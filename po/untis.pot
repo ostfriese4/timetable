@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the untis package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: untis\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-03 21:49+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/page.codeberg.ostfriese4.Untis.desktop.in:2
+msgid "untis"
+msgstr ""
+
+#: data/page.codeberg.ostfriese4.Untis.desktop.in:8
+msgid "GTK;"
+msgstr ""
+
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/window.ui:6
+msgid "Untis"
+msgstr ""
+
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:8
+msgid "Keep the summary shorter, between 10 and 35 characters"
+msgstr ""
+
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:10
+msgid "No description"
+msgstr ""
+
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:14
+msgid "Developer name"
+msgstr ""
+
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:52
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:56
+msgid "A caption"
+msgstr ""
+
+#. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
+#: src/main.py:64
+msgid "translator-credits"
+msgstr ""
+
+#: src/window.ui:17
+msgid "Main Menu"
+msgstr ""
+
+#: src/window.ui:25
+msgid "Hello, World!"
+msgstr ""
+
+#: src/window.ui:37
+msgid "_Preferences"
+msgstr ""
+
+#: src/window.ui:41
+msgid "_Keyboard Shortcuts"
+msgstr ""
+
+#: src/window.ui:45
+msgid "_About Untis"
+msgstr ""

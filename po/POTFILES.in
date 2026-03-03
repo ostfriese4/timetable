@@ -3,6 +3,7 @@
 data/page.codeberg.ostfriese4.Untis.desktop.in
 data/page.codeberg.ostfriese4.Untis.metainfo.xml.in
 data/page.codeberg.ostfriese4.Untis.gschema.xml
+src/api.py
 src/main.py
 src/window.py
 src/window.ui
