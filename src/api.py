@@ -22,38 +22,40 @@ import json
 import os
 import webuntis
 
-session = None
+class untisApi:
+    def __init__(self):
+        self.session = None
 
-def getJSONTimetable(start, end):
-    table = session.my_timetable(start=monday, end=friday).to_table()
+    def getJSONTimetable(self, start, end):
+        table = self.session.my_timetable(start=monday, end=friday).to_table()
 
-    json = []
+        json = []
 
-def login():
-    global session
+    def login(self):
+        credentials = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
+        with open(credentials) as file:
+            credentials = json.load(file)
+            self.session = webuntis.Session(
+                username=credentials["username"],
+                password=credentials["password"],
+                server=credentials["server"],
+                school=credentials["school"],
+                useragent='WebUntis Test'
+                )
+            self.session.login()
 
-    credentials = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
-    with open(credentials) as file:
-        credentials = json.load(file)
-        session = webuntis.Session(
-            username=credentials["username"],
-            password=credentials["password"],
-            server=credentials["server"],
-            school=credentials["school"],
-            useragent='WebUntis Test'
-            )
-        session.login()
-
-def logout():
-    session.logout()
+    def logout(self):
+        self.session.logout()
 
 
-def test():
-    login()
-    for klasse in session.klassen():
-        print(klasse.name)
-    monday = datetime.date(2026, 3, 2)
-    friday = datetime.date(2026, 3, 6)
-    table = session.my_timetable(start=monday, end=friday).to_table()
-    print(table)
-    logout()
+    def test(self):
+        self.login()
+        for klasse in self.session.klassen():
+            print(klasse.name)
+        monday = datetime.date(2026, 3, 2)
+        friday = datetime.date(2026, 3, 6)
+        table = self.session.my_timetable(start=monday, end=friday).to_table()
+        print(table)
+        self.logout()
+
+api = untisApi()
