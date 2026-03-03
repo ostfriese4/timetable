@@ -28,6 +28,7 @@ configure_file(
 
 untis_sources = [
   '__init__.py',
+  'api.py',
   'main.py',
   'window.py',
 ]
