@@ -17,12 +17,9 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import datetime
-import json
+import api
 import sys
 import gi
-import os
-import webuntis
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -42,30 +39,7 @@ class UntisApplication(Adw.Application):
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
 
-        self.login()
-        for klasse in self.session.klassen():
-            print(klasse.name)
-        monday = datetime.date(2026, 3, 2)
-        friday = datetime.date(2026, 3, 6)
-        table = self.session.my_timetable(start=monday, end=friday).to_table()
-        print(table)
-        self.logout()
-
-    def login(self):
-        credentials = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
-        with open(credentials) as file:
-            credentials = json.load(file)
-            self.session = webuntis.Session(
-                username=credentials["username"],
-                password=credentials["password"],
-                server=credentials["server"],
-                school=credentials["school"],
-                useragent='WebUntis Test'
-                )
-            self.session.login()
-
-    def logout(self):
-        self.session.logout()
+        api.test()
 
     def do_activate(self):
         """Called when the application is activated.
