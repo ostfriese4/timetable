@@ -1,0 +1,117 @@
+# main.py
+#
+# Copyright 2026 Jonas
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+import datetime
+import json
+import sys
+import gi
+import os
+import webuntis
+
+gi.require_version('Gtk', '4.0')
+gi.require_version('Adw', '1')
+
+from gi.repository import Gtk, Gio, Adw
+from .window import UntisWindow
+
+
+class UntisApplication(Adw.Application):
+    """The main application singleton class."""
+
+    def __init__(self):
+        super().__init__(application_id='page.codeberg.ostfriese4.Untis',
+                         flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
+                         resource_base_path='/page/codeberg/ostfriese4/Untis')
+        self.create_action('quit', lambda *_: self.quit(), ['<control>q'])
+        self.create_action('about', self.on_about_action)
+        self.create_action('preferences', self.on_preferences_action)
+
+        self.login()
+        for klasse in self.session.klassen():
+            print(klasse.name)
+        monday = datetime.date(2026, 3, 2)
+        friday = datetime.date(2026, 3, 6)
+        table = self.session.my_timetable(start=monday, end=friday).to_table()
+        print(table)
+        self.logout()
+
+    def login(self):
+        credentials = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
+        with open(credentials) as file:
+            credentials = json.load(file)
+            self.session = webuntis.Session(
+                username=credentials["username"],
+                password=credentials["password"],
+                server=credentials["server"],
+                school=credentials["school"],
+                useragent='WebUntis Test'
+                )
+            self.session.login()
+
+    def logout(self):
+        self.session.logout()
+
+    def do_activate(self):
+        """Called when the application is activated.
+
+        We raise the application's main window, creating it if
+        necessary.
+        """
+        win = self.props.active_window
+        if not win:
+            win = UntisWindow(application=self)
+        win.present()
+
+    def on_about_action(self, *args):
+        """Callback for the app.about action."""
+        about = Adw.AboutDialog(application_name='untis',
+                                application_icon='page.codeberg.ostfriese4.Untis',
+                                developer_name='Jonas',
+                                version='0.1.0',
+                                developers=['Jonas'],
+                                copyright='© 2026 Jonas')
+        # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
+        about.set_translator_credits(_('translator-credits'))
+        about.present(self.props.active_window)
+
+    def on_preferences_action(self, widget, _):
+        """Callback for the app.preferences action."""
+        print('app.preferences action activated')
+
+    def create_action(self, name, callback, shortcuts=None):
+        """Add an application action.
+
+        Args:
+            name: the name of the action
+            callback: the function to be called when the action is
+              activated
+            shortcuts: an optional list of accelerators
+        """
+        action = Gio.SimpleAction.new(name, None)
+        action.connect("activate", callback)
+        self.add_action(action)
+        if shortcuts:
+            self.set_accels_for_action(f"app.{name}", shortcuts)
+
+
+def main(version):
+    """The application's entry point."""
+    app = UntisApplication()
+
+    return app.run(sys.argv)

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=untis
+Exec=untis
+Icon=page.codeberg.ostfriese4.Untis
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true

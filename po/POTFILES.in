@@ -1,0 +1,8 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+data/page.codeberg.ostfriese4.Untis.desktop.in
+data/page.codeberg.ostfriese4.Untis.metainfo.xml.in
+data/page.codeberg.ostfriese4.Untis.gschema.xml
+src/main.py
+src/window.py
+src/window.ui
