@@ -2,20 +2,22 @@
 # Copyright (C) 2026 THE untis'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the untis package.
 # Automatically generated, 2026.
+# Jonas Harer <jonas.harer@icloud.com>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-03 21:49+0100\n"
-"PO-Revision-Date: 2026-03-03 21:38+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-03-04 17:10+0100\n"
+"Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
+"Language-Team: de_DE\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 49.0\n"
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
 msgid "untis"
@@ -53,7 +55,7 @@ msgstr ""
 
 #: src/window.ui:17
 msgid "Main Menu"
-msgstr ""
+msgstr "Hauptmenü"
 
 #: src/window.ui:25
 msgid "Hello, World!"
@@ -61,12 +63,12 @@ msgstr ""
 
 #: src/window.ui:37
 msgid "_Preferences"
-msgstr ""
+msgstr "_Einstellungen"
 
 #: src/window.ui:41
 msgid "_Keyboard Shortcuts"
-msgstr ""
+msgstr "_Kurzbefehle"
 
 #: src/window.ui:45
 msgid "_About Untis"
-msgstr ""
+msgstr "Über _Untis"
