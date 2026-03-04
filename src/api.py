@@ -26,10 +26,10 @@ class untisApi:
     def __init__(self):
         self.session = None
 
-    def getJSONTimetable(self, start, end):
-        table = self.session.my_timetable(start=monday, end=friday).to_table()
+    def getTimetable(self, start, end):
+        table = self.session.my_timetable(start=start, end=end).to_table()
 
-        json = []
+        return table
 
     def login(self):
         credentials = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"

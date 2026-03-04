@@ -23,7 +23,7 @@
         "*.a"
     ],
     "modules" : [
-        "pypi.json",
+    	"pypi.json",
         {
             "name" : "untis",
             "builddir" : true,
@@ -33,13 +33,7 @@
                     "type" : "git",
                     "url" : "file:///home/jonas/Programme/Builder"
                 }
-            ],
-            "config-opts" : [
-                "--libdir=lib"
             ]
         }
-    ],
-    "build-options" : {
-        "env" : {        }
-    }
+    ]
 }
