@@ -21,6 +21,9 @@
           </object>
         </child>
         <property name="content">
+          <object class="AdwBanner" id="offline">
+            <property name="title" translatable="yes">You are offline</property>
+          </object>
           <object class="GtkDrawingArea" id="timetable">
             <property name="hexpand">true</property>
             <property name="vexpand">true</property>

@@ -27,9 +27,57 @@ class untisApi:
         self.session = None
 
     def getTimetable(self, start, end):
-        table = self.session.my_timetable(start=start, end=end).to_table()
+        CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/days/"
+        os.system("mkdir -p " + CACHEDIR)
 
-        return table
+        day_count = (end - start).days + 1
+
+        try:
+            login()
+            table = self.session.my_timetable(start=start, end=end).to_table()
+            logout()
+        except:
+            try:
+                data = []
+                for date in (start + datetime.timedelta(n) for n in range(day_count)):
+                    name = date.strftime("%Y-%m-%d")
+                    print("reading cache", name)
+                    with open(CACHEDIR + name) as cache:
+                        data.append(json.load(cache))
+                return data
+
+            except:
+                return []
+
+
+        data = []
+
+        for time in table:
+            time, subjects = time
+            for day in subjects:
+                day, info = day
+                daynr = day-start
+                daynr = daynr.days
+                if len(data) == daynr:
+                    data.append([])
+                daydata = data[daynr]
+                lessondata = None
+                for lesson in info:
+                    lessondata = {}
+                    lessondata["sg"] = lesson.studentGroup
+                    break # Only use the first one
+                daydata.append(lessondata)
+
+
+        i=0
+        for date in (start + datetime.timedelta(n) for n in range(day_count)):
+            name = date.strftime("%Y-%m-%d")
+            print("writing cache", name)
+            with open(CACHEDIR + name, "w") as cache:
+                json.dump(data[i], cache, indent=4)
+            i+=1
+
+        return data
 
     def login(self):
         credentials = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"

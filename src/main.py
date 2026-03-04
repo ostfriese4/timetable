@@ -39,8 +39,6 @@ class UntisApplication(Adw.Application):
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
 
-        api.test()
-
     def do_activate(self):
         """Called when the application is activated.
 
