@@ -58,7 +58,7 @@ class UntisWindow(Adw.ApplicationWindow):
 
                     context.set_source_rgb(1,0,0)
                     context.set_line_width(0)
-                    context.rectangle(x+2, y, (width/len(self.table)) - 4, (height / minutes) * (lesson["duration"]))
+                    context.rectangle(x+2, y, (width / len(self.table)) - 4, (height / minutes) * (lesson["duration"]))
                     context.fill_preserve()
                     context.stroke()
 
@@ -66,6 +66,13 @@ class UntisWindow(Adw.ApplicationWindow):
                     context.set_source_rgb(1,1,1)
                     context.move_to(x,y + 10)
                     context.show_text(lesson["sg"])
+
+                    if lesson["code"] == "cancelled":
+                        context.set_source_rgb(1,1,1)
+                        context.set_line_width(2)
+                        context.move_to(x + 2, y)
+                        context.line_to(x + (width / len(self.table)) - 2, y + (height / minutes) * (lesson["duration"]))
+                        context.stroke()
                 y += 20
             x += width/len(self.table)
 
