@@ -43,8 +43,9 @@ class UntisWindow(Adw.ApplicationWindow):
         self.next_button.connect("clicked", self.next)
         self.previous_button.connect("clicked", self.previous)
 
-        self.startdate = datetime.date(2026, 3, 2)
-        self.enddate = datetime.date(2026, 3, 6)
+        today = datetime.date.today()
+        self.startdate = today - datetime.timedelta(days=today.weekday())
+        self.enddate = self.startdate + datetime.timedelta(days=4)
         self.loadData()
 
     def next(self, data = None):

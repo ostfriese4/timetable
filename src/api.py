@@ -101,7 +101,7 @@ class untisApi:
                 day, info = day
                 daynr = day-start
                 daynr = daynr.days
-                if len(data) == daynr:
+                while len(data) <= daynr:
                     data.append([])
                 daydata = data[daynr]
                 lessondata = None
