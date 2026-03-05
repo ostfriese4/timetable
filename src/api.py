@@ -35,7 +35,6 @@ class untisApi:
         try:
             self.login()
             table = self.session.my_timetable(start=start, end=end).to_table()
-            self.logout()
         except Exception as e:
             try:
                 data = []
@@ -67,12 +66,16 @@ class untisApi:
                     lessondata = {}
                     lessondata["sg"] = lesson.studentGroup
                     lessondata["code"] = lesson.code
-                    #lessondata["color"] = lesson.code_color
                     lessondata["number"] = lesson.lsnumber
                     lessondata["start"] = lesson.start.hour * 60 + lesson.start.minute
                     lessondata["end"] = lesson.end.hour * 60 + lesson.end.minute
                     lessondata["duration"] = lessondata["end"] - lessondata["start"]
-                    break # Only use the first one
+                    lessondata["teacher-long"] = lesson.teachers[0].full_name
+                    lessondata["teacher-short"] = lesson.teachers[0].name
+                    lessondata["room"] = lesson.rooms[0].name
+                    lessondata["info"] = lesson.info
+                    if lessondata["code"] != "cancelled":
+                        break # Only use the first one
                 equal = True
                 if len(daydata) == 0:
                     equal = False
@@ -98,6 +101,7 @@ class untisApi:
                 json.dump(data[i], cache, indent=4)
             i+=1
 
+        self.logout()
         return data
 
     def login(self):
