@@ -25,9 +25,50 @@ import webuntis
 class untisApi:
     def __init__(self):
         self.session = None
+        self.colors = {}
+        try:
+            self.loadColors()
+        except:
+            self.writeColors() # create
+
+    def loadColors(self):
+        with open(os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-colors.json") as file:
+            self.colors = json.load(file)
+
+    def writeColors(self):
+        with open(os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-colors.json", "w") as file:
+            json.dump(self.colors, file, indent=4)
+
+    def getColor(self, subject):
+        if subject in self.colors:
+            return self.colors[subject]
+        colors = [
+            (1, 0, 0), # Red
+            (0, 1, 0), # Green
+            (0, 0, 1), # Blue
+            (1, 1, 0), # Yellow
+            (1, 0, 1), # Magenta
+            (0, 1, 1) # Cyan
+        ]
+        color = colors[0]
+        count = 0
+        for key in self.colors:
+            if self.colors[key] == color:
+                count += 1
+        for c in colors:
+            n = 0
+            for key in self.colors:
+                if self.colors[key] == c:
+                    n += 1
+            if n < count:
+                count = n
+                color = c
+        self.colors[subject] = color
+        self.writeColors()
+        return color
 
     def getTimetable(self, start, end):
-        CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/days/"
+        CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-days/"
         os.system("mkdir -p " + CACHEDIR)
 
         day_count = (end - start).days + 1

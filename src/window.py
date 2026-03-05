@@ -56,7 +56,8 @@ class UntisWindow(Adw.ApplicationWindow):
                 if lesson is not None:
                     y = (height / minutes) * (lesson["start"] - start)
 
-                    context.set_source_rgb(1,0,0)
+                    r,g,b = api.getColor(lesson["subject-short"])
+                    context.set_source_rgb(r,g,b)
                     context.set_line_width(0)
                     context.rectangle(x+2, y, (width / len(self.table)) - 4, (height / minutes) * (lesson["duration"]))
                     context.fill_preserve()
@@ -64,8 +65,12 @@ class UntisWindow(Adw.ApplicationWindow):
 
 
                     context.set_source_rgb(1,1,1)
-                    context.move_to(x,y + 10)
-                    context.show_text(lesson["sg"])
+                    context.move_to(x + 5,y + 10)
+                    context.show_text(lesson["subject-short"])
+                    context.move_to(x + 5,y + 25)
+                    context.show_text(lesson["room"])
+                    context.move_to(x + 5,y + 40)
+                    context.show_text(lesson["teacher-short"])
 
                     if lesson["code"] == "cancelled":
                         context.set_source_rgb(1,1,1)
