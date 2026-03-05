@@ -67,6 +67,7 @@ class untisApi:
                     lessondata = {}
                     lessondata["sg"] = lesson.studentGroup
                     lessondata["code"] = lesson.code
+                    #lessondata["color"] = lesson.code_color
                     lessondata["number"] = lesson.lsnumber
                     lessondata["start"] = lesson.start.hour * 60 + lesson.start.minute
                     lessondata["end"] = lesson.end.hour * 60 + lesson.end.minute
@@ -85,7 +86,8 @@ class untisApi:
                     daydata[-1]["end"] = lessondata["end"]
                     daydata[-1]["duration"] = daydata[-1]["end"] - daydata[-1]["start"]
                 else:
-                    daydata.append(lessondata)
+                    if lessondata is not None:
+                        daydata.append(lessondata)
 
 
         i=0

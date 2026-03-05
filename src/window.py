@@ -40,13 +40,31 @@ class UntisWindow(Adw.ApplicationWindow):
         self.table = api.getTimetable(self.startdate, self.enddate)
 
     def drawTimetable(self, area, context, width, height, data):
-        context.set_source_rgb(1,1,1)
         x=0
+        start = 1440 # One day in minutes (max possible value)
+        end = 0
         for day in self.table:
-            y=10
+            for lesson in day:
+                if lesson["start"] < start:
+                    start = lesson["start"]
+                if lesson["end"] > end:
+                    end = lesson["end"]
+        minutes = end-start
+
+        for day in self.table:
             for lesson in day:
                 if lesson is not None:
-                    context.move_to(x,y)
+                    y = (height / minutes) * (lesson["start"] - start)
+
+                    context.set_source_rgb(1,0,0)
+                    context.set_line_width(0)
+                    context.rectangle(x+2, y, (width/len(self.table)) - 4, (height / minutes) * (lesson["duration"]))
+                    context.fill_preserve()
+                    context.stroke()
+
+
+                    context.set_source_rgb(1,1,1)
+                    context.move_to(x,y + 10)
                     context.show_text(lesson["sg"])
                 y += 20
             x += width/len(self.table)
