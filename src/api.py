@@ -26,6 +26,7 @@ class untisApi:
     def __init__(self):
         self.session = None
         self.colors = {}
+        self.cache = True
         try:
             self.loadColors()
         except:
@@ -74,9 +75,11 @@ class untisApi:
         day_count = (end - start).days + 1
 
         try:
+            self.cache = False
             self.login()
             table = self.session.my_timetable(start=start, end=end).to_table()
         except Exception as e:
+            self.cache = True
             try:
                 data = []
                 for date in (start + datetime.timedelta(n) for n in range(day_count)):

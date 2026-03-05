@@ -21,12 +21,19 @@
           </object>
         </child>
         <property name="content">
-          <object class="AdwBanner" id="offline">
-            <property name="title" translatable="yes">You are offline</property>
-          </object>
-          <object class="GtkDrawingArea" id="timetable">
-            <property name="hexpand">true</property>
-            <property name="vexpand">true</property>
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="AdwBanner" id="offline">
+                <property name="title" translatable="yes">You are offline</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkDrawingArea" id="timetable">
+                <property name="hexpand">true</property>
+                <property name="vexpand">true</property>
+              </object>
+            </child>
           </object>
         </property>
       </object>

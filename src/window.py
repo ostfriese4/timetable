@@ -44,6 +44,12 @@ class UntisWindow(Adw.ApplicationWindow):
         self.startdate = datetime.date(2026, 3, 2)
         self.enddate = datetime.date(2026, 3, 6)
         self.table = api.getTimetable(self.startdate, self.enddate)
+        if api.cache:
+            self.offline.set_revealed(revealed=True)
+        else:
+            self.offline.set_revealed(revealed=False)
+        self.timetable.queue_draw()
+
 
     def drawTimetable(self, area, context, width, height, data):
         x=0
