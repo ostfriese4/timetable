@@ -61,18 +61,26 @@ class untisApi:
                     data.append([])
                 daydata = data[daynr]
                 lessondata = None
-                importantKeys = ["sg", "code", "number"]
+                importantKeys = [
+                    "sg",
+                    "code",
+                    "teacher-short",
+                    "room",
+                    "info"
+                ]
                 for lesson in info:
                     lessondata = {}
                     lessondata["sg"] = lesson.studentGroup
                     lessondata["code"] = lesson.code
-                    lessondata["number"] = lesson.lsnumber
                     lessondata["start"] = lesson.start.hour * 60 + lesson.start.minute
                     lessondata["end"] = lesson.end.hour * 60 + lesson.end.minute
                     lessondata["duration"] = lessondata["end"] - lessondata["start"]
                     lessondata["teacher-long"] = lesson.teachers[0].full_name
                     lessondata["teacher-short"] = lesson.teachers[0].name
+                    lessondata["subject-long"] = lesson.subjects[0].long_name
+                    lessondata["subject-short"] = lesson.subjects[0].name
                     lessondata["room"] = lesson.rooms[0].name
+                    lessondata["room-info"] = lesson.rooms[0].long_name
                     lessondata["info"] = lesson.info
                     if lessondata["code"] != "cancelled":
                         break # Only use the first one
