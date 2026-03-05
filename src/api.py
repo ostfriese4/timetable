@@ -33,10 +33,10 @@ class untisApi:
         day_count = (end - start).days + 1
 
         try:
-            login()
+            self.login()
             table = self.session.my_timetable(start=start, end=end).to_table()
-            logout()
-        except:
+            self.logout()
+        except Exception as e:
             try:
                 data = []
                 for date in (start + datetime.timedelta(n) for n in range(day_count)):
@@ -47,7 +47,7 @@ class untisApi:
                 return data
 
             except:
-                return []
+                return [[]]
 
 
         data = []
@@ -62,11 +62,30 @@ class untisApi:
                     data.append([])
                 daydata = data[daynr]
                 lessondata = None
+                importantKeys = ["sg", "code", "number"]
                 for lesson in info:
                     lessondata = {}
                     lessondata["sg"] = lesson.studentGroup
+                    lessondata["code"] = lesson.code
+                    lessondata["number"] = lesson.lsnumber
+                    lessondata["start"] = lesson.start.hour * 60 + lesson.start.minute
+                    lessondata["end"] = lesson.end.hour * 60 + lesson.end.minute
+                    lessondata["duration"] = lessondata["end"] - lessondata["start"]
                     break # Only use the first one
-                daydata.append(lessondata)
+                equal = True
+                if len(daydata) == 0:
+                    equal = False
+                elif daydata[-1] is None or lessondata is None:
+                    equal = False
+                else:
+                    for key in importantKeys:
+                        if daydata[-1][key] != lessondata[key]:
+                            equal = False
+                if equal:
+                    daydata[-1]["end"] = lessondata["end"]
+                    daydata[-1]["duration"] = daydata[-1]["end"] - daydata[-1]["start"]
+                else:
+                    daydata.append(lessondata)
 
 
         i=0
