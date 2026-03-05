@@ -32,6 +32,12 @@ class UntisWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.timetable.set_draw_func(self.drawTimetable, None)
+        subjectClicked = Gtk.GestureClick.new()
+        subjectClicked.connect("pressed", self.subjectClicked)
+        self.timetable.add_controller(subjectClicked)
+
+        self.dim = (1,1)
+
         self.loadData()
 
     def loadData(self):
@@ -50,6 +56,8 @@ class UntisWindow(Adw.ApplicationWindow):
                 if lesson["end"] > end:
                     end = lesson["end"]
         minutes = end-start
+
+        self.dim = (width, height)
 
         for day in self.table:
             for lesson in day:
@@ -80,4 +88,23 @@ class UntisWindow(Adw.ApplicationWindow):
                         context.stroke()
                 y += 20
             x += width/len(self.table)
+    def subjectClicked(self, gesture, data, x, y):
+
+        start = 1440 # One day in minutes (max possible value)
+        end = 0
+        for day in self.table:
+            for lesson in day:
+                if lesson["start"] < start:
+                    start = lesson["start"]
+                if lesson["end"] > end:
+                    end = lesson["end"]
+        minutes = end-start
+
+        width, height = self.dim
+
+        day = self.table[int(x / (width / len(self.table)))]
+        minute = start + (y / (height / minutes))
+        for subject in day:
+            if subject["start"] < minute and subject["end"] > minute:
+                print(subject)
 
