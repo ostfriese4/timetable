@@ -28,6 +28,8 @@ class UntisWindow(Adw.ApplicationWindow):
 
     timetable = Gtk.Template.Child()
     offline = Gtk.Template.Child()
+    next_button = Gtk.Template.Child()
+    previous_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -38,11 +40,24 @@ class UntisWindow(Adw.ApplicationWindow):
 
         self.dim = (1,1)
 
+        self.next_button.connect("clicked", self.next)
+        self.previous_button.connect("clicked", self.previous)
+
+        self.startdate = datetime.date(2026, 3, 2)
+        self.enddate = datetime.date(2026, 3, 6)
+        self.loadData()
+
+    def next(self, data = None):
+        self.startdate += datetime.timedelta(days=7)
+        self.enddate += datetime.timedelta(days=7)
+        self.loadData()
+
+    def previous(self, data = None):
+        self.startdate -= datetime.timedelta(days=7)
+        self.enddate -= datetime.timedelta(days=7)
         self.loadData()
 
     def loadData(self):
-        self.startdate = datetime.date(2026, 3, 2)
-        self.enddate = datetime.date(2026, 3, 6)
         self.table = api.getTimetable(self.startdate, self.enddate)
         if api.cache:
             self.offline.set_revealed(revealed=True)
@@ -94,8 +109,8 @@ class UntisWindow(Adw.ApplicationWindow):
                         context.stroke()
                 y += 20
             x += width/len(self.table)
-    def subjectClicked(self, gesture, data, x, y):
 
+    def subjectClicked(self, gesture, data, x, y):
         start = 1440 # One day in minutes (max possible value)
         end = 0
         for day in self.table:

@@ -10,6 +10,29 @@
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
+            <property name="title-widget">
+              <object class="GtkBox">
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkButton" id="previous_button">
+                    <property name="icon-name">go-previous-symbolic</property>
+                    <property name="tooltip-text" translatable="yes">Previous</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Untis</property>
+                    <property name="halign">GTK_ALIGN_CENTER</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="next_button">
+                    <property name="icon-name">go-next-symbolic</property>
+                    <property name="tooltip-text" translatable="yes">Next</property>
+                  </object>
+                </child>
+              </object>
+            </property>
             <child type="end">
               <object class="GtkMenuButton">
                 <property name="primary">True</property>
