@@ -38,6 +38,7 @@ class UntisApplication(Adw.Application):
         self.create_action('quit', lambda *_: self.quit(), ['<control>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
+        self.create_action('login', self.on_login_action)
 
     def do_activate(self):
         """Called when the application is activated.
@@ -65,6 +66,9 @@ class UntisApplication(Adw.Application):
     def on_preferences_action(self, widget, _):
         """Callback for the app.preferences action."""
         print('app.preferences action activated')
+
+    def on_login_action(self, widget, _):
+        self.props.active_window.login_window.present(self.props.active_window)
 
     def create_action(self, name, callback, shortcuts=None):
         """Add an application action.

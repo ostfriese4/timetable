@@ -7,6 +7,53 @@
     <property name="default-width">800</property>
     <property name="default-height">600</property>
     <property name="content">
+      <object class="AdwDialog" id="login_window">
+        <property name="title" translatable="yes">Login</property>
+        <property name="content-width">400</property>
+        <child>
+          <object class="AdwHeaderBar">
+
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesPage">
+            <child>
+              <object class="AdwPreferencesGroup">
+                <child>
+                  <object class="AdwEntryRow" id="server_entry">
+                    <property name="title">Server-URL</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwEntryRow" id="school_entry">
+                    <property name="title">School</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwEntryRow" id="usr_entry">
+                    <property name="title">Username</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPasswordEntryRow" id="pswd_entry">
+                    <property name="title">Password</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <child>
+                  <object class="AdwButtonRow" id="login_button">
+                    <property name="title" translatable="yes">Login</property>
+                    <property name="css-classes">suggested-action</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
@@ -53,8 +100,8 @@
             </child>
             <child>
               <object class="GtkDrawingArea" id="timetable">
-                <property name="hexpand">true</property>
-                <property name="vexpand">true</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
               </object>
             </child>
           </object>
@@ -75,6 +122,10 @@
       <item>
         <attribute name="label" translatable="yes">_About Untis</attribute>
         <attribute name="action">app.about</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Login</attribute>
+        <attribute name="action">app.login</attribute>
       </item>
     </section>
   </menu>

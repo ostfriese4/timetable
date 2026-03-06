@@ -30,6 +30,9 @@ class UntisWindow(Adw.ApplicationWindow):
     offline = Gtk.Template.Child()
     next_button = Gtk.Template.Child()
     previous_button = Gtk.Template.Child()
+    login_window = Gtk.Template.Child()
+    login_button = Gtk.Template.Child()
+    pswd_entry = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -42,11 +45,16 @@ class UntisWindow(Adw.ApplicationWindow):
 
         self.next_button.connect("clicked", self.next)
         self.previous_button.connect("clicked", self.previous)
+        self.login_button.connect("activated", self.login)
 
         today = datetime.date.today()
         self.startdate = today - datetime.timedelta(days=today.weekday())
         self.enddate = self.startdate + datetime.timedelta(days=4)
         self.loadData()
+
+    def login(self, data = None):
+        print("login")
+        print(self.pswd_entry.get_text())
 
     def next(self, data = None):
         self.startdate += datetime.timedelta(days=7)
