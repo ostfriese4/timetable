@@ -47,9 +47,9 @@ class untisApi:
             (1, 0, 0), # Red
             (0, 1, 0), # Green
             (0, 0, 1), # Blue
-            (1, 1, 0), # Yellow
+            (0.8, 0.7, 0), # Yellow / Brown
             (1, 0, 1), # Magenta
-            (0, 1, 1) # Cyan
+            (0, 0.5, 0.8) # Bright Blue
         ]
         color = colors[0]
         count = 0
