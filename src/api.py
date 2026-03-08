@@ -20,6 +20,7 @@
 import datetime
 import json
 import os
+import requests
 import webuntis
 
 class untisApi:
@@ -194,5 +195,10 @@ class untisApi:
             return False
         except webuntis.errors.BadCredentialsError:
             return False
+        except requests.exceptions.ConnectionError:
+            return True
+        except Exception:
+            return True # Unknown error
+
 
 api = untisApi()
