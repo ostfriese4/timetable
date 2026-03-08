@@ -156,6 +156,17 @@ class untisApi:
         self.logout()
         return data
 
+    def setCredentials(self, server, school, user, password):
+        credentials = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
+        with open(credentials, "w") as file:
+            json.dump({
+                "username": user,
+                "password": password,
+                "server": server,
+                "school": school
+            },
+            file)
+
     def login(self):
         credentials = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
         with open(credentials) as file:

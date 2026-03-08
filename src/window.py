@@ -33,6 +33,9 @@ class UntisWindow(Adw.ApplicationWindow):
     login_window = Gtk.Template.Child()
     login_button = Gtk.Template.Child()
     pswd_entry = Gtk.Template.Child()
+    usr_entry = Gtk.Template.Child()
+    school_entry = Gtk.Template.Child()
+    server_entry = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -54,7 +57,13 @@ class UntisWindow(Adw.ApplicationWindow):
 
     def login(self, data = None):
         print("login")
-        print(self.pswd_entry.get_text())
+        api.setCredentials(user = self.usr_entry.get_text(),
+                           password = self.pswd_entry.get_text(),
+                           school = self.school_entry.get_text(),
+                           server = self.server_entry.get_text()
+                           )
+        self.loadData()
+        self.login_window.close()
 
     def next(self, data = None):
         self.startdate += datetime.timedelta(days=7)

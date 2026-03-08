@@ -10,11 +10,7 @@
       <object class="AdwDialog" id="login_window">
         <property name="title" translatable="yes">Login</property>
         <property name="content-width">400</property>
-        <child>
-          <object class="AdwHeaderBar">
-
-          </object>
-        </child>
+        <property name="can-close">True</property>
         <child>
           <object class="AdwPreferencesPage">
             <child>
