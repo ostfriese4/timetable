@@ -198,7 +198,6 @@ class untisApi:
         except requests.exceptions.ConnectionError:
             return True
         except Exception:
-            raise
             return True # Unknown error
 
 
