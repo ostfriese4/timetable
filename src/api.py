@@ -183,4 +183,16 @@ class untisApi:
     def logout(self):
         self.session.logout()
 
+    def testLogin(self):
+        if not os.path.exists(os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"):
+            return False
+        try:
+            self.login()
+            self.logout()
+            return True
+        except webuntis.errors.BadCredentialsError:
+            return False
+        except webuntis.errors.BadCredentialsError:
+            return False
+
 api = untisApi()

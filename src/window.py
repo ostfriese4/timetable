@@ -79,10 +79,11 @@ class UntisWindow(Adw.ApplicationWindow):
         self.table = api.getTimetable(self.startdate, self.enddate)
         if api.cache:
             self.offline.set_revealed(revealed=True)
+            if not api.testLogin():
+                self.login_window.present(self)
         else:
             self.offline.set_revealed(revealed=False)
         self.timetable.queue_draw()
-
 
     def drawTimetable(self, area, context, width, height, data):
         x=0
