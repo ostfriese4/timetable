@@ -193,11 +193,12 @@ class untisApi:
             return True
         except webuntis.errors.BadCredentialsError:
             return False
-        except webuntis.errors.BadCredentialsError:
+        except webuntis.errors.RemoteError:
             return False
         except requests.exceptions.ConnectionError:
             return True
         except Exception:
+            raise
             return True # Unknown error
 
 
