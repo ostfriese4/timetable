@@ -172,15 +172,4 @@ class untisApi:
     def logout(self):
         self.session.logout()
 
-
-    def test(self):
-        self.login()
-        for klasse in self.session.klassen():
-            print(klasse.name)
-        monday = datetime.date(2026, 3, 2)
-        friday = datetime.date(2026, 3, 6)
-        table = self.session.my_timetable(start=monday, end=friday).to_table()
-        print(table)
-        self.logout()
-
 api = untisApi()
