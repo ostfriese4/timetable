@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-04 18:57+0100\n"
+"POT-Creation-Date: 2026-03-09 08:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,55 +18,73 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
-msgid "untis"
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7
+msgid "Timetable"
 msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:8
-msgid "GTK;"
-msgstr ""
-
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/window.ui:6
-msgid "Untis"
+msgid "GTK;untis;school;timetable;students"
 msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:8
-msgid "Keep the summary shorter, between 10 and 35 characters"
+msgid "A client for webuntis"
 msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:10
-msgid "No description"
+msgid ""
+"Timetable is a client for webuntis, which focusses on the featured used by "
+"students."
 msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:14
-msgid "Developer name"
+msgid "Jonas Harer"
 msgstr ""
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:52
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:56
-msgid "A caption"
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:37
+msgid "The timetable"
 msgstr ""
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:62
+#: src/main.py:63
 msgid "translator-credits"
 msgstr ""
 
-#: src/window.ui:17
+#: src/window.ui:6 src/window.ui:67
+msgid "Untis"
+msgstr ""
+
+#: src/window.ui:11 src/window.ui:44
+msgid "Login"
+msgstr ""
+
+#: src/window.ui:62
+msgid "Previous"
+msgstr ""
+
+#: src/window.ui:74
+msgid "Next"
+msgstr ""
+
+#: src/window.ui:83
 msgid "Main Menu"
 msgstr ""
 
-#: src/window.ui:25
+#: src/window.ui:94
 msgid "You are offline"
 msgstr ""
 
-#: src/window.ui:38
+#: src/window.ui:111
 msgid "_Preferences"
 msgstr ""
 
-#: src/window.ui:42
+#: src/window.ui:115
 msgid "_Keyboard Shortcuts"
 msgstr ""
 
-#: src/window.ui:46
+#: src/window.ui:119
 msgid "_About Untis"
+msgstr ""
+
+#: src/window.ui:123
+msgid "_Login"
 msgstr ""
