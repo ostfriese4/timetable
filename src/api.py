@@ -111,8 +111,7 @@ class untisApi:
                     "sg",
                     "code",
                     "teacher-short",
-                    "room",
-                    "info"
+                    "room"
                 ]
                 for lesson in info:
                     lessondata = {}
@@ -127,7 +126,7 @@ class untisApi:
                     lessondata["subject-short"] = lesson.subjects[0].name
                     lessondata["room"] = lesson.rooms[0].name
                     lessondata["room-info"] = lesson.rooms[0].long_name
-                    lessondata["info"] = lesson.info
+                    lessondata["text"] = lesson.lstext
                     if lessondata["code"] != "cancelled":
                         break # Only use the first one
                 equal = True

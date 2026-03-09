@@ -170,6 +170,8 @@ class UntisWindow(Adw.ApplicationWindow):
                 data[_("Subject")] = subject["subject-long"] + " (" + subject["subject-short"] + ")"
                 data[_("Room")] = subject["room"]
                 data[_("Teacher")] = subject["teacher-long"] + " (" + subject["teacher-short"] + ")"
+                if subject["text"] != "":
+                    data[_("Information about this lesson")] = subject["text"]
 
                 for key, value in data.items():
                     row = Adw.ActionRow(title = key)
