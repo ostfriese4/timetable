@@ -17,22 +17,22 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwEntryRow" id="server_entry">
-                    <property name="title">Server-URL</property>
+                    <property name="title" translatable="yes">Server-URL</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="school_entry">
-                    <property name="title">School</property>
+                    <property name="title" translatable="yes">School</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="usr_entry">
-                    <property name="title">Username</property>
+                    <property name="title" translatable="yes">Username</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwPasswordEntryRow" id="pswd_entry">
-                    <property name="title">Password</property>
+                    <property name="title" translatable="yes">Password</property>
                   </object>
                 </child>
               </object>
