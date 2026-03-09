@@ -1,10 +1,10 @@
 [Desktop Entry]
-Name=untis
+Name=Timetable
 Exec=untis
 Icon=page.codeberg.ostfriese4.Untis
 Terminal=false
 Type=Application
-Categories=Utility;
-Keywords=GTK;
+Categories=Education;
+Keywords=GTK;untis;school;timetable;students
 StartupNotify=true
 DBusActivatable=true
