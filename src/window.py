@@ -154,7 +154,7 @@ class UntisWindow(Adw.ApplicationWindow):
             x += width/len(self.table)
 
     def subjectClicked(self, gesture, data, x, y):
-        x -= self.datey
+        y -= self.datey
         start = 1440 # One day in minutes (max possible value)
         end = 0
         for day in self.table:
