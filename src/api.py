@@ -96,6 +96,10 @@ class untisApi:
 
 
         data = []
+        days = end-start
+        days = days.days + 1
+        for i in range(days):
+            data.append([])
 
         for time in table:
             time, subjects = time
@@ -103,8 +107,6 @@ class untisApi:
                 day, info = day
                 daynr = day-start
                 daynr = daynr.days
-                while len(data) <= daynr:
-                    data.append([])
                 daydata = data[daynr]
                 lessondata = None
                 importantKeys = [
