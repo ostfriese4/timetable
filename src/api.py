@@ -126,8 +126,32 @@ class untisApi:
                     lessondata["teacher-short"] = lesson.teachers[0].name
                     lessondata["subject-long"] = lesson.subjects[0].long_name
                     lessondata["subject-short"] = lesson.subjects[0].name
-                    lessondata["room"] = lesson.rooms[0].name
-                    lessondata["room-info"] = lesson.rooms[0].long_name
+
+                    try:
+                        rooms = lesson.rooms
+                    except Exception:
+                        rooms = []
+                    if rooms == []:
+                        lessondata["room"] = "???"
+                        lessondata["room-info"] = _("Unknown")
+                    elif len(rooms) == 1:
+                        lessondata["room"] = lesson.rooms[0].name
+                        lessondata["room-info"] = lesson.rooms[0].long_name
+                    else:
+                        lessondata["room"] = ""
+                        lessondata["room-info"] = ""
+                        i=len(rooms)
+                        for room in rooms:
+                            i-=1
+                            lessondata["room"] += room.name
+                            lessondata["room-info"] += room.long_name
+                            if i == 1:
+                                lessondata["room"] += " " + _("and") + " "
+                                lessondata["room-info"] += " " + _("and") + " "
+                            elif i > 1:
+                                lessondata["room"] += ", "
+                                lessondata["room-info"] += ", "
+
                     lessondata["text"] = lesson.lstext
                     if lessondata["code"] != "cancelled":
                         break # Only use the first one
