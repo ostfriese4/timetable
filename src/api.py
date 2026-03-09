@@ -79,7 +79,9 @@ class untisApi:
         try:
             self.cache = False
             self.login()
-            table = self.session.my_timetable(start=start, end=end).to_table()
+            table = self.session.my_timetable(start=start, end=end)
+            table = table.combine()
+            table = table.to_table()
         except Exception as e:
             self.cache = True
             try:
@@ -109,12 +111,6 @@ class untisApi:
                 daynr = daynr.days
                 daydata = data[daynr]
                 lessondata = None
-                importantKeys = [
-                    "sg",
-                    "code",
-                    "teacher-short",
-                    "room"
-                ]
                 for lesson in info:
                     lessondata = {}
                     lessondata["sg"] = lesson.studentGroup
@@ -155,21 +151,8 @@ class untisApi:
                     lessondata["text"] = lesson.lstext
                     if lessondata["code"] != "cancelled":
                         break # Only use the first one
-                equal = True
-                if len(daydata) == 0:
-                    equal = False
-                elif daydata[-1] is None or lessondata is None:
-                    equal = False
-                else:
-                    for key in importantKeys:
-                        if daydata[-1][key] != lessondata[key]:
-                            equal = False
-                if equal:
-                    daydata[-1]["end"] = lessondata["end"]
-                    daydata[-1]["duration"] = daydata[-1]["end"] - daydata[-1]["start"]
-                else:
-                    if lessondata is not None:
-                        daydata.append(lessondata)
+                if lessondata is not None:
+                    daydata.append(lessondata)
 
 
         i=0
