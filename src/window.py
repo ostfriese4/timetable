@@ -31,6 +31,8 @@ class UntisWindow(Adw.ApplicationWindow):
     next_button = Gtk.Template.Child()
     previous_button = Gtk.Template.Child()
     login_window = Gtk.Template.Child()
+    info_window = Gtk.Template.Child()
+    info_table = Gtk.Template.Child()
     login_button = Gtk.Template.Child()
     pswd_entry = Gtk.Template.Child()
     usr_entry = Gtk.Template.Child()
@@ -54,6 +56,8 @@ class UntisWindow(Adw.ApplicationWindow):
         self.startdate = today - datetime.timedelta(days=today.weekday())
         self.enddate = self.startdate + datetime.timedelta(days=4)
         self.loadData()
+
+        self.info_rows = []
 
     def login(self, data = None):
         print("login")
@@ -146,5 +150,20 @@ class UntisWindow(Adw.ApplicationWindow):
         minute = start + (y / (height / minutes))
         for subject in day:
             if subject["start"] < minute and subject["end"] > minute:
-                print(subject)
+                while self.info_rows != []:
+                    self.info_table.remove(self.info_rows.pop())
+
+                data = {}
+
+                data[_("Subject")] = subject["subject-long"] + " (" + subject["subject-short"] + ")"
+                data[_("Room")] = subject["room"]
+                data[_("Teacher")] = subject["teacher-long"] + " (" + subject["teacher-short"] + ")"
+
+                for key, value in data.items():
+                    row = Adw.ActionRow(title = key)
+                    row.set_subtitle(value)
+                    self.info_table.add(row)
+                    self.info_rows.append(row)
+
+                self.info_window.present(self)
 

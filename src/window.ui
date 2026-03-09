@@ -7,49 +7,6 @@
     <property name="default-width">800</property>
     <property name="default-height">600</property>
     <property name="content">
-      <object class="AdwDialog" id="login_window">
-        <property name="title" translatable="yes">Login</property>
-        <property name="content-width">400</property>
-        <property name="can-close">True</property>
-        <child>
-          <object class="AdwPreferencesPage">
-            <child>
-              <object class="AdwPreferencesGroup">
-                <child>
-                  <object class="AdwEntryRow" id="server_entry">
-                    <property name="title" translatable="yes">Server-URL</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwEntryRow" id="school_entry">
-                    <property name="title" translatable="yes">School</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwEntryRow" id="usr_entry">
-                    <property name="title" translatable="yes">Username</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwPasswordEntryRow" id="pswd_entry">
-                    <property name="title" translatable="yes">Password</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <child>
-                  <object class="AdwButtonRow" id="login_button">
-                    <property name="title" translatable="yes">Login</property>
-                    <property name="css-classes">suggested-action</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-          </object>
-        </child>
-      </object>
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
@@ -125,4 +82,66 @@
       </item>
     </section>
   </menu>
+
+  <object class="AdwDialog" id="login_window">
+    <property name="title" translatable="yes">Login</property>
+    <property name="content-width">400</property>
+    <property name="can-close">True</property>
+    <child>
+      <object class="AdwPreferencesPage">
+        <child>
+          <object class="AdwPreferencesGroup">
+            <child>
+              <object class="AdwEntryRow" id="server_entry">
+                <property name="title" translatable="yes">Server-URL</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwEntryRow" id="school_entry">
+                <property name="title" translatable="yes">School</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwEntryRow" id="usr_entry">
+                <property name="title" translatable="yes">Username</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPasswordEntryRow" id="pswd_entry">
+                <property name="title" translatable="yes">Password</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <child>
+              <object class="AdwButtonRow" id="login_button">
+                <property name="title" translatable="yes">Login</property>
+                <property name="css-classes">suggested-action</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="AdwDialog" id="info_window">
+    <property name="title" translatable="yes">Information</property>
+    <property name="content-width">400</property>
+
+    <child>
+      <object class="AdwHeaderBar">
+      </object>
+    </child>
+
+    <child>
+      <object class="AdwPreferencesPage">
+        <child>
+          <object class="AdwPreferencesGroup" id="info_table"/>
+        </child>
+      </object>
+    </child>
+  </object>
+
 </interface>
