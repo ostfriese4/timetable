@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-09 08:12+0100\n"
-"PO-Revision-Date: 2026-03-04 17:10+0100\n"
+"PO-Revision-Date: 2026-03-09 08:29+0100\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -22,11 +22,11 @@ msgstr ""
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/window.ui:6
 msgid "Timetable"
-msgstr ""
+msgstr "Stundenplan"
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:8
 msgid "GTK;untis;school;timetable;students"
-msgstr ""
+msgstr "GTK;Untis;Schule;Stundenplan;Schüler"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:8
 msgid "A client for webuntis"
@@ -40,11 +40,11 @@ msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:14
 msgid "Jonas Harer"
-msgstr ""
+msgstr "Jonas Harer"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:37
 msgid "The timetable"
-msgstr ""
+msgstr "Der Stundenplan"
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:63
@@ -53,7 +53,7 @@ msgstr ""
 
 #: src/window.ui:11 src/window.ui:44
 msgid "Login"
-msgstr ""
+msgstr "Anmelden"
 
 #: src/window.ui:62
 msgid "Previous"
@@ -73,7 +73,7 @@ msgstr "Hauptmenü"
 
 #: src/window.ui:94
 msgid "You are offline"
-msgstr ""
+msgstr "Keine Internetverbindung"
 
 #: src/window.ui:111
 msgid "_Preferences"
@@ -89,4 +89,4 @@ msgstr "Über _Untis"
 
 #: src/window.ui:123
 msgid "_Login"
-msgstr ""
+msgstr "An_melden"

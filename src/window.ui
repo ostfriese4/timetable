@@ -64,7 +64,7 @@
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="label" translatable="yes">Untis</property>
+                    <property name="label" translatable="yes">Timetable</property>
                     <property name="halign">GTK_ALIGN_CENTER</property>
                   </object>
                 </child>
