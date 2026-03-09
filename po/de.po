@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-09 08:33+0100\n"
-"PO-Revision-Date: 2026-03-09 08:36+0100\n"
+"POT-Creation-Date: 2026-03-09 16:35+0100\n"
+"PO-Revision-Date: 2026-03-09 16:50+0100\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/window.ui:6
-#: src/window.ui:76
+#: src/window.ui:24
 msgid "Timetable"
 msgstr "Stundenplan"
 
@@ -47,63 +47,90 @@ msgstr "Jonas Harer"
 msgid "The timetable"
 msgstr "Der Stundenplan"
 
+#: src/api.py:136
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: src/api.py:149 src/api.py:150
+msgid "and"
+msgstr "und"
+
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:63
 msgid "translator-credits"
 msgstr ""
 
-#: src/window.ui:11 src/window.ui:44
-msgid "Login"
-msgstr "Anmelden"
+#: src/window.py:170
+msgid "Subject"
+msgstr "Fach"
 
-#: src/window.ui:20
-msgid "Server-URL"
-msgstr "Server-URL"
+#: src/window.py:171
+msgid "Room"
+msgstr "Raum"
 
-#: src/window.ui:25
-msgid "School"
-msgstr "Schule"
+#: src/window.py:172
+msgid "Teacher"
+msgstr "Lehrkraft"
 
-#: src/window.ui:30
-msgid "Username"
-msgstr "Benutzername"
+#: src/window.py:174
+msgid "Information about this lesson"
+msgstr "Informationen zur Stunde"
 
-#: src/window.ui:35
-msgid "Password"
-msgstr "Passwort"
-
-#: src/window.ui:54
-msgid "Information"
-msgstr "Informationen"
-
-#: src/window.ui:71
+#: src/window.ui:19
 msgid "Previous"
 msgstr "Nächste Woche"
 
-#: src/window.ui:83
+#: src/window.ui:31
 msgid "Next"
 msgstr "Vorherige Woche"
 
-#: src/window.ui:92
+#: src/window.ui:40
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
-#: src/window.ui:103
+#: src/window.ui:51
 msgid "You are offline"
 msgstr "Keine Internetverbindung"
 
-#: src/window.ui:120
+#: src/window.ui:68
 msgid "_Preferences"
 msgstr "_Einstellungen"
 
-#: src/window.ui:124
+#: src/window.ui:72
 msgid "_Keyboard Shortcuts"
 msgstr "_Kurzbefehle"
 
-#: src/window.ui:128
-msgid "_About Untis"
-msgstr "Über _Untis"
+#: src/window.ui:76
+msgid "_About Timetable"
+msgstr "Über _Stundenplan"
 
-#: src/window.ui:132
+#: src/window.ui:80
 msgid "_Login"
 msgstr "An_melden"
+
+#: src/window.ui:87 src/window.ui:120
+msgid "Login"
+msgstr "Anmelden"
+
+#: src/window.ui:96
+msgid "Server-URL"
+msgstr "Server-URL"
+
+#: src/window.ui:101
+msgid "School"
+msgstr "Schule"
+
+#: src/window.ui:106
+msgid "Username"
+msgstr "Benutzername"
+
+#: src/window.ui:111
+msgid "Password"
+msgstr "Passwort"
+
+#: src/window.ui:130
+msgid "Information"
+msgstr "Informationen"
+
+#~ msgid "_About Untis"
+#~ msgstr "Über _Untis"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-09 08:33+0100\n"
+"POT-Creation-Date: 2026-03-09 16:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/window.ui:6
-#: src/window.ui:76
+#: src/window.ui:24
 msgid "Timetable"
 msgstr ""
 
@@ -45,63 +45,87 @@ msgstr ""
 msgid "The timetable"
 msgstr ""
 
+#: src/api.py:136
+msgid "Unknown"
+msgstr ""
+
+#: src/api.py:149 src/api.py:150
+msgid "and"
+msgstr ""
+
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:63
 msgid "translator-credits"
 msgstr ""
 
-#: src/window.ui:11 src/window.ui:44
-msgid "Login"
+#: src/window.py:170
+msgid "Subject"
 msgstr ""
 
-#: src/window.ui:20
-msgid "Server-URL"
+#: src/window.py:171
+msgid "Room"
 msgstr ""
 
-#: src/window.ui:25
-msgid "School"
+#: src/window.py:172
+msgid "Teacher"
 msgstr ""
 
-#: src/window.ui:30
-msgid "Username"
+#: src/window.py:174
+msgid "Information about this lesson"
 msgstr ""
 
-#: src/window.ui:35
-msgid "Password"
-msgstr ""
-
-#: src/window.ui:54
-msgid "Information"
-msgstr ""
-
-#: src/window.ui:71
+#: src/window.ui:19
 msgid "Previous"
 msgstr ""
 
-#: src/window.ui:83
+#: src/window.ui:31
 msgid "Next"
 msgstr ""
 
-#: src/window.ui:92
+#: src/window.ui:40
 msgid "Main Menu"
 msgstr ""
 
-#: src/window.ui:103
+#: src/window.ui:51
 msgid "You are offline"
 msgstr ""
 
-#: src/window.ui:120
+#: src/window.ui:68
 msgid "_Preferences"
 msgstr ""
 
-#: src/window.ui:124
+#: src/window.ui:72
 msgid "_Keyboard Shortcuts"
 msgstr ""
 
-#: src/window.ui:128
-msgid "_About Untis"
+#: src/window.ui:76
+msgid "_About Timetable"
 msgstr ""
 
-#: src/window.ui:132
+#: src/window.ui:80
 msgid "_Login"
+msgstr ""
+
+#: src/window.ui:87 src/window.ui:120
+msgid "Login"
+msgstr ""
+
+#: src/window.ui:96
+msgid "Server-URL"
+msgstr ""
+
+#: src/window.ui:101
+msgid "School"
+msgstr ""
+
+#: src/window.ui:106
+msgid "Username"
+msgstr ""
+
+#: src/window.ui:111
+msgid "Password"
+msgstr ""
+
+#: src/window.ui:130
+msgid "Information"
 msgstr ""
