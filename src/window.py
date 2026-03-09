@@ -61,11 +61,14 @@ class UntisWindow(Adw.ApplicationWindow):
 
     def requestLogin(self):
         self.login_window.present(self)
-        credentials = api.loadCredentials()
-        self.usr_entry.set_text(credentials["username"])
-        self.pswd_entry.set_text(credentials["password"])
-        self.school_entry.set_text(credentials["school"])
-        self.server_entry.set_text(credentials["server"])
+        try:
+            credentials = api.loadCredentials()
+            self.usr_entry.set_text(credentials["username"])
+            self.pswd_entry.set_text(credentials["password"])
+            self.school_entry.set_text(credentials["school"])
+            self.server_entry.set_text(credentials["server"])
+        except FileNotFoundError:
+            pass # first run
 
     def login(self, data = None):
         print("login")
