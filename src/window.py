@@ -46,6 +46,8 @@ class UntisWindow(Adw.ApplicationWindow):
         subjectClicked.connect("pressed", self.subjectClicked)
         self.timetable.add_controller(subjectClicked)
 
+        self.datey = 15
+
         self.dim = (1,1)
 
         self.next_button.connect("clicked", self.next)
@@ -102,9 +104,11 @@ class UntisWindow(Adw.ApplicationWindow):
         self.timetable.queue_draw()
 
     def drawTimetable(self, area, context, width, height, data):
+        height -= self.datey
         x=0
         start = 1440 # One day in minutes (max possible value)
         end = 0
+        date = self.startdate
         for day in self.table:
             for lesson in day:
                 if lesson["start"] < start:
@@ -116,9 +120,13 @@ class UntisWindow(Adw.ApplicationWindow):
         self.dim = (width, height)
 
         for day in self.table:
+            context.set_source_rgb(255, 255, 255)
+            context.move_to(x+5, 14)
+            context.show_text(date.strftime("%d.%m.%y"))
+            date += datetime.timedelta(days=1)
             for lesson in day:
                 if lesson is not None:
-                    y = (height / minutes) * (lesson["start"] - start)
+                    y = self.datey + (height / minutes) * (lesson["start"] - start)
 
                     r,g,b = api.getColor(lesson["subject-short"])
                     context.set_source_rgb(r,g,b)
@@ -146,6 +154,7 @@ class UntisWindow(Adw.ApplicationWindow):
             x += width/len(self.table)
 
     def subjectClicked(self, gesture, data, x, y):
+        x -= self.datey
         start = 1440 # One day in minutes (max possible value)
         end = 0
         for day in self.table:
