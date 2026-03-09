@@ -68,7 +68,7 @@ class UntisApplication(Adw.Application):
         print('app.preferences action activated')
 
     def on_login_action(self, widget, _):
-        self.props.active_window.login_window.present(self.props.active_window)
+        self.props.active_window.requestLogin()
 
     def create_action(self, name, callback, shortcuts=None):
         action = Gio.SimpleAction.new(name, None)

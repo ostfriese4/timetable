@@ -59,6 +59,14 @@ class UntisWindow(Adw.ApplicationWindow):
 
         self.info_rows = []
 
+    def requestLogin(self):
+        self.login_window.present(self)
+        credentials = api.loadCredentials()
+        self.usr_entry.set_text(credentials["username"])
+        self.pswd_entry.set_text(credentials["password"])
+        self.school_entry.set_text(credentials["school"])
+        self.server_entry.set_text(credentials["server"])
+
     def login(self, data = None):
         print("login")
         api.setCredentials(user = self.usr_entry.get_text(),
@@ -82,9 +90,10 @@ class UntisWindow(Adw.ApplicationWindow):
     def loadData(self):
         self.table = api.getTimetable(self.startdate, self.enddate)
         if api.cache:
-            self.offline.set_revealed(revealed=True)
             if not api.testLogin():
-                self.login_window.present(self)
+                self.requestLogin()
+            else:
+                self.offline.set_revealed(revealed=True)
         else:
             self.offline.set_revealed(revealed=False)
         self.timetable.queue_draw()

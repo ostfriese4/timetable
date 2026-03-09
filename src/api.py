@@ -28,6 +28,7 @@ class untisApi:
         self.session = None
         self.colors = {}
         self.cache = True
+        self.credentialsPath = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
         try:
             self.loadColors()
         except:
@@ -158,8 +159,7 @@ class untisApi:
         return data
 
     def setCredentials(self, server, school, user, password):
-        credentials = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
-        with open(credentials, "w") as file:
+        with open(self.credentialsPath, "w") as file:
             json.dump({
                 "username": user,
                 "password": password,
@@ -168,9 +168,12 @@ class untisApi:
             },
             file)
 
+    def loadCredentials(self):
+        with open(self.credentialsPath) as file:
+            return json.load(file)
+
     def login(self):
-        credentials = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
-        with open(credentials) as file:
+        with open(self.credentialsPath) as file:
             credentials = json.load(file)
             self.session = webuntis.Session(
                 username=credentials["username"],
@@ -185,7 +188,7 @@ class untisApi:
         self.session.logout()
 
     def testLogin(self):
-        if not os.path.exists(os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"):
+        if not os.path.exists(self.credentialsPath):
             return False
         try:
             self.login()
