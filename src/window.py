@@ -45,6 +45,7 @@ class UntisWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
 
         self.columns = []
+        self.lessons = []
 
         self.next_button.connect("clicked", self.next)
         self.previous_button.connect("clicked", self.previous)
@@ -104,6 +105,10 @@ class UntisWindow(Adw.ApplicationWindow):
                 if lesson["start"] < start:
                     start = lesson["start"]
 
+        for lesson in self.lessons:
+            lesson[0].remove(lesson[1])
+        self.lessons.clear()
+
         for column in self.columns:
             self.timetable.remove(column)
         self.columns.clear()
@@ -124,9 +129,9 @@ class UntisWindow(Adw.ApplicationWindow):
             date += datetime.timedelta(days=1)
 
             fixed = Gtk.Fixed()
-            fixed.set_hexpand(True)
             column.append(fixed)
 
             for lesson in day:
                 block = Lesson(lesson, self)
                 fixed.put(block, 0, lesson["start"] - start)
+                self.lessons.append((fixed, block))

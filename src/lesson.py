@@ -26,7 +26,7 @@ class Lesson(Gtk.Box):
 
     subject_label = Gtk.Template.Child()
 
-    def __init__(self, lesson, window, **kwargs):
+    def __init__(self, lesson, window, width = -1, **kwargs):
         super().__init__(**kwargs)
 
         click = Gtk.GestureClick.new()
@@ -36,11 +36,16 @@ class Lesson(Gtk.Box):
         self.lesson = lesson
         self.window = window
 
-        self.set_size_request(-1, self.lesson["duration"])
+        self.setWidth(width)
         self.subject_label.set_label(self.lesson["subject-short"])
 
         self.add_css_class("lesson-card")
         self.add_css_class("lessons-" + self.lesson["color"])
+        if self.lesson["code"] == "cancelled":
+            self.add_css_class("lesson-cancelled")
+
+    def setWidth(self, width):
+        self.set_size_request(width, self.lesson["duration"])
 
     def on_click(self, gesture, data, x, y):
         while self.window.info_rows != []:
