@@ -1,0 +1,59 @@
+:root {
+  --color-mix-combination: 60%;
+  --lessons-green: color-mix(in oklab, var(--accent-green), var(--window-bg-color) var(--color-mix-combination));
+  --lessons-red: color-mix(in oklab, var(--accent-red), var(--window-bg-color) var(--color-mix-combination));
+  --lessons-blue: color-mix(in oklab, var(--accent-blue), var(--window-bg-color) var(--color-mix-combination));
+  --lessons-orange: color-mix(in oklab, var(--accent-orange), var(--window-bg-color) var(--color-mix-combination));
+  --lessons-purple: color-mix(in oklab, var(--accent-purple), var(--window-bg-color) var(--color-mix-combination));
+  --lessons-pink: color-mix(in oklab, var(--accent-pink), var(--window-bg-color) var(--color-mix-combination));
+  --lessons-yellow: color-mix(in oklab, var(--accent-yellow), var(--window-bg-color) var(--color-mix-combination));
+  --lessons-teal: color-mix(in oklab, var(--accent-teal), var(--window-bg-color) var(--color-mix-combination));
+  --lessons-slate: color-mix(in oklab, var(--accent-slate), var(--window-bg-color) var(--color-mix-combination));
+}
+
+.lesson-card {
+  padding: 12px;
+  border-radius: 1rem;
+}
+
+.lessons-green {
+  background: var(--lessons-green);
+}
+
+.lessons-red {
+  background: var(--lessons-red);
+}
+
+.lessons-blue {
+  background: var(--lessons-blue);
+}
+
+.lessons-orange {
+  background: var(--lessons-orange);
+}
+
+.lessons-purple {
+  background: var(--lessons-purple);
+}
+
+.lessons-teal {
+  background: var(--lessons-teal);
+}
+
+.lessons-yellow {
+  background: var(--lessons-yellow);
+}
+
+.lessons-slate {
+  background: var(--lessons-slate);
+}
+
+.lessons-pink {
+  background: var(--lessons-pink);
+}
+
+
+
+.suggested-action {
+  color: currentColor;
+}

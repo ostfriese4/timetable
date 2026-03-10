@@ -46,12 +46,15 @@ class untisApi:
         if subject in self.colors:
             return self.colors[subject]
         colors = [
-            (1, 0, 0), # Red
-            (0, 1, 0), # Green
-            (0, 0, 1), # Blue
-            (0.8, 0.7, 0), # Yellow / Brown
-            (1, 0, 1), # Magenta
-            (0, 0.5, 0.8) # Bright Blue
+            "green",
+            "red",
+            "blue",
+            "orange",
+            "purple",
+            "teal",
+            "yellow",
+            "slate",
+            "pink"
         ]
         color = colors[0]
         count = 0
@@ -126,6 +129,8 @@ class untisApi:
                     lessondata["teacher-short"] = lesson.teachers[0].name
                     lessondata["subject-long"] = lesson.subjects[0].long_name
                     lessondata["subject-short"] = lesson.subjects[0].name
+
+                    lessondata["color"] = self.getColor(lessondata["subject-short"])
 
                     try:
                         rooms = lesson.rooms

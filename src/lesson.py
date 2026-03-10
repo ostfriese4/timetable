@@ -33,11 +33,17 @@ class Lesson(Gtk.Box):
         click.connect("pressed", self.on_click)
         self.add_controller(click)
 
+        css_provider = Gtk.CssProvider()
+        css_provider
+
         self.lesson = lesson
         self.window = window
 
         self.set_size_request(-1, self.lesson["duration"])
         self.subject_label.set_label(self.lesson["subject-short"])
+
+        self.add_css_class("lesson-card")
+        self.add_css_class("lessons-" + self.lesson["color"])
 
     def on_click(self, gesture, data, x, y):
         while self.window.info_rows != []:
