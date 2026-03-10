@@ -33,9 +33,6 @@ class Lesson(Gtk.Box):
         click.connect("pressed", self.on_click)
         self.add_controller(click)
 
-        css_provider = Gtk.CssProvider()
-        css_provider
-
         self.lesson = lesson
         self.window = window
 
