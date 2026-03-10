@@ -41,14 +41,8 @@ class UntisWindow(Adw.ApplicationWindow):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.timetable.set_draw_func(self.drawTimetable, None)
-        subjectClicked = Gtk.GestureClick.new()
-        subjectClicked.connect("pressed", self.subjectClicked)
-        self.timetable.add_controller(subjectClicked)
 
-        self.datey = 15
-
-        self.dim = (1,1)
+        self.columns = []
 
         self.next_button.connect("clicked", self.next)
         self.previous_button.connect("clicked", self.previous)
@@ -93,7 +87,7 @@ class UntisWindow(Adw.ApplicationWindow):
         self.loadData()
 
     def loadData(self):
-        self.table = api.getTimetable(self.startdate, self.enddate)
+        table = api.getTimetable(self.startdate, self.enddate)
         if api.cache:
             if not api.testLogin():
                 self.requestLogin()
@@ -101,92 +95,40 @@ class UntisWindow(Adw.ApplicationWindow):
                 self.offline.set_revealed(revealed=True)
         else:
             self.offline.set_revealed(revealed=False)
-        self.timetable.queue_draw()
 
-    def drawTimetable(self, area, context, width, height, data):
-        height -= self.datey
-        x=0
         start = 1440 # One day in minutes (max possible value)
-        end = 0
+        for day in table:
+            for lesson in day:
+                if lesson["start"] < start:
+                    start = lesson["start"]
+
+        for column in self.columns:
+            self.timetable.remove(column)
+        self.columns.clear()
+
         date = self.startdate
-        for day in self.table:
-            for lesson in day:
-                if lesson["start"] < start:
-                    start = lesson["start"]
-                if lesson["end"] > end:
-                    end = lesson["end"]
-        minutes = end-start
+        for day in table:
+            column = Gtk.Box()
+            column.set_orientation(Gtk.Orientation.VERTICAL)
+            column.set_hexpand(True)
+            column.set_halign(Gtk.Align.FILL)
+            column.set_spacing(0)
+            self.timetable.append(column)
+            self.columns.append(column)
 
-        self.dim = (width, height)
-
-        for day in self.table:
-            context.set_source_rgb(255, 255, 255)
-            context.move_to(x+5, 14)
-            context.show_text(date.strftime("%d.%m.%y"))
+            dateLabel = Gtk.Label()
+            dateLabel.set_label(date.strftime("%d.%m.%y"))
+            column.append(dateLabel)
             date += datetime.timedelta(days=1)
+
+            fixed = Gtk.Fixed()
+            fixed.set_hexpand(True)
+            column.append(fixed)
+
             for lesson in day:
-                if lesson is not None:
-                    y = self.datey + (height / minutes) * (lesson["start"] - start)
-
-                    r,g,b = api.getColor(lesson["subject-short"])
-                    context.set_source_rgb(r,g,b)
-                    context.set_line_width(0)
-                    context.rectangle(x+2, y, (width / len(self.table)) - 4, (height / minutes) * (lesson["duration"]))
-                    context.fill_preserve()
-                    context.stroke()
-
-
-                    context.set_source_rgb(1,1,1)
-                    context.move_to(x + 5,y + 10)
-                    context.show_text(lesson["subject-short"])
-                    context.move_to(x + 5,y + 25)
-                    context.show_text(lesson["room"])
-                    context.move_to(x + 5,y + 40)
-                    context.show_text(lesson["teacher-short"])
-
-                    if lesson["code"] == "cancelled":
-                        context.set_source_rgb(1,1,1)
-                        context.set_line_width(2)
-                        context.move_to(x + 2, y)
-                        context.line_to(x + (width / len(self.table)) - 2, y + (height / minutes) * (lesson["duration"]))
-                        context.stroke()
-                y += 20
-            x += width/len(self.table)
-
-    def subjectClicked(self, gesture, data, x, y):
-        y -= self.datey
-        start = 1440 # One day in minutes (max possible value)
-        end = 0
-        for day in self.table:
-            for lesson in day:
-                if lesson["start"] < start:
-                    start = lesson["start"]
-                if lesson["end"] > end:
-                    end = lesson["end"]
-        minutes = end-start
-
-        width, height = self.dim
-
-        day = self.table[int(x / (width / len(self.table)))]
-        minute = start + (y / (height / minutes))
-        for subject in day:
-            if subject["start"] < minute and subject["end"] > minute:
-                while self.info_rows != []:
-                    self.info_table.remove(self.info_rows.pop())
-
-                data = {}
-
-                data[_("Subject")] = subject["subject-long"] + " (" + subject["subject-short"] + ")"
-                data[_("Room")] = subject["room"]
-                data[_("Teacher")] = subject["teacher-long"] + " (" + subject["teacher-short"] + ")"
-                if subject["text"] != "":
-                    data[_("Information about this lesson")] = subject["text"]
-
-                for key, value in data.items():
-                    row = Adw.ActionRow(title = key)
-                    row.set_subtitle(value)
-                    self.info_table.add(row)
-                    self.info_rows.append(row)
-
-                self.info_window.present(self)
+                block = Gtk.Label()
+                block.set_label(lesson["subject-short"])
+                block.set_size_request(-1, lesson["duration"])
+                block.set_hexpand(True)
+                fixed.put(block, 0, lesson["start"] - start)
 

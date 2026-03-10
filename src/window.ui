@@ -52,9 +52,16 @@
               </object>
             </child>
             <child>
-              <object class="GtkDrawingArea" id="timetable">
+              <object class="GtkScrolledWindow">
+                <property name="hscrollbar-policy">never</property>
+                <property name="vscrollbar-policy">automatic</property>
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
+                <child>
+                  <object class="GtkBox" id="timetable">
+                    <property name="orientation">horizontal</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
