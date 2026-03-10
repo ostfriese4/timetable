@@ -37,7 +37,6 @@ class UntisApplication(Adw.Application):
                          resource_base_path='/page/codeberg/ostfriese4/Untis')
         self.create_action('quit', lambda *_: self.quit(), ['<control>q'])
         self.create_action('about', self.on_about_action)
-        self.create_action('preferences', self.on_preferences_action)
         self.create_action('login', self.on_login_action)
 
     def do_activate(self):
@@ -62,10 +61,6 @@ class UntisApplication(Adw.Application):
         # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
         about.set_translator_credits(_('translator-credits'))
         about.present(self.props.active_window)
-
-    def on_preferences_action(self, widget, _):
-        """Callback for the app.preferences action."""
-        print('app.preferences action activated')
 
     def on_login_action(self, widget, _):
         self.props.active_window.requestLogin()
