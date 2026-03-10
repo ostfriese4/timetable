@@ -51,9 +51,3 @@
 .lessons-pink {
   background: var(--lessons-pink);
 }
-
-
-
-.suggested-action {
-  color: currentColor;
-}
