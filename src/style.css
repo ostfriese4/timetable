@@ -1,5 +1,5 @@
 :root {
-  --color-mix-combination: 60%;
+  --color-mix-combination: 20%;
   --lessons-green: color-mix(in oklab, var(--accent-green), var(--window-bg-color) var(--color-mix-combination));
   --lessons-red: color-mix(in oklab, var(--accent-red), var(--window-bg-color) var(--color-mix-combination));
   --lessons-blue: color-mix(in oklab, var(--accent-blue), var(--window-bg-color) var(--color-mix-combination));
@@ -15,6 +15,10 @@
   padding: 12px;
   margin: 5px;
   border-radius: 5px;
+}
+
+.lesson-cancelled {
+  border: 2px solid red;
 }
 
 .lessons-green {
