@@ -29,8 +29,6 @@ from .window import UntisWindow
 
 
 class UntisApplication(Adw.Application):
-    """The main application singleton class."""
-
     def __init__(self):
         super().__init__(application_id='page.codeberg.ostfriese4.Untis',
                          flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
