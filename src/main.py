@@ -37,7 +37,7 @@ class UntisApplication(Adw.Application):
                          resource_base_path='/page/codeberg/ostfriese4/Untis')
         self.create_action('quit', lambda *_: self.quit(), ['<control>q'])
         self.create_action('about', self.on_about_action)
-        self.create_action('login', self.on_login_action)
+        self.create_action('login', self.on_login_action, ['<control>l'])
 
     def do_activate(self):
         """Called when the application is activated.
