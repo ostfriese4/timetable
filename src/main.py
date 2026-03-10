@@ -50,7 +50,7 @@ class UntisApplication(Adw.Application):
 
     def on_about_action(self, *args):
         """Callback for the app.about action."""
-        about = Adw.AboutDialog(application_name='untis',
+        about = Adw.AboutDialog(application_name=_('Timetable'),
                                 application_icon='page.codeberg.ostfriese4.Untis',
                                 developer_name='Jonas',
                                 version='0.1.0',
