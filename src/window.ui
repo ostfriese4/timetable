@@ -4,7 +4,7 @@
   <requires lib="Adw" version="1.0"/>
   <template class="UntisWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Timetable</property>
-    <property name="default-width">800</property>
+    <property name="default-width">400</property>
     <property name="default-height">600</property>
     <property name="content">
       <object class="AdwToolbarView">
