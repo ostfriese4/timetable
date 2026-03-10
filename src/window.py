@@ -18,9 +18,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from .api import api
+from .lesson import Lesson
 import datetime
 from gi.repository import Adw
 from gi.repository import Gtk
+from gi.repository import Gdk
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/window.ui')
 class UntisWindow(Adw.ApplicationWindow):
@@ -126,9 +128,5 @@ class UntisWindow(Adw.ApplicationWindow):
             column.append(fixed)
 
             for lesson in day:
-                block = Gtk.Label()
-                block.set_label(lesson["subject-short"])
-                block.set_size_request(-1, lesson["duration"])
-                block.set_hexpand(True)
+                block = Lesson(lesson, self)
                 fixed.put(block, 0, lesson["start"] - start)
-
