@@ -58,6 +58,13 @@ class Lesson(Gtk.Box):
         data[_("Teacher")] = self.lesson["teacher-long"] + " (" + self.lesson["teacher-short"] + ")"
         if self.lesson["text"] != "":
             data[_("Information about this lesson")] = self.lesson["text"]
+        if self.lesson["code"] == "cancelled":
+            data[_("Cancelled")] = ""
+        minutes_start = self.lesson["start"] % 60
+        hours_start = int((self.lesson["start"] - minutes_start) / 60)
+        minutes_end = self.lesson["end"] % 60
+        hours_end = int((self.lesson["end"] - minutes_end) / 60)
+        data[_("Duration")] = str(self.lesson["duration"]) + " " + _("Minutes") + " (" + str(hours_start) + ":" + str(minutes_start) + " - " + str(hours_end) + ":" + str(minutes_end) + ")"
 
         for key, value in data.items():
             row = Adw.ActionRow(title = key)
