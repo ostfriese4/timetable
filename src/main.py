@@ -38,11 +38,6 @@ class UntisApplication(Adw.Application):
         self.create_action('login', self.on_login_action, ['<control>l'])
 
     def do_activate(self):
-        """Called when the application is activated.
-
-        We raise the application's main window, creating it if
-        necessary.
-        """
         win = self.props.active_window
         if not win:
             win = UntisWindow(application=self)

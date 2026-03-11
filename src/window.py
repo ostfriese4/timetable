@@ -51,6 +51,9 @@ class UntisWindow(Adw.ApplicationWindow):
         self.previous_button.connect("clicked", self.previous)
         self.login_button.connect("activated", self.login)
 
+        self.connect("notify::size", self.on_size_changed)
+        self.connect("realize", self.on_size_changed)
+
         today = datetime.date.today()
         self.startdate = today - datetime.timedelta(days=today.weekday())
         self.enddate = self.startdate + datetime.timedelta(days=4)
@@ -88,6 +91,11 @@ class UntisWindow(Adw.ApplicationWindow):
         self.startdate -= datetime.timedelta(days=7)
         self.enddate -= datetime.timedelta(days=7)
         self.loadData()
+
+    def on_size_changed(self, data = None):
+        width = self.get_width() / len(self.columns)
+        for lesson in self.lessons:
+            lesson[1].setWidth(width)
 
     def loadData(self):
         table = api.getTimetable(self.startdate, self.enddate)
@@ -135,3 +143,4 @@ class UntisWindow(Adw.ApplicationWindow):
                 block = Lesson(lesson, self)
                 fixed.put(block, 0, lesson["start"] - start)
                 self.lessons.append((fixed, block))
+        self.on_size_changed()
