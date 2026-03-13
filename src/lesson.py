@@ -25,6 +25,8 @@ class Lesson(Gtk.Box):
     __gtype_name__ = 'Lesson'
 
     subject_label = Gtk.Template.Child()
+    teacher_label = Gtk.Template.Child()
+    room_label = Gtk.Template.Child()
 
     def __init__(self, lesson, window, width = -1, **kwargs):
         super().__init__(**kwargs)
@@ -37,6 +39,8 @@ class Lesson(Gtk.Box):
         self.window = window
 
         self.subject_label.set_label(self.lesson["subject-short"])
+        self.teacher_label.set_label(self.lesson["teacher-short"])
+        self.room_label.set_label(self.lesson["room"])
 
         self.set_size_request(-1, self.lesson["duration"])
         self.add_css_class("lesson")
