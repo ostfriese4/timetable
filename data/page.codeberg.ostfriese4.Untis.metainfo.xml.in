@@ -43,14 +43,9 @@
   </screenshots>
 
   <releases>
-    <release version="1.0.1" date="2024-01-18">
-      <url type="details">https://example.org/changelog.html#version_1.0.1</url>
+    <release version="1.0" date="2026-03-13">
       <description translate="no">
-        <p>Release description</p>
-        <ul>
-          <li>List of changes</li>
-          <li>List of changes</li>
-        </ul>
+        <p>First release</p>
       </description>
     </release>
   </releases>
