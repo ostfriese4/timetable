@@ -25,6 +25,15 @@
   border: 2px solid green;
 }
 
+.day {
+  border-radius: 20px;
+  margin: 4px;
+}
+
+.today {
+  background: red;
+}
+
 .changed.label {
   background: green;
   border-radius: 20px;

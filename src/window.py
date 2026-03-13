@@ -101,6 +101,9 @@ class UntisWindow(Adw.ApplicationWindow):
             dateLabel = Gtk.Label()
             dateLabel.set_label(date.strftime("%d.%m.%y"))
             column.append(dateLabel)
+            if date == datetime.date.today():
+                dateLabel.add_css_class("today")
+            dateLabel.add_css_class("day")
             date += datetime.timedelta(days=1)
 
             x = start
