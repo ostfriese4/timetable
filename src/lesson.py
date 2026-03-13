@@ -39,10 +39,10 @@ class Lesson(Gtk.Box):
         self.setWidth(width)
         self.subject_label.set_label(self.lesson["subject-short"])
 
-        self.add_css_class("lesson-card")
-        self.add_css_class("lessons-" + self.lesson["color"])
+        self.add_css_class("lesson")
+        self.add_css_class("lesson-" + self.lesson["color"])
         if self.lesson["code"] == "cancelled":
-            self.add_css_class("lesson-cancelled")
+            self.add_css_class("cancelled")
 
     def setWidth(self, width):
         self.set_size_request(width, self.lesson["duration"])

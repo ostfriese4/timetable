@@ -11,48 +11,48 @@
   --lessons-slate: color-mix(in oklab, var(--accent-slate), var(--window-bg-color) var(--color-mix-combination));
 }
 
-.lesson-card {
+.lesson {
   padding: 12px;
   margin: 5px;
   border-radius: 5px;
 }
 
-.lesson-cancelled {
+.cancelled {
   border: 2px solid red;
 }
 
-.lessons-green {
+.lesson-green {
   background: var(--lessons-green);
 }
 
-.lessons-red {
+.lesson-red {
   background: var(--lessons-red);
 }
 
-.lessons-blue {
+.lesson-blue {
   background: var(--lessons-blue);
 }
 
-.lessons-orange {
+.lesson-orange {
   background: var(--lessons-orange);
 }
 
-.lessons-purple {
+.lesson-purple {
   background: var(--lessons-purple);
 }
 
-.lessons-teal {
+.lesson-teal {
   background: var(--lessons-teal);
 }
 
-.lessons-yellow {
+.lesson-yellow {
   background: var(--lessons-yellow);
 }
 
-.lessons-slate {
+.lesson-slate {
   background: var(--lessons-slate);
 }
 
-.lessons-pink {
+.lesson-pink {
   background: var(--lessons-pink);
 }
