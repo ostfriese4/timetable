@@ -6,6 +6,8 @@ data/page.codeberg.ostfriese4.Untis.gschema.xml
 src/api.py
 src/lesson.py
 src/lesson.ui
+src/login.py
+src/login.ui
 src/main.py
 src/window.py
 src/window.ui

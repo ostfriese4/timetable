@@ -19,6 +19,7 @@
 
 from .api import api
 from .lesson import Lesson
+from .login import LoginWindow
 import datetime
 from gi.repository import Adw
 from gi.repository import Gtk
@@ -32,14 +33,8 @@ class UntisWindow(Adw.ApplicationWindow):
     offline = Gtk.Template.Child()
     next_button = Gtk.Template.Child()
     previous_button = Gtk.Template.Child()
-    login_window = Gtk.Template.Child()
     info_window = Gtk.Template.Child()
     info_table = Gtk.Template.Child()
-    login_button = Gtk.Template.Child()
-    pswd_entry = Gtk.Template.Child()
-    usr_entry = Gtk.Template.Child()
-    school_entry = Gtk.Template.Child()
-    server_entry = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -49,7 +44,8 @@ class UntisWindow(Adw.ApplicationWindow):
 
         self.next_button.connect("clicked", self.next)
         self.previous_button.connect("clicked", self.previous)
-        self.login_button.connect("activated", self.login)
+
+        self.login_window = LoginWindow(self)
 
         today = datetime.date.today()
         self.startdate = today - datetime.timedelta(days=today.weekday())
@@ -57,27 +53,6 @@ class UntisWindow(Adw.ApplicationWindow):
         self.loadData()
 
         self.info_rows = []
-
-    def requestLogin(self):
-        self.login_window.present(self)
-        try:
-            credentials = api.loadCredentials()
-            self.usr_entry.set_text(credentials["username"])
-            self.pswd_entry.set_text(credentials["password"])
-            self.school_entry.set_text(credentials["school"])
-            self.server_entry.set_text(credentials["server"])
-        except FileNotFoundError:
-            pass # first run
-
-    def login(self, data = None):
-        print("login")
-        api.setCredentials(user = self.usr_entry.get_text(),
-                           password = self.pswd_entry.get_text(),
-                           school = self.school_entry.get_text(),
-                           server = self.server_entry.get_text()
-                           )
-        self.loadData()
-        self.login_window.close()
 
     def next(self, data = None):
         self.startdate += datetime.timedelta(days=7)
@@ -93,7 +68,7 @@ class UntisWindow(Adw.ApplicationWindow):
         table = api.getTimetable(self.startdate, self.enddate)
         if api.cache:
             if not api.testLogin():
-                self.requestLogin()
+                self.login_window.requestLogin()
             else:
                 self.offline.set_revealed(revealed=True)
         else:

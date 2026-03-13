@@ -56,7 +56,7 @@ class UntisApplication(Adw.Application):
         about.present(self.props.active_window)
 
     def on_login_action(self, widget, _):
-        self.props.active_window.requestLogin()
+        self.props.active_window.login_window.requestLogin()
 
     def create_action(self, name, callback, shortcuts=None):
         action = Gio.SimpleAction.new(name, None)
