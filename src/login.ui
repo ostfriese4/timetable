@@ -19,6 +19,16 @@
             <child>
               <object class="AdwPreferencesGroup">
                 <child>
+                  <object class="AdwButtonRow" id="search_button">
+                    <property name="title" translatable="yes">Search school</property>
+                    <property name="start-icon-name">system-search</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <child>
                   <object class="AdwEntryRow" id="server_entry">
                     <property name="title" translatable="yes">Server-URL</property>
                   </object>
@@ -40,19 +50,53 @@
                 </child>
               </object>
             </child>
+
             <child>
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwButtonRow" id="login_button">
                     <property name="title" translatable="yes">Login</property>
-                    <property name="css-classes">suggested-action</property>
                   </object>
                 </child>
+              </object>
+            </child>
+
+          </object>
+        </property>
+      </object>
+    </child>
+  </template>
+
+  <object class="AdwDialog" id="search_window">
+    <property name="title" translatable="yes">Search school</property>
+    <property name="content-width">350</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-start-title-buttons">true</property>
+            <property name="show-end-title-buttons">true</property>
+            <property name="title-widget">
+              <object class="AdwPreferencesGroup">
+                <child>
+                  <object class="AdwEntryRow" id="search_entry">
+                    <property name="title" translatable="yes">School</property>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+        <property name="content">
+          <object class="AdwPreferencesPage">
+            <child>
+              <object class="AdwPreferencesGroup" id="result_list">
+                <property name="height-request">250</property>
               </object>
             </child>
           </object>
         </property>
       </object>
     </child>
-  </template>
+  </object>
 </interface>

@@ -204,6 +204,29 @@ class untisApi:
         self.logout()
         return data
 
+    # from https://github.com/l-koehler/untis-py (api.py)
+    def school_search(self, partial_name):
+        # return: [display name, server URL]
+
+        if partial_name == "":
+            return []
+
+        baseurl = "https://schoolsearch.webuntis.com/schoolquery2"
+        json = {
+            "id": "untis-mobile-blackberry-2.7.4",
+            "jsonrpc": "2.0",
+            "method": "searchSchool",
+            "params": [{
+                "search": f"{partial_name}"
+            }]
+        }
+        data = requests.post(url=baseurl, json=json).json()
+        if "error" in data:
+            return []
+        return [
+            [school["loginName"], school["server"]] for school in data["result"]["schools"]
+        ]
+
     def setCredentials(self, server, school, user, password):
         with open(self.credentialsPath, "w") as file:
             json.dump({

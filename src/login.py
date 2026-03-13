@@ -31,11 +31,52 @@ class LoginWindow(Adw.Dialog):
     school_entry = Gtk.Template.Child()
     server_entry = Gtk.Template.Child()
 
+    search_button = Gtk.Template.Child()
+    search_window = Gtk.Template.Child()
+    search_entry = Gtk.Template.Child()
+    result_list = Gtk.Template.Child()
+
     def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
 
         self.window = window
+        self.results = []
+
         self.login_button.connect("activated", self.login)
+        self.search_button.connect("activated", self.openSearchSchoolWindow)
+        self.search_entry.connect("changed", self.searchSchool)
+
+        self.login_button.add_css_class("suggested-action")
+
+    def openSearchSchoolWindow(self, data = None):
+        self.searchSchool()
+        self.search_window.present(self)
+
+    def searchSchool(self, data = None):
+        for result in self.results:
+            self.result_list.remove(result)
+        self.results.clear()
+
+        name = self.search_entry.get_text()
+        schools = api.school_search(name)
+
+        for school in schools:
+            name = school[0]
+            server = school[1]
+            result = Adw.ActionRow(title = name)
+            result.set_subtitle(server)
+
+            def onClick(click,key,x,y, name=name, server=server):
+                self.search_window.close()
+                self.school_entry.set_text(name)
+                self.server_entry.set_text(server)
+
+            click = Gtk.GestureClick.new()
+            click.connect("pressed", onClick)
+            result.add_controller(click)
+
+            self.result_list.add(result)
+            self.results.append(result)
 
     def login(self, data = None):
         print("login")
