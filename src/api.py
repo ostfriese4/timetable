@@ -116,7 +116,8 @@ class untisApi:
                     "sg",
                     "code",
                     "teacher-short",
-                    "room"
+                    "room",
+                    "subject-short"
                 ]
                 for lesson in info:
                     lessondata = {}
@@ -164,6 +165,8 @@ class untisApi:
                 if len(daydata) == 0:
                     equal = False
                 elif daydata[-1] is None or lessondata is None:
+                    equal = False
+                elif lessondata["start"] != daydata[-1]["end"]:
                     equal = False
                 else:
                     for key in importantKeys:
