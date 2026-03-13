@@ -36,16 +36,13 @@ class Lesson(Gtk.Box):
         self.lesson = lesson
         self.window = window
 
-        self.setWidth(width)
         self.subject_label.set_label(self.lesson["subject-short"])
 
+        self.set_size_request(-1, self.lesson["duration"])
         self.add_css_class("lesson")
         self.add_css_class(self.lesson["color"])
         if self.lesson["code"] == "cancelled":
             self.add_css_class("cancelled")
-
-    def setWidth(self, width):
-        self.set_size_request(width, self.lesson["duration"])
 
     def on_click(self, gesture, data, x, y):
         while self.window.info_rows != []:
