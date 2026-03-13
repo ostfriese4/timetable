@@ -40,7 +40,7 @@ class Lesson(Gtk.Box):
         self.subject_label.set_label(self.lesson["subject-short"])
 
         self.add_css_class("lesson")
-        self.add_css_class("lesson-" + self.lesson["color"])
+        self.add_css_class(self.lesson["color"])
         if self.lesson["code"] == "cancelled":
             self.add_css_class("cancelled")
 

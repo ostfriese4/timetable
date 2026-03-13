@@ -1,14 +1,15 @@
 :root {
   --color-mix-combination: 20%;
-  --lessons-green: color-mix(in oklab, var(--accent-green), var(--window-bg-color) var(--color-mix-combination));
-  --lessons-red: color-mix(in oklab, var(--accent-red), var(--window-bg-color) var(--color-mix-combination));
-  --lessons-blue: color-mix(in oklab, var(--accent-blue), var(--window-bg-color) var(--color-mix-combination));
-  --lessons-orange: color-mix(in oklab, var(--accent-orange), var(--window-bg-color) var(--color-mix-combination));
-  --lessons-purple: color-mix(in oklab, var(--accent-purple), var(--window-bg-color) var(--color-mix-combination));
-  --lessons-pink: color-mix(in oklab, var(--accent-pink), var(--window-bg-color) var(--color-mix-combination));
-  --lessons-yellow: color-mix(in oklab, var(--accent-yellow), var(--window-bg-color) var(--color-mix-combination));
-  --lessons-teal: color-mix(in oklab, var(--accent-teal), var(--window-bg-color) var(--color-mix-combination));
-  --lessons-slate: color-mix(in oklab, var(--accent-slate), var(--window-bg-color) var(--color-mix-combination));
+  --color-mix-combination-cancelled: 50%;
+  --green: color-mix(in oklab, var(--accent-green), var(--window-bg-color) var(--color-mix-combination));
+  --red: color-mix(in oklab, var(--accent-red), var(--window-bg-color) var(--color-mix-combination));
+  --blue: color-mix(in oklab, var(--accent-blue), var(--window-bg-color) var(--color-mix-combination));
+  --orange: color-mix(in oklab, var(--accent-orange), var(--window-bg-color) var(--color-mix-combination));
+  --purple: color-mix(in oklab, var(--accent-purple), var(--window-bg-color) var(--color-mix-combination));
+  --pink: color-mix(in oklab, var(--accent-pink), var(--window-bg-color) var(--color-mix-combination));
+  --yellow: color-mix(in oklab, var(--accent-yellow), var(--window-bg-color) var(--color-mix-combination));
+  --teal: color-mix(in oklab, var(--accent-teal), var(--window-bg-color) var(--color-mix-combination));
+  --slate: color-mix(in oklab, var(--accent-slate), var(--window-bg-color) var(--color-mix-combination));
 }
 
 .lesson {
@@ -21,38 +22,58 @@
   border: 2px solid red;
 }
 
-.lesson-green {
-  background: var(--lessons-green);
+.green {
+  background: var(--green);
+}
+.red {
+  background: var(--red);
+}
+.blue {
+  background: var(--blue);
+}
+.orange {
+  background: var(--orange);
+}
+.purple {
+  background: var(--purple);
+}
+.teal {
+  background: var(--teal);
+}
+.yellow {
+  background: var(--yellow);
+}
+.slate {
+  background: var(--slate);
+}
+.pink {
+  background: var(--pink);
 }
 
-.lesson-red {
-  background: var(--lessons-red);
+.cancelled.green {
+  background: color-mix(in oklab, var(--green), var(--window-bg-color) var(--color-mix-combination-cancelled));
 }
-
-.lesson-blue {
-  background: var(--lessons-blue);
+.cancelled.red {
+  background: color-mix(in oklab, var(--red), var(--window-bg-color) var(--color-mix-combination-cancelled));
 }
-
-.lesson-orange {
-  background: var(--lessons-orange);
+.cancelled.blue {
+  background: color-mix(in oklab, var(--blue), var(--window-bg-color) var(--color-mix-combination-cancelled));
 }
-
-.lesson-purple {
-  background: var(--lessons-purple);
+.cancelled.orange {
+  background: color-mix(in oklab, var(--orange), var(--window-bg-color) var(--color-mix-combination-cancelled));
 }
-
-.lesson-teal {
-  background: var(--lessons-teal);
+.cancelled.purple {
+  background: color-mix(in oklab, var(--purple), var(--window-bg-color) var(--color-mix-combination-cancelled));
 }
-
-.lesson-yellow {
-  background: var(--lessons-yellow);
+.cancelled.teal {
+  background: color-mix(in oklab, var(--teal), var(--window-bg-color) var(--color-mix-combination-cancelled));
 }
-
-.lesson-slate {
-  background: var(--lessons-slate);
+.cancelled.yellow {
+  background: color-mix(in oklab, var(--yellow), var(--window-bg-color) var(--color-mix-combination-cancelled));
 }
-
-.lesson-pink {
-  background: var(--lessons-pink);
+.cancelled.slate {
+  background: color-mix(in oklab, var(--slate), var(--window-bg-color) var(--color-mix-combination-cancelled));
+}
+.cancelled.pink {
+  background: color-mix(in oklab, var(--pink), var(--window-bg-color) var(--color-mix-combination-cancelled));
 }
