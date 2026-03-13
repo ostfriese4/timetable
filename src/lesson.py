@@ -62,8 +62,12 @@ class Lesson(Gtk.Box):
             data[_("Cancelled")] = ""
         minutes_start = self.lesson["start"] % 60
         hours_start = int((self.lesson["start"] - minutes_start) / 60)
+        if len(str(minutes_start)) == 1:
+            minutes_start = "0" + str(minutes_start)
         minutes_end = self.lesson["end"] % 60
         hours_end = int((self.lesson["end"] - minutes_end) / 60)
+        if len(str(minutes_end)) == 1:
+            minutes_end = "0" + str(minutes_end)
         data[_("Duration")] = str(self.lesson["duration"]) + " " + _("Minutes") + " (" + str(hours_start) + ":" + str(minutes_start) + " - " + str(hours_end) + ":" + str(minutes_end) + ")"
 
         for key, value in data.items():

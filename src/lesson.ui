@@ -5,7 +5,8 @@
     <property name="hexpand">True</property>
     <child>
       <object class="GtkLabel" id="subject_label">
-
+        <property name="halign">fill</property>
+        <property name="hexpand">True</property>
       </object>
     </child>
   </template>
