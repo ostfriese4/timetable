@@ -21,6 +21,15 @@
   opacity: 0.5;
 }
 
+.changed {
+  border: 2px solid green;
+}
+
+.changed.label {
+  background: green;
+  border-radius: 20px;
+}
+
 .green {
   background: var(--green);
 }

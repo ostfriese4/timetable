@@ -119,6 +119,7 @@ class untisApi:
                     "room",
                     "subject-short"
                 ]
+                planned = None
                 for lesson in info:
                     lessondata = {}
                     lessondata["sg"] = lesson.studentGroup
@@ -159,8 +160,20 @@ class untisApi:
                                 lessondata["room-info"] += ", "
 
                     lessondata["text"] = lesson.lstext
-                    if lessondata["code"] != "cancelled":
-                        break # Only use the first one
+
+                    if planned is not None:
+                        if lessondata["code"] == "cancelled":
+                            tmp = planned
+                            planned = lessondata
+                            lessondata = tmp
+                        original = {}
+                        for key in ["room", "subject-short", "teacher-short"]:
+                            if planned[key] != lessondata[key]:
+                                original[key] = planned[key]
+                        lessondata["original"] = original
+                    else:
+                        planned = lessondata
+
                 equal = True
                 if len(daydata) == 0:
                     equal = False

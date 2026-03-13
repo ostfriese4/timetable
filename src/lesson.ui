@@ -6,20 +6,17 @@
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkLabel" id="subject_label">
-        <property name="halign">fill</property>
-        <property name="hexpand">True</property>
+        <property name="halign">center</property>
       </object>
     </child>
     <child>
       <object class="GtkLabel" id="teacher_label">
-        <property name="halign">fill</property>
-        <property name="hexpand">True</property>
+        <property name="halign">center</property>
       </object>
     </child>
     <child>
       <object class="GtkLabel" id="room_label">
-        <property name="halign">fill</property>
-        <property name="hexpand">True</property>
+        <property name="halign">center</property>
       </object>
     </child>
   </template>

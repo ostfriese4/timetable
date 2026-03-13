@@ -47,6 +47,17 @@ class Lesson(Gtk.Box):
         self.add_css_class(self.lesson["color"])
         if self.lesson["code"] == "cancelled":
             self.add_css_class("cancelled")
+        if "original" in self.lesson:
+            self.add_css_class("changed")
+            if "teacher-short" in self.lesson["original"]:
+                self.teacher_label.add_css_class("label")
+                self.teacher_label.add_css_class("changed")
+            if "subject-short" in self.lesson["original"]:
+                self.subject_label.add_css_class("label")
+                self.subject_label.add_css_class("changed")
+            if "room" in self.lesson["original"]:
+                self.room_label.add_css_class("label")
+                self.room_label.add_css_class("changed")
 
     def on_click(self, gesture, data, x, y):
         while self.window.info_rows != []:
