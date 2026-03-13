@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-11 12:04+0100\n"
+"POT-Creation-Date: 2026-03-13 19:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:10
 msgid ""
-"Timetable is a client for webuntis, which focusses on the featured used by "
+"Timetable is a client for WebUntis, which focusses on the featured used by "
 "students."
 msgstr ""
 
@@ -45,40 +45,68 @@ msgstr ""
 msgid "The timetable"
 msgstr ""
 
-#: src/api.py:141
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:41
+msgid "Dialog showing information about a lesson"
+msgstr ""
+
+#: src/api.py:143
 msgid "Unknown"
 msgstr ""
 
-#: src/api.py:154 src/api.py:155
+#: src/api.py:156 src/api.py:157
 msgid "and"
 msgstr ""
 
-#: src/lesson.py:56
+#: src/lesson.py:68
 msgid "Subject"
 msgstr ""
 
-#: src/lesson.py:57
+#: src/lesson.py:69
 msgid "Room"
 msgstr ""
 
-#: src/lesson.py:58
+#: src/lesson.py:70
 msgid "Teacher"
 msgstr ""
 
-#: src/lesson.py:60
+#: src/lesson.py:72
 msgid "Information about this lesson"
 msgstr ""
 
-#: src/lesson.py:62
+#: src/lesson.py:74
 msgid "Cancelled"
 msgstr ""
 
-#: src/lesson.py:67
+#: src/lesson.py:83
 msgid "Duration"
 msgstr ""
 
-#: src/lesson.py:67
+#: src/lesson.py:83
 msgid "Minutes"
+msgstr ""
+
+#: src/login.ui:6 src/login.ui:58
+msgid "Login"
+msgstr ""
+
+#: src/login.ui:23 src/login.ui:71
+msgid "Search school"
+msgstr ""
+
+#: src/login.ui:33
+msgid "Server-URL"
+msgstr ""
+
+#: src/login.ui:38 src/login.ui:83
+msgid "School"
+msgstr ""
+
+#: src/login.ui:43
+msgid "Username"
+msgstr ""
+
+#: src/login.ui:48
+msgid "Password"
 msgstr ""
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
@@ -114,26 +142,6 @@ msgstr ""
 msgid "_About Timetable"
 msgstr ""
 
-#: src/window.ui:91 src/window.ui:124
-msgid "Login"
-msgstr ""
-
-#: src/window.ui:100
-msgid "Server-URL"
-msgstr ""
-
-#: src/window.ui:105
-msgid "School"
-msgstr ""
-
-#: src/window.ui:110
-msgid "Username"
-msgstr ""
-
-#: src/window.ui:115
-msgid "Password"
-msgstr ""
-
-#: src/window.ui:134
+#: src/window.ui:91
 msgid "Information"
 msgstr ""

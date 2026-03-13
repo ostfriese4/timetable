@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-11 12:04+0100\n"
-"PO-Revision-Date: 2026-03-11 12:09+0100\n"
+"POT-Creation-Date: 2026-03-13 19:38+0100\n"
+"PO-Revision-Date: 2026-03-13 19:45+0100\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -35,9 +35,11 @@ msgstr "Ein Client für Webuntis"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:10
 msgid ""
-"Timetable is a client for webuntis, which focusses on the featured used by "
+"Timetable is a client for WebUntis, which focusses on the featured used by "
 "students."
 msgstr ""
+"Stundenplan ist ein Client für WebUntis, mit Fokus auf die von Schüler*innen "
+"verwendeten Funktionen."
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:14
 msgid "Jonas Harer"
@@ -47,41 +49,69 @@ msgstr "Jonas Harer"
 msgid "The timetable"
 msgstr "Der Stundenplan"
 
-#: src/api.py:141
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:41
+msgid "Dialog showing information about a lesson"
+msgstr "Informationen zur Stunde werden in einem Dialog angezeigt"
+
+#: src/api.py:143
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/api.py:154 src/api.py:155
+#: src/api.py:156 src/api.py:157
 msgid "and"
 msgstr "und"
 
-#: src/lesson.py:56
+#: src/lesson.py:68
 msgid "Subject"
 msgstr "Fach"
 
-#: src/lesson.py:57
+#: src/lesson.py:69
 msgid "Room"
 msgstr "Raum"
 
-#: src/lesson.py:58
+#: src/lesson.py:70
 msgid "Teacher"
 msgstr "Lehrkraft"
 
-#: src/lesson.py:60
+#: src/lesson.py:72
 msgid "Information about this lesson"
 msgstr "Informationen zur Stunde"
 
-#: src/lesson.py:62
+#: src/lesson.py:74
 msgid "Cancelled"
 msgstr "Entfall"
 
-#: src/lesson.py:67
+#: src/lesson.py:83
 msgid "Duration"
 msgstr "Dauer"
 
-#: src/lesson.py:67
+#: src/lesson.py:83
 msgid "Minutes"
 msgstr "Minuten"
+
+#: src/login.ui:6 src/login.ui:58
+msgid "Login"
+msgstr "Anmelden"
+
+#: src/login.ui:23 src/login.ui:71
+msgid "Search school"
+msgstr "Schule suchen"
+
+#: src/login.ui:33
+msgid "Server-URL"
+msgstr "Server-URL"
+
+#: src/login.ui:38 src/login.ui:83
+msgid "School"
+msgstr "Schule"
+
+#: src/login.ui:43
+msgid "Username"
+msgstr "Benutzername"
+
+#: src/login.ui:48
+msgid "Password"
+msgstr "Passwort"
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:55
@@ -116,27 +146,7 @@ msgstr "_Kurzbefehle"
 msgid "_About Timetable"
 msgstr "Über _Stundenplan"
 
-#: src/window.ui:91 src/window.ui:124
-msgid "Login"
-msgstr "Anmelden"
-
-#: src/window.ui:100
-msgid "Server-URL"
-msgstr "Server-URL"
-
-#: src/window.ui:105
-msgid "School"
-msgstr "Schule"
-
-#: src/window.ui:110
-msgid "Username"
-msgstr "Benutzername"
-
-#: src/window.ui:115
-msgid "Password"
-msgstr "Passwort"
-
-#: src/window.ui:134
+#: src/window.ui:91
 msgid "Information"
 msgstr "Informationen"
 
