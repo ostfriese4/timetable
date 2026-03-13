@@ -28,7 +28,7 @@ class Lesson(Gtk.Box):
     teacher_label = Gtk.Template.Child()
     room_label = Gtk.Template.Child()
 
-    def __init__(self, lesson, window, width = -1, **kwargs):
+    def __init__(self, lesson, window, **kwargs):
         super().__init__(**kwargs)
 
         click = Gtk.GestureClick.new()
