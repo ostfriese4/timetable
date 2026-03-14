@@ -10,7 +10,7 @@
     <p>Timetable is an unofficial client for WebUntis, which focusses on the featured used by students.</p>
   </description>
 
-  <developer id="tld.vendor">
+  <developer id="page.codeberg.ostfriese4">
     <name>Jonas Harer</name>
   </developer>
 
