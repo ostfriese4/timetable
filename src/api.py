@@ -209,7 +209,7 @@ class untisApi:
         # return: [display name, server URL]
 
         if partial_name == "":
-            return []
+            return ["too many results"]
 
         baseurl = "https://schoolsearch.webuntis.com/schoolquery2"
         json = {
