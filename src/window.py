@@ -50,6 +50,8 @@ class UntisWindow(Adw.ApplicationWindow):
         today = datetime.date.today()
         self.startdate = today - datetime.timedelta(days=today.weekday())
         self.enddate = self.startdate + datetime.timedelta(days=4)
+        while self.enddate < today:
+            self.next()
         self.loadData()
 
         self.info_rows = []
