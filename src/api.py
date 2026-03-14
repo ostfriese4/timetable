@@ -220,12 +220,15 @@ class untisApi:
                 "search": f"{partial_name}"
             }]
         }
-        data = requests.post(url=baseurl, json=json).json()
-        if "error" in data:
-            return []
-        return [
-            [school["loginName"], school["server"]] for school in data["result"]["schools"]
-        ]
+        try:
+            data = requests.post(url=baseurl, json=json).json()
+            if "error" in data:
+                return [data["error"]["message"]]
+            return [
+                [school["loginName"], school["server"]] for school in data["result"]["schools"]
+            ]
+        except requests.exceptions.ConnectionError:
+            return ["offline"]
 
     def setCredentials(self, server, school, user, password):
         with open(self.credentialsPath, "w") as file:

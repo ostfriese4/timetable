@@ -60,6 +60,33 @@ class LoginWindow(Adw.Dialog):
         name = self.search_entry.get_text()
         schools = api.school_search(name)
 
+        if len(schools) == 1:
+            if type(schools[0]) == str:
+                error = schools[0]
+                if error == "too many results":
+                    schools = [
+                        [
+                            _("Too many results"),
+                            ""
+                        ]
+                    ]
+                elif error == "offline":
+                    schools = [
+                        [
+                            _("Offline"),
+                            ""
+                        ]
+                    ]
+                else:
+                    schools = []
+        if schools == []:
+            schools = [
+                [
+                    _("No results"),
+                    ""
+                ]
+            ]
+
         for school in schools:
             name = school[0]
             server = school[1]
