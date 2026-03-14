@@ -47,10 +47,10 @@ class UntisApplication(Adw.Application):
         """Callback for the app.about action."""
         about = Adw.AboutDialog(application_name=_('Timetable'),
                                 application_icon='page.codeberg.ostfriese4.Untis',
-                                developer_name='Jonas',
+                                developer_name='Ostfriese4',
                                 version='1.0',
-                                developers=['Jonas'],
-                                copyright='© 2026 Jonas')
+                                developers=['Ostfiese4'],
+                                copyright='© 2026 Ostfriese4')
         # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
         about.set_translator_credits(_('translator-credits'))
         about.present(self.props.active_window)
