@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-13 19:51+0100\n"
+"POT-Creation-Date: 2026-03-14 13:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgid ""
 msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:14
-msgid "Jonas Harer"
+msgid "Ostfriese4"
 msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:37
@@ -115,11 +115,11 @@ msgid "translator-credits"
 msgstr ""
 
 #: src/window.ui:19
-msgid "Previous"
+msgid "Previous week"
 msgstr ""
 
 #: src/window.ui:31
-msgid "Next"
+msgid "Next week"
 msgstr ""
 
 #: src/window.ui:40

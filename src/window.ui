@@ -16,7 +16,7 @@
                 <child>
                   <object class="GtkButton" id="previous_button">
                     <property name="icon-name">go-previous-symbolic</property>
-                    <property name="tooltip-text" translatable="yes">Previous</property>
+                    <property name="tooltip-text" translatable="yes">Previous week</property>
                   </object>
                 </child>
                 <child>
@@ -28,7 +28,7 @@
                 <child>
                   <object class="GtkButton" id="next_button">
                     <property name="icon-name">go-next-symbolic</property>
-                    <property name="tooltip-text" translatable="yes">Next</property>
+                    <property name="tooltip-text" translatable="yes">Next week</property>
                   </object>
                 </child>
               </object>

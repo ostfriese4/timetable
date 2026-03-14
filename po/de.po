@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-13 19:51+0100\n"
-"PO-Revision-Date: 2026-03-13 19:53+0100\n"
+"POT-Creation-Date: 2026-03-14 13:28+0100\n"
+"PO-Revision-Date: 2026-03-14 13:32+0100\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -42,8 +42,8 @@ msgstr ""
 "Schüler*innen verwendeten Funktionen."
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:14
-msgid "Jonas Harer"
-msgstr "Jonas Harer"
+msgid "Ostfriese4"
+msgstr "Ostfriese4"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:37
 msgid "The timetable"
@@ -119,12 +119,12 @@ msgid "translator-credits"
 msgstr ""
 
 #: src/window.ui:19
-msgid "Previous"
-msgstr "Nächste Woche"
+msgid "Previous week"
+msgstr "Vorherige Woche"
 
 #: src/window.ui:31
-msgid "Next"
-msgstr "Vorherige Woche"
+msgid "Next week"
+msgstr "Nächste Woche"
 
 #: src/window.ui:40
 msgid "Main Menu"
@@ -149,6 +149,9 @@ msgstr "Über _Stundenplan"
 #: src/window.ui:91
 msgid "Information"
 msgstr "Informationen"
+
+#~ msgid "Jonas Harer"
+#~ msgstr "Jonas Harer"
 
 #~ msgid "_Preferences"
 #~ msgstr "_Einstellungen"
