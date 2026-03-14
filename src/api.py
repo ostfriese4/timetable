@@ -34,6 +34,51 @@ class untisApi:
         except:
             self.writeColors() # create
 
+    def getHoliday(self, date):
+        path = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-holidays.json"
+        load = False
+        today = datetime.date.today()
+        if not os.path.exists(path):
+            load = True
+        else:
+            with open(path) as file:
+                data = json.load(file)
+            if today != datetime.datetime.strptime(data["updated"], "%d.%m.%y").date():
+                load = True
+        if load:
+            try:
+                self.login()
+                holidays = self.session.holidays()
+                self.logout()
+            except Exception:
+                load = False
+
+            data = {}
+            data["updated"] = today.strftime("%d.%m.%y")
+            data["holidays"] = []
+
+            for holiday in holidays:
+                item = {}
+                item["name"] = holiday.name
+                item["start"] = holiday.start.strftime("%d.%m.%y")
+                item["end"] = holiday.end.strftime("%d.%m.%y")
+                item["short"] = holiday.short_name
+
+                data["holidays"].append(item)
+            with open(path, "w") as file:
+                print("writing holidays-cache")
+                json.dump(data, file, indent=4)
+        if not load:
+            print("loading holidays-cache")
+            with open(path) as file:
+                data = json.load(file)
+        for holiday in data["holidays"]:
+            start = datetime.datetime.strptime(holiday["start"], "%d.%m.%y").date()
+            end = datetime.datetime.strptime(holiday["end"], "%d.%m.%y").date()
+
+            if start <= date and end >= date:
+                return holiday
+
     def loadColors(self):
         with open(os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-colors.json") as file:
             self.colors = json.load(file)

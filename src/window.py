@@ -106,9 +106,14 @@ class UntisWindow(Adw.ApplicationWindow):
             if date == datetime.date.today():
                 dateLabel.add_css_class("today")
             dateLabel.add_css_class("day")
-            date += datetime.timedelta(days=1)
 
             x = start
+            if day == []:
+                holiday = api.getHoliday(date)
+                obj = Gtk.Label()
+                obj.set_vexpand(True)
+                obj.set_text(holiday["name"])
+                column.append(obj)
             for lesson in day:
                 if lesson["start"] - x != 0:
                     gap = Gtk.Label()
@@ -118,3 +123,4 @@ class UntisWindow(Adw.ApplicationWindow):
                 x = lesson["end"]
                 column.append(block)
                 self.lessons.append((column, block))
+            date += datetime.timedelta(days=1)
