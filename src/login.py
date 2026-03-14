@@ -78,7 +78,12 @@ class LoginWindow(Adw.Dialog):
                         ]
                     ]
                 else:
-                    schools = []
+                    schools = [
+                        [
+                            _("Error"),
+                            str(error)
+                        ]
+                    ]
         if schools == []:
             schools = [
                 [
