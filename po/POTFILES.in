@@ -9,5 +9,6 @@ src/lesson.ui
 src/login.py
 src/login.ui
 src/main.py
+src/shortcuts-dialog.ui
 src/window.py
 src/window.ui

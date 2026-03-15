@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-14 13:28+0100\n"
-"PO-Revision-Date: 2026-03-14 13:32+0100\n"
+"POT-Creation-Date: 2026-03-15 18:11+0100\n"
+"PO-Revision-Date: 2026-03-15 18:14+0100\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Gtranslator 49.0\n"
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:48
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:49
 #: src/window.ui:6 src/window.ui:24
 msgid "Timetable"
 msgstr "Stundenplan"
@@ -53,11 +53,15 @@ msgstr "Der Stundenplan"
 msgid "Dialog showing information about a lesson"
 msgstr "Informationen zur Stunde werden in einem Dialog angezeigt"
 
-#: src/api.py:143
+#: src/api.py:93
+msgid "No data available"
+msgstr "Keine Daten verfügbar"
+
+#: src/api.py:241
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/api.py:156 src/api.py:157
+#: src/api.py:254 src/api.py:255
 msgid "and"
 msgstr "und"
 
@@ -89,6 +93,22 @@ msgstr "Dauer"
 msgid "Minutes"
 msgstr "Minuten"
 
+#: src/login.py:69
+msgid "Too many results"
+msgstr "Zu viele Ergebnisse"
+
+#: src/login.py:76
+msgid "Offline"
+msgstr "Kein Internet"
+
+#: src/login.py:83
+msgid "Error"
+msgstr "Fehler"
+
+#: src/login.py:90
+msgid "No results"
+msgstr "Keine Ergebnisse"
+
 #: src/login.ui:6 src/login.ui:58
 msgid "Login"
 msgstr "Anmelden"
@@ -114,9 +134,33 @@ msgid "Password"
 msgstr "Passwort"
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:55
+#: src/main.py:56
 msgid "translator-credits"
 msgstr ""
+
+#: src/shortcuts-dialog.ui:6
+msgid "Shortcuts"
+msgstr "Tastenkürzel"
+
+#: src/shortcuts-dialog.ui:9
+msgctxt "shortcut window"
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#: src/shortcuts-dialog.ui:15
+msgctxt "shortcut window"
+msgid "Login"
+msgstr "Anmelden"
+
+#: src/shortcuts-dialog.ui:21
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Tastenkürzel anzeigen"
+
+#: src/shortcuts-dialog.ui:27
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Beenden"
 
 #: src/window.ui:19
 msgid "Previous week"
@@ -135,18 +179,22 @@ msgid "You are offline"
 msgstr "Keine Internetverbindung"
 
 #: src/window.ui:76
+msgid "_Refresh"
+msgstr "_Aktualisieren"
+
+#: src/window.ui:80
 msgid "_Login"
 msgstr "An_melden"
 
-#: src/window.ui:80
-msgid "_Keyboard Shortcuts"
-msgstr "_Kurzbefehle"
-
 #: src/window.ui:84
+msgid "_Keyboard Shortcuts"
+msgstr "_Tastenkürzel"
+
+#: src/window.ui:88
 msgid "_About Timetable"
 msgstr "Über _Stundenplan"
 
-#: src/window.ui:91
+#: src/window.ui:95
 msgid "Information"
 msgstr "Informationen"
 

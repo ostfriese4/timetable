@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-14 13:28+0100\n"
+"POT-Creation-Date: 2026-03-15 18:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:48
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:49
 #: src/window.ui:6 src/window.ui:24
 msgid "Timetable"
 msgstr ""
@@ -49,11 +49,15 @@ msgstr ""
 msgid "Dialog showing information about a lesson"
 msgstr ""
 
-#: src/api.py:143
+#: src/api.py:93
+msgid "No data available"
+msgstr ""
+
+#: src/api.py:241
 msgid "Unknown"
 msgstr ""
 
-#: src/api.py:156 src/api.py:157
+#: src/api.py:254 src/api.py:255
 msgid "and"
 msgstr ""
 
@@ -85,6 +89,22 @@ msgstr ""
 msgid "Minutes"
 msgstr ""
 
+#: src/login.py:69
+msgid "Too many results"
+msgstr ""
+
+#: src/login.py:76
+msgid "Offline"
+msgstr ""
+
+#: src/login.py:83
+msgid "Error"
+msgstr ""
+
+#: src/login.py:90
+msgid "No results"
+msgstr ""
+
 #: src/login.ui:6 src/login.ui:58
 msgid "Login"
 msgstr ""
@@ -110,8 +130,32 @@ msgid "Password"
 msgstr ""
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:55
+#: src/main.py:56
 msgid "translator-credits"
+msgstr ""
+
+#: src/shortcuts-dialog.ui:6
+msgid "Shortcuts"
+msgstr ""
+
+#: src/shortcuts-dialog.ui:9
+msgctxt "shortcut window"
+msgid "Refresh"
+msgstr ""
+
+#: src/shortcuts-dialog.ui:15
+msgctxt "shortcut window"
+msgid "Login"
+msgstr ""
+
+#: src/shortcuts-dialog.ui:21
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr ""
+
+#: src/shortcuts-dialog.ui:27
+msgctxt "shortcut window"
+msgid "Quit"
 msgstr ""
 
 #: src/window.ui:19
@@ -131,17 +175,21 @@ msgid "You are offline"
 msgstr ""
 
 #: src/window.ui:76
-msgid "_Login"
+msgid "_Refresh"
 msgstr ""
 
 #: src/window.ui:80
-msgid "_Keyboard Shortcuts"
+msgid "_Login"
 msgstr ""
 
 #: src/window.ui:84
+msgid "_Keyboard Shortcuts"
+msgstr ""
+
+#: src/window.ui:88
 msgid "_About Timetable"
 msgstr ""
 
-#: src/window.ui:91
+#: src/window.ui:95
 msgid "Information"
 msgstr ""
