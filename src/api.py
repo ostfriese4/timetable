@@ -29,10 +29,18 @@ class untisApi:
         self.colors = {}
         self.cache = True
         self.credentialsPath = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
+        self.CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-days/"
+        os.system("mkdir -p " + self.CACHEDIR)
         try:
             self.loadColors()
         except:
             self.writeColors() # create
+        try:
+            self.loadCache()
+        except:
+            self.cacheFile = {}
+            self.cacheFile["refresh"] = "01/01/2000, 00:00:00"
+            self.writeCache() # create
 
     def getHoliday(self, date):
         path = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-holidays.json"
@@ -124,46 +132,73 @@ class untisApi:
         self.writeColors()
         return color
 
+    def loadCache(self):
+        with open(self.CACHEDIR + "index.json") as cache:
+            self.cacheFile = json.load(cache)
+
+    def refresh(self):
+        self.cacheFile["refresh"] = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        self.writeCache()
+
+    def writeCache(self):
+        with open(self.CACHEDIR + "index.json", "w") as cache:
+            json.dump(self.cacheFile, cache, indent = 4)
+
+    def useCache(self, date):
+        name = date.strftime("%Y-%m-%d")
+        if not name in self.cacheFile:
+            return False
+        last = datetime.datetime.strptime(self.cacheFile[name], "%m/%d/%Y, %H:%M:%S")
+        refresh = datetime.datetime.strptime(self.cacheFile["refresh"], "%m/%d/%Y, %H:%M:%S")
+        now = datetime.datetime.now()
+        if last <= refresh:
+            return False
+        if now - last >= datetime.timedelta(hours=1):
+            return False
+        return True
+
     def writeDayToCache(self, day, data):
-        CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-days/"
-        os.system("mkdir -p " + CACHEDIR)
-
         name = day.strftime("%Y-%m-%d")
+        self.cacheFile[name] = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         print("writing cache", name)
-        with open(CACHEDIR + name, "w") as cache:
+        with open(self.CACHEDIR + name, "w") as cache:
             json.dump(data, cache, indent=4)
+        self.writeCache()
 
-    def loadDayfromCache(self, day):
-        CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-days/"
-        os.system("mkdir -p " + CACHEDIR)
-
+    def loadDayFromCache(self, day):
         name = day.strftime("%Y-%m-%d")
-        print("writing cache", name)
-        with open(CACHEDIR + name, "w") as cache:
+        print("reading cache", name)
+        with open(self.CACHEDIR + name) as cache:
             return json.load(cache)
 
     def getTimetable(self, start, end):
-        day_count = (end - start).days + 1
+        days = (end - start).days + 1
+        self.cache = False
 
-        try:
-            self.cache = False
-            self.login()
-            table = self.session.my_timetable(start=start, end=end).to_table()
-        except Exception as e:
-            self.cache = True
+        useCache = True
+        for date in (start + datetime.timedelta(n) for n in range(days)):
+            if not self.useCache(date):
+                useCache = False
+                break
+
+        if not useCache:
+            try:
+                self.login()
+                table = self.session.my_timetable(start=start, end=end).to_table()
+            except Exception:
+                self.cache = True
+                self.useCache = True
+        if useCache:
             try:
                 data = []
-                for date in (start + datetime.timedelta(n) for n in range(day_count)):
+                for date in (start + datetime.timedelta(n) for n in range(days)):
                     data.append(self.loadDayFromCache(date))
                 return data
-
             except:
                 return [[]]
 
 
         data = []
-        days = end-start
-        days = days.days + 1
         for i in range(days):
             data.append([])
 
@@ -257,7 +292,7 @@ class untisApi:
 
 
         i=0
-        for date in (start + datetime.timedelta(n) for n in range(day_count)):
+        for date in (start + datetime.timedelta(n) for n in range(days)):
             self.writeDayToCache(date, data[i])
             i+=1
 
