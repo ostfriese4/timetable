@@ -79,6 +79,12 @@ class untisApi:
             if start <= date and end >= date:
                 return holiday
 
+        return {
+            "start": date.strftime("%d.%m.%y"),
+            "end": date.strftime("%d.%m.%y"),
+            "name": _("No data available")
+        }
+
     def loadColors(self):
         with open(os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-colors.json") as file:
             self.colors = json.load(file)
@@ -118,10 +124,25 @@ class untisApi:
         self.writeColors()
         return color
 
-    def getTimetable(self, start, end):
+    def writeDayToCache(self, day, data):
         CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-days/"
         os.system("mkdir -p " + CACHEDIR)
 
+        name = day.strftime("%Y-%m-%d")
+        print("writing cache", name)
+        with open(CACHEDIR + name, "w") as cache:
+            json.dump(data, cache, indent=4)
+
+    def loadDayfromCache(self, day):
+        CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-days/"
+        os.system("mkdir -p " + CACHEDIR)
+
+        name = day.strftime("%Y-%m-%d")
+        print("writing cache", name)
+        with open(CACHEDIR + name, "w") as cache:
+            return json.load(cache)
+
+    def getTimetable(self, start, end):
         day_count = (end - start).days + 1
 
         try:
@@ -133,10 +154,7 @@ class untisApi:
             try:
                 data = []
                 for date in (start + datetime.timedelta(n) for n in range(day_count)):
-                    name = date.strftime("%Y-%m-%d")
-                    print("reading cache", name)
-                    with open(CACHEDIR + name) as cache:
-                        data.append(json.load(cache))
+                    data.append(self.loadDayFromCache(date))
                 return data
 
             except:
@@ -240,10 +258,7 @@ class untisApi:
 
         i=0
         for date in (start + datetime.timedelta(n) for n in range(day_count)):
-            name = date.strftime("%Y-%m-%d")
-            print("writing cache", name)
-            with open(CACHEDIR + name, "w") as cache:
-                json.dump(data[i], cache, indent=4)
+            self.writeDayToCache(date, data[i])
             i+=1
 
         self.logout()
