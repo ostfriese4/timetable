@@ -36,6 +36,7 @@ class UntisApplication(Adw.Application):
         self.create_action('quit', lambda *_: self.quit(), ['<control>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('login', self.on_login_action, ['<control>l'])
+        self.create_action('refresh', self.on_refresh_action, ['<control>r'])
 
     def do_activate(self):
         win = self.props.active_window
@@ -57,6 +58,9 @@ class UntisApplication(Adw.Application):
 
     def on_login_action(self, widget, _):
         self.props.active_window.login_window.requestLogin()
+
+    def on_refresh_action(self, widget, _):
+        self.props.active_window.refresh()
 
     def create_action(self, name, callback, shortcuts=None):
         action = Gio.SimpleAction.new(name, None)

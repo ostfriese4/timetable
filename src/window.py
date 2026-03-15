@@ -66,6 +66,10 @@ class UntisWindow(Adw.ApplicationWindow):
         self.enddate -= datetime.timedelta(days=7)
         self.loadData()
 
+    def refresh(self):
+        api.refresh()
+        self.loadData()
+
     def loadData(self):
         table = api.getTimetable(self.startdate, self.enddate)
         if api.cache:
