@@ -49,7 +49,7 @@ class UntisApplication(Adw.Application):
         about = Adw.AboutDialog(application_name=_('Timetable'),
                                 application_icon='page.codeberg.ostfriese4.Untis',
                                 developer_name='Ostfriese4',
-                                version='1.1',
+                                version='1.2',
                                 developers=['Ostfriese4'],
                                 copyright='© 2026 Ostfriese4')
         # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
