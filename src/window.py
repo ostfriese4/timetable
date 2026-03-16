@@ -26,6 +26,8 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GLib
 
+import threading
+
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/window.ui')
 class UntisWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'UntisWindow'
@@ -74,7 +76,14 @@ class UntisWindow(Adw.ApplicationWindow):
         self.loadData()
 
     def loadData(self):
-        table = api.getTimetable(self.startdate, self.enddate)
+        def load():
+            table = api.getTimetable(self.startdate, self.enddate)
+            GLib.idle_add(self.displayData, table)
+        thread = threading.Thread(target=load, daemon=True)
+        thread.start()
+        return True # To repeat
+
+    def displayData(self, table):
         if api.cache:
             if not api.testLogin():
                 self.login_window.requestLogin()
@@ -131,4 +140,3 @@ class UntisWindow(Adw.ApplicationWindow):
                 column.append(block)
                 self.lessons.append((column, block))
             date += datetime.timedelta(days=1)
-        return True # To repeat
