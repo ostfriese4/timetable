@@ -351,8 +351,6 @@ class untisApi:
         self.session.logout()
 
     def testLogin(self):
-        if not os.path.exists(self.credentialsPath):
-            return False
         try:
             self.login()
             self.logout()
@@ -363,6 +361,8 @@ class untisApi:
             return False
         except requests.exceptions.ConnectionError:
             return True
+        except FileNotFoundError:
+            return False
         except Exception:
             return True # Unknown error
 

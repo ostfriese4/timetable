@@ -118,8 +118,9 @@ class LoginWindow(Adw.Dialog):
                        school = self.school_entry.get_text(),
                        server = self.server_entry.get_text()
                        )
-        self.window.loadData()
-        self.close()
+        if api.testLogin():
+            self.close()
+            self.window.loadData()
 
     def requestLogin(self):
         self.present(self.window)
