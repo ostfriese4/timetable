@@ -14,10 +14,7 @@
           </object>
         </child>
         <property name="content">
-          <object class="AdwPreferencesPage">
-            <child>
-              <object class="AdwPreferencesGroup" id="info_table"/>
-            </child>
+          <object class="AdwPreferencesPage" id="info_table">
           </object>
         </property>
       </object>

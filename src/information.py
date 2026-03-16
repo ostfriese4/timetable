@@ -35,7 +35,9 @@ class InformationWindow(Adw.Dialog):
         while self.info_rows != []:
             self.info_table.remove(self.info_rows.pop())
 
+        rows = []
         data = {}
+        rows.append(("", data))
 
         data[_("Subject")] = lesson["subject-long"] + " (" + lesson["subject-short"] + ")"
         data[_("Room")] = lesson["room"]
@@ -55,20 +57,36 @@ class InformationWindow(Adw.Dialog):
         data[_("Duration")] = str(lesson["duration"]) + " " + _("Minutes") + " (" + str(hours_start) + ":" + str(minutes_start) + " - " + str(hours_end) + ":" + str(minutes_end) + ")"
 
         if "original" in lesson:
+            data = {}
+            rows.append((_("Original lesson"), data))
             original = lesson["original"]
             if "subject-short" in original:
-                data[_("Original subject")] = original["subject-long"] + " (" + original["subject-short"] + ")"
+                sd = original
+            else:
+                sd = lesson
             if "room" in original:
-                data[_("Original room")] = original["room"]
+                rd = original
+            else:
+                rd = lesson
             if "teacher-short" in original:
-                data[_("Original teacher")] = original["teacher-long"] + " (" + original["teacher-short"] + ")"
+                td = original
+            else:
+                td = lesson
+
+            data[_("Subject")] = sd["subject-long"] + " (" + sd["subject-short"] + ")"
+            data[_("Room")] = rd["room"]
+            data[_("Teacher")] = td["teacher-long"] + " (" + td["teacher-short"] + ")"
 
 
-        for key, value in data.items():
-            row = Adw.ActionRow(title = key)
-            row.set_subtitle(value)
-            self.info_table.add(row)
-            self.info_rows.append(row)
+        for r in rows:
+            data = r[1]
+            table = Adw.PreferencesGroup(title=r[0])
+            self.info_table.add(table)
+            for key, value in data.items():
+                row = Adw.ActionRow(title = key)
+                row.set_subtitle(value)
+                table.add(row)
+            self.info_rows.append(table)
 
         self.present(self.window)
 
