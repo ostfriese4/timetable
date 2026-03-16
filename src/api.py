@@ -200,6 +200,7 @@ class untisApi:
                 else:
                     data = []
                     print("Try to fetch the days individually")
+                    self.cache = False
                     for date in (start + datetime.timedelta(n) for n in range(days)):
                         day = self.getTimetable(date, date)
                         data.append(day[0])
