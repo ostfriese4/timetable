@@ -30,6 +30,7 @@ untis_sources = [
   '__init__.py',
   'api.py',
   'credentials.py',
+  'information.py',
   'lesson.py',
   'login.py',
   'main.py',

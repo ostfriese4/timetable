@@ -20,6 +20,7 @@
 from .api import api
 from .lesson import Lesson
 from .login import LoginWindow
+from .information import InformationWindow
 import datetime
 from gi.repository import Adw
 from gi.repository import Gtk
@@ -36,8 +37,6 @@ class UntisWindow(Adw.ApplicationWindow):
     offline = Gtk.Template.Child()
     next_button = Gtk.Template.Child()
     previous_button = Gtk.Template.Child()
-    info_window = Gtk.Template.Child()
-    info_table = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -49,6 +48,7 @@ class UntisWindow(Adw.ApplicationWindow):
         self.previous_button.connect("clicked", self.previous)
 
         self.login_window = LoginWindow(self)
+        self.information_window = InformationWindow(self)
 
         today = datetime.date.today()
         self.startdate = today - datetime.timedelta(days=today.weekday())
