@@ -32,11 +32,12 @@
      id="defs2">
     <linearGradient
        id="frame_grad"
-       x1="0"
-       x2="0"
-       y1="0"
-       y2="1"
-       gradientTransform="rotate(45, 0.5, 0)">
+       x1="14"
+       x2="14"
+       y1="14"
+       y2="186"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0765624,0,0,1.0765624,-8.0677568,-8.0677568)">
       <stop
          offset=" 0%"
          stop-color="#ED0"
@@ -49,100 +50,99 @@
   </defs>
   <!-- clock -->
   <circle
-     cx="100"
-     cy="100"
-     r="80"
+     cx="99.588478"
+     cy="99.588478"
      stroke="url(#frame_grad)"
-     stroke-width="12"
+     stroke-width="12.9188"
      fill="#EEE"
      id="circle2"
-     style="fill:#212121;fill-opacity:1" />
+     style="fill:#212121;fill-opacity:1;stroke:url(#frame_grad)"
+     r="86.124985" />
   <!-- clock hands/markings -->
   <line
-     x1="100"
-     y1="100"
-     x2="100"
-     y2="34"
+     x1="99.588478"
+     y1="99.588478"
+     x2="99.588478"
+     y2="28.535364"
      stroke="#3A3ADD"
-     stroke-width="8"
+     stroke-width="8.6125"
      stroke-linecap="round"
      id="line2"
      style="stroke:#3363db;stroke-opacity:1" />
   <line
-     x1="100"
-     y1="100"
-     x2="100"
-     y2="34"
-     transform="rotate( 45, 100, 100)"
-     stroke="#DD3A3A"
-     stroke-width="8"
+     x1="99.588478"
+     y1="99.588478"
+     x2="149.83063"
+     y2="49.346336"
+     stroke="#dd3a3a"
+     stroke-width="8.31412"
      stroke-linecap="round"
      id="line3" />
   <line
-     x1="100"
-     y1="100"
-     x2="100"
-     y2="34"
-     transform="rotate( 90, 100, 100)"
-     stroke="#DDDD3A"
-     stroke-width="8"
+     x1="99.588478"
+     y1="99.588478"
+     x2="170.64159"
+     y2="99.588478"
+     stroke="#dddd3a"
+     stroke-width="8.31412"
      stroke-linecap="round"
      id="line4" />
   <line
-     x1="138.89087"
-     y1="138.89087"
-     x2="147.37616"
-     y2="147.37616"
+     x1="141.45692"
+     y1="141.45692"
+     x2="150.59186"
+     y2="150.59186"
      stroke="#888888"
-     stroke-width="6"
+     stroke-width="6.45937"
      stroke-linecap="round"
      id="line5"
      style="stroke:#c6c6c6;stroke-opacity:1" />
   <line
-     x1="100"
-     y1="155"
-     x2="100"
-     y2="167"
+     x1="99.588478"
+     y1="158.79941"
+     x2="99.588478"
+     y2="171.71815"
      stroke="#888888"
-     stroke-width="6"
+     stroke-width="6.45937"
      stroke-linecap="round"
      id="line6"
      style="stroke:#c7c7c7;stroke-opacity:1" />
   <line
-     x1="61.109127"
-     y1="138.89087"
-     x2="52.623844"
-     y2="147.37616"
+     x1="57.720028"
+     y1="141.45692"
+     x2="48.585091"
+     y2="150.59186"
      stroke="#888888"
-     stroke-width="6"
+     stroke-width="6.45937"
      stroke-linecap="round"
      id="line7"
      style="stroke:#c7c7c7;stroke-opacity:1" />
   <line
-     x1="45"
-     y1="100"
-     x2="33"
-     y2="100"
+     x1="40.377548"
+     y1="99.588478"
+     x2="27.458801"
+     y2="99.588478"
      stroke="#888888"
-     stroke-width="6"
+     stroke-width="6.45937"
      stroke-linecap="round"
      id="line8"
      style="stroke:#c7c7c7;stroke-opacity:1" />
   <line
-     x1="61.109127"
-     y1="61.109127"
-     x2="52.623844"
-     y2="52.623844"
+     x1="57.720028"
+     y1="57.720028"
+     x2="48.585091"
+     y2="48.585091"
      stroke="#888888"
-     stroke-width="6"
+     stroke-width="6.45937"
      stroke-linecap="round"
      id="line9"
      style="stroke:#c7c7c7;stroke-opacity:1" />
   <!-- without this, the clock hand colors weirdly overlap when zoomed in -->
   <circle
-     cx="100"
-     cy="100"
-     r="4.025"
-     fill="#DDDD3A"
-     id="circle9" />
+     cx="99.588478"
+     cy="99.588478"
+     fill="#dddd3a"
+     id="circle9"
+     r="4.3331637"
+     style="stroke-width:1.07656" />
 </svg>
