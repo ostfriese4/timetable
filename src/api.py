@@ -185,6 +185,8 @@ class untisApi:
             try:
                 self.login()
                 table = self.session.my_timetable(start=start, end=end).to_table()
+            except webuntis.errors.DateNotAllowed:
+                useCache = True
             except Exception:
                 self.cache = True
                 useCache = True
