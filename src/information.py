@@ -54,6 +54,16 @@ class InformationWindow(Adw.Dialog):
             minutes_end = "0" + str(minutes_end)
         data[_("Duration")] = str(lesson["duration"]) + " " + _("Minutes") + " (" + str(hours_start) + ":" + str(minutes_start) + " - " + str(hours_end) + ":" + str(minutes_end) + ")"
 
+        if "original" in lesson:
+            original = lesson["original"]
+            if "subject-short" in original:
+                data[_("Original subject")] = original["subject-long"] + " (" + original["subject-short"] + ")"
+            if "room" in original:
+                data[_("Original room")] = original["room"]
+            if "teacher-short" in original:
+                data[_("Original teacher")] = original["teacher-long"] + " (" + original["teacher-short"] + ")"
+
+
         for key, value in data.items():
             row = Adw.ActionRow(title = key)
             row.set_subtitle(value)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-16 15:53+0100\n"
+"POT-Creation-Date: 2026-03-16 19:07+0100\n"
 "PO-Revision-Date: 2026-03-16 15:59+0100\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
@@ -57,55 +57,71 @@ msgstr "Informationen zur Stunde werden in einem Dialog angezeigt"
 msgid "No data available"
 msgstr "Keine Daten verfügbar"
 
-#: src/api.py:252
+#: src/api.py:254
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/api.py:265 src/api.py:266
+#: src/api.py:267 src/api.py:268
 msgid "and"
 msgstr "und"
 
-#: src/lesson.py:68
+#: src/information.py:40
 msgid "Subject"
 msgstr "Fach"
 
-#: src/lesson.py:69
+#: src/information.py:41
 msgid "Room"
 msgstr "Raum"
 
-#: src/lesson.py:70
+#: src/information.py:42
 msgid "Teacher"
 msgstr "Lehrkraft"
 
-#: src/lesson.py:72
+#: src/information.py:44
 msgid "Information about this lesson"
 msgstr "Informationen zur Stunde"
 
-#: src/lesson.py:74
+#: src/information.py:46
 msgid "Cancelled"
 msgstr "Entfall"
 
-#: src/lesson.py:83
+#: src/information.py:55
 msgid "Duration"
 msgstr "Dauer"
 
-#: src/lesson.py:83
+#: src/information.py:55
 msgid "Minutes"
 msgstr "Minuten"
 
-#: src/login.py:69
+#: src/information.py:60
+msgid "Original subject"
+msgstr ""
+
+#: src/information.py:62
+msgid "Original room"
+msgstr ""
+
+#: src/information.py:64
+msgid "Original teacher"
+msgstr ""
+
+#: src/information.ui:6
+msgid "Information"
+msgstr "Informationen"
+
+#: src/login.py:70
 msgid "Too many results"
 msgstr "Zu viele Ergebnisse"
 
-#: src/login.py:76
+#: src/login.py:77
 msgid "Offline"
 msgstr "Kein Internet"
 
-#: src/login.py:83
+#: src/login.py:84
 msgid "Error"
 msgstr "Fehler"
 
-#: src/login.py:90
+#: src/login.py:91
 msgid "No results"
 msgstr "Keine Ergebnisse"
 
@@ -193,10 +209,6 @@ msgstr "_Tastenkürzel"
 #: src/window.ui:88
 msgid "_About Timetable"
 msgstr "Über _Stundenplan"
-
-#: src/window.ui:95
-msgid "Information"
-msgstr "Informationen"
 
 #~ msgid "A client for webuntis"
 #~ msgstr "Ein Client für Webuntis"

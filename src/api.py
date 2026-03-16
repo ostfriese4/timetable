@@ -278,7 +278,7 @@ class untisApi:
                             planned = lessondata
                             lessondata = tmp
                         original = {}
-                        for key in ["room", "subject-short", "teacher-short"]:
+                        for key in ["room", "subject-short", "teacher-short", "subject-long", "teacher-long"]:
                             if planned[key] != lessondata[key]:
                                 original[key] = planned[key]
                         lessondata["original"] = original
