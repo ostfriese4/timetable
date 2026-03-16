@@ -187,7 +187,7 @@ class untisApi:
                 table = self.session.my_timetable(start=start, end=end).to_table()
             except Exception:
                 self.cache = True
-                self.useCache = True
+                useCache = True
         if useCache:
             try:
                 data = []
@@ -195,7 +195,17 @@ class untisApi:
                     data.append(self.loadDayFromCache(date))
                 return data
             except:
-                return [[]]
+                if days == 1:
+                    return [[]]
+                else:
+                    data = []
+                    print("Try to fetch the days individually")
+                    for date in (start + datetime.timedelta(n) for n in range(days)):
+                        day = self.getTimetable(date, date)
+                        data.append(day[0])
+                    if data == []:
+                        data.append([])
+                    return data
 
 
         data = []
