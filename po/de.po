@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-16 19:07+0100\n"
-"PO-Revision-Date: 2026-03-16 15:59+0100\n"
+"PO-Revision-Date: 2026-03-16 19:19+0100\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -83,7 +83,7 @@ msgstr "Informationen zur Stunde"
 
 #: src/information.py:46
 msgid "Cancelled"
-msgstr "Entfall"
+msgstr "Fällt aus"
 
 #: src/information.py:55
 msgid "Duration"
@@ -95,15 +95,15 @@ msgstr "Minuten"
 
 #: src/information.py:60
 msgid "Original subject"
-msgstr ""
+msgstr "Ursprüngliches Fach"
 
 #: src/information.py:62
 msgid "Original room"
-msgstr ""
+msgstr "Ursprünglicher Raum"
 
 #: src/information.py:64
 msgid "Original teacher"
-msgstr ""
+msgstr "Ursprüngliche Lehrkraft"
 
 #: src/information.ui:6
 msgid "Information"
