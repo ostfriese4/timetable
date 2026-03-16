@@ -34,6 +34,10 @@
   background: red;
 }
 
+.holiday {
+  transform: rotate(90deg);
+}
+
 .changed.label {
   background: green;
   border-radius: 20px;

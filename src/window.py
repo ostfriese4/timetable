@@ -129,6 +129,7 @@ class UntisWindow(Adw.ApplicationWindow):
                 obj = Gtk.Label()
                 obj.set_vexpand(True)
                 obj.set_text(holiday["name"])
+                obj.add_css_class("holiday")
                 column.append(obj)
             for lesson in day:
                 if lesson["start"] - x != 0:
