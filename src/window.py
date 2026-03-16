@@ -24,6 +24,7 @@ import datetime
 from gi.repository import Adw
 from gi.repository import Gtk
 from gi.repository import Gdk
+from gi.repository import GLib
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/window.ui')
 class UntisWindow(Adw.ApplicationWindow):
@@ -55,6 +56,8 @@ class UntisWindow(Adw.ApplicationWindow):
         self.loadData()
 
         self.info_rows = []
+
+        GLib.timeout_add(1000*60*10, self.loadData) # Update every ten minutes (will result in every hour because of caching; ten minutes to handle manual updates changing the time of the cache timeout)
 
     def next(self, data = None):
         self.startdate += datetime.timedelta(days=7)
@@ -128,3 +131,4 @@ class UntisWindow(Adw.ApplicationWindow):
                 column.append(block)
                 self.lessons.append((column, block))
             date += datetime.timedelta(days=1)
+        return True # To repeat
