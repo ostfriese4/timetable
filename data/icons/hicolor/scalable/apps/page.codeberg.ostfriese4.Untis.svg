@@ -55,7 +55,8 @@
      stroke="url(#frame_grad)"
      stroke-width="12"
      fill="#EEE"
-     id="circle2" />
+     id="circle2"
+     style="fill:#212121;fill-opacity:1" />
   <!-- clock hands/markings -->
   <line
      x1="100"
@@ -65,7 +66,8 @@
      stroke="#3A3ADD"
      stroke-width="8"
      stroke-linecap="round"
-     id="line2" />
+     id="line2"
+     style="stroke:#3363db;stroke-opacity:1" />
   <line
      x1="100"
      y1="100"
@@ -94,7 +96,8 @@
      stroke="#888888"
      stroke-width="6"
      stroke-linecap="round"
-     id="line5" />
+     id="line5"
+     style="stroke:#c6c6c6;stroke-opacity:1" />
   <line
      x1="100"
      y1="155"
@@ -103,7 +106,8 @@
      stroke="#888888"
      stroke-width="6"
      stroke-linecap="round"
-     id="line6" />
+     id="line6"
+     style="stroke:#c7c7c7;stroke-opacity:1" />
   <line
      x1="61.109127"
      y1="138.89087"
@@ -112,7 +116,8 @@
      stroke="#888888"
      stroke-width="6"
      stroke-linecap="round"
-     id="line7" />
+     id="line7"
+     style="stroke:#c7c7c7;stroke-opacity:1" />
   <line
      x1="45"
      y1="100"
@@ -121,7 +126,8 @@
      stroke="#888888"
      stroke-width="6"
      stroke-linecap="round"
-     id="line8" />
+     id="line8"
+     style="stroke:#c7c7c7;stroke-opacity:1" />
   <line
      x1="61.109127"
      y1="61.109127"
@@ -130,7 +136,8 @@
      stroke="#888888"
      stroke-width="6"
      stroke-linecap="round"
-     id="line9" />
+     id="line9"
+     style="stroke:#c7c7c7;stroke-opacity:1" />
   <!-- without this, the clock hand colors weirdly overlap when zoomed in -->
   <circle
      cx="100"
