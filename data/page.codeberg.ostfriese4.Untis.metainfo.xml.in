@@ -45,7 +45,7 @@
   <releases>
     <release version="1.1" date="2026-03-14">
       <description translate="no">
-        <p>Fixed the Flatpak-manifestt and improved the week displayed on startup</p>
+        <p>Fixed the Flatpak-manifest and improved the week displayed on startup</p>
       </description>
     </release>
     <release version="1.0" date="2026-03-13">
