@@ -20,6 +20,7 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from .api import api
+from .credentials import getCredentials, setCredentials
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/login.ui')
 class LoginWindow(Adw.Dialog):
@@ -112,18 +113,18 @@ class LoginWindow(Adw.Dialog):
 
     def login(self, data = None):
         print("login")
-        api.setCredentials(user = self.usr_entry.get_text(),
-                           password = self.pswd_entry.get_text(),
-                           school = self.school_entry.get_text(),
-                           server = self.server_entry.get_text()
-                           )
+        setCredentials(user = self.usr_entry.get_text(),
+                       password = self.pswd_entry.get_text(),
+                       school = self.school_entry.get_text(),
+                       server = self.server_entry.get_text()
+                       )
         self.window.loadData()
         self.close()
 
     def requestLogin(self):
         self.present(self.window)
         try:
-            credentials = api.loadCredentials()
+            credentials = getCredentials()
             self.usr_entry.set_text(credentials["username"])
             self.pswd_entry.set_text(credentials["password"])
             self.school_entry.set_text(credentials["school"])

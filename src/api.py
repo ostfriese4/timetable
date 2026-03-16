@@ -22,13 +22,13 @@ import json
 import os
 import requests
 import webuntis
+from .credentials import getCredentials, setCredentials
 
 class untisApi:
     def __init__(self):
         self.session = None
         self.colors = {}
         self.cache = True
-        self.credentialsPath = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
         self.CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-days/"
         os.system("mkdir -p " + self.CACHEDIR)
         try:
@@ -336,31 +336,16 @@ class untisApi:
         except requests.exceptions.ConnectionError:
             return ["offline"]
 
-    def setCredentials(self, server, school, user, password):
-        with open(self.credentialsPath, "w") as file:
-            json.dump({
-                "username": user,
-                "password": password,
-                "server": server,
-                "school": school
-            },
-            file)
-
-    def loadCredentials(self):
-        with open(self.credentialsPath) as file:
-            return json.load(file)
-
     def login(self):
-        with open(self.credentialsPath) as file:
-            credentials = json.load(file)
-            self.session = webuntis.Session(
-                username=credentials["username"],
-                password=credentials["password"],
-                server=credentials["server"],
-                school=credentials["school"],
-                useragent='WebUntis Test'
-                )
-            self.session.login()
+        credentials = getCredentials()
+        self.session = webuntis.Session(
+            username=credentials["username"],
+            password=credentials["password"],
+            server=credentials["server"],
+            school=credentials["school"],
+            useragent='WebUntis Test'
+            )
+        self.session.login()
 
     def logout(self):
         self.session.logout()

@@ -29,6 +29,7 @@ configure_file(
 untis_sources = [
   '__init__.py',
   'api.py',
+  'credentials.py',
   'lesson.py',
   'login.py',
   'main.py',
