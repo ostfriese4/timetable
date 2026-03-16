@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-15 18:11+0100\n"
-"PO-Revision-Date: 2026-03-15 18:14+0100\n"
+"POT-Creation-Date: 2026-03-16 15:53+0100\n"
+"PO-Revision-Date: 2026-03-16 15:59+0100\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -30,8 +30,8 @@ msgid "GTK;untis;school;timetable;students"
 msgstr "GTK;Untis;Schule;Stundenplan;Schüler"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:8
-msgid "A client for webuntis"
-msgstr "Ein Client für Webuntis"
+msgid "View your WebUntis timetable"
+msgstr "Sie dir deinen WebUntis-Stundenplan an"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:10
 msgid ""
@@ -57,11 +57,11 @@ msgstr "Informationen zur Stunde werden in einem Dialog angezeigt"
 msgid "No data available"
 msgstr "Keine Daten verfügbar"
 
-#: src/api.py:241
+#: src/api.py:252
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/api.py:254 src/api.py:255
+#: src/api.py:265 src/api.py:266
 msgid "and"
 msgstr "und"
 
@@ -197,6 +197,9 @@ msgstr "Über _Stundenplan"
 #: src/window.ui:95
 msgid "Information"
 msgstr "Informationen"
+
+#~ msgid "A client for webuntis"
+#~ msgstr "Ein Client für Webuntis"
 
 #~ msgid "Jonas Harer"
 #~ msgstr "Jonas Harer"

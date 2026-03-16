@@ -5,7 +5,7 @@
   <project_license>GPL-3.0-or-later</project_license>
 
   <name>Timetable</name>
-  <summary>A client for webuntis</summary>
+  <summary>View your WebUntis timetable</summary>
   <description>
     <p>Timetable is an unofficial client for WebUntis, which focusses on the featured used by students.</p>
   </description>

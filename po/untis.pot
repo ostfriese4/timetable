@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-15 18:11+0100\n"
+"POT-Creation-Date: 2026-03-16 15:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,7 @@ msgid "GTK;untis;school;timetable;students"
 msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:8
-msgid "A client for webuntis"
+msgid "View your WebUntis timetable"
 msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:10
@@ -53,11 +53,11 @@ msgstr ""
 msgid "No data available"
 msgstr ""
 
-#: src/api.py:241
+#: src/api.py:252
 msgid "Unknown"
 msgstr ""
 
-#: src/api.py:254 src/api.py:255
+#: src/api.py:265 src/api.py:266
 msgid "and"
 msgstr ""
 
