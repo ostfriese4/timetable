@@ -76,9 +76,14 @@ class UntisWindow(Adw.ApplicationWindow):
         self.loadData()
 
     def loadData(self):
+        s = self.startdate
         def load():
-            table = api.getTimetable(self.startdate, self.enddate)
-            GLib.idle_add(self.displayData, table)
+            table = api.getTimetable(self.startdate, self.enddate, useCache = True)
+            if s == self.startdate:
+                GLib.idle_add(self.displayData, table)
+                table = api.getTimetable(self.startdate, self.enddate)
+                if s == self.startdate:
+                    GLib.idle_add(self.displayData, table)
         thread = threading.Thread(target=load, daemon=True)
         thread.start()
         return True # To repeat

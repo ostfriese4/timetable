@@ -33,14 +33,15 @@ class untisApi:
         os.system("mkdir -p " + self.CACHEDIR)
         try:
             self.loadColors()
-        except:
+        except FileNotFoundError:
             self.writeColors() # create
         try:
             self.loadCache()
-        except:
+        except FileNotFoundError:
             self.cacheFile = {}
             self.cacheFile["refresh"] = "01/01/2000, 00:00:00"
             self.writeCache() # create
+        self.loggedIn = False
 
     def getHoliday(self, date):
         path = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-holidays.json"
@@ -173,15 +174,18 @@ class untisApi:
         with open(self.CACHEDIR + name) as cache:
             return json.load(cache)
 
-    def getTimetable(self, start, end):
+    def getTimetable(self, start, end, useCache = False):
         days = (end - start).days + 1
         self.cache = False
 
-        useCache = True
-        for date in (start + datetime.timedelta(n) for n in range(days)):
-            if not self.useCache(date):
-                useCache = False
-                break
+        useCacheOrig = useCache
+
+        if not useCache:
+            useCache = True
+            for date in (start + datetime.timedelta(n) for n in range(days)):
+                if not self.useCache(date):
+                    useCache = False
+                    break
 
         if not useCache:
             try:
@@ -198,7 +202,7 @@ class untisApi:
                 for date in (start + datetime.timedelta(n) for n in range(days)):
                     data.append(self.loadDayFromCache(date))
                 return data
-            except:
+            except Exception:
                 if days == 1:
                     return [[]]
                 else:
@@ -206,7 +210,7 @@ class untisApi:
                     print("Try to fetch the days individually")
                     self.cache = False
                     for date in (start + datetime.timedelta(n) for n in range(days)):
-                        day = self.getTimetable(date, date)
+                        day = self.getTimetable(date, date, useCacheOrig)
                         data.append(day[0])
                     if data == []:
                         data.append([])
@@ -311,7 +315,8 @@ class untisApi:
             self.writeDayToCache(date, data[i])
             i+=1
 
-        self.logout()
+        if self.loggedIn:
+            self.logout()
         return data
 
     # from https://github.com/l-koehler/untis-py (api.py)
@@ -350,9 +355,11 @@ class untisApi:
             useragent='WebUntis Test'
             )
         self.session.login()
+        self.loggedIn = True
 
     def logout(self):
         self.session.logout()
+        self.loggedIn = False
 
     def testLogin(self):
         try:
