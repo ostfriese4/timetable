@@ -27,6 +27,9 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GLib
 
+
+from .homework_api import fetchHomeworks
+
 import threading
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/window.ui')
@@ -76,6 +79,7 @@ class UntisWindow(Adw.ApplicationWindow):
         self.loadData()
 
     def loadData(self):
+        fetchHomeworks(self.startdate, self.enddate)
         s = self.startdate
         def load():
             table = api.getTimetable(self.startdate, self.enddate, useCache = True)
