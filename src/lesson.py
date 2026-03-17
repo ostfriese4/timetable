@@ -27,6 +27,7 @@ class Lesson(Gtk.Box):
     subject_label = Gtk.Template.Child()
     teacher_label = Gtk.Template.Child()
     room_label = Gtk.Template.Child()
+    clamp = Gtk.Template.Child()
 
     def __init__(self, lesson, window, **kwargs):
         super().__init__(**kwargs)
@@ -42,11 +43,14 @@ class Lesson(Gtk.Box):
         self.teacher_label.set_label(self.lesson["teacher-short"])
         self.room_label.set_label(self.lesson["room"])
 
-        self.set_size_request(-1, self.lesson["duration"])
+        self.clamp.set_maximum_size(lesson["duration"])
+        self.set_size_request(-1, lesson["duration"])
+
         self.add_css_class("lesson")
         self.add_css_class(self.lesson["color"])
         if self.lesson["code"] == "cancelled":
             self.add_css_class("cancelled")
+
         if "original" in self.lesson:
             self.add_css_class("changed")
             if "teacher-short" in self.lesson["original"]:
