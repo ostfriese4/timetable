@@ -61,21 +61,23 @@ class untisApi:
             except Exception:
                 load = False
 
-            data = {}
-            data["updated"] = today.strftime("%d.%m.%y")
-            data["holidays"] = []
+            if load:
+                data = {}
+                data["updated"] = today.strftime("%d.%m.%y")
+                data["holidays"] = []
 
-            for holiday in holidays:
-                item = {}
-                item["name"] = holiday.name
-                item["start"] = holiday.start.strftime("%d.%m.%y")
-                item["end"] = holiday.end.strftime("%d.%m.%y")
-                item["short"] = holiday.short_name
+                for holiday in holidays:
+                    item = {}
+                    item["name"] = holiday.name
+                    item["start"] = holiday.start.strftime("%d.%m.%y")
+                    item["end"] = holiday.end.strftime("%d.%m.%y")
+                    item["short"] = holiday.short_name
 
-                data["holidays"].append(item)
-            with open(path, "w") as file:
-                print("writing holidays-cache")
-                json.dump(data, file, indent=4)
+                    data["holidays"].append(item)
+                with open(path, "w") as file:
+                    print("writing holidays-cache")
+                    json.dump(data, file, indent=4)
+
         if not load:
             print("loading holidays-cache")
             with open(path) as file:
