@@ -55,6 +55,7 @@ def fetchHomeworks(start, end, useCache = False):
             result = json.loads(r.text)
 
             data = result["data"]
+            lessons = data["lessons"]
             homeworks = data["homeworks"]
 
             days = {}
@@ -64,11 +65,14 @@ def fetchHomeworks(start, end, useCache = False):
             for homework in homeworks:
                 day = str(homework["dueDate"])
                 days[day].append(homework)
+                for lesson in lessons:
+                    if lesson["id"] == homework["lessonId"]:
+                        homework["subject"] = lesson["subject"]
 
             result = []
             for day in days:
                 writeDay(day, days[day])
-                result.append(days[day])
+                result += days[day]
 
             session.logout()
 
@@ -80,5 +84,5 @@ def fetchHomeworks(start, end, useCache = False):
         result = []
         for date in (start + datetime.timedelta(n) for n in range(day_count)):
             day = loadDay(date.strftime("%Y%m%d"))
-            result.append(day)
+            result += day
         return result

@@ -248,6 +248,8 @@ class untisApi:
                     lessondata = {}
                     lessondata["sg"] = lesson.studentGroup
                     lessondata["code"] = lesson.code
+                    lessondata["id"] = lesson.lsnumber
+                    lessondata["date"] = lesson.start.strftime("%Y%m%d")
                     lessondata["start"] = lesson.start.hour * 60 + lesson.start.minute
                     lessondata["end"] = lesson.end.hour * 60 + lesson.end.minute
                     lessondata["duration"] = lessondata["end"] - lessondata["start"]
