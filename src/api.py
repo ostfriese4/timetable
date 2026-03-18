@@ -21,12 +21,12 @@ import datetime
 import json
 import os
 import requests
+import sys
 import webuntis
 from .credentials import getCredentials, setCredentials
 
 class untisApi:
     def __init__(self):
-        self.session = None
         self.colors = {}
         self.cache = True
         self.CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-days/"
@@ -41,7 +41,6 @@ class untisApi:
             self.cacheFile = {}
             self.cacheFile["refresh"] = "01/01/2000, 00:00:00"
             self.writeCache() # create
-        self.loggedIn = False
 
     def getHoliday(self, date):
         path = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-holidays.json"
@@ -189,13 +188,15 @@ class untisApi:
 
         if not useCache:
             try:
-                self.login()
-                table = self.session.my_timetable(start=start, end=end).to_table()
+                session = self.login()
+                table = session.my_timetable(start=start, end=end).to_table()
             except webuntis.errors.DateNotAllowed:
                 useCache = True
-            except Exception:
+            except Exception as e:
                 self.cache = True
                 useCache = True
+                print("offline bacause of")
+                sys.print_exception(e)
         if useCache:
             try:
                 data = []
@@ -315,8 +316,7 @@ class untisApi:
             self.writeDayToCache(date, data[i])
             i+=1
 
-        if self.loggedIn:
-            self.logout()
+        session.logout()
         return data
 
     # from https://github.com/l-koehler/untis-py (api.py)
@@ -347,24 +347,19 @@ class untisApi:
 
     def login(self):
         credentials = getCredentials()
-        self.session = webuntis.Session(
+        session = webuntis.Session(
             username=credentials["username"],
             password=credentials["password"],
             server=credentials["server"],
             school=credentials["school"],
             useragent='WebUntis Test'
             )
-        self.session.login()
-        self.loggedIn = True
-
-    def logout(self):
-        self.session.logout()
-        self.loggedIn = False
+        session.login()
+        return session
 
     def testLogin(self):
         try:
-            self.login()
-            self.logout()
+            self.login().logout()
             return True
         except webuntis.errors.BadCredentialsError:
             return False
