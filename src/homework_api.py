@@ -1,10 +1,8 @@
 from .api import api
 import json
-from webuntis.utils.remote import _request_getid, _parse_result, _send_request
 
 def fetchHomeworks(start, end):
-    api.login()
-    session = api.session
+    session = api.login()
 
     jsessionid = session.config["jsessionid"]
     useragent = session.config["useragent"]
@@ -28,4 +26,4 @@ def fetchHomeworks(start, end):
 
     print(result)
 
-    api.logout()
+    session.logout()
