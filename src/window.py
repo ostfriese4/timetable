@@ -79,7 +79,9 @@ class UntisWindow(Adw.ApplicationWindow):
         self.loadData()
 
     def loadData(self):
-        fetchHomeworks(self.startdate, self.enddate)
+        try:
+            fetchHomeworks(self.startdate, self.enddate)
+        except: pass
         s = self.startdate
         def load():
             table = api.getTimetable(self.startdate, self.enddate, useCache = True)

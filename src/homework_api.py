@@ -1,5 +1,6 @@
 from .api import api
 import json
+from webuntis.utils.remote import rpc_request
 
 def fetchHomeworks(start, end):
     session = api.login()
@@ -9,7 +10,7 @@ def fetchHomeworks(start, end):
     server = session.config["server"]
     school = session.config["school"]
 
-    session = session.config["_http_session"]
+    s = session.config["_http_session"]
 
     url = server + "/WebUntis/api/homeworks/lessons?startDate=" + start.strftime("%Y%m%d") + "&endDate=" + end.strftime("%Y%m%d") + "&school=" + school
 
@@ -21,9 +22,14 @@ def fetchHomeworks(start, end):
     }
     headers['Cookie'] = u'JSESSIONID=' + jsessionid
 
-    r = session.get(url, data=json.dumps({}), headers=headers)
+    r = s.get(url, data=json.dumps({}), headers=headers)
     result = r.text
 
     print(result)
 
+    parameters = session._create_date_param(end, start, id=5, type="student")
+    data = rpc_request(session.config, "getHomework", parameters)
+    print(data)
+
     session.logout()
+
