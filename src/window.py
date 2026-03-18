@@ -79,9 +79,6 @@ class UntisWindow(Adw.ApplicationWindow):
         self.loadData()
 
     def loadData(self):
-        try:
-            fetchHomeworks(self.startdate, self.enddate)
-        except: pass
         s = self.startdate
         def load():
             table = api.getTimetable(self.startdate, self.enddate, useCache = True)
@@ -90,6 +87,7 @@ class UntisWindow(Adw.ApplicationWindow):
                 table = api.getTimetable(self.startdate, self.enddate)
                 if s == self.startdate:
                     GLib.idle_add(self.displayData, table)
+                    homeworks = fetchHomeworks(self.startdate, self.enddate)
         thread = threading.Thread(target=load, daemon=True)
         thread.start()
         return True # To repeat
