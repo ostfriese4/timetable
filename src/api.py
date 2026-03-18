@@ -21,7 +21,7 @@ import datetime
 import json
 import os
 import requests
-import sys
+import traceback
 import webuntis
 from .credentials import getCredentials, setCredentials
 
@@ -196,7 +196,7 @@ class untisApi:
                 self.cache = True
                 useCache = True
                 print("offline bacause of")
-                sys.print_exception(e)
+                traceback.print_exc()
         if useCache:
             try:
                 data = []
