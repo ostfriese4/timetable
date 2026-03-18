@@ -11,8 +11,8 @@
         "--device=dri",
         "--socket=wayland"
     ],
-    "cleanup-commands" : [
-        "python3 -m compileall --invalidation-mode=unchecked-hash /app"
+    "cleanup-commands": [
+    	"python3 -m compileall --invalidation-mode=unchecked-hash /app"
     ],
     "modules" : [
         "pypi.json",
