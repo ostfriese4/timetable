@@ -27,8 +27,7 @@
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg9"
-     showgrid="false" />
+     inkscape:current-layer="svg9" />
   <defs
      id="defs2">
     <linearGradient
@@ -38,7 +37,7 @@
        y1="14"
        y2="186"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.0765624,0,0,1.0765624,-8.0677568,-8.0677568)">
+       gradientTransform="matrix(1.0886562,0,0,1.0886562,-8.6598649,-8.6598649)">
       <stop
          offset=" 0%"
          stop-color="#ED0"
@@ -51,92 +50,93 @@
   </defs>
   <!-- clock -->
   <circle
-     cx="99.588478"
-     cy="99.588478"
+     cx="100.20576"
+     cy="100.20576"
+     r="87.092499"
      stroke="url(#frame_grad)"
-     stroke-width="12.9188"
-     fill="#EEE"
+     stroke-width="12.4958"
+     fill="#eeeeee"
      id="circle2"
-     style="fill:#212121;fill-opacity:1;stroke:url(#frame_grad)"
-     r="86.124985" />
+     style="stroke:url(#frame_grad)" />
   <!-- clock hands/markings -->
   <line
-     x1="99.588478"
-     y1="99.588478"
-     x2="99.588478"
-     y2="28.535364"
-     stroke="#3A3ADD"
-     stroke-width="8.6125"
+     x1="100.20576"
+     y1="100.20576"
+     x2="100.20576"
+     y2="28.35445"
+     stroke="#3a3add"
+     stroke-width="8.33055"
      stroke-linecap="round"
-     id="line2"
-     style="stroke:#3363db;stroke-opacity:1" />
+     id="line2" />
   <line
-     x1="99.588478"
-     y1="99.588478"
-     x2="149.83063"
-     y2="49.346336"
+     x1="100.20576"
+     y1="100.20576"
+     x2="151.01231"
+     y2="49.399208"
      stroke="#dd3a3a"
-     stroke-width="8.31412"
+     stroke-width="8.33055"
      stroke-linecap="round"
      id="line3" />
   <line
-     x1="99.58847"
-     y1="99.588478"
-     x2="170.64159"
-     y2="99.588478"
+     x1="100.20576"
+     y1="100.20576"
+     x2="172.05708"
+     y2="100.20576"
      stroke="#dddd3a"
-     stroke-width="8.31412"
+     stroke-width="8.33055"
      stroke-linecap="round"
      id="line4" />
   <line
-     x1="141.45692"
-     y1="141.45692"
-     x2="150.59186"
-     y2="150.59186"
+     x1="142.54454"
+     y1="142.54454"
+     x2="151.7821"
+     y2="151.7821"
      stroke="#888888"
-     stroke-width="6.45937"
+     stroke-width="6.53193"
      stroke-linecap="round"
-     id="line5"
-     style="stroke:#c6c6c6;stroke-opacity:1" />
+     id="line5" />
   <line
-     x1="99.588478"
-     y1="158.79941"
-     x2="99.588478"
-     y2="171.71815"
+     x1="100.20576"
+     y1="160.08185"
+     x2="100.20576"
+     y2="173.14574"
      stroke="#888888"
-     stroke-width="6.45937"
+     stroke-width="6.53193"
      stroke-linecap="round"
-     id="line6"
-     style="stroke:#c7c7c7;stroke-opacity:1" />
+     id="line6" />
   <line
-     x1="57.720028"
-     y1="141.45692"
-     x2="48.585091"
-     y2="150.59186"
+     x1="57.86697"
+     y1="142.54454"
+     x2="48.629414"
+     y2="151.7821"
      stroke="#888888"
-     stroke-width="6.45937"
+     stroke-width="6.53193"
      stroke-linecap="round"
-     id="line7"
-     style="stroke:#c7c7c7;stroke-opacity:1" />
+     id="line7" />
   <line
-     x1="40.377548"
-     y1="99.588478"
-     x2="27.458801"
-     y2="99.588478"
+     x1="40.329666"
+     y1="100.20576"
+     x2="27.265793"
+     y2="100.20576"
      stroke="#888888"
-     stroke-width="6.45937"
+     stroke-width="6.53193"
      stroke-linecap="round"
-     id="line8"
-     style="stroke:#c7c7c7;stroke-opacity:1" />
+     id="line8" />
   <line
-     x1="57.720028"
-     y1="57.720028"
-     x2="48.585091"
-     y2="48.585091"
+     x1="57.86697"
+     y1="57.86697"
+     x2="48.629414"
+     y2="48.629414"
      stroke="#888888"
-     stroke-width="6.45937"
+     stroke-width="6.53193"
      stroke-linecap="round"
-     id="line9"
-     style="stroke:#c7c7c7;stroke-opacity:1" />
+     id="line9" />
   <!-- without this, the clock hand colors weirdly overlap when zoomed in -->
+  <circle
+     cx="100.20576"
+     cy="100.20576"
+     r="4.3818417"
+     fill="#dddd3a"
+     id="circle9"
+     style="stroke-width:1.08866" />
 </svg>
