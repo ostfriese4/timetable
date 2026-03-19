@@ -56,6 +56,13 @@ class InformationWindow(Adw.Dialog):
             minutes_end = "0" + str(minutes_end)
         data[_("Duration")] = str(lesson["duration"]) + " " + _("Minutes") + " (" + str(hours_start) + ":" + str(minutes_start) + " - " + str(hours_end) + ":" + str(minutes_end) + ")"
 
+        if "homeworks" in lesson:
+            homeworks = lesson["homeworks"]
+            data = {}
+            rows.append((_("Homework"), data))
+            for homework in homeworks:
+                data[homework["text"]] = ""
+
         if "original" in lesson:
             data = {}
             rows.append((_("Original lesson"), data))

@@ -61,3 +61,11 @@ class Lesson(Gtk.Box):
 
     def on_click(self, gesture, data, x, y):
         self.window.information_window.setLesson(self.lesson)
+
+    def addHomework(self, homework):
+        if "homeworks" in self.lesson:
+            homeworks = self.lesson["homeworks"]
+        else:
+            homeworks = []
+            self.lesson["homeworks"] = homeworks
+        homeworks.append(homework)

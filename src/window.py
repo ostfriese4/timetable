@@ -27,6 +27,9 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GLib
 
+
+from .homework_api import fetchHomeworks
+
 import threading
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/window.ui')
@@ -84,9 +87,25 @@ class UntisWindow(Adw.ApplicationWindow):
                 table = api.getTimetable(self.startdate, self.enddate)
                 if s == self.startdate:
                     GLib.idle_add(self.displayData, table)
+                    homeworks = fetchHomeworks(self.startdate, self.enddate)
+                    if s == self.startdate:
+                        GLib.idle_add(self.displayHomeworks, homeworks)
         thread = threading.Thread(target=load, daemon=True)
         thread.start()
         return True # To repeat
+
+    def displayHomeworks(self, data):
+        for homework in data:
+            for lesson in self.lessons:
+                ld = lesson[2]
+                if ld["subject-short"] == homework["subject"]:
+                    if str(homework["dueDate"]) == ld["date"]:
+                        lesson[1].addHomework(homework)
+                if "original" in ld:
+                    if "subject-short" in ld["original"]:
+                        if ld["original"]["subject-short"] == homework["subject"]:
+                            if str(homework["dueDate"]) == ld["date"]:
+                                lesson[1].addHomework(homework)
 
     def displayData(self, table):
         if api.cache:
@@ -144,5 +163,5 @@ class UntisWindow(Adw.ApplicationWindow):
                 block = Lesson(lesson, self)
                 x = lesson["end"]
                 column.append(block)
-                self.lessons.append((column, block))
+                self.lessons.append((column, block, lesson))
             date += datetime.timedelta(days=1)

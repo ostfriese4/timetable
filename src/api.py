@@ -146,8 +146,7 @@ class untisApi:
         with open(self.CACHEDIR + "index.json", "w") as cache:
             json.dump(self.cacheFile, cache, indent = 4)
 
-    def useCache(self, date):
-        name = date.strftime("%Y-%m-%d")
+    def useCacheName(self, name):
         if not name in self.cacheFile:
             return False
         last = datetime.datetime.strptime(self.cacheFile[name], "%m/%d/%Y, %H:%M:%S")
@@ -159,13 +158,20 @@ class untisApi:
             return False
         return True
 
+    def useCache(self, date):
+        name = date.strftime("%Y-%m-%d")
+        return self.useCacheName(name)
+
+    def updateCache(self, name):
+        self.cacheFile[name] = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        self.writeCache()
+
     def writeDayToCache(self, day, data):
         name = day.strftime("%Y-%m-%d")
-        self.cacheFile[name] = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        self.updateCache(name)
         print("writing cache", name)
         with open(self.CACHEDIR + name, "w") as cache:
             json.dump(data, cache, indent=4)
-        self.writeCache()
 
     def loadDayFromCache(self, day):
         name = day.strftime("%Y-%m-%d")
@@ -242,6 +248,8 @@ class untisApi:
                     lessondata = {}
                     lessondata["sg"] = lesson.studentGroup
                     lessondata["code"] = lesson.code
+                    lessondata["id"] = lesson.lsnumber
+                    lessondata["date"] = lesson.start.strftime("%Y%m%d")
                     lessondata["start"] = lesson.start.hour * 60 + lesson.start.minute
                     lessondata["end"] = lesson.end.hour * 60 + lesson.end.minute
                     lessondata["duration"] = lessondata["end"] - lessondata["start"]
