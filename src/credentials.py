@@ -1,3 +1,6 @@
+import gi
+gi.require_version('Secret', '1')
+
 from gi.repository import Secret
 import json
 import os
