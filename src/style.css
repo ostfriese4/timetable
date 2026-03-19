@@ -12,7 +12,10 @@
 }
 
 .lesson {
-  margin: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 0px;
+  margin-top: 0px;
   border-radius: 5px;
 }
 
