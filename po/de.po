@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-16 19:07+0100\n"
-"PO-Revision-Date: 2026-03-16 19:19+0100\n"
+"POT-Creation-Date: 2026-03-19 08:43+0100\n"
+"PO-Revision-Date: 2026-03-19 08:47+0100\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 49.0\n"
+"X-Generator: Gtranslator 50.0\n"
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:49
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:50
 #: src/window.ui:6 src/window.ui:24
 msgid "Timetable"
 msgstr "Stundenplan"
@@ -53,57 +53,53 @@ msgstr "Der Stundenplan"
 msgid "Dialog showing information about a lesson"
 msgstr "Informationen zur Stunde werden in einem Dialog angezeigt"
 
-#: src/api.py:93
+#: src/api.py:95
 msgid "No data available"
 msgstr "Keine Daten verfügbar"
 
-#: src/api.py:254
+#: src/api.py:269
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/api.py:267 src/api.py:268
+#: src/api.py:282 src/api.py:283
 msgid "and"
 msgstr "und"
 
-#: src/information.py:40
+#: src/information.py:42 src/information.py:83
 msgid "Subject"
 msgstr "Fach"
 
-#: src/information.py:41
+#: src/information.py:43 src/information.py:84
 msgid "Room"
 msgstr "Raum"
 
-#: src/information.py:42
+#: src/information.py:44 src/information.py:85
 msgid "Teacher"
 msgstr "Lehrkraft"
 
-#: src/information.py:44
+#: src/information.py:46
 msgid "Information about this lesson"
 msgstr "Informationen zur Stunde"
 
-#: src/information.py:46
+#: src/information.py:48
 msgid "Cancelled"
 msgstr "Fällt aus"
 
-#: src/information.py:55
+#: src/information.py:57
 msgid "Duration"
 msgstr "Dauer"
 
-#: src/information.py:55
+#: src/information.py:57
 msgid "Minutes"
 msgstr "Minuten"
 
-#: src/information.py:60
-msgid "Original subject"
-msgstr "Ursprüngliches Fach"
-
 #: src/information.py:62
-msgid "Original room"
-msgstr "Ursprünglicher Raum"
+msgid "Homework"
+msgstr "Hausaufgaben"
 
-#: src/information.py:64
-msgid "Original teacher"
-msgstr "Ursprüngliche Lehrkraft"
+#: src/information.py:68
+msgid "Original lesson"
+msgstr "Ursprüngliche Stunde"
 
 #: src/information.ui:6
 msgid "Information"
@@ -150,7 +146,7 @@ msgid "Password"
 msgstr "Passwort"
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:56
+#: src/main.py:57
 msgid "translator-credits"
 msgstr ""
 
@@ -209,6 +205,12 @@ msgstr "_Tastenkürzel"
 #: src/window.ui:88
 msgid "_About Timetable"
 msgstr "Über _Stundenplan"
+
+#~ msgid "Original subject"
+#~ msgstr "Ursprüngliches Fach"
+
+#~ msgid "Original teacher"
+#~ msgstr "Ursprüngliche Lehrkraft"
 
 #~ msgid "A client for webuntis"
 #~ msgstr "Ein Client für Webuntis"

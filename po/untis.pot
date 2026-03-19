@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-16 19:07+0100\n"
+"POT-Creation-Date: 2026-03-19 08:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:49
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:50
 #: src/window.ui:6 src/window.ui:24
 msgid "Timetable"
 msgstr ""
@@ -49,56 +49,52 @@ msgstr ""
 msgid "Dialog showing information about a lesson"
 msgstr ""
 
-#: src/api.py:93
+#: src/api.py:95
 msgid "No data available"
 msgstr ""
 
-#: src/api.py:254
+#: src/api.py:269
 msgid "Unknown"
 msgstr ""
 
-#: src/api.py:267 src/api.py:268
+#: src/api.py:282 src/api.py:283
 msgid "and"
 msgstr ""
 
-#: src/information.py:40
+#: src/information.py:42 src/information.py:83
 msgid "Subject"
 msgstr ""
 
-#: src/information.py:41
+#: src/information.py:43 src/information.py:84
 msgid "Room"
 msgstr ""
 
-#: src/information.py:42
+#: src/information.py:44 src/information.py:85
 msgid "Teacher"
 msgstr ""
 
-#: src/information.py:44
+#: src/information.py:46
 msgid "Information about this lesson"
 msgstr ""
 
-#: src/information.py:46
+#: src/information.py:48
 msgid "Cancelled"
 msgstr ""
 
-#: src/information.py:55
+#: src/information.py:57
 msgid "Duration"
 msgstr ""
 
-#: src/information.py:55
+#: src/information.py:57
 msgid "Minutes"
 msgstr ""
 
-#: src/information.py:60
-msgid "Original subject"
-msgstr ""
-
 #: src/information.py:62
-msgid "Original room"
+msgid "Homework"
 msgstr ""
 
-#: src/information.py:64
-msgid "Original teacher"
+#: src/information.py:68
+msgid "Original lesson"
 msgstr ""
 
 #: src/information.ui:6
@@ -146,7 +142,7 @@ msgid "Password"
 msgstr ""
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:56
+#: src/main.py:57
 msgid "translator-credits"
 msgstr ""
 
