@@ -101,6 +101,11 @@ class UntisWindow(Adw.ApplicationWindow):
                 if ld["subject-short"] == homework["subject"]:
                     if str(homework["dueDate"]) == ld["date"]:
                         lesson[1].addHomework(homework)
+                if "original" in ld:
+                    if "subject-short" in ld["original"]:
+                        if ld["original"]["subject-short"] == homework["subject"]:
+                            if str(homework["dueDate"]) == ld["date"]:
+                                lesson[1].addHomework(homework)
 
     def displayData(self, table):
         if api.cache:

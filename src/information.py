@@ -59,7 +59,7 @@ class InformationWindow(Adw.Dialog):
         if "homeworks" in lesson:
             homeworks = lesson["homeworks"]
             data = {}
-            rows.append((_("Homeworks"), data))
+            rows.append((_("Homework"), data))
             for homework in homeworks:
                 data[homework["text"]] = ""
 
