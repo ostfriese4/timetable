@@ -30,6 +30,7 @@ class untisApi:
         self.colors = {}
         self.cache = True
         self.CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-days/"
+        self.holidays = []
         os.system("mkdir -p " + self.CACHEDIR)
         try:
             self.loadColors()
@@ -44,28 +45,30 @@ class untisApi:
 
     def getHoliday(self, date):
         path = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-holidays.json"
-        load = False
-        today = datetime.date.today()
         if not os.path.exists(path):
-            load = True
-        else:
+            with open(path ,"w") as file:
+                self.holidays = []
+                json.dump(self.holidays, file)
+
+        useCache = self.useCacheName("holidays")
+
+        if self.holidays == []:
             with open(path) as file:
-                data = json.load(file)
-            if today != datetime.datetime.strptime(data["updated"], "%d.%m.%y").date():
-                load = True
-        if load:
+                print("loading holidays-cache")
+                self.holidays = json.load(file)
+            if self.holidays == []:
+                useCache = False
+
+        if not useCache:
             try:
-                self.login()
-                holidays = self.session.holidays()
-                self.logout()
+                session = self.login()
+                holidays = session.holidays()
+                session.logout()
             except Exception:
-                load = False
+                useCache = True
 
-            if load:
-                data = {}
-                data["updated"] = today.strftime("%d.%m.%y")
-                data["holidays"] = []
-
+            if not useCache:
+                self.holidays = []
                 for holiday in holidays:
                     item = {}
                     item["name"] = holiday.name
@@ -73,16 +76,14 @@ class untisApi:
                     item["end"] = holiday.end.strftime("%d.%m.%y")
                     item["short"] = holiday.short_name
 
-                    data["holidays"].append(item)
+                    self.holidays.append(item)
+
                 with open(path, "w") as file:
                     print("writing holidays-cache")
-                    json.dump(data, file, indent=4)
+                    json.dump(self.holidays, file, indent=4)
+                    self.updateCache("holidays")
 
-        if not load:
-            print("loading holidays-cache")
-            with open(path) as file:
-                data = json.load(file)
-        for holiday in data["holidays"]:
+        for holiday in self.holidays:
             start = datetime.datetime.strptime(holiday["start"], "%d.%m.%y").date()
             end = datetime.datetime.strptime(holiday["end"], "%d.%m.%y").date()
 
