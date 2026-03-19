@@ -43,6 +43,15 @@
   </screenshots>
 
   <releases>
+    <release version="2.0" date="2026-03-19">
+      <description translate="no">
+        <ul>
+          <li>Updated to GNOME 50</li>
+          <li>Initial support for homework</li>
+          <li>Performance improvements and bugfixes</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.2" date="2026-03-16">
       <description translate="no">
         <p>Added support for holidays and improved caching</p>
