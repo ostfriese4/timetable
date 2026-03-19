@@ -77,9 +77,8 @@ def fetchHomeworks(start, end, useCache = False):
             session.logout()
 
             return result
-        except:
+        except requests.exceptions.ConnectionError:
             useCache = True
-            raise
     if useCache:
         result = []
         for date in (start + datetime.timedelta(n) for n in range(day_count)):
