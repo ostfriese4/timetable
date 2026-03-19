@@ -126,7 +126,7 @@ class LoginWindow(Adw.Dialog):
         self.present(self.window)
         try:
             credentials = getCredentials()
-            self.usr_entry.set_text(credentials["username"])
+            self.usr_entry.set_text(credentials["user"])
             self.pswd_entry.set_text(credentials["password"])
             self.school_entry.set_text(credentials["school"])
             self.server_entry.set_text(credentials["server"])

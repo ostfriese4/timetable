@@ -356,7 +356,7 @@ class untisApi:
     def login(self):
         credentials = getCredentials()
         session = webuntis.Session(
-            username=credentials["username"],
+            username=credentials["user"],
             password=credentials["password"],
             server=credentials["server"],
             school=credentials["school"],

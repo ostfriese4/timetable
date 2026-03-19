@@ -1,18 +1,33 @@
+from gi.repository import Secret
 import json
 import os
 
 credentialsPath = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
 
+SCHEMA = Secret.Schema.new("page.codeberg.ostfriese4.Untis.Store",
+    Secret.SchemaFlags.NONE,
+    {
+        "server": Secret.SchemaAttributeType.STRING,
+        "school": Secret.SchemaAttributeType.STRING,
+        "user": Secret.SchemaAttributeType.STRING
+    }
+)
+
 def setCredentials(server, school, user, password):
-    with open(credentialsPath, "w") as file:
-        json.dump({
-            "username": user,
-            "password": password,
+    data = {
+            "user": user,
             "server": server,
             "school": school
-        },
-        file)
+           }
+    with open(credentialsPath, "w") as file:
+        json.dump(data, file)
+    Secret.password_store_sync(SCHEMA, data, Secret.COLLECTION_DEFAULT, "Untis Password", password, None)
 
 def getCredentials():
     with open(credentialsPath) as file:
-        return json.load(file)
+        data = json.load(file)
+    password = Secret.password_lookup_sync(SCHEMA, data, None)
+    data["password"] = password
+    if password == None:
+        raise FileNotFoundError("no password set")
+    return data
