@@ -30,7 +30,11 @@ def getCredentials():
     with open(credentialsPath) as file:
         data = json.load(file)
     password = Secret.password_lookup_sync(SCHEMA, data, None)
-    data["password"] = password
     if password == None:
+        if "password" in data: # not yet migrated
+            print("migrating password")
+            setCredentials(data["server"], data["school"], data["username"], data["password"])
+            return getCredentials()
         raise FileNotFoundError("no password set")
+    data["password"] = password
     return data
