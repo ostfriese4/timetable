@@ -3,6 +3,7 @@ import json
 from webuntis.utils.remote import rpc_request
 import datetime
 import os
+import requests
 from .credentials import getCredentials
 
 CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-hw/"
