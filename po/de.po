@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 08:43+0100\n"
-"PO-Revision-Date: 2026-03-19 08:47+0100\n"
+"PO-Revision-Date: 2026-03-19 13:26+0100\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -31,7 +31,7 @@ msgstr "GTK;Untis;Schule;Stundenplan;Schüler"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:8
 msgid "View your WebUntis timetable"
-msgstr "Sie dir deinen WebUntis-Stundenplan an"
+msgstr "Sieh dir deinen WebUntis-Stundenplan an"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:10
 msgid ""
