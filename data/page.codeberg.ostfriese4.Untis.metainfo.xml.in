@@ -43,6 +43,14 @@
   </screenshots>
 
   <releases>
+    <release version="2.1" date="2026-03-19">
+      <description translate="no">
+        <ul>
+          <li>Fixed holidays</li>
+          <li>Use gnome-keyring</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0" date="2026-03-19">
       <description translate="no">
         <ul>
