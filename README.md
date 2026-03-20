@@ -12,3 +12,7 @@
 
 # Build
 To build, clone this in GNOME-Builder and click play
+
+# Screenshots
+<img alt='The timetable' src='https://codeberg.org/ostfriese4/untis/raw/branch/main/screenshots/timetable.png'/>
+<img alt='Information about a lesson' src='https://codeberg.org/ostfriese4/untis/raw/branch/main/screenshots/information.png'/>
