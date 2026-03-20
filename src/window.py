@@ -47,6 +47,8 @@ class UntisWindow(Adw.ApplicationWindow):
         self.columns = []
         self.lessons = []
 
+        self.prefetching = []
+
         self.next_button.connect("clicked", self.next)
         self.previous_button.connect("clicked", self.previous)
 
@@ -78,6 +80,30 @@ class UntisWindow(Adw.ApplicationWindow):
         api.refresh()
         self.loadData()
 
+    def prefetch(self):
+        def code():
+            while self.prefetching != []:
+                day = self.prefetching[0]
+                if not day.strftime("%Y-%m-%d") in api.cacheFile:
+                    data = api.getTimetable(day, day)
+                    if data == [[]]:
+                        api.getHoliday(day)
+                self.prefetching.remove(day)
+
+        start = (self.prefetching == [])
+
+        start = self.startdate + datetime.timedelta(days=7)
+        for date in (start + datetime.timedelta(n) for n in range(5)):
+            self.prefetching.append(date)
+        start = self.startdate - datetime.timedelta(days=7)
+        for date in (start + datetime.timedelta(n) for n in range(5)):
+            self.prefetching.append(date)
+
+        if start:
+            thread = threading.Thread(target=code, daemon=True)
+            thread.start()
+
+
     def loadData(self):
         s = self.startdate
         def load():
@@ -90,6 +116,8 @@ class UntisWindow(Adw.ApplicationWindow):
                     homeworks = fetchHomeworks(self.startdate, self.enddate)
                     if s == self.startdate:
                         GLib.idle_add(self.displayHomeworks, homeworks)
+                        self.prefetch()
+
         thread = threading.Thread(target=load, daemon=True)
         thread.start()
         return True # To repeat
