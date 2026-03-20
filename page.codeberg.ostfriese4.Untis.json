@@ -25,7 +25,13 @@
                     "type" : "git",
                     "url" : "file:///home/jonas/Programme/Builder"
                 }
+            ],
+            "config-opts" : [
+                "--libdir=lib"
             ]
         }
-    ]
+    ],
+    "build-options" : {
+        "env" : {        }
+    }
 }
