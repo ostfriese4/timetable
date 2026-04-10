@@ -64,6 +64,15 @@ class UntisWindow(Adw.ApplicationWindow):
 
         self.info_rows = []
 
+        def onKeyPress(click,key,x,y):
+            if key == 65363:
+                self.next()
+            elif key == 65361:
+                self.previous()
+        keyPress = Gtk.EventControllerKey.new()
+        keyPress.connect("key-pressed", onKeyPress)
+        self.add_controller(keyPress)
+
         GLib.timeout_add(1000*60*10, self.loadData) # Update every ten minutes (will result in every hour because of caching; ten minutes to handle manual updates changing the time of the cache timeout)
 
     def next(self, data = None):
