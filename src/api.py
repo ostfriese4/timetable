@@ -266,6 +266,12 @@ class untisApi:
                         lessondata["original"]["teacher-short"] = lesson.original_teachers[0].name
                         lessondata["original"]["teacher-long"] = lesson.original_teachers[0].full_name
 
+                    if len(lesson.original_rooms) != 0:
+                        if not "original" in lessondata:
+                            lessondata["original"] = {}
+                        lessondata["original"]["room"] = lesson.original_rooms[0].name
+                        lessondata["original"]["room-info"] = lesson.original_rooms[0].long_name
+
                     try:
                         rooms = lesson.rooms
                     except Exception:
