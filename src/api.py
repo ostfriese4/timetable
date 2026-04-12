@@ -202,7 +202,7 @@ class untisApi:
             except Exception as e:
                 self.cache = True
                 useCache = True
-                print("offline bacause of")
+                print("offline because of")
                 traceback.print_exc()
         if useCache:
             try:
