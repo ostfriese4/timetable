@@ -258,14 +258,13 @@ class untisApi:
                     lessondata["teacher-short"] = lesson.teachers[0].name
                     lessondata["subject-long"] = lesson.subjects[0].long_name
                     lessondata["subject-short"] = lesson.subjects[0].name
+                    lessondata["color"] = self.getColor(lessondata["subject-short"])
 
                     if len(lesson.original_teachers) != 0:
                         if not "original" in lessondata:
                             lessondata["original"] = {}
-                            lessondata["original"]["teacher-short"] = lesson.original_teachers[0].name
-                            lessondata["original"]["teacher-long"] = lesson.original_teachers[0].full_name
-
-                    lessondata["color"] = self.getColor(lessondata["subject-short"])
+                        lessondata["original"]["teacher-short"] = lesson.original_teachers[0].name
+                        lessondata["original"]["teacher-long"] = lesson.original_teachers[0].full_name
 
                     try:
                         rooms = lesson.rooms
