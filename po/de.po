@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 08:43+0100\n"
+"POT-Creation-Date: 2026-04-12 21:55+0200\n"
 "PO-Revision-Date: 2026-03-19 13:26+0100\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
@@ -53,15 +53,15 @@ msgstr "Der Stundenplan"
 msgid "Dialog showing information about a lesson"
 msgstr "Informationen zur Stunde werden in einem Dialog angezeigt"
 
-#: src/api.py:95
+#: src/api.py:96
 msgid "No data available"
 msgstr "Keine Daten verfügbar"
 
-#: src/api.py:269
+#: src/api.py:281
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/api.py:282 src/api.py:283
+#: src/api.py:294 src/api.py:295
 msgid "and"
 msgstr "und"
 
@@ -205,21 +205,3 @@ msgstr "_Tastenkürzel"
 #: src/window.ui:88
 msgid "_About Timetable"
 msgstr "Über _Stundenplan"
-
-#~ msgid "Original subject"
-#~ msgstr "Ursprüngliches Fach"
-
-#~ msgid "Original teacher"
-#~ msgstr "Ursprüngliche Lehrkraft"
-
-#~ msgid "A client for webuntis"
-#~ msgstr "Ein Client für Webuntis"
-
-#~ msgid "Jonas Harer"
-#~ msgstr "Jonas Harer"
-
-#~ msgid "_Preferences"
-#~ msgstr "_Einstellungen"
-
-#~ msgid "_About Untis"
-#~ msgstr "Über _Untis"

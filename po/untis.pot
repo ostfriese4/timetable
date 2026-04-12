@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 08:43+0100\n"
+"POT-Creation-Date: 2026-04-12 21:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,15 +49,15 @@ msgstr ""
 msgid "Dialog showing information about a lesson"
 msgstr ""
 
-#: src/api.py:95
+#: src/api.py:96
 msgid "No data available"
 msgstr ""
 
-#: src/api.py:269
+#: src/api.py:281
 msgid "Unknown"
 msgstr ""
 
-#: src/api.py:282 src/api.py:283
+#: src/api.py:294 src/api.py:295
 msgid "and"
 msgstr ""
 
