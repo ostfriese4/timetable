@@ -51,6 +51,16 @@
         </ul>
       </description>
     </release>
+    <release version="2.2" date="2026-04-13">
+      <description translate="no">
+        <ul>
+          <li>Improved keyboard-navigation</li>
+          <li>Fixed substitiutions not being recognized</li>
+          <li>Updated dependencies</li>
+          <li>Improved performance</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0" date="2026-03-19">
       <description translate="no">
         <ul>
