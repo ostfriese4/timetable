@@ -96,17 +96,14 @@ class LoginWindow(Adw.Dialog):
         for school in schools:
             name = school[0]
             server = school[1]
-            result = Adw.ActionRow(title = name)
-            result.set_subtitle(server)
+            result = Adw.ButtonRow(title = name)
 
-            def onClick(click,key,x,y, name=name, server=server):
+            def onClick(click, name=name, server=server):
                 self.search_window.close()
                 self.school_entry.set_text(name)
                 self.server_entry.set_text(server)
 
-            click = Gtk.GestureClick.new()
-            click.connect("pressed", onClick)
-            result.add_controller(click)
+            result.connect("activated", onClick)
 
             self.result_list.add(result)
             self.results.append(result)
