@@ -37,6 +37,9 @@ class LoginWindow(Adw.Dialog):
     search_entry = Gtk.Template.Child()
     result_list = Gtk.Template.Child()
 
+    sso_info_button = Gtk.Template.Child()
+    sso_info_window = Gtk.Template.Child()
+
     def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
 
@@ -48,6 +51,11 @@ class LoginWindow(Adw.Dialog):
         self.search_entry.connect("changed", self.searchSchool)
 
         self.login_button.add_css_class("suggested-action")
+
+        self.sso_info_button.connect("activated", self.openSSOInfoWindow)
+
+    def openSSOInfoWindow(self, a = None):
+        self.sso_info_window.present(self)
 
     def openSearchSchoolWindow(self, data = None):
         self.searchSchool()
