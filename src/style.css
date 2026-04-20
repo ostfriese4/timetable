@@ -1,5 +1,5 @@
 :root {
-  --color-mix-combination: 20%;
+  --color-mix-combination: 0%;
   --green: color-mix(in oklab, var(--accent-green), var(--window-bg-color) var(--color-mix-combination));
   --red: color-mix(in oklab, var(--accent-red), var(--window-bg-color) var(--color-mix-combination));
   --blue: color-mix(in oklab, var(--accent-blue), var(--window-bg-color) var(--color-mix-combination));
