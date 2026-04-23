@@ -18,6 +18,12 @@
   <url type="vcs-browser">https://codeberg.org/ostfriese4/untis</url>
   <url type="bugtracker">https://codeberg.org/ostfriese4/untis/issues</url>
 
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
+
   <translation type="gettext">untis</translation>
   <!-- All graphical applications having a desktop file must have this tag in the MetaInfo.
      If this is present, appstreamcli compose will pull icons, keywords and categories from the desktop file. -->
