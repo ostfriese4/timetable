@@ -73,6 +73,16 @@ class UntisWindow(Adw.ApplicationWindow):
         keyPress.connect("key-pressed", onKeyPress)
         self.add_controller(keyPress)
 
+        def onSwipe(gesture,x,y):
+            if abs(y) < abs(x) * 0.5:
+                if x > 100:
+                    self.next()
+                elif x < 100:
+                    self.previous()
+        swipe = Gtk.GestureSwipe()
+        swipe.connect("swipe", onSwipe)
+        self.timetable.add_controller(swipe)
+
         GLib.timeout_add(1000*60*10, self.loadData) # Update every ten minutes (will result in every hour because of caching; ten minutes to handle manual updates changing the time of the cache timeout)
 
     def next(self, data = None):
