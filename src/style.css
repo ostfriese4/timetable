@@ -1,5 +1,5 @@
 :root {
-  --color-mix-combination: 0%;
+  --color-mix-combination: 50%;
   --green: color-mix(in oklab, var(--accent-green), var(--window-bg-color) var(--color-mix-combination));
   --red: color-mix(in oklab, var(--accent-red), var(--window-bg-color) var(--color-mix-combination));
   --blue: color-mix(in oklab, var(--accent-blue), var(--window-bg-color) var(--color-mix-combination));
@@ -47,30 +47,58 @@
 }
 
 .green {
-  background: var(--green);
+  background: var(--accent-green);
 }
 .red {
-  background: var(--red);
+  background: var(--accent-red);
 }
 .blue {
-  background: var(--blue);
+  background: var(--accent-blue);
 }
 .orange {
-  background: var(--orange);
+  background: var(--accent-orange);
 }
 .purple {
-  background: var(--purple);
+  background: var(--accent-purple);
 }
 .teal {
-  background: var(--teal);
+  background: var(--accent-teal);
 }
 .yellow {
-  background: var(--yellow);
+  background: var(--accent-yellow);
 }
 .slate {
-  background: var(--slate);
+  background: var(--accent-slate);
 }
 .pink {
-  background: var(--pink);
+  background: var(--accent-pink);
 }
 
+
+.green.cancelled {
+  background: var(--green);
+}
+.red.cancelled {
+  background: var(--red);
+}
+.blue.cancelled {
+  background: var(--blue);
+}
+.orange.cancelled {
+  background: var(--orange);
+}
+.purple.cancelled {
+  background: var(--purple);
+}
+.teal.cancelled {
+  background: var(--teal);
+}
+.yellow.cancelled {
+  background: var(--yellow);
+}
+.slate.cancelled {
+  background: var(--slate);
+}
+.pink.cancelled {
+  background: var(--pink);
+}
