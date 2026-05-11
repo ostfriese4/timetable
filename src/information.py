@@ -30,8 +30,10 @@ class InformationWindow(Adw.Dialog):
         super().__init__(**kwargs)
         self.window = window
         self.info_rows = []
+        self.lesson = None
 
     def setLesson(self, lesson):
+        self.lesson = lesson
         while self.info_rows != []:
             self.info_table.remove(self.info_rows.pop())
 

@@ -32,7 +32,7 @@ class Lesson(Gtk.Box):
         super().__init__(**kwargs)
 
         click = Gtk.GestureClick.new()
-        click.connect("pressed", self.on_click)
+        click.connect("released", self.on_click)
         self.add_controller(click)
 
         self.lesson = lesson
@@ -59,8 +59,16 @@ class Lesson(Gtk.Box):
                 self.room_label.add_css_class("label")
                 self.room_label.add_css_class("changed")
 
+        self.markedAsHidden = False
+
+    def markAsHidden(self):
+        self.markedAsHidden = True
+        if self.window.information_window.lesson == self.lesson:
+            self.window.information_window.close()
+
     def on_click(self, gesture, data, x, y):
-        self.window.information_window.setLesson(self.lesson)
+        if not self.markedAsHidden:
+            self.window.information_window.setLesson(self.lesson)
 
     def addHomework(self, homework):
         if "homeworks" in self.lesson:

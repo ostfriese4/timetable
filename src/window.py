@@ -76,9 +76,9 @@ class UntisWindow(Adw.ApplicationWindow):
         def onSwipe(gesture,x,y):
             if abs(y) < abs(x) * 0.5:
                 if x > 100:
-                    self.next()
-                elif x < 100:
                     self.previous()
+                elif x < 100:
+                    self.next()
         swipe = Gtk.GestureSwipe()
         swipe.connect("swipe", onSwipe)
         self.timetable.add_controller(swipe)
@@ -171,6 +171,7 @@ class UntisWindow(Adw.ApplicationWindow):
 
         for lesson in self.lessons:
             lesson[0].remove(lesson[1])
+            lesson[1].markAsHidden()
         self.lessons.clear()
 
         for column in self.columns:
