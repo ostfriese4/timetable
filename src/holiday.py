@@ -31,12 +31,12 @@ class Holiday(Gtk.DrawingArea):
         self.set_size_request(20,20)
 
     def drawVerticalLabel(self, area, context, width, height):
-        print(width,height)
+        if Gtk.Settings.get_default().get_property("gtk-application-prefer-dark-theme"):
+            context.set_source_rgb(1,1,1)
 
         layout = PangoCairo.create_layout(context)
         layout.set_text(self.label, -1)
 
-        context.save()
         context.translate(width * 0.5, height * 0.5)
         context.rotate(math.pi * 0.5)
         context.translate(-height * 0.5, -width * 0.5)
