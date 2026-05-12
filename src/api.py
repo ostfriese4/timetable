@@ -254,7 +254,6 @@ class untisApi:
                     lessondata["start"] = lesson.start.hour * 60 + lesson.start.minute
                     lessondata["end"] = lesson.end.hour * 60 + lesson.end.minute
                     lessondata["duration"] = lessondata["end"] - lessondata["start"]
-                    lessondata["color"] = self.getColor(lessondata["subject-short"])
 
                     if len(lesson.original_teachers) != 0:
                         if not "original" in lessondata:
@@ -344,6 +343,7 @@ class untisApi:
                                 lessondata["room-info"] += ", "
 
                     lessondata["text"] = lesson.lstext
+                    lessondata["color"] = self.getColor(lessondata["subject-short"])
 
                     if planned is not None:
                         if lessondata["code"] == "cancelled":
