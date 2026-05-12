@@ -254,10 +254,6 @@ class untisApi:
                     lessondata["start"] = lesson.start.hour * 60 + lesson.start.minute
                     lessondata["end"] = lesson.end.hour * 60 + lesson.end.minute
                     lessondata["duration"] = lessondata["end"] - lessondata["start"]
-                    lessondata["teacher-long"] = lesson.teachers[0].full_name
-                    lessondata["teacher-short"] = lesson.teachers[0].name
-                    lessondata["subject-long"] = lesson.subjects[0].long_name
-                    lessondata["subject-short"] = lesson.subjects[0].name
                     lessondata["color"] = self.getColor(lessondata["subject-short"])
 
                     if len(lesson.original_teachers) != 0:
@@ -271,6 +267,56 @@ class untisApi:
                             lessondata["original"] = {}
                         lessondata["original"]["room"] = lesson.original_rooms[0].name
                         lessondata["original"]["room-info"] = lesson.original_rooms[0].long_name
+
+                    try:
+                        teachers = lesson.teachers
+                    except Exception:
+                        teachers = []
+                    if teachers == []:
+                        lessondata["teacher-long"] = "???"
+                        lessondata["teacher-short"] = "???"
+                    else:
+                        ts = ""
+                        tl = ""
+                        i = 0
+                        for teacher in teachers:
+                            ts += teacher.name
+                            tl += teacher.full_name
+                            if teacher != teachers[-1]:
+                                ts += ", "
+                                if len(teachers) >= 3 and i < len(teachers) - 2:
+                                    tl += " " + _("and") + " "
+                                else:
+                                    tl += ", "
+                            i += 1
+                        lessondata["teacher-long"] = tl
+                        lessondata["teacher-short"] = ts
+
+
+
+                    try:
+                        subjects = lesson.subjects
+                    except Exception:
+                        subjects = []
+                    if subjects == []:
+                        lessondata["subject-long"] = "???"
+                        lessondata["subject-short"] = "???"
+                    else:
+                        ss = ""
+                        sl = ""
+                        i = 0
+                        for subject in subjects:
+                            ss += subject.name
+                            sl += subject.long_name
+                            if subject != subjects[-1]:
+                                ss += ", "
+                                if len(subjects) >= 3 and i < len(subjects) - 2:
+                                    sl += " " + _("and") + " "
+                                else:
+                                    sl += ", "
+                            i += 1
+                        lessondata["subject-long"] = sl
+                        lessondata["subject-short"] = ss
 
                     try:
                         rooms = lesson.rooms
