@@ -267,11 +267,8 @@ class untisApi:
                         lessondata["original"]["room"] = lesson.original_rooms[0].name
                         lessondata["original"]["room-info"] = lesson.original_rooms[0].long_name
 
-                    try:
-                        teachers = lesson.teachers
-                    except Exception:
-                        teachers = []
-                    if teachers == []:
+                    teachers = lesson.teachers
+                    if len(teachers) == 0:
                         lessondata["teacher-long"] = "???"
                         lessondata["teacher-short"] = "???"
                     else:
@@ -292,12 +289,8 @@ class untisApi:
                         lessondata["teacher-short"] = ts
 
 
-
-                    try:
-                        subjects = lesson.subjects
-                    except Exception:
-                        subjects = []
-                    if subjects == []:
+                    subjects = lesson.subjects
+                    if len(subjects) == 0:
                         lessondata["subject-long"] = "???"
                         lessondata["subject-short"] = "???"
                     else:
@@ -317,11 +310,8 @@ class untisApi:
                         lessondata["subject-long"] = sl
                         lessondata["subject-short"] = ss
 
-                    try:
-                        rooms = lesson.rooms
-                    except Exception:
-                        rooms = []
-                    if rooms == []:
+                    rooms = lesson.rooms
+                    if len(rooms) == 0:
                         lessondata["room"] = "???"
                         lessondata["room-info"] = _("Unknown")
                     elif len(rooms) == 1:
