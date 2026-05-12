@@ -269,7 +269,7 @@ class untisApi:
 
                     teachers = lesson.teachers
                     if len(teachers) == 0:
-                        lessondata["teacher-long"] = "???"
+                        lessondata["teacher-long"] = _("Unknown")
                         lessondata["teacher-short"] = "???"
                     else:
                         ts = ""
@@ -291,7 +291,7 @@ class untisApi:
 
                     subjects = lesson.subjects
                     if len(subjects) == 0:
-                        lessondata["subject-long"] = "???"
+                        lessondata["subject-long"] = _("Unknown")
                         lessondata["subject-short"] = "???"
                     else:
                         ss = ""
