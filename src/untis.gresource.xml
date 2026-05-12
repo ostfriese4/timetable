@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/page/codeberg/ostfriese4/Untis">
-    <file preprocess="xml-stripblanks">window.ui</file>
-    <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>
+    <file preprocess="xml-stripblanks">information.ui</file>
+    <file preprocess="xml-stripblanks">holiday.ui</file>
     <file preprocess="xml-stripblanks">lesson.ui</file>
     <file preprocess="xml-stripblanks">login.ui</file>
-    <file preprocess="xml-stripblanks">information.ui</file>
+    <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>
+    <file preprocess="xml-stripblanks">window.ui</file>
     <file>style.css</file>
   </gresource>
 </gresources>

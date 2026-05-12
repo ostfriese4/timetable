@@ -19,6 +19,7 @@
 
 from .api import api
 from .lesson import Lesson
+from .holiday import Holiday
 from .login import LoginWindow
 from .information import InformationWindow
 import datetime
@@ -198,10 +199,7 @@ class UntisWindow(Adw.ApplicationWindow):
             x = start
             if day == []:
                 holiday = api.getHoliday(date)
-                obj = Gtk.Label()
-                obj.set_vexpand(True)
-                obj.set_text(holiday["name"])
-                obj.add_css_class("holiday")
+                obj = Holiday(holiday["name"])
                 column.append(obj)
             for lesson in day:
                 if lesson["start"] - x != 0:
