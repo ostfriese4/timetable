@@ -25,7 +25,7 @@
 }
 
 .changed {
-  border: 2px solid green;
+  border: 2px solid color-mix(in oklab, red, rgb(from var(--window-bg-color) calc(255 - r) calc(255 - g) calc(255 - b)) 50%);
 }
 
 .day {
@@ -43,6 +43,7 @@
 
 .changed.label {
   background: green;
+  border: 2px solid orange;
   border-radius: 20px;
 }
 
