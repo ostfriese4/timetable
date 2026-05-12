@@ -49,6 +49,15 @@
   </screenshots>
 
   <releases>
+    <release version="2.3" date="2026-05-13">
+      <description translate="no">
+        <ul>
+          <li>Changed colors of cancelled and changed lessons</li>
+          <li>Improved usability on mobile devices</li>
+          <li>Fixed the width of holidays</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.2" date="2026-04-13">
       <description translate="no">
         <ul>
