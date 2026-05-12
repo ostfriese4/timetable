@@ -259,13 +259,13 @@ class untisApi:
                         if not "original" in lessondata:
                             lessondata["original"] = {}
                         lessondata["original"]["teacher-short"] = lesson.original_teachers[0].name
-                        lessondata["original"]["teacher-long"] = lesson.original_teachers[0].full_name
+                        lessondata["original"]["teacher-long"] = lesson.original_teachers[0].full_name + " (" + lesson.original_teachers[0].name + ")"
 
                     if len(lesson.original_rooms) != 0:
                         if not "original" in lessondata:
                             lessondata["original"] = {}
                         lessondata["original"]["room"] = lesson.original_rooms[0].name
-                        lessondata["original"]["room-info"] = lesson.original_rooms[0].long_name
+                        lessondata["original"]["room-info"] = lesson.original_rooms[0].long_name + " (" + lesson.original_rooms[0].name + ")"
 
                     teachers = lesson.teachers
                     if len(teachers) == 0:
@@ -277,13 +277,13 @@ class untisApi:
                         i = 0
                         for teacher in teachers:
                             ts += teacher.name
-                            tl += teacher.full_name
+                            tl += teacher.full_name + " (" + teacher.name + ")"
                             if teacher != teachers[-1]:
                                 ts += ", "
-                                if len(teachers) >= 3 and i < len(teachers) - 2:
-                                    tl += " " + _("and") + " "
-                                else:
+                                if i < len(teachers) - 2:
                                     tl += ", "
+                                else:
+                                    tl += " " + _("and") + " "
                             i += 1
                         lessondata["teacher-long"] = tl
                         lessondata["teacher-short"] = ts
@@ -299,13 +299,13 @@ class untisApi:
                         i = 0
                         for subject in subjects:
                             ss += subject.name
-                            sl += subject.long_name
+                            sl += subject.long_name + " (" + subject.name + ")"
                             if subject != subjects[-1]:
                                 ss += ", "
-                                if len(subjects) >= 3 and i < len(subjects) - 2:
-                                    sl += " " + _("and") + " "
-                                else:
+                                if i < len(subjects) - 2:
                                     sl += ", "
+                                else:
+                                    sl += " " + _("and") + " "
                             i += 1
                         lessondata["subject-long"] = sl
                         lessondata["subject-short"] = ss
