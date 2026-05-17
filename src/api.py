@@ -180,6 +180,33 @@ class untisApi:
         with open(self.CACHEDIR + name) as cache:
             return json.load(cache)
 
+    def getLongName(self, item):
+        if type(item) == webuntis.objects.RoomObject:
+            return item.long_name
+        elif type(item) == webuntis.objects.TeacherObject:
+            return item.full_name
+        elif type(item) == webuntis.objects.SubjectObject:
+            return item.long_name
+        else:
+            print(type(item))
+    def createList(self, items):
+        if len(items) == 0:
+            return "???", _("Unknown")
+        long = ""
+        short = ""
+        i = 0
+        for item in items:
+            short += item.name
+            long += self.getLongName(item) + " (" + item.name + ")"
+            if item != items[-1]:
+                short += ", "
+                if i < len(items) - 2:
+                    long += ", "
+                else:
+                    long += " " + _("and") + " "
+            i += 1
+        return short, long
+
     def getTimetable(self, start, end, useCache = False):
         days = (end - start).days + 1
         self.cache = False
@@ -258,79 +285,17 @@ class untisApi:
                     if len(lesson.original_teachers) != 0:
                         if not "original" in lessondata:
                             lessondata["original"] = {}
-                        lessondata["original"]["teacher-short"] = lesson.original_teachers[0].name
-                        lessondata["original"]["teacher-long"] = lesson.original_teachers[0].full_name + " (" + lesson.original_teachers[0].name + ")"
+                        lessondata["original"]["teacher-short"], lessondata["original"]["teacher-long"] = self.createList(lesson.original_teachers)
 
                     if len(lesson.original_rooms) != 0:
                         if not "original" in lessondata:
                             lessondata["original"] = {}
-                        lessondata["original"]["room"] = lesson.original_rooms[0].name
-                        lessondata["original"]["room-info"] = lesson.original_rooms[0].long_name + " (" + lesson.original_rooms[0].name + ")"
-
-                    teachers = lesson.teachers
-                    if len(teachers) == 0:
-                        lessondata["teacher-long"] = _("Unknown")
-                        lessondata["teacher-short"] = "???"
-                    else:
-                        ts = ""
-                        tl = ""
-                        i = 0
-                        for teacher in teachers:
-                            ts += teacher.name
-                            tl += teacher.full_name + " (" + teacher.name + ")"
-                            if teacher != teachers[-1]:
-                                ts += ", "
-                                if i < len(teachers) - 2:
-                                    tl += ", "
-                                else:
-                                    tl += " " + _("and") + " "
-                            i += 1
-                        lessondata["teacher-long"] = tl
-                        lessondata["teacher-short"] = ts
+                        lessondata["original"]["room"], lessondata["original"]["room-info"] = self.createList(lesson.original_rooms)
 
 
-                    subjects = lesson.subjects
-                    if len(subjects) == 0:
-                        lessondata["subject-long"] = _("Unknown")
-                        lessondata["subject-short"] = "???"
-                    else:
-                        ss = ""
-                        sl = ""
-                        i = 0
-                        for subject in subjects:
-                            ss += subject.name
-                            sl += subject.long_name + " (" + subject.name + ")"
-                            if subject != subjects[-1]:
-                                ss += ", "
-                                if i < len(subjects) - 2:
-                                    sl += ", "
-                                else:
-                                    sl += " " + _("and") + " "
-                            i += 1
-                        lessondata["subject-long"] = sl
-                        lessondata["subject-short"] = ss
-
-                    rooms = lesson.rooms
-                    if len(rooms) == 0:
-                        lessondata["room"] = "???"
-                        lessondata["room-info"] = _("Unknown")
-                    elif len(rooms) == 1:
-                        lessondata["room"] = lesson.rooms[0].name
-                        lessondata["room-info"] = lesson.rooms[0].long_name
-                    else:
-                        lessondata["room"] = ""
-                        lessondata["room-info"] = ""
-                        i=len(rooms)
-                        for room in rooms:
-                            i-=1
-                            lessondata["room"] += room.name
-                            lessondata["room-info"] += room.long_name
-                            if i == 1:
-                                lessondata["room"] += " " + _("and") + " "
-                                lessondata["room-info"] += " " + _("and") + " "
-                            elif i > 1:
-                                lessondata["room"] += ", "
-                                lessondata["room-info"] += ", "
+                    lessondata["subject-short"], lessondata["subject-long"] = self.createList(lesson.subjects)
+                    lessondata["room"], lessondata["room-info"] = self.createList(lesson.rooms)
+                    lessondata["teacher-short"], lessondata["teacher-long"] = self.createList(lesson.teachers)
 
                     lessondata["text"] = lesson.lstext
                     lessondata["color"] = self.getColor(lessondata["subject-short"])
