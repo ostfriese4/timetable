@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-18 21:24+0200\n"
-"PO-Revision-Date: 2026-03-19 13:26+0100\n"
+"PO-Revision-Date: 2026-05-18 21:35+0200\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -127,7 +127,7 @@ msgstr "Anmelden"
 
 #: src/login.ui:23
 msgid "I usually log in using a third-party service"
-msgstr ""
+msgstr "I melde mich normalerweise über einen Drittanbieter an"
 
 #: src/login.ui:33 src/login.ui:81
 msgid "Search school"
@@ -151,7 +151,7 @@ msgstr "Passwort"
 
 #: src/login.ui:114
 msgid "Help"
-msgstr ""
+msgstr "Hilfe"
 
 #: src/login.ui:130
 msgid ""
@@ -160,6 +160,11 @@ msgid ""
 "account-settings and change your password. Then log into this app using your "
 "newly created password and presumably the same username as in your sso."
 msgstr ""
+"Wenn Sie sich normalerweise über einen Drittanbieter (z.B. IServ) anmelden, "
+"müssen Sie Ihre Zugangsdaten manuell festlegen, indem Sie sich über einen "
+"Webbrowser in WebUntis anmelden und in den Kontoeinstellungen Ihr Passwort "
+"ändern. Dann melden Sie sich in dieser App mit dem Benutzernamen Ihres "
+"Drittanbieters und dem neu erstellten Passwort an."
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:57
