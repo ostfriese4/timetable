@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-12 21:55+0200\n"
+"POT-Creation-Date: 2026-05-18 21:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,11 +41,11 @@ msgstr ""
 msgid "Ostfriese4"
 msgstr ""
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:37
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:43
 msgid "The timetable"
 msgstr ""
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:41
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:47
 msgid "Dialog showing information about a lesson"
 msgstr ""
 
@@ -53,47 +53,47 @@ msgstr ""
 msgid "No data available"
 msgstr ""
 
-#: src/api.py:281
+#: src/api.py:194
 msgid "Unknown"
 msgstr ""
 
-#: src/api.py:294 src/api.py:295
+#: src/api.py:206
 msgid "and"
 msgstr ""
 
-#: src/information.py:42 src/information.py:83
+#: src/information.py:44 src/information.py:85
 msgid "Subject"
 msgstr ""
 
-#: src/information.py:43 src/information.py:84
+#: src/information.py:45 src/information.py:86
 msgid "Room"
 msgstr ""
 
-#: src/information.py:44 src/information.py:85
+#: src/information.py:46 src/information.py:87
 msgid "Teacher"
 msgstr ""
 
-#: src/information.py:46
+#: src/information.py:48
 msgid "Information about this lesson"
 msgstr ""
 
-#: src/information.py:48
+#: src/information.py:50
 msgid "Cancelled"
 msgstr ""
 
-#: src/information.py:57
+#: src/information.py:59
 msgid "Duration"
 msgstr ""
 
-#: src/information.py:57
+#: src/information.py:59
 msgid "Minutes"
 msgstr ""
 
-#: src/information.py:62
+#: src/information.py:64
 msgid "Homework"
 msgstr ""
 
-#: src/information.py:68
+#: src/information.py:70
 msgid "Original lesson"
 msgstr ""
 
@@ -101,44 +101,60 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: src/login.py:70
+#: src/login.py:78
 msgid "Too many results"
 msgstr ""
 
-#: src/login.py:77
+#: src/login.py:85
 msgid "Offline"
 msgstr ""
 
-#: src/login.py:84
+#: src/login.py:92
 msgid "Error"
 msgstr ""
 
-#: src/login.py:91
+#: src/login.py:99
 msgid "No results"
 msgstr ""
 
-#: src/login.ui:6 src/login.ui:58
+#: src/login.ui:6 src/login.ui:68
 msgid "Login"
 msgstr ""
 
-#: src/login.ui:23 src/login.ui:71
+#: src/login.ui:23
+msgid "I usually log in using a third-party service"
+msgstr ""
+
+#: src/login.ui:33 src/login.ui:81
 msgid "Search school"
 msgstr ""
 
-#: src/login.ui:33
+#: src/login.ui:43
 msgid "Server-URL"
 msgstr ""
 
-#: src/login.ui:38 src/login.ui:83
+#: src/login.ui:48 src/login.ui:93
 msgid "School"
 msgstr ""
 
-#: src/login.ui:43
+#: src/login.ui:53
 msgid "Username"
 msgstr ""
 
-#: src/login.ui:48
+#: src/login.ui:58
 msgid "Password"
+msgstr ""
+
+#: src/login.ui:114
+msgid "Help"
+msgstr ""
+
+#: src/login.ui:130
+msgid ""
+"If you are logging usually logging into WebUntis using a third party sso "
+"(e.g. IServ), you'll' have to open WebUntis in your browser, go to your "
+"account-settings and change your password. Then log into this app using your "
+"newly created password and presumably the same username as in your sso."
 msgstr ""
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
@@ -186,18 +202,18 @@ msgstr ""
 msgid "You are offline"
 msgstr ""
 
-#: src/window.ui:76
+#: src/window.ui:79
 msgid "_Refresh"
 msgstr ""
 
-#: src/window.ui:80
+#: src/window.ui:83
 msgid "_Login"
 msgstr ""
 
-#: src/window.ui:84
+#: src/window.ui:87
 msgid "_Keyboard Shortcuts"
 msgstr ""
 
-#: src/window.ui:88
+#: src/window.ui:91
 msgid "_About Timetable"
 msgstr ""
