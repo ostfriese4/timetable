@@ -155,9 +155,9 @@ class UntisWindow(Adw.ApplicationWindow):
                             if str(homework["dueDate"]) == ld["date"]:
                                 lesson[1].addHomework(homework)
 
-    def drawTimeMarker(self, area, context, width, height):
+    def drawTimeMarker(self, area, context, width, height, dateLabel):
         now = datetime.datetime.now()
-        y = now.hour * 60 + now.minute - self.start
+        y = now.hour * 60 + now.minute - self.start + dateLabel.get_allocated_height()
 
         context.set_source_rgb(1, 0, 0)
         context.set_line_width(3)
@@ -211,7 +211,7 @@ class UntisWindow(Adw.ApplicationWindow):
                 timeMarker = Gtk.DrawingArea()
                 timeMarker.set_hexpand(True)
                 timeMarker.set_vexpand(True)
-                timeMarker.set_draw_func(self.drawTimeMarker)
+                timeMarker.set_draw_func(self.drawTimeMarker, dateLabel)
                 timeMarker.set_can_target(False)
                 column.add_overlay(timeMarker)
 
