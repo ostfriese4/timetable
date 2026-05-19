@@ -84,7 +84,7 @@ class UntisWindow(Adw.ApplicationWindow):
         swipe.connect("swipe", onSwipe)
         self.timetable.add_controller(swipe)
 
-        GLib.timeout_add(1000*60*10, self.loadData) # Update every ten minutes (will result in every hour because of caching; ten minutes to handle manual updates changing the time of the cache timeout)
+        GLib.timeout_add(1000*60, self.loadData) # Update every minute (will result in every hour because of caching; one minute to update position of now-marker)
 
     def next(self, data = None):
         self.startdate += datetime.timedelta(days=7)
@@ -155,6 +155,16 @@ class UntisWindow(Adw.ApplicationWindow):
                             if str(homework["dueDate"]) == ld["date"]:
                                 lesson[1].addHomework(homework)
 
+    def drawTimeMarker(self, area, context, width, height):
+        now = datetime.datetime.now()
+        y = now.hour * 60 + now.minute - self.start
+
+        context.set_source_rgb(1, 0, 0)
+        context.set_line_width(3)
+        context.move_to(0, y)
+        context.line_to(width, y)
+        context.stroke()
+
     def displayData(self, table):
         if api.cache:
             if not api.testLogin():
@@ -164,11 +174,11 @@ class UntisWindow(Adw.ApplicationWindow):
         else:
             self.offline.set_revealed(revealed=False)
 
-        start = 1440 # One day in minutes (max possible value)
+        self.start = 1440 # One day in minutes (max possible value)
         for day in table:
             for lesson in day:
-                if lesson["start"] < start:
-                    start = lesson["start"]
+                if lesson["start"] < self.start:
+                    self.start = lesson["start"]
 
         for lesson in self.lessons:
             lesson[0].remove(lesson[1])
@@ -181,33 +191,42 @@ class UntisWindow(Adw.ApplicationWindow):
 
         date = self.startdate
         for day in table:
-            column = Gtk.Box()
-            column.set_orientation(Gtk.Orientation.VERTICAL)
-            column.set_hexpand(True)
-            column.set_halign(Gtk.Align.FILL)
-            column.set_spacing(0)
+            column = Gtk.Overlay()
             self.timetable.append(column)
             self.columns.append(column)
 
+            dayBox = Gtk.Box()
+            dayBox.set_orientation(Gtk.Orientation.VERTICAL)
+            dayBox.set_hexpand(True)
+            dayBox.set_halign(Gtk.Align.FILL)
+            dayBox.set_spacing(0)
+            column.set_child(dayBox)
+
             dateLabel = Gtk.Label()
             dateLabel.set_label(date.strftime("%d.%m.%y"))
-            column.append(dateLabel)
+            dayBox.append(dateLabel)
+            dateLabel.add_css_class("day")
             if date == datetime.date.today():
                 dateLabel.add_css_class("today")
-            dateLabel.add_css_class("day")
+                timeMarker = Gtk.DrawingArea()
+                timeMarker.set_hexpand(True)
+                timeMarker.set_vexpand(True)
+                timeMarker.set_draw_func(self.drawTimeMarker)
+                timeMarker.set_can_target(False)
+                column.add_overlay(timeMarker)
 
-            x = start
+            x = self.start
             if day == []:
                 holiday = api.getHoliday(date)
                 obj = Holiday(holiday["name"])
-                column.append(obj)
+                dayBox.append(obj)
             for lesson in day:
                 if lesson["start"] - x != 0:
                     gap = Gtk.Label()
                     gap.set_size_request(-1, lesson["start"] - x)
-                    column.append(gap)
+                    dayBox.append(gap)
                 block = Lesson(lesson, self)
                 x = lesson["end"]
-                column.append(block)
-                self.lessons.append((column, block, lesson))
+                dayBox.append(block)
+                self.lessons.append((dayBox, block, lesson))
             date += datetime.timedelta(days=1)
