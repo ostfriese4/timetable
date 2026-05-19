@@ -38,6 +38,7 @@ class UntisWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'UntisWindow'
 
     timetable = Gtk.Template.Child()
+    overlay = Gtk.Template.Child()
     offline = Gtk.Template.Child()
     next_button = Gtk.Template.Child()
     previous_button = Gtk.Template.Child()
@@ -47,6 +48,7 @@ class UntisWindow(Adw.ApplicationWindow):
 
         self.columns = []
         self.lessons = []
+        self.overlays = []
 
         self.prefetching = []
 
@@ -155,12 +157,15 @@ class UntisWindow(Adw.ApplicationWindow):
                             if str(homework["dueDate"]) == ld["date"]:
                                 lesson[1].addHomework(homework)
 
-    def drawTimeMarker(self, area, context, width, height, dateLabel):
+    def drawTimeMarker(self, area, context, width, height, dateLabel, week):
         now = datetime.datetime.now()
         y = now.hour * 60 + now.minute - self.start + dateLabel.get_allocated_height()
 
         context.set_source_rgb(1, 0, 0)
-        context.set_line_width(3)
+        if week:
+            context.set_line_width(1)
+        else:
+            context.set_line_width(4)
         context.move_to(0, y)
         context.line_to(width, y)
         context.stroke()
@@ -189,6 +194,10 @@ class UntisWindow(Adw.ApplicationWindow):
             self.timetable.remove(column)
         self.columns.clear()
 
+        for overlay in self.overlays:
+            self.overlay.remove_overlay(overlay)
+        self.overlays.clear()
+
         date = self.startdate
         for day in table:
             column = Gtk.Overlay()
@@ -211,9 +220,17 @@ class UntisWindow(Adw.ApplicationWindow):
                 timeMarker = Gtk.DrawingArea()
                 timeMarker.set_hexpand(True)
                 timeMarker.set_vexpand(True)
-                timeMarker.set_draw_func(self.drawTimeMarker, dateLabel)
+                timeMarker.set_draw_func(self.drawTimeMarker, dateLabel, False)
                 timeMarker.set_can_target(False)
                 column.add_overlay(timeMarker)
+
+                timeMarkerWeek = Gtk.DrawingArea()
+                timeMarkerWeek.set_hexpand(True)
+                timeMarkerWeek.set_vexpand(True)
+                timeMarkerWeek.set_draw_func(self.drawTimeMarker, dateLabel, True)
+                timeMarkerWeek.set_can_target(False)
+                self.overlays.append(timeMarkerWeek)
+                self.overlay.add_overlay(timeMarkerWeek)
 
             x = self.start
             if day == []:
