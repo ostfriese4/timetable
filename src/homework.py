@@ -42,7 +42,6 @@ class HomeworkList(Gtk.Box):
         self.displayed = {}
         self.days = {}
         self.scrollTo = None
-        self.connect("map", self.scroll)
 
     def enable_bindings(self):
         parent = self.get_ancestor(Adw.ApplicationWindow)
@@ -62,8 +61,8 @@ class HomeworkList(Gtk.Box):
     def scroll(self, data = None):
         if self.scrollTo is not None:
             y = self.days[self.scrollTo].get_allocation().y
-            self.scrolled_window.get_vadjustment().set_value(y)
-            print(y)
+            adj = self.scrolled_window.get_vadjustment()
+            adj.set_value(y)
 
     def loadData(self):
         self.scrollTo = None
@@ -91,5 +90,5 @@ class HomeworkList(Gtk.Box):
                             if now.day <= dt.day:
                                 self.scrollTo = date
 
-        self.scroll()
+        GLib.idle_add(self.scroll)
             
