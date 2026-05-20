@@ -13,7 +13,7 @@
       </object>
     </child>
     <property name="content">
-      <object class="AdwNavigationSplitView" id="split_view">
+      <object class="AdwOverlaySplitView" id="split_view">
         <property name="sidebar">
           <object class="AdwNavigationPage">
             <property name="title" translatable="yes">Sidebar</property>
@@ -47,7 +47,7 @@
                 <child>
                   <object class="AdwViewStackPage">
                     <property name="name">timetable</property>
-                    <property name="title">My timetable</property>
+                    <property name="title">Timetable</property>
                     <property name="child">
                       <object class="Timetable" id="timetable"></object>
                     </property>
@@ -62,10 +62,6 @@
   </template>
   <menu id="primary_menu">
     <section>
-      <item>
-        <attribute name="label" translatable="yes">_Refresh</attribute>
-        <attribute name="action">app.refresh</attribute>
-      </item>
       <item>
         <attribute name="label" translatable="yes">_Login</attribute>
         <attribute name="action">app.login</attribute>
