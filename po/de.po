@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-20 10:58+0200\n"
-"PO-Revision-Date: 2026-05-18 21:35+0200\n"
+"POT-Creation-Date: 2026-05-20 19:04+0200\n"
+"PO-Revision-Date: 2026-05-20 19:05+0200\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:50
-#: src/window.ui:6 src/window.ui:24
+#: src/window.ui:6 src/window.ui:45
 msgid "Timetable"
 msgstr "Stundenplan"
 
@@ -34,7 +34,6 @@ msgid "View your WebUntis timetable"
 msgstr "Sieh dir deinen WebUntis-Stundenplan an"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:10
-#, fuzzy
 msgid ""
 "Timetable is an unofficial client for WebUntis, which focusses on the "
 "features used by students."
@@ -46,11 +45,11 @@ msgstr ""
 msgid "Ostfriese4"
 msgstr "Ostfriese4"
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:43
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:47
 msgid "The timetable"
 msgstr "Der Stundenplan"
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:47
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:51
 msgid "Dialog showing information about a lesson"
 msgstr "Informationen zur Stunde werden in einem Dialog angezeigt"
 
@@ -65,6 +64,10 @@ msgstr "Unbekannt"
 #: src/api.py:206
 msgid "and"
 msgstr "und"
+
+#: src/homework.ui:14 src/information.py:64 src/window.ui:61
+msgid "Homework"
+msgstr "Hausaufgaben"
 
 #: src/information.py:44 src/information.py:85
 msgid "Subject"
@@ -93,10 +96,6 @@ msgstr "Dauer"
 #: src/information.py:59
 msgid "Minutes"
 msgstr "Minuten"
-
-#: src/information.py:64
-msgid "Homework"
-msgstr "Hausaufgaben"
 
 #: src/information.py:70
 msgid "Original lesson"
@@ -197,32 +196,37 @@ msgid "Quit"
 msgstr "Beenden"
 
 #: src/window.ui:19
-msgid "Previous week"
-msgstr "Vorherige Woche"
+msgid "Sidebar"
+msgstr ""
 
-#: src/window.ui:31
-msgid "Next week"
-msgstr "Nächste Woche"
-
-#: src/window.ui:40
+#: src/window.ui:28
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
-#: src/window.ui:55
-msgid "_Refresh"
-msgstr "_Aktualisieren"
+#: src/window.ui:52
+msgid "My timetable"
+msgstr "Mein Stundenplan"
 
-#: src/window.ui:59
+#: src/window.ui:77
 msgid "_Login"
 msgstr "An_melden"
 
-#: src/window.ui:63
+#: src/window.ui:81
 msgid "_Keyboard Shortcuts"
 msgstr "_Tastenkürzel"
 
-#: src/window.ui:67
+#: src/window.ui:85
 msgid "_About Timetable"
 msgstr "Über _Stundenplan"
+
+#~ msgid "Previous week"
+#~ msgstr "Vorherige Woche"
+
+#~ msgid "Next week"
+#~ msgstr "Nächste Woche"
+
+#~ msgid "_Refresh"
+#~ msgstr "_Aktualisieren"
 
 #~ msgid "You are offline"
 #~ msgstr "Keine Internetverbindung"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-20 10:58+0200\n"
+"POT-Creation-Date: 2026-05-20 19:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:50
-#: src/window.ui:6 src/window.ui:24
+#: src/window.ui:6 src/window.ui:45
 msgid "Timetable"
 msgstr ""
 
@@ -41,11 +41,11 @@ msgstr ""
 msgid "Ostfriese4"
 msgstr ""
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:43
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:47
 msgid "The timetable"
 msgstr ""
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:47
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:51
 msgid "Dialog showing information about a lesson"
 msgstr ""
 
@@ -59,6 +59,10 @@ msgstr ""
 
 #: src/api.py:206
 msgid "and"
+msgstr ""
+
+#: src/homework.ui:14 src/information.py:64 src/window.ui:61
+msgid "Homework"
 msgstr ""
 
 #: src/information.py:44 src/information.py:85
@@ -87,10 +91,6 @@ msgstr ""
 
 #: src/information.py:59
 msgid "Minutes"
-msgstr ""
-
-#: src/information.py:64
-msgid "Homework"
 msgstr ""
 
 #: src/information.py:70
@@ -187,29 +187,25 @@ msgid "Quit"
 msgstr ""
 
 #: src/window.ui:19
-msgid "Previous week"
+msgid "Sidebar"
 msgstr ""
 
-#: src/window.ui:31
-msgid "Next week"
-msgstr ""
-
-#: src/window.ui:40
+#: src/window.ui:28
 msgid "Main Menu"
 msgstr ""
 
-#: src/window.ui:55
-msgid "_Refresh"
+#: src/window.ui:52
+msgid "My timetable"
 msgstr ""
 
-#: src/window.ui:59
+#: src/window.ui:77
 msgid "_Login"
 msgstr ""
 
-#: src/window.ui:63
+#: src/window.ui:81
 msgid "_Keyboard Shortcuts"
 msgstr ""
 
-#: src/window.ui:67
+#: src/window.ui:85
 msgid "_About Timetable"
 msgstr ""
