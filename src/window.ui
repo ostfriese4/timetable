@@ -32,16 +32,8 @@
                   </object>
                 </child>
                 <property name="content">
-                  <object class="AdwSidebar">
-                    <child>
-                      <object class="AdwSidebarSection">
-                        <child>
-                          <object class="AdwSidebarItem">
-                            <property name="title">My timetable</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
+                  <object class="AdwViewSwitcherSidebar">
+                    <property name="stack">main_view_stack</property>
                   </object>
                 </property>
               </object>
@@ -50,9 +42,18 @@
         </property>
         <property name="content">
           <object class="AdwNavigationPage">
-            <property name="title" translatable="yes">Content</property>
             <child>
-              <object class="Timetable" id="timetable"></object>
+              <object class="AdwViewStack" id="main_view_stack">
+                <child>
+                  <object class="AdwViewStackPage">
+                    <property name="name">timetable</property>
+                    <property name="title">My timetable</property>
+                    <property name="child">
+                      <object class="Timetable" id="timetable"></object>
+                    </property>
+                  </object>
+                </child>
+              </object>
             </child>
           </object>
         </property>
