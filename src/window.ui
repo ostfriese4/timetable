@@ -4,47 +4,97 @@
   <requires lib="Adw" version="1.0"/>
   <template class="UntisWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Timetable</property>
-    <property name="default-width">450</property>
+    <property name="default-width">600</property>
     <property name="default-height">600</property>
+    <child>
+      <object class="AdwBreakpoint">
+        <condition>max-width: 599sp</condition>
+        <setter object="split_view" property="collapsed">True</setter>
+      </object>
+    </child>
     <property name="content">
-      <object class="AdwToolbarView">
-        <child type="top">
-          <object class="AdwHeaderBar">
-            <property name="title-widget">
-              <object class="GtkBox">
-                <property name="spacing">6</property>
-                <child>
-                  <object class="GtkButton" id="previous_button">
-                    <property name="icon-name">go-previous-symbolic</property>
-                    <property name="tooltip-text" translatable="yes">Previous week</property>
+      <object class="AdwNavigationSplitView" id="split_view">
+        <property name="sidebar">
+          <object class="AdwNavigationPage">
+            <property name="title" translatable="yes">Sidebar</property>
+            <child>
+              <object class="AdwToolbarView">
+                <child type="top">
+                  <object class="AdwHeaderBar">
+                    <child type="end">
+                      <object class="GtkMenuButton">
+                        <property name="primary">True</property>
+                        <property name="icon-name">open-menu-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Main Menu</property>
+                        <property name="menu-model">primary_menu</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="label" translatable="yes">Timetable</property>
-                    <property name="halign">GTK_ALIGN_CENTER</property>
+                <property name="content">
+                  <object class="AdwSidebar">
+                    <child>
+                      <object class="AdwSidebarSection">
+                        <child>
+                          <object class="AdwSidebarItem">
+                            <property name="title">My timetable</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
                   </object>
-                </child>
-                <child>
-                  <object class="GtkButton" id="next_button">
-                    <property name="icon-name">go-next-symbolic</property>
-                    <property name="tooltip-text" translatable="yes">Next week</property>
-                  </object>
-                </child>
-              </object>
-            </property>
-            <child type="end">
-              <object class="GtkMenuButton">
-                <property name="primary">True</property>
-                <property name="icon-name">open-menu-symbolic</property>
-                <property name="tooltip-text" translatable="yes">Main Menu</property>
-                <property name="menu-model">primary_menu</property>
+                </property>
+
               </object>
             </child>
           </object>
-        </child>
+        </property>
         <property name="content">
-          <object class="Timetable" id="timetable"></object>
+          <object class="AdwNavigationPage">
+            <property name="title" translatable="yes">Content</property>
+            <child>
+              <object class="AdwToolbarView">
+                <child type="top">
+                  <object class="AdwHeaderBar">
+                    <property name="title-widget">
+                      <object class="GtkBox">
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkButton" id="previous_button">
+                            <property name="icon-name">go-previous-symbolic</property>
+                            <property name="tooltip-text" translatable="yes">Previous week</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label" translatable="yes">Timetable</property>
+                            <property name="halign">GTK_ALIGN_CENTER</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="next_button">
+                            <property name="icon-name">go-next-symbolic</property>
+                            <property name="tooltip-text" translatable="yes">Next week</property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                    <child type="end">
+                      <object class="GtkMenuButton">
+                        <property name="primary">True</property>
+                        <property name="icon-name">open-menu-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Main Menu</property>
+                        <property name="menu-model">primary_menu</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <property name="content">
+                  <object class="Timetable" id="timetable"></object>
+                </property>
+              </object>
+            </child>
+          </object>
         </property>
       </object>
     </property>

@@ -3,6 +3,8 @@
   <requires lib="gtk" version="4.0"/>
   <template class="Timetable" parent="GtkBox">
     <property name="orientation">vertical</property>
+    <property name="hexpand">True</property>
+    <property name="vexpand">True</property>
     <child>
       <object class="AdwBanner" id="offline">
         <property name="title" translatable="yes">You are offline</property>
