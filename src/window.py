@@ -29,14 +29,9 @@ class UntisWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'UntisWindow'
 
     timetable = Gtk.Template.Child()
-    next_button = Gtk.Template.Child()
-    previous_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        self.next_button.connect("clicked", self.timetable.next)
-        self.previous_button.connect("clicked", self.timetable.previous)
 
         self.login_window = LoginWindow(self)
 

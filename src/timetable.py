@@ -36,6 +36,8 @@ class Timetable(Gtk.Box):
     overlay = Gtk.Template.Child()
     offline = Gtk.Template.Child()
     timetable = Gtk.Template.Child()
+    next_button = Gtk.Template.Child()
+    previous_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -46,6 +48,9 @@ class Timetable(Gtk.Box):
         self.prefetching = []
 
         self.information_window = InformationWindow(self)
+
+        self.next_button.connect("clicked", self.next)
+        self.previous_button.connect("clicked", self.previous)
 
         today = datetime.date.today()
         self.startdate = today - datetime.timedelta(days=today.weekday())
