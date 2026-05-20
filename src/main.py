@@ -61,7 +61,7 @@ class UntisApplication(Adw.Application):
         self.props.active_window.login_window.requestLogin()
 
     def on_refresh_action(self, widget, _):
-        self.props.active_window.refresh()
+        self.props.active_window.timetable.refresh()
 
     def create_action(self, name, callback, shortcuts=None):
         action = Gio.SimpleAction.new(name, None)

@@ -125,7 +125,7 @@ class LoginWindow(Adw.Dialog):
                        )
         if api.testLogin():
             self.close()
-            self.window.loadData()
+            self.window.timetable.loadData()
 
     def requestLogin(self):
         self.present(self.window)

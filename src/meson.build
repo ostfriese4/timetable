@@ -36,6 +36,7 @@ untis_sources = [
   'lesson.py',
   'login.py',
   'main.py',
+  'timetable.py',
   'window.py',
 ]
 

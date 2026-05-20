@@ -32,6 +32,9 @@ def fetchHomeworks(start, end, useCache = False):
                 break
 
     if not useCache:
+        if not api.testLogin():
+            print("login failed")
+            return []
         try:
             session = api.login()
 
