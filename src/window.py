@@ -29,6 +29,8 @@ class UntisWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'UntisWindow'
 
     timetable = Gtk.Template.Child()
+    sidebar_breakpoint = Gtk.Template.Child()
+    split_view = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -43,3 +45,4 @@ class UntisWindow(Adw.ApplicationWindow):
         keyPress = Gtk.EventControllerKey.new()
         keyPress.connect("key-pressed", onKeyPress)
         self.add_controller(keyPress)
+        self.timetable.enable_bindings()

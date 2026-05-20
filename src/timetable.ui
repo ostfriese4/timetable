@@ -30,6 +30,12 @@
                 </child>
               </object>
             </property>
+            <child type="start">
+              <object class="GtkToggleButton" id="show_sidebar_button">
+                <property name="icon-name">adw-sidebar-symbolic</property>
+                <property name="visible">False</property>
+              </object>
+            </child>
             <child type="end">
               <object class="GtkButton">
                 <property name="icon-name">view-refresh-symbolic</property>

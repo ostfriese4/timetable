@@ -7,7 +7,7 @@
     <property name="default-width">600</property>
     <property name="default-height">600</property>
     <child>
-      <object class="AdwBreakpoint">
+      <object class="AdwBreakpoint" id="sidebar_breakpoint">
         <condition>max-width: 599sp</condition>
         <setter object="split_view" property="collapsed">True</setter>
       </object>

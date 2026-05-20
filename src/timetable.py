@@ -21,6 +21,7 @@ from gi.repository import Gtk
 from gi.repository import Adw
 from gi.repository import Gdk
 from gi.repository import GLib
+from gi.repository import GObject
 from .homework_api import fetchHomeworks
 from .information import InformationWindow
 from .lesson import Lesson
@@ -38,6 +39,7 @@ class Timetable(Gtk.Box):
     timetable = Gtk.Template.Child()
     next_button = Gtk.Template.Child()
     previous_button = Gtk.Template.Child()
+    show_sidebar_button = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -72,6 +74,16 @@ class Timetable(Gtk.Box):
         self.timetable.add_controller(swipe)
 
         GLib.timeout_add(1000*60, self.loadData) # Update every minute (will result in every hour because of caching; one minute to update position of now-marker)
+
+    def enable_bindings(self):
+        parent = self.get_ancestor(Adw.ApplicationWindow)
+        parent.split_view.bind_property(
+            "show-sidebar",
+            self.show_sidebar_button,
+            "active",
+            GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL
+        )
+        parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
 
     def next(self, data = None):
         self.startdate += datetime.timedelta(days=7)
