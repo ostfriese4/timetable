@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-18 21:24+0200\n"
+"POT-Creation-Date: 2026-05-20 10:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,7 +34,7 @@ msgstr ""
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:10
 msgid ""
 "Timetable is an unofficial client for WebUntis, which focusses on the "
-"featured used by students."
+"features used by students."
 msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:14
@@ -198,22 +198,18 @@ msgstr ""
 msgid "Main Menu"
 msgstr ""
 
-#: src/window.ui:51
-msgid "You are offline"
-msgstr ""
-
-#: src/window.ui:79
+#: src/window.ui:55
 msgid "_Refresh"
 msgstr ""
 
-#: src/window.ui:83
+#: src/window.ui:59
 msgid "_Login"
 msgstr ""
 
-#: src/window.ui:87
+#: src/window.ui:63
 msgid "_Keyboard Shortcuts"
 msgstr ""
 
-#: src/window.ui:91
+#: src/window.ui:67
 msgid "_About Timetable"
 msgstr ""

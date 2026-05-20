@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-18 21:24+0200\n"
+"POT-Creation-Date: 2026-05-20 10:58+0200\n"
 "PO-Revision-Date: 2026-05-18 21:35+0200\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
@@ -34,9 +34,10 @@ msgid "View your WebUntis timetable"
 msgstr "Sieh dir deinen WebUntis-Stundenplan an"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:10
+#, fuzzy
 msgid ""
 "Timetable is an unofficial client for WebUntis, which focusses on the "
-"featured used by students."
+"features used by students."
 msgstr ""
 "Stundenplan ist ein inoffizieller Client für WebUntis, mit Fokus auf die von "
 "Schüler*innen verwendeten Funktionen."
@@ -207,22 +208,21 @@ msgstr "Nächste Woche"
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
-#: src/window.ui:51
-msgid "You are offline"
-msgstr "Keine Internetverbindung"
-
-#: src/window.ui:79
+#: src/window.ui:55
 msgid "_Refresh"
 msgstr "_Aktualisieren"
 
-#: src/window.ui:83
+#: src/window.ui:59
 msgid "_Login"
 msgstr "An_melden"
 
-#: src/window.ui:87
+#: src/window.ui:63
 msgid "_Keyboard Shortcuts"
 msgstr "_Tastenkürzel"
 
-#: src/window.ui:91
+#: src/window.ui:67
 msgid "_About Timetable"
 msgstr "Über _Stundenplan"
+
+#~ msgid "You are offline"
+#~ msgstr "Keine Internetverbindung"
