@@ -1,0 +1,95 @@
+# timetable.py
+#
+# Copyright 2026 Jonas
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+from gi.repository import Gtk
+from gi.repository import Adw
+from gi.repository import Gdk
+from gi.repository import GLib
+from gi.repository import GObject
+from .homework_api import fetchHomeworks, CACHEDIR
+from .api import api
+import datetime
+
+import os
+import json
+
+@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/homework.ui')
+class HomeworkList(Gtk.Box):
+    __gtype_name__ = 'HomeworkList'
+
+    show_sidebar_button = Gtk.Template.Child()
+    container = Gtk.Template.Child()
+    scrolled_window = Gtk.Template.Child()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.displayed = {}
+        self.days = {}
+        self.scrollTo = None
+        self.connect("map", self.scroll)
+
+    def enable_bindings(self):
+        parent = self.get_ancestor(Adw.ApplicationWindow)
+        parent.split_view.bind_property(
+            "show-sidebar",
+            self.show_sidebar_button,
+            "active",
+            GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL
+        )
+        parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
+
+        def on_visible(page, pspec):
+            if parent.main_view_stack.get_visible_child_name() == "homework":
+                self.loadData()
+        parent.main_view_stack.connect("notify::visible-child-name", on_visible)
+
+    def scroll(self, data = None):
+        if self.scrollTo is not None:
+            y = self.days[self.scrollTo].get_allocation().y
+            self.scrolled_window.get_vadjustment().set_value(y)
+            print(y)
+
+    def loadData(self):
+        self.scrollTo = None
+        now = datetime.date.today()
+        for day in sorted(os.listdir(CACHEDIR)):
+            with open(CACHEDIR + day) as file:
+                dayData = json.load(file)
+            for homework in dayData:
+                id = homework["id"]
+                date = homework["dueDate"]
+                dt = datetime.datetime.strptime(str(date), "%Y%m%d")
+                if not id in self.displayed:
+                    if not date in self.days:
+                        dayRow = Adw.PreferencesGroup(title = dt.strftime("%d.%m.%Y"))
+                        self.days[date] = dayRow
+                        self.container.add(dayRow)
+                    dayRow = self.days[date]
+                    hwRow = Adw.ActionRow(title = homework["text"])
+                    dayRow.add(hwRow)
+                    self.displayed[id] = hwRow
+
+                if self.scrollTo is None:
+                    if now.year <= dt.year:
+                        if now.month <= dt.month:
+                            if now.day <= dt.day:
+                                self.scrollTo = date
+
+        self.scroll()
+            

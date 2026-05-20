@@ -20,6 +20,7 @@
 from .api import api
 from .login import LoginWindow
 from .timetable import Timetable
+from .homework import HomeworkList
 from gi.repository import Adw
 from gi.repository import Gtk
 
@@ -29,6 +30,8 @@ class UntisWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'UntisWindow'
 
     timetable = Gtk.Template.Child()
+    homework = Gtk.Template.Child()
+    main_view_stack = Gtk.Template.Child()
     sidebar_breakpoint = Gtk.Template.Child()
     split_view = Gtk.Template.Child()
 
@@ -46,3 +49,4 @@ class UntisWindow(Adw.ApplicationWindow):
         keyPress.connect("key-pressed", onKeyPress)
         self.add_controller(keyPress)
         self.timetable.enable_bindings()
+        self.homework.enable_bindings()

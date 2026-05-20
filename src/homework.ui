@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="HomeworkList" parent="GtkBox">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="title-widget">
+              <object class="GtkBox">
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Homework</property>
+                    <property name="halign">GTK_ALIGN_CENTER</property>
+                  </object>
+                </child>
+              </object>
+            </property>
+            <child type="start">
+              <object class="GtkToggleButton" id="show_sidebar_button">
+                <property name="icon-name">adw-sidebar-symbolic</property>
+                <property name="visible">False</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="GtkScrolledWindow" id="scrolled_window">
+            <property name="hscrollbar-policy">never</property>
+            <property name="vscrollbar-policy">automatic</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <child>
+              <object class="AdwPreferencesPage" id="container"></object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </child>
+  </template>
+</interface>

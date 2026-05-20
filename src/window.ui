@@ -42,14 +42,25 @@
         </property>
         <property name="content">
           <object class="AdwNavigationPage">
+            <property name="title" translatable="yes">Timetable</property>
             <child>
               <object class="AdwViewStack" id="main_view_stack">
+                <property name="enable-transitions">True</property>
                 <child>
                   <object class="AdwViewStackPage">
                     <property name="name">timetable</property>
-                    <property name="title">Timetable</property>
+                    <property name="title" translatable="yes">My timetable</property>
                     <property name="child">
                       <object class="Timetable" id="timetable"></object>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwViewStackPage">
+                    <property name="name">homework</property>
+                    <property name="title" translatable="yes">Homework</property>
+                    <property name="child">
+                      <object class="HomeworkList" id="homework"></object>
                     </property>
                   </object>
                 </child>
