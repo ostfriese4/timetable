@@ -50,6 +50,7 @@
                   <object class="AdwViewStackPage">
                     <property name="name">timetable</property>
                     <property name="title" translatable="yes">My timetable</property>
+                    <property name="icon-name">starred-symbolic</property>
                     <property name="child">
                       <object class="Timetable" id="timetable"></object>
                     </property>
@@ -59,6 +60,7 @@
                   <object class="AdwViewStackPage" id="homework_page">
                     <property name="name">homework</property>
                     <property name="title" translatable="yes">Homework</property>
+                    <property name="icon-name">user-home-symbolic</property>
                     <property name="child">
                       <object class="HomeworkList" id="homework"></object>
                     </property>

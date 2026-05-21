@@ -140,3 +140,9 @@ def getById(id):
     for item in getAll():
         if str(item["id"]) == id:
             return item
+
+def delete(id):
+    id = str(id)
+    if id in ownData:
+        del ownData[id]
+        writeOwnData(ownData)
