@@ -350,7 +350,7 @@ class untisApi:
 
         baseurl = "https://schoolsearch.webuntis.com/schoolquery2"
         json = {
-            "id": "untis-mobile-blackberry-2.7.4",
+            "id": "page.codeberg.ostfriese4.Untis,
             "jsonrpc": "2.0",
             "method": "searchSchool",
             "params": [{
@@ -374,7 +374,7 @@ class untisApi:
             password=credentials["password"],
             server=credentials["server"],
             school=credentials["school"],
-            useragent='WebUntis Test'
+            useragent='page.codeberg.ostfriese4.Untis'
             )
         session.login()
         return session
