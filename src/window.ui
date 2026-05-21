@@ -4,11 +4,11 @@
   <requires lib="Adw" version="1.0"/>
   <template class="UntisWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Timetable</property>
-    <property name="default-width">450</property>
+    <property name="default-width">600</property>
     <property name="default-height">600</property>
     <child>
       <object class="AdwBreakpoint" id="sidebar_breakpoint">
-        <condition>max-width: 600sp</condition>
+        <condition>max-width: 500sp</condition>
         <setter object="split_view" property="collapsed">True</setter>
       </object>
     </child>
