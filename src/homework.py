@@ -55,40 +55,61 @@ class HomeworkList(Gtk.Box):
 
         def on_visible(page, pspec):
             if parent.main_view_stack.get_visible_child_name() == "homework":
-                self.loadData()
+                self.displayAll()
         parent.main_view_stack.connect("notify::visible-child-name", on_visible)
 
-    def scroll(self, data = None):
+    def scroll(self, data = None, y = None):
         if self.scrollTo is not None:
             y = self.days[self.scrollTo].get_allocation().y
+        if y is not None:
             adj = self.scrolled_window.get_vadjustment()
             adj.set_value(y)
 
-    def loadData(self):
+    def displayAll(self):
         self.scrollTo = None
-        now = datetime.date.today()
-        for day in sorted(os.listdir(CACHEDIR)):
+        data = []
+        for day in os.listdir(CACHEDIR):
             with open(CACHEDIR + day) as file:
                 dayData = json.load(file)
-            for homework in dayData:
-                id = homework["id"]
-                date = homework["dueDate"]
-                dt = datetime.datetime.strptime(str(date), "%Y%m%d")
-                if not id in self.displayed:
-                    if not date in self.days:
-                        dayRow = Adw.PreferencesGroup(title = dt.strftime("%d.%m.%Y"))
-                        self.days[date] = dayRow
-                        self.container.add(dayRow)
-                    dayRow = self.days[date]
-                    hwRow = Adw.ActionRow(title = homework["text"])
-                    dayRow.add(hwRow)
-                    self.displayed[id] = hwRow
+                data += dayData
+        self.display(data)
+        GLib.idle_add(self.scroll)
+
+    def sortData(self, data):
+        new = []
+        if not len(data) == 0:
+            new.append(data.pop())
+            for homework in data:
+                i = 0
+                date = datetime.datetime.strptime(str(homework["dueDate"]), "%Y%m%d")
+                for item in new:
+                    itemDate = datetime.datetime.strptime(str(item["dueDate"]), "%Y%m%d")
+                    if date.year <= itemDate.year and date.month <= itemDate.month and itemDate.day <= itemDate.day:
+                        break
+                    i += 1
+                new.insert(i,homework)
+        return new
+
+    def display(self, data):
+        data = self.sortData(data)
+        now = datetime.date.today()
+        for homework in data:
+            date = homework["dueDate"]
+            dt = datetime.datetime.strptime(str(date), "%Y%m%d")
+            id = homework["id"]
+            if not id in self.displayed:
+                if not date in self.days:
+                    dayRow = Adw.PreferencesGroup(title = dt.strftime("%d.%m.%Y"))
+                    self.days[date] = dayRow
+                    self.container.add(dayRow)
+                dayRow = self.days[date]
+                hwRow = Adw.ActionRow(title = homework["text"])
+                dayRow.add(hwRow)
+                self.displayed[id] = hwRow
 
                 if self.scrollTo is None:
                     if now.year <= dt.year:
                         if now.month <= dt.month:
                             if now.day <= dt.day:
                                 self.scrollTo = date
-
-        GLib.idle_add(self.scroll)
             
