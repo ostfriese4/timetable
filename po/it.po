@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-20 19:04+0200\n"
+"POT-Creation-Date: 2026-05-21 16:52+0200\n"
 "PO-Revision-Date: 2026-05-19 19:46+0200\n"
 "Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian\n"
@@ -62,39 +62,56 @@ msgstr "Sconosciuto"
 msgid "and"
 msgstr "e"
 
-#: src/homework.ui:14 src/information.py:64 src/window.ui:61
+#: src/homework.ui:14 src/information.py:69 src/information.py:98
+#: src/window.ui:62
 msgid "Homework"
 msgstr "Compiti a casa"
 
-#: src/information.py:44 src/information.py:85
+#: src/homework_row.py:60
+msgid "Do you really want to delete this homework?"
+msgstr ""
+
+#: src/homework_row.py:61
+msgid "Delete?"
+msgstr ""
+
+#: src/homework_row.py:62
+msgid "Cancel"
+msgstr ""
+
+#: src/homework_row.py:63
+msgid "Delete"
+msgstr ""
+
+#: src/information.py:45 src/information.py:88
 msgid "Subject"
 msgstr "Materia"
 
-#: src/information.py:45 src/information.py:86
+#: src/information.py:46 src/information.py:89
 msgid "Room"
 msgstr "Aula"
 
-#: src/information.py:46 src/information.py:87
+#: src/information.py:47 src/information.py:90
 msgid "Teacher"
 msgstr "Insegnante"
 
-#: src/information.py:48
+#: src/information.py:49
 msgid "Information about this lesson"
 msgstr "Informazioni su questa lezione"
 
-#: src/information.py:50
+#: src/information.py:51
 msgid "Cancelled"
 msgstr "Annullata"
 
-#: src/information.py:59
+#: src/information.py:60
 msgid "Duration"
 msgstr "Durata"
 
-#: src/information.py:59
+#: src/information.py:60
 msgid "Minutes"
 msgstr "Minuti"
 
-#: src/information.py:70
+#: src/information.py:73
 msgid "Original lesson"
 msgstr "Lezione originale"
 
@@ -205,15 +222,15 @@ msgstr "Menu principale"
 msgid "My timetable"
 msgstr "L'orario"
 
-#: src/window.ui:77
+#: src/window.ui:79
 msgid "_Login"
 msgstr "_Accedi"
 
-#: src/window.ui:81
+#: src/window.ui:83
 msgid "_Keyboard Shortcuts"
 msgstr "Scorciatoie da _tastiera"
 
-#: src/window.ui:85
+#: src/window.ui:87
 msgid "_About Timetable"
 msgstr "_Informazioni su Timetable"
 
