@@ -93,10 +93,16 @@ class HomeworkList(Gtk.Box):
     def display(self, data):
         data = self.sortData(data)
         now = datetime.date.today()
+        displayedIDs = []
+        displayedDays = []
         for homework in data:
             date = homework["dueDate"]
             dt = datetime.datetime.strptime(str(date), "%Y%m%d")
             id = homework["id"]
+            if not id in displayedIDs:
+                displayedIDs.append(id)
+            if not date in displayedDays:
+                displayedDays.append(date)
             if not id in self.displayed:
                 if not date in self.days:
                     dayRow = Adw.PreferencesGroup(title = dt.strftime("%d.%m.%Y"))
@@ -112,4 +118,13 @@ class HomeworkList(Gtk.Box):
                         if now.month <= dt.month:
                             if now.day <= dt.day:
                                 self.scrollTo = date
+
+        for id in self.displayed:
+            if id not in displayedIDs:
+                widget = self.displayed[id]
+                parent = widget.get_parent(Adw.PreferencesGroup)
+                parent.remove(widget)
+        for date in self.days:
+            if date not in displayedDays:
+                container.remove(self.days[date])
             
