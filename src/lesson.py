@@ -21,12 +21,13 @@ from gi.repository import Gtk
 from gi.repository import Adw
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/lesson.ui')
-class Lesson(Gtk.Box):
+class Lesson(Gtk.Overlay):
     __gtype_name__ = 'Lesson'
 
     subject_label = Gtk.Template.Child()
     teacher_label = Gtk.Template.Child()
     room_label = Gtk.Template.Child()
+    homework_indicator = Gtk.Template.Child()
 
     def __init__(self, lesson, window, **kwargs):
         super().__init__(**kwargs)
@@ -77,3 +78,4 @@ class Lesson(Gtk.Box):
             homeworks = []
             self.lesson["homeworks"] = homeworks
         homeworks.append(homework)
+        self.homework_indicator.set_visible(True)
