@@ -7,7 +7,23 @@ import requests
 from .credentials import getCredentials
 
 CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-hw/"
-os.system("mkdir -p " + CACHEDIR)
+DATAPATH = os.environ.get("XDG_DATA_HOME", ".untis") + "/homework.json"
+
+if not os.path.exists(CACHEDIR):
+    os.mkdir(CACHEDIR)
+
+def loadOwnData():
+    if os.path.exists(DATAPATH):
+        with open(DATAPATH) as file:
+            return json.load(file)
+    else:
+        return {}
+
+def writeOwnData(data):
+    with open(DATAPATH, "w") as file:
+        json.dump(data, file, indent=4)
+
+ownData = loadOwnData()
 
 def writeDay(date, data):
     name = date + "hw"
@@ -76,7 +92,8 @@ def fetchHomeworks(start, end, useCache = False):
             result = []
             for day in days:
                 writeDay(day, days[day])
-                result += days[day]
+                for item in days[day]:
+                    result.append(applyChanges(item))
 
             session.logout()
 
@@ -87,5 +104,39 @@ def fetchHomeworks(start, end, useCache = False):
         result = []
         for date in (start + datetime.timedelta(n) for n in range(day_count)):
             day = loadDay(date.strftime("%Y%m%d"))
-            result += day
+            for item in day:
+                result.append(applyChanges(item))
         return result
+
+def applyChanges(item):
+    id = str(item["id"])
+    if id in ownData:
+        changes = ownData[id]
+        item["oldKeys"] = {}
+        for key in changes:
+            if not id.startswith("own"):
+                item["oldKeys"][key] = item[key]
+            item[key] = changes[key]
+    return item
+
+def getAll():
+    data = []
+    for day in os.listdir(CACHEDIR):
+        with open(CACHEDIR + day) as file:
+            dayData = json.load(file)
+            for item in dayData:
+                data.append(applyChanges(item))
+    return data
+
+def setValue(id,key,value):
+    id = str(id)
+    if not id in ownData:
+        ownData[id] = {"id": id}
+    ownData[id][key] = value
+    writeOwnData(ownData)
+
+def getById(id):
+    id = str(id)
+    for item in getAll():
+        if str(item["id"]) == id:
+            return item

@@ -56,7 +56,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="AdwViewStackPage">
+                  <object class="AdwViewStackPage" id="homework_page">
                     <property name="name">homework</property>
                     <property name="title" translatable="yes">Homework</property>
                     <property name="child">

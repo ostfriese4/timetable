@@ -33,6 +33,7 @@ untis_sources = [
   'holiday.py',
   'homework.py',
   'homework_api.py',
+  'homework_row.py',
   'information.py',
   'lesson.py',
   'login.py',

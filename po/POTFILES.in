@@ -7,6 +7,8 @@ src/api.py
 src/credentials.py
 src/homework.py
 src/homework.ui
+src/homework_row.py
+src/homework_row.ui
 src/information.py
 src/information.ui
 src/lesson.py

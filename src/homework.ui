@@ -17,10 +17,20 @@
                 </child>
               </object>
             </property>
+            <child type="end">
+              <object class="GtkButton" id="add_homework_button">
+                <property name="icon-name">list-add-symbolic</property>
+              </object>
+            </child>
             <child type="start">
               <object class="GtkToggleButton" id="show_sidebar_button">
                 <property name="icon-name">adw-sidebar-symbolic</property>
                 <property name="visible">False</property>
+              </object>
+            </child>
+            <child type="start">
+              <object class="GtkButton" id="show_search_button">
+                <property name="icon-name">system-search-symbolic</property>
               </object>
             </child>
           </object>

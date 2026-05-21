@@ -19,6 +19,7 @@
 
 from gi.repository import Gtk
 from gi.repository import Adw
+from .homework_row import HomeworkRow
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/information.ui')
 class InformationWindow(Adw.Dialog):
@@ -61,9 +62,11 @@ class InformationWindow(Adw.Dialog):
         if "homeworks" in lesson:
             homeworks = lesson["homeworks"]
             data = {}
-            rows.append((_("Homework"), data))
+            i = 0
             for homework in homeworks:
-                data[homework["text"]] = ""
+                data[i] = homework
+                i += 1
+            rows.append((_("Homework"), data))
 
         if "original" in lesson:
             data = {}
@@ -92,8 +95,11 @@ class InformationWindow(Adw.Dialog):
             table = Adw.PreferencesGroup(title=r[0])
             self.info_table.add(table)
             for key, value in data.items():
-                row = Adw.ActionRow(title = key)
-                row.set_subtitle(value)
+                if r[0] == _("Homework"):
+                    row = HomeworkRow(value)
+                else:
+                    row = Adw.ActionRow(title = key)
+                    row.set_subtitle(value)
                 table.add(row)
             self.info_rows.append(table)
 

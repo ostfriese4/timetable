@@ -19,15 +19,11 @@
 
 from gi.repository import Gtk
 from gi.repository import Adw
-from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import GObject
-from .homework_api import fetchHomeworks, CACHEDIR
-from .api import api
+from .homework_api import getAll
+from .homework_row import HomeworkRow
 import datetime
-
-import os
-import json
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/homework.ui')
 class HomeworkList(Gtk.Box):
@@ -43,8 +39,7 @@ class HomeworkList(Gtk.Box):
         self.days = {}
         self.scrollTo = None
 
-    def enable_bindings(self):
-        parent = self.get_ancestor(Adw.ApplicationWindow)
+    def enable_bindings(self, parent):
         parent.split_view.bind_property(
             "show-sidebar",
             self.show_sidebar_button,
@@ -58,6 +53,9 @@ class HomeworkList(Gtk.Box):
                 self.displayAll()
         parent.main_view_stack.connect("notify::visible-child-name", on_visible)
 
+        self.page = parent.homework_page
+        self.displayAll()
+
     def scroll(self, data = None, y = None):
         if self.scrollTo is not None:
             y = self.days[self.scrollTo].get_allocation().y
@@ -66,13 +64,14 @@ class HomeworkList(Gtk.Box):
             adj.set_value(y)
 
     def displayAll(self):
+        unfinished = 0
         self.scrollTo = None
-        data = []
-        for day in os.listdir(CACHEDIR):
-            with open(CACHEDIR + day) as file:
-                dayData = json.load(file)
-                data += dayData
+        data = getAll()
+        for item in data:
+            if item["completed"] == False:
+                unfinished += 1
         self.display(data)
+        self.page.set_badge_number(unfinished)
         GLib.idle_add(self.scroll)
 
     def sortData(self, data):
@@ -109,7 +108,7 @@ class HomeworkList(Gtk.Box):
                     self.days[date] = dayRow
                     self.container.add(dayRow)
                 dayRow = self.days[date]
-                hwRow = Adw.ActionRow(title = homework["text"])
+                hwRow = HomeworkRow(homework)
                 dayRow.add(hwRow)
                 self.displayed[id] = hwRow
 
@@ -127,4 +126,3 @@ class HomeworkList(Gtk.Box):
         for date in self.days:
             if date not in displayedDays:
                 container.remove(self.days[date])
-            
