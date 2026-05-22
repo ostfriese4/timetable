@@ -1,4 +1,4 @@
-# timetable.py
+# homework.py
 #
 # Copyright 2026 Jonas
 #

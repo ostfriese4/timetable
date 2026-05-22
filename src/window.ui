@@ -66,6 +66,16 @@
                     </property>
                   </object>
                 </child>
+                <child>
+                  <object class="AdwViewStackPage">
+                    <property name="name">teachers</property>
+                    <property name="title" translatable="yes">Teachers</property>
+                    <property name="icon-name">system-users-symbolic</property>
+                    <property name="child">
+                      <object class="TeacherPage" id="teachers"></object>
+                    </property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>

@@ -17,5 +17,9 @@ src/login.py
 src/login.ui
 src/main.py
 src/shortcuts-dialog.ui
+src/teachers.py
+src/teachers.ui
+src/timetable.py
+src/timetable.ui
 src/window.py
 src/window.ui

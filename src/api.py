@@ -350,7 +350,7 @@ class untisApi:
 
         baseurl = "https://schoolsearch.webuntis.com/schoolquery2"
         json = {
-            "id": "page.codeberg.ostfriese4.Untis,
+            "id": "page.codeberg.ostfriese4.Untis",
             "jsonrpc": "2.0",
             "method": "searchSchool",
             "params": [{
@@ -378,6 +378,13 @@ class untisApi:
             )
         session.login()
         return session
+
+    def listTeachers(self):
+        with self.login() as session:
+            out = []
+            for teacher in session.teachers():
+                out.append(teacher)
+            return out
 
     def testLogin(self):
         try:
