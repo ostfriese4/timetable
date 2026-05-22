@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-21 16:52+0200\n"
-"PO-Revision-Date: 2026-05-20 19:05+0200\n"
+"POT-Creation-Date: 2026-05-22 14:21+0200\n"
+"PO-Revision-Date: 2026-05-22 14:44+0200\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:50
-#: src/window.ui:6 src/window.ui:45
+#: src/timetable.ui:21 src/window.ui:6 src/window.ui:45
 msgid "Timetable"
 msgstr "Stundenplan"
 
@@ -66,25 +66,25 @@ msgid "and"
 msgstr "und"
 
 #: src/homework.ui:14 src/information.py:69 src/information.py:98
-#: src/window.ui:62
+#: src/teachers.ui:14 src/window.ui:62
 msgid "Homework"
 msgstr "Hausaufgaben"
 
 #: src/homework_row.py:60
 msgid "Do you really want to delete this homework?"
-msgstr ""
+msgstr "Wollen Sie diese Hausaufgabe wirklich löschen?"
 
 #: src/homework_row.py:61
 msgid "Delete?"
-msgstr ""
+msgstr "Löschen?"
 
 #: src/homework_row.py:62
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: src/homework_row.py:63
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: src/information.py:45 src/information.py:88
 msgid "Subject"
@@ -212,9 +212,29 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Beenden"
 
+#: src/teachers.ui:38
+msgid "Search term"
+msgstr "Suchbegriff"
+
+#: src/timetable.ui:16
+msgid "Previous week"
+msgstr "Vorherige Woche"
+
+#: src/timetable.ui:28
+msgid "Next week"
+msgstr "Nächste Woche"
+
+#: src/timetable.ui:42
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+#: src/timetable.ui:53
+msgid "You are offline"
+msgstr "Keine Internetverbindung"
+
 #: src/window.ui:19
 msgid "Sidebar"
-msgstr ""
+msgstr "Seitenleiste"
 
 #: src/window.ui:28
 msgid "Main Menu"
@@ -224,26 +244,21 @@ msgstr "Hauptmenü"
 msgid "My timetable"
 msgstr "Mein Stundenplan"
 
-#: src/window.ui:79
+#: src/window.ui:72
+msgid "Teachers"
+msgstr "Lehrkräfte"
+
+#: src/window.ui:89
 msgid "_Login"
 msgstr "An_melden"
 
-#: src/window.ui:83
+#: src/window.ui:93
 msgid "_Keyboard Shortcuts"
 msgstr "_Tastenkürzel"
 
-#: src/window.ui:87
+#: src/window.ui:97
 msgid "_About Timetable"
 msgstr "Über _Stundenplan"
 
-#~ msgid "Previous week"
-#~ msgstr "Vorherige Woche"
-
-#~ msgid "Next week"
-#~ msgstr "Nächste Woche"
-
 #~ msgid "_Refresh"
 #~ msgstr "_Aktualisieren"
-
-#~ msgid "You are offline"
-#~ msgstr "Keine Internetverbindung"

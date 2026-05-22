@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-21 16:52+0200\n"
+"POT-Creation-Date: 2026-05-22 14:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:50
-#: src/window.ui:6 src/window.ui:45
+#: src/timetable.ui:21 src/window.ui:6 src/window.ui:45
 msgid "Timetable"
 msgstr ""
 
@@ -62,7 +62,7 @@ msgid "and"
 msgstr ""
 
 #: src/homework.ui:14 src/information.py:69 src/information.py:98
-#: src/window.ui:62
+#: src/teachers.ui:14 src/window.ui:62
 msgid "Homework"
 msgstr ""
 
@@ -203,6 +203,26 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr ""
 
+#: src/teachers.ui:38
+msgid "Search term"
+msgstr ""
+
+#: src/timetable.ui:16
+msgid "Previous week"
+msgstr ""
+
+#: src/timetable.ui:28
+msgid "Next week"
+msgstr ""
+
+#: src/timetable.ui:42
+msgid "Refresh"
+msgstr ""
+
+#: src/timetable.ui:53
+msgid "You are offline"
+msgstr ""
+
 #: src/window.ui:19
 msgid "Sidebar"
 msgstr ""
@@ -215,14 +235,18 @@ msgstr ""
 msgid "My timetable"
 msgstr ""
 
-#: src/window.ui:79
+#: src/window.ui:72
+msgid "Teachers"
+msgstr ""
+
+#: src/window.ui:89
 msgid "_Login"
 msgstr ""
 
-#: src/window.ui:83
+#: src/window.ui:93
 msgid "_Keyboard Shortcuts"
 msgstr ""
 
-#: src/window.ui:87
+#: src/window.ui:97
 msgid "_About Timetable"
 msgstr ""
