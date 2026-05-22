@@ -207,6 +207,36 @@ class untisApi:
             i += 1
         return short, long
 
+    def analyzeLesson(self, lesson):
+        lessondata = {}
+        lessondata["sg"] = lesson.studentGroup
+        lessondata["code"] = lesson.code
+        lessondata["id"] = lesson.lsnumber
+        lessondata["date"] = lesson.start.strftime("%Y%m%d")
+        lessondata["start"] = lesson.start.hour * 60 + lesson.start.minute
+        lessondata["end"] = lesson.end.hour * 60 + lesson.end.minute
+        lessondata["duration"] = lessondata["end"] - lessondata["start"]
+
+        if len(lesson.original_teachers) != 0:
+            if not "original" in lessondata:
+                lessondata["original"] = {}
+            lessondata["original"]["teacher-short"], lessondata["original"]["teacher-long"] = self.createList(lesson.original_teachers)
+
+        if len(lesson.original_rooms) != 0:
+            if not "original" in lessondata:
+                lessondata["original"] = {}
+            lessondata["original"]["room"], lessondata["original"]["room-info"] = self.createList(lesson.original_rooms)
+
+
+        lessondata["subject-short"], lessondata["subject-long"] = self.createList(lesson.subjects)
+        lessondata["room"], lessondata["room-info"] = self.createList(lesson.rooms)
+        lessondata["teacher-short"], lessondata["teacher-long"] = self.createList(lesson.teachers)
+
+        lessondata["text"] = lesson.lstext
+        lessondata["color"] = self.getColor(lessondata["subject-short"])
+
+        return lessondata
+
     def getTimetable(self, start, end, useCache = False):
         days = (end - start).days + 1
         self.cache = False
@@ -273,33 +303,7 @@ class untisApi:
                 ]
                 planned = None
                 for lesson in info:
-                    lessondata = {}
-                    lessondata["sg"] = lesson.studentGroup
-                    lessondata["code"] = lesson.code
-                    lessondata["id"] = lesson.lsnumber
-                    lessondata["date"] = lesson.start.strftime("%Y%m%d")
-                    lessondata["start"] = lesson.start.hour * 60 + lesson.start.minute
-                    lessondata["end"] = lesson.end.hour * 60 + lesson.end.minute
-                    lessondata["duration"] = lessondata["end"] - lessondata["start"]
-
-                    if len(lesson.original_teachers) != 0:
-                        if not "original" in lessondata:
-                            lessondata["original"] = {}
-                        lessondata["original"]["teacher-short"], lessondata["original"]["teacher-long"] = self.createList(lesson.original_teachers)
-
-                    if len(lesson.original_rooms) != 0:
-                        if not "original" in lessondata:
-                            lessondata["original"] = {}
-                        lessondata["original"]["room"], lessondata["original"]["room-info"] = self.createList(lesson.original_rooms)
-
-
-                    lessondata["subject-short"], lessondata["subject-long"] = self.createList(lesson.subjects)
-                    lessondata["room"], lessondata["room-info"] = self.createList(lesson.rooms)
-                    lessondata["teacher-short"], lessondata["teacher-long"] = self.createList(lesson.teachers)
-
-                    lessondata["text"] = lesson.lstext
-                    lessondata["color"] = self.getColor(lessondata["subject-short"])
-
+                    lessondata = self.analyzeLesson(lesson)
                     if planned is not None:
                         if lessondata["code"] == "cancelled":
                             tmp = planned
