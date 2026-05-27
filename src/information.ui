@@ -8,10 +8,7 @@
     <child>
       <object class="AdwToolbarView">
         <child type="top">
-          <object class="AdwHeaderBar">
-            <property name="show-start-title-buttons">true</property>
-            <property name="show-end-title-buttons">true</property>
-          </object>
+          <object class="AdwHeaderBar"/>
         </child>
         <property name="content">
           <object class="AdwPreferencesPage" id="info_table">
