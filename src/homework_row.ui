@@ -8,6 +8,7 @@
         <child>
           <object class="GtkCheckButton" id="check_button">
             <property name="hexpand">False</property>
+            <property name="valign">start</property>
           </object>
         </child>
         <child>
@@ -20,6 +21,7 @@
         <child>
           <object class="GtkButton" id="delete_button">
             <property name="hexpand">False</property>
+            <property name="valign">start</property>
             <property name="icon-name">user-trash-symbolic</property>
           </object>
         </child>
