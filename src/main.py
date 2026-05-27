@@ -38,6 +38,7 @@ class UntisApplication(Adw.Application):
         self.create_action('about', self.on_about_action)
         self.create_action('login', self.on_login_action, ['<control>l'])
         self.create_action('refresh', self.on_refresh_action, ['<control>r'])
+        self.create_action('create_homework', self.on_create_homework_action, ['<control>n'])
 
     def do_activate(self):
         win = self.props.active_window
@@ -62,6 +63,9 @@ class UntisApplication(Adw.Application):
 
     def on_refresh_action(self, widget, _):
         self.props.active_window.timetable.refresh()
+
+    def on_create_homework_action(self, widget, _):
+        self.props.active_window.homeworkEditWindow.new_homework()
 
     def create_action(self, name, callback, shortcuts=None):
         action = Gio.SimpleAction.new(name, None)

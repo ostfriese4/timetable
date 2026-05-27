@@ -20,6 +20,7 @@
             <child type="end">
               <object class="GtkButton" id="add_homework_button">
                 <property name="icon-name">list-add-symbolic</property>
+                <property name="action-name">app.create_homework</property>
               </object>
             </child>
             <child type="start">

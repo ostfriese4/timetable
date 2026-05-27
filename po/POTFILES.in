@@ -5,6 +5,8 @@ data/page.codeberg.ostfriese4.Untis.metainfo.xml.in
 data/page.codeberg.ostfriese4.Untis.gschema.xml
 src/api.py
 src/credentials.py
+src/create_homework.py
+src/create_homework.ui
 src/homework.py
 src/homework.ui
 src/homework_row.py

@@ -123,6 +123,7 @@ class HomeworkList(Gtk.Box):
                 widget = self.displayed[id]
                 parent = widget.get_parent(Adw.PreferencesGroup)
                 parent.remove(widget)
+                del self.displayed[id]
         for date in self.days:
             if date not in displayedDays:
                 container.remove(self.days[date])

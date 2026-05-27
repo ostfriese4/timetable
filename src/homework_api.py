@@ -126,6 +126,9 @@ def getAll():
             dayData = json.load(file)
             for item in dayData:
                 data.append(applyChanges(item))
+    for id in ownData:
+        if id.startswith("own"):
+            data.append(ownData[id])
     return data
 
 def setValue(id,key,value):
@@ -146,3 +149,9 @@ def delete(id):
     if id in ownData:
         del ownData[id]
         writeOwnData(ownData)
+
+def getNewId():
+    i = 0
+    while "own" + str(i) in ownData:
+        i+=1
+    return "own" + str(i)

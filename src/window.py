@@ -22,6 +22,7 @@ from .login import LoginWindow
 from .timetable import Timetable
 from .homework import HomeworkList
 from .teachers import TeacherPage
+from .create_homework import HomeworkEditWindow
 from gi.repository import Adw
 from gi.repository import Gtk
 
@@ -42,6 +43,7 @@ class UntisWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
 
         self.login_window = LoginWindow(self)
+        self.homeworkEditWindow = HomeworkEditWindow(self)
 
         def onKeyPress(click,key,x,y):
             if key == 65363:
