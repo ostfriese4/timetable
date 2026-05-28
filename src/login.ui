@@ -21,7 +21,7 @@
                 <child>
                   <object class="AdwButtonRow" id="sso_info_button">
                     <property name="title" translatable="yes">I usually log in using a third-party service</property>
-                    <property name="start-icon-name">help-about-symbolic</property>
+                    <property name="start-icon-name">dialog-information-symbolic</property>
                   </object>
                 </child>
               </object>

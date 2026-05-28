@@ -19,7 +19,7 @@
 
 from gi.repository import Gtk
 from gi.repository import Adw
-from .homework_api import getNewId, setValue, getById
+from .homework_api import getNewId, setValue, getById, delete
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/create_homework.ui')
 class HomeworkEditWindow(Adw.Dialog):
@@ -31,22 +31,63 @@ class HomeworkEditWindow(Adw.Dialog):
     save = Gtk.Template.Child()
     subject = Gtk.Template.Child()
 
+    delete_button = Gtk.Template.Child()
+    delete_row = Gtk.Template.Child()
+
     def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
         self.window = window
         self.save.add_css_class("suggested-action")
         self.save.connect("activated", self.on_save)
+        self.delete_button.add_css_class("destructive-action")
+        self.delete_button.connect("activated", self.delete)
 
     def new_homework(self):
         self.window.main_view_stack.set_visible_child_name("homework")
         self.current_id = getNewId()
         self.task.set_text("")
+        self.delete_row.set_visible(False)
+        self.present(self.window)
+
+    def edit(self, id):
+        self.current_id = id
+        item = getById(id)
+        self.task.set_text(item["text"])
+        self.subject.set_text(item["subject"])
+        self.completed.set_active(item["completed"])
+        date = item["dueDate"]
+        year = int(date * 0.0001)
+        month = int((date - (year * 10000)) * 0.01)
+        day = date - year * 10000 - month * 100
+        self.date.set_year(year)
+        self.date.set_month(month)
+        self.date.set_day(day)
+        self.delete_row.set_visible(True)
         self.present(self.window)
 
     def on_save(self, data = None):
         setValue(self.current_id, "text", self.task.get_text())
         setValue(self.current_id, "subject", self.subject.get_text())
         setValue(self.current_id, "completed", self.completed.get_active())
-        setValue(self.current_id, "dueDate", int(str(self.date.get_year()) + str(self.date.get_month()) + str(self.date.get_day())))
+        setValue(self.current_id, "dueDate", int(str(self.date.get_year()).zfill(4) + str(self.date.get_month()).zfill(2) + str(self.date.get_day()).zfill(2)))
         self.close()
         self.window.homework.displayAll()
+
+    def delete(self, data=None):
+        warning = Adw.AlertDialog()
+        warning.set_body(_("Do you really want to delete this homework?"))
+        warning.set_heading(_("Delete?"))
+        warning.add_response("cancel", _("Cancel"))
+        warning.add_response("delete", _("Delete"))
+        warning.set_default_response("cancel")
+        warning.set_close_response("cancel")
+        warning.set_response_appearance("delete", 2)
+        def on_answer(warning, answer):
+            if answer == "delete":
+                self.deleteData()
+        warning.connect("response", on_answer)
+        warning.present(self.get_ancestor(Adw.ApplicationWindow))
+
+    def deleteData(self):
+        delete(self.current_id)
+

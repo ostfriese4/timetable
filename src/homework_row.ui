@@ -19,10 +19,10 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="delete_button">
+          <object class="GtkButton" id="edit_button">
             <property name="hexpand">False</property>
             <property name="valign">start</property>
-            <property name="icon-name">user-trash-symbolic</property>
+            <property name="icon-name">document-edit-symbolic</property>
           </object>
         </child>
       </object>

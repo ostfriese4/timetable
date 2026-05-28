@@ -50,6 +50,15 @@
               </object>
             </child>
             <child>
+              <object class="AdwPreferencesGroup" id="delete_row">
+                <child>
+                  <object class="AdwButtonRow" id="delete_button">
+                    <property name="title" translatable="yes">Delete</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwButtonRow" id="save">
