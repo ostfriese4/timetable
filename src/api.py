@@ -25,6 +25,9 @@ import traceback
 import webuntis
 from .credentials import getCredentials, setCredentials
 
+version = "devel"
+useragent = "page.codeberg.ostrfiese4.Untis " + version
+
 class untisApi:
     def __init__(self):
         self.colors = {}
@@ -354,7 +357,7 @@ class untisApi:
 
         baseurl = "https://schoolsearch.webuntis.com/schoolquery2"
         json = {
-            "id": "page.codeberg.ostfriese4.Untis",
+            "id": useragent,
             "jsonrpc": "2.0",
             "method": "searchSchool",
             "params": [{
@@ -378,7 +381,7 @@ class untisApi:
             password=credentials["password"],
             server=credentials["server"],
             school=credentials["school"],
-            useragent='page.codeberg.ostfriese4.Untis'
+            useragent=useragent
             )
         session.login()
         return session
