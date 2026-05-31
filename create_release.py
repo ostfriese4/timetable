@@ -30,7 +30,7 @@ with open("data/page.codeberg.ostfriese4.Untis.metainfo.xml.in") as file:
 pos = meta.find("<releases>") + 10
 
 
-release = "\n    <release version=\"" + version + "\" date=\"" + datetime.date.today().strftime("%y-%m-%d") + "\">\n      <description translate=\"no\">\n        <ul>"
+release = "\n    <release version=\"" + version + "\" date=\"" + datetime.date.today().strftime("%Y-%m-%d") + "\">\n      <description translate=\"no\">\n        <ul>"
 for new in news:
     release += "\n          <li>" + new + "</li>"
 release += "\n        </ul>\n      </description>\n    </release>"
