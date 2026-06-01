@@ -3,7 +3,6 @@
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.0"/>
   <template class="HomeworkEditWindow" parent="AdwDialog">
-    <property name="title" translatable="yes">Create homework</property>
     <property name="content-width">400</property>
     <child>
       <object class="AdwToolbarView">

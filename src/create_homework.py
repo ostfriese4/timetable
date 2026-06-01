@@ -47,6 +47,7 @@ class HomeworkEditWindow(Adw.Dialog):
         self.current_id = getNewId()
         self.task.set_text("")
         self.delete_row.set_visible(False)
+        self.set_title(_("Create homework"))
         self.present(self.window)
 
     def edit(self, id):
@@ -63,6 +64,7 @@ class HomeworkEditWindow(Adw.Dialog):
         self.date.set_month(month)
         self.date.set_day(day)
         self.delete_row.set_visible(True)
+        self.set_title(_("Edit homework"))
         self.present(self.window)
 
     def on_save(self, data = None):
