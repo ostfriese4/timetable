@@ -29,11 +29,6 @@
                 <property name="visible">False</property>
               </object>
             </child>
-            <child type="start">
-              <object class="GtkButton" id="show_search_button">
-                <property name="icon-name">system-search-symbolic</property>
-              </object>
-            </child>
           </object>
         </child>
         <property name="content">
