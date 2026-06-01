@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-01 09:17+0200\n"
+"POT-Creation-Date: 2026-06-01 20:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,23 +69,23 @@ msgstr ""
 msgid "Create homework"
 msgstr ""
 
-#: src/create_homework.py:67
+#: src/create_homework.py:68 src/homework_row.ui:27
 msgid "Edit homework"
 msgstr ""
 
-#: src/create_homework.py:80
+#: src/create_homework.py:82
 msgid "Do you really want to delete this homework?"
 msgstr ""
 
-#: src/create_homework.py:81
+#: src/create_homework.py:83
 msgid "Delete?"
 msgstr ""
 
-#: src/create_homework.py:82
+#: src/create_homework.py:84
 msgid "Cancel"
 msgstr ""
 
-#: src/create_homework.py:83 src/create_homework.ui:55
+#: src/create_homework.py:85 src/create_homework.ui:55
 msgid "Delete"
 msgstr ""
 
@@ -101,7 +101,7 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
-#: src/create_homework.ui:46
+#: src/create_homework.ui:46 src/homework.ui:36
 msgid "Completed"
 msgstr ""
 
@@ -109,9 +109,16 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: src/homework.ui:14 src/information.py:69 src/information.py:98
-#: src/teachers.ui:14 src/window.ui:62
-msgid "Homework"
+#: src/homework.ui:19
+msgid "Create a new homework"
+msgstr ""
+
+#: src/homework.ui:53
+msgid "Unfinished"
+msgstr ""
+
+#: src/homework_row.ui:12
+msgid "Mark as completed"
 msgstr ""
 
 #: src/information.py:46 src/information.py:89
@@ -136,6 +143,10 @@ msgstr ""
 
 #: src/information.py:60
 msgid "Minutes"
+msgstr ""
+
+#: src/information.py:69 src/information.py:98 src/window.ui:62
+msgid "Homework"
 msgstr ""
 
 #: src/information.py:73
@@ -236,7 +247,11 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr ""
 
-#: src/teachers.ui:38
+#: src/teachers.ui:12 src/window.ui:72
+msgid "Teachers"
+msgstr ""
+
+#: src/teachers.ui:34
 msgid "Search term"
 msgstr ""
 
@@ -266,10 +281,6 @@ msgstr ""
 
 #: src/window.ui:52
 msgid "My timetable"
-msgstr ""
-
-#: src/window.ui:72
-msgid "Teachers"
 msgstr ""
 
 #: src/window.ui:89
