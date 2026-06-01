@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-01 20:14+0200\n"
+"POT-Creation-Date: 2026-06-01 21:35+0200\n"
 "PO-Revision-Date: 2026-05-19 19:46+0200\n"
 "Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:52
-#: src/timetable.ui:21 src/window.ui:6 src/window.ui:45
+#: src/window.ui:6 src/window.ui:19 src/window.ui:45
 msgid "Timetable"
 msgstr "Timetable"
 
@@ -265,26 +265,30 @@ msgstr ""
 msgid "Search term"
 msgstr ""
 
+#: src/timetable.py:197
+msgid "Week %W"
+msgstr ""
+
 #: src/timetable.ui:16
 msgid "Previous week"
 msgstr "Settimana precedente"
 
-#: src/timetable.ui:28
+#: src/timetable.ui:21 src/timetable.ui:84
+msgid "Jump to date"
+msgstr ""
+
+#: src/timetable.ui:27
 msgid "Next week"
 msgstr "Settimana successiva"
 
-#: src/timetable.ui:42
+#: src/timetable.ui:41
 #, fuzzy
 msgid "Refresh"
 msgstr "Aggiorna"
 
-#: src/timetable.ui:53
+#: src/timetable.ui:52
 msgid "You are offline"
 msgstr "Sei offline"
-
-#: src/window.ui:19
-msgid "Sidebar"
-msgstr ""
 
 #: src/window.ui:28
 msgid "Main Menu"

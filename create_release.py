@@ -1,9 +1,6 @@
-import os
 import datetime
 
 version = input("version: ")
-os.system("git switch stable")
-os.system("git merge main")
 
 news = []
 with open("NEWS", "r") as file:
