@@ -17,9 +17,8 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkLabel">
-                    <property name="label" translatable="yes">Timetable</property>
-                    <property name="halign">GTK_ALIGN_CENTER</property>
+                  <object class="GtkButton" id="header_button">
+                    <property name="tooltip-text" translatable="yes">Jump to date</property>
                   </object>
                 </child>
                 <child>
@@ -81,4 +80,17 @@
       </object>
     </child>
   </template>
+  <object class="AdwDialog" id="date_chooser_dialog">
+    <property name="title" translatable="yes">Jump to date</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar"/>
+        </child>
+        <property name="content">
+          <object class="GtkCalendar" id="date_chooser"/>
+        </property>
+      </object>
+    </child>
+  </object>
 </interface>

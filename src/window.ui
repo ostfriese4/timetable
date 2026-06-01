@@ -16,7 +16,7 @@
       <object class="AdwOverlaySplitView" id="split_view">
         <property name="sidebar">
           <object class="AdwNavigationPage">
-            <property name="title" translatable="yes">Sidebar</property>
+            <property name="title" translatable="yes">Timetable</property>
             <child>
               <object class="AdwToolbarView">
                 <child type="top">

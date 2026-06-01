@@ -41,6 +41,10 @@ class Timetable(Gtk.Box):
     previous_button = Gtk.Template.Child()
     show_sidebar_button = Gtk.Template.Child()
 
+    header_button = Gtk.Template.Child()
+    date_chooser = Gtk.Template.Child()
+    date_chooser_dialog = Gtk.Template.Child()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -53,13 +57,10 @@ class Timetable(Gtk.Box):
 
         self.next_button.connect("clicked", self.next)
         self.previous_button.connect("clicked", self.previous)
+        self.header_button.connect("clicked", self.on_header_button)
+        self.date_chooser.connect("day-selected", self.on_day_selected)
 
-        today = datetime.date.today()
-        self.startdate = today - datetime.timedelta(days=today.weekday())
-        self.enddate = self.startdate + datetime.timedelta(days=4)
-        while self.enddate < today:
-            self.next()
-        self.loadData()
+        self.jump_to(datetime.date.today())
 
         self.info_rows = []
 
@@ -75,6 +76,24 @@ class Timetable(Gtk.Box):
 
         GLib.timeout_add(1000*60, self.update_marker) # update time-marker
         GLib.timeout_add(1000*60*10, self.loadData) # Update every ten minutes (will result in every hour because of caching)
+
+    def on_header_button(self, data=None):
+        self.date_chooser_dialog.present(self.get_ancestor(Adw.ApplicationWindow))
+        self.date_chooser.set_year(self.startdate.year)
+        self.date_chooser.set_month(self.startdate.month - 1)
+        self.date_chooser.set_day(self.startdate.day)
+
+    def on_day_selected(self, date):
+        date = datetime.datetime.strptime(self.date_chooser.get_date().format("%d-%m-%Y"), "%d-%m-%Y").date()
+        self.date_chooser_dialog.close()
+        self.jump_to(date)
+
+    def jump_to(self, date):
+        self.startdate = date - datetime.timedelta(days=date.weekday())
+        self.enddate = self.startdate + datetime.timedelta(days=4)
+        while self.enddate < date:
+            self.next()
+        self.loadData()
 
     def update_marker(self):
         for overlay in self.overlays:
@@ -173,6 +192,7 @@ class Timetable(Gtk.Box):
         context.stroke()
 
     def displayData(self, table):
+        self.header_button.set_label(self.startdate.strftime(_("Week %W")))
         if api.cache:
             if not api.testLogin():
                 self.get_ancestor(Adw.ApplicationWindow).login_window.requestLogin()

@@ -62,7 +62,7 @@ class HomeworkEditWindow(Adw.Dialog):
         month = int((date - (year * 10000)) * 0.01)
         day = date - year * 10000 - month * 100
         self.date.set_year(year)
-        self.date.set_month(month)
+        self.date.set_month(month - 1)
         self.date.set_day(day)
         self.delete_row.set_visible(True)
         self.set_title(_("Edit homework"))
