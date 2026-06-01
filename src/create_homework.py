@@ -92,4 +92,5 @@ class HomeworkEditWindow(Adw.Dialog):
 
     def deleteData(self):
         delete(self.current_id)
+        self.close()
 
