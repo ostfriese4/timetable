@@ -8,13 +8,9 @@
         <child type="top">
           <object class="AdwHeaderBar">
             <property name="title-widget">
-              <object class="GtkBox">
-                <child>
-                  <object class="GtkLabel">
-                    <property name="label" translatable="yes">Homework</property>
-                    <property name="halign">GTK_ALIGN_CENTER</property>
-                  </object>
-                </child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Teachers</property>
+                <property name="halign">GTK_ALIGN_CENTER</property>
               </object>
             </property>
             <child type="start">
