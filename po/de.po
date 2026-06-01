@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-01 20:14+0200\n"
-"PO-Revision-Date: 2026-05-22 14:44+0200\n"
+"PO-Revision-Date: 2026-06-01 20:20+0200\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -55,7 +55,7 @@ msgstr "Informationen zur Stunde werden in einem Dialog angezeigt"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:55
 msgid "Editing a homework"
-msgstr ""
+msgstr "Bearbeiten einer Hausaufgabe"
 
 #: src/api.py:99
 msgid "No data available"
@@ -70,14 +70,12 @@ msgid "and"
 msgstr "und"
 
 #: src/create_homework.py:50
-#, fuzzy
 msgid "Create homework"
-msgstr "Hausaufgaben"
+msgstr "Hausaufgabe erstellen"
 
 #: src/create_homework.py:68 src/homework_row.ui:27
-#, fuzzy
 msgid "Edit homework"
-msgstr "Hausaufgaben"
+msgstr "Hausaufgabe bearbeiten"
 
 #: src/create_homework.py:82
 msgid "Do you really want to delete this homework?"
@@ -97,11 +95,11 @@ msgstr "Löschen"
 
 #: src/create_homework.ui:23
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: src/create_homework.ui:36
 msgid "Task"
-msgstr ""
+msgstr "Aufgabe"
 
 #: src/create_homework.ui:41 src/information.py:45 src/information.py:88
 msgid "Subject"
@@ -109,24 +107,23 @@ msgstr "Fach"
 
 #: src/create_homework.ui:46 src/homework.ui:36
 msgid "Completed"
-msgstr ""
+msgstr "Erledigt"
 
 #: src/create_homework.ui:64
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: src/homework.ui:19
-#, fuzzy
 msgid "Create a new homework"
-msgstr "Hausaufgaben"
+msgstr "Eine neue Hausaufgabe erstellen"
 
 #: src/homework.ui:53
 msgid "Unfinished"
-msgstr ""
+msgstr "Unerledigt"
 
 #: src/homework_row.ui:12
 msgid "Mark as completed"
-msgstr ""
+msgstr "Als erledigt markieren"
 
 #: src/information.py:46 src/information.py:89
 msgid "Room"
@@ -245,10 +242,9 @@ msgid "Login"
 msgstr "Anmelden"
 
 #: src/shortcuts-dialog.ui:21
-#, fuzzy
 msgctxt "shortcut window"
 msgid "create homework"
-msgstr "Hausaufgaben"
+msgstr "Hausaufgabe erstellen"
 
 #: src/shortcuts-dialog.ui:27
 msgctxt "shortcut window"
