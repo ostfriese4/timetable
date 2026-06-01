@@ -133,7 +133,9 @@ class Timetable(Gtk.Box):
                         api.getHoliday(day)
                 self.prefetching.remove(day)
 
-        start = (self.prefetching == [])
+        ok = (self.prefetching == [])
+
+        fetchHomeworks(self.startdate - datetime.timedelta(days=14), self.enddate + datetime.timedelta(days=14))
 
         start = self.startdate + datetime.timedelta(days=7)
         for date in (start + datetime.timedelta(n) for n in range(5)):
@@ -142,7 +144,7 @@ class Timetable(Gtk.Box):
         for date in (start + datetime.timedelta(n) for n in range(5)):
             self.prefetching.append(date)
 
-        if start:
+        if ok:
             thread = threading.Thread(target=code, daemon=True)
             thread.start()
 
