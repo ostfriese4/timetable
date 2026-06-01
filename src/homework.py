@@ -83,8 +83,14 @@ class HomeworkList(Gtk.Box):
                 date = datetime.datetime.strptime(str(homework["dueDate"]), "%Y%m%d")
                 for item in new:
                     itemDate = datetime.datetime.strptime(str(item["dueDate"]), "%Y%m%d")
-                    if date.year <= itemDate.year and date.month <= itemDate.month and itemDate.day <= itemDate.day:
+                    if date.year < itemDate.year:
                         break
+                    elif date.year == itemDate.year:
+                        if date.month < itemDate.month:
+                            break
+                        elif date.month == itemDate.month:
+                            if date.day <= itemDate.day:
+                                break
                     i += 1
                 new.insert(i,homework)
         return new
