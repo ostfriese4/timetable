@@ -57,6 +57,19 @@
   </screenshots>
 
   <releases>
+    <release version="3.0" date="2026-06-01">
+      <description translate="no">
+        <ul>
+          <li>added italian translation @albanobattistella</li>
+          <li>display a marker at the current time</li>
+          <li>show indicators on lessons with homework</li>
+          <li>new homework page</li>
+          <li>allow editing homework</li>
+          <li>new teachers page</li>
+          <li>jump to date functionality</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.3" date="2026-05-18">
       <description translate="no">
         <ul>
