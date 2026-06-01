@@ -50,7 +50,8 @@ class HomeworkEditWindow(Adw.Dialog):
         self.set_title(_("Create homework"))
         self.present(self.window)
 
-    def edit(self, id):
+    def edit(self, id, row = None):
+        self.row = row
         self.current_id = id
         item = getById(id)
         self.task.set_text(item["text"])
@@ -73,6 +74,7 @@ class HomeworkEditWindow(Adw.Dialog):
         setValue(self.current_id, "completed", self.completed.get_active())
         setValue(self.current_id, "dueDate", int(str(self.date.get_year()).zfill(4) + str(self.date.get_month()).zfill(2) + str(self.date.get_day()).zfill(2)))
         self.close()
+        self.row.update()
         self.window.homework.displayAll()
 
     def delete(self, data=None):
@@ -93,4 +95,8 @@ class HomeworkEditWindow(Adw.Dialog):
     def deleteData(self):
         delete(self.current_id)
         self.close()
+        self.row.update()
+        if getById(self.current_id) is None:
+            self.row.delete()
+        self.window.homework.displayAll()
 

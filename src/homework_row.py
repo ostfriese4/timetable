@@ -58,4 +58,7 @@ class HomeworkRow(Gtk.ListBoxRow):
         self.update()
 
     def edit(self, data = None):
-        self.get_ancestor(Adw.ApplicationWindow).homeworkEditWindow.edit(self.homework["id"])
+        self.get_ancestor(Adw.ApplicationWindow).homeworkEditWindow.edit(self.homework["id"], row = self)
+
+    def delete(self):
+        self.get_ancestor(Adw.PreferencesGroup).remove(self)
