@@ -16,6 +16,7 @@
               <object class="GtkButton" id="add_homework_button">
                 <property name="icon-name">list-add-symbolic</property>
                 <property name="action-name">app.create_homework</property>
+                <property name="tooltip-text" translatable="yes">Create a new homework</property>
               </object>
             </child>
             <child type="start">

@@ -9,6 +9,7 @@
           <object class="GtkCheckButton" id="check_button">
             <property name="hexpand">False</property>
             <property name="valign">start</property>
+            <property name="tooltip-text" translatable="yes">Mark as completed</property>
           </object>
         </child>
         <child>
@@ -23,6 +24,7 @@
             <property name="hexpand">False</property>
             <property name="valign">start</property>
             <property name="icon-name">document-edit-symbolic</property>
+            <property name="tooltip-text" translatable="yes">Edit homework</property>
           </object>
         </child>
       </object>
