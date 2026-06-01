@@ -73,7 +73,12 @@ class Timetable(Gtk.Box):
         swipe.connect("swipe", onSwipe)
         self.timetable.add_controller(swipe)
 
-        GLib.timeout_add(1000*60, self.loadData) # Update every minute (will result in every hour because of caching; one minute to update position of now-marker)
+        GLib.timeout_add(1000*60, self.update_marker) # update time-marker
+        GLib.timeout_add(1000*60*10, self.loadData) # Update every ten minutes (will result in every hour because of caching)
+
+    def update_marker(self):
+        for overlay in self.overlays:
+            overlay.queue_draw()
 
     def enable_bindings(self):
         parent = self.get_ancestor(Adw.ApplicationWindow)

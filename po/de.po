@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-22 14:21+0200\n"
+"POT-Creation-Date: 2026-06-01 09:17+0200\n"
 "PO-Revision-Date: 2026-05-22 14:44+0200\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Gtranslator 50.0\n"
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:50
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:52
 #: src/timetable.ui:21 src/window.ui:6 src/window.ui:45
 msgid "Timetable"
 msgstr "Stundenplan"
@@ -53,42 +53,72 @@ msgstr "Der Stundenplan"
 msgid "Dialog showing information about a lesson"
 msgstr "Informationen zur Stunde werden in einem Dialog angezeigt"
 
-#: src/api.py:96
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:55
+msgid "Editing a homework"
+msgstr ""
+
+#: src/api.py:99
 msgid "No data available"
 msgstr "Keine Daten verfügbar"
 
-#: src/api.py:194
+#: src/api.py:197
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/api.py:206
+#: src/api.py:209
 msgid "and"
 msgstr "und"
+
+#: src/create_homework.py:50
+#, fuzzy
+msgid "Create homework"
+msgstr "Hausaufgaben"
+
+#: src/create_homework.py:67
+#, fuzzy
+msgid "Edit homework"
+msgstr "Hausaufgaben"
+
+#: src/create_homework.py:80
+msgid "Do you really want to delete this homework?"
+msgstr "Wollen Sie diese Hausaufgabe wirklich löschen?"
+
+#: src/create_homework.py:81
+msgid "Delete?"
+msgstr "Löschen?"
+
+#: src/create_homework.py:82
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: src/create_homework.py:83 src/create_homework.ui:55
+msgid "Delete"
+msgstr "Löschen"
+
+#: src/create_homework.ui:23
+msgid "Date"
+msgstr ""
+
+#: src/create_homework.ui:36
+msgid "Task"
+msgstr ""
+
+#: src/create_homework.ui:41 src/information.py:45 src/information.py:88
+msgid "Subject"
+msgstr "Fach"
+
+#: src/create_homework.ui:46
+msgid "Completed"
+msgstr ""
+
+#: src/create_homework.ui:64
+msgid "Save"
+msgstr ""
 
 #: src/homework.ui:14 src/information.py:69 src/information.py:98
 #: src/teachers.ui:14 src/window.ui:62
 msgid "Homework"
 msgstr "Hausaufgaben"
-
-#: src/homework_row.py:60
-msgid "Do you really want to delete this homework?"
-msgstr "Wollen Sie diese Hausaufgabe wirklich löschen?"
-
-#: src/homework_row.py:61
-msgid "Delete?"
-msgstr "Löschen?"
-
-#: src/homework_row.py:62
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: src/homework_row.py:63
-msgid "Delete"
-msgstr "Löschen"
-
-#: src/information.py:45 src/information.py:88
-msgid "Subject"
-msgstr "Fach"
 
 #: src/information.py:46 src/information.py:89
 msgid "Room"
@@ -184,7 +214,7 @@ msgstr ""
 "Drittanbieters und dem neu erstellten Passwort an."
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:57
+#: src/main.py:59
 msgid "translator-credits"
 msgstr ""
 
@@ -203,11 +233,17 @@ msgid "Login"
 msgstr "Anmelden"
 
 #: src/shortcuts-dialog.ui:21
+#, fuzzy
+msgctxt "shortcut window"
+msgid "create homework"
+msgstr "Hausaufgaben"
+
+#: src/shortcuts-dialog.ui:27
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
 msgstr "Tastenkürzel anzeigen"
 
-#: src/shortcuts-dialog.ui:27
+#: src/shortcuts-dialog.ui:33
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Beenden"
