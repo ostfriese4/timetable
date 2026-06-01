@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-01 21:35+0200\n"
-"PO-Revision-Date: 2026-06-01 20:20+0200\n"
+"PO-Revision-Date: 2026-06-01 21:38+0200\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -266,7 +266,7 @@ msgstr "Suchbegriff"
 
 #: src/timetable.py:197
 msgid "Week %W"
-msgstr ""
+msgstr "%W. Woche"
 
 #: src/timetable.ui:16
 msgid "Previous week"
@@ -274,7 +274,7 @@ msgstr "Vorherige Woche"
 
 #: src/timetable.ui:21 src/timetable.ui:84
 msgid "Jump to date"
-msgstr ""
+msgstr "Zu Datum springen"
 
 #: src/timetable.ui:27
 msgid "Next week"
