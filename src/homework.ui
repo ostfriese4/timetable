@@ -31,7 +31,7 @@
             <property name="enable-transitions">True</property>
             <child>
               <object class="AdwViewStackPage" id="done_page">
-                <property name="name">done</property>
+                <property name="name">completed</property>
                 <property name="title" translatable="yes">Completed</property>
                 <property name="child">
                   <object class="GtkScrolledWindow" id="scrolled_window_done">
@@ -40,7 +40,7 @@
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <child>
-                      <object class="AdwPreferencesPage" id="container_done"></object>
+                      <object class="AdwPreferencesPage" id="container_done"/>
                     </child>
                   </object>
                 </property>
@@ -48,8 +48,8 @@
             </child>
             <child>
               <object class="AdwViewStackPage" id="undone_page">
-                <property name="name">undone</property>
-                <property name="title" translatable="yes">Ongoing</property>
+                <property name="name">unfinished</property>
+                <property name="title" translatable="yes">Unfinished</property>
                 <property name="child">
                   <object class="GtkScrolledWindow" id="scrolled_window_undone">
                     <property name="hscrollbar-policy">never</property>
@@ -57,12 +57,13 @@
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <child>
-                      <object class="AdwPreferencesPage" id="container_undone"></object>
+                      <object class="AdwPreferencesPage" id="container_undone"/>
                     </child>
                   </object>
                 </property>
               </object>
             </child>
+            <property name="visible-child-name">unfinished</property>
           </object>
         </property>
       </object>
