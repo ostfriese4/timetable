@@ -30,12 +30,14 @@ class HomeworkList(Gtk.Box):
     __gtype_name__ = 'HomeworkList'
 
     show_sidebar_button = Gtk.Template.Child()
-    container = Gtk.Template.Child()
-    scrolled_window = Gtk.Template.Child()
+    container_done = Gtk.Template.Child()
+    scrolled_window_done = Gtk.Template.Child()
+    container_undone = Gtk.Template.Child()
+    scrolled_window_undone = Gtk.Template.Child()
+    undone_page = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.displayed = {}
         self.days = {}
         self.scrollTo = None
 
@@ -60,8 +62,15 @@ class HomeworkList(Gtk.Box):
         if self.scrollTo is not None:
             y = self.days[self.scrollTo].get_allocation().y
         if y is not None:
-            adj = self.scrolled_window.get_vadjustment()
+            adj = self.scrolled_window_done.get_vadjustment()
             adj.set_value(y)
+
+    def set_number(self, unfinished):
+        self.page.set_badge_number(unfinished)
+        self.undone_page.set_badge_number(unfinished)
+
+    def get_number(self):
+        return self.page.get_badge_number()
 
     def displayAll(self):
         unfinished = 0
@@ -71,7 +80,7 @@ class HomeworkList(Gtk.Box):
             if item["completed"] == False:
                 unfinished += 1
         self.display(data)
-        self.page.set_badge_number(unfinished)
+        self.set_number(unfinished)
         GLib.idle_add(self.scroll)
 
     def sortData(self, data):
@@ -97,39 +106,24 @@ class HomeworkList(Gtk.Box):
 
     def display(self, data):
         data = self.sortData(data)
-        now = datetime.date.today()
-        displayedIDs = []
-        displayedDays = []
+        for day in self.days:
+            self.days[day][0].remove(self.days[day][1])
+        self.days = {}
         for homework in data:
-            date = homework["dueDate"]
-            dt = datetime.datetime.strptime(str(date), "%Y%m%d")
-            id = homework["id"]
-            if not id in displayedIDs:
-                displayedIDs.append(id)
-            if not date in displayedDays:
-                displayedDays.append(date)
-            if not id in self.displayed:
-                if not date in self.days:
-                    dayRow = Adw.PreferencesGroup(title = dt.strftime("%d.%m.%Y"))
-                    self.days[date] = dayRow
-                    self.container.add(dayRow)
-                dayRow = self.days[date]
-                hwRow = HomeworkRow(homework)
-                dayRow.add(hwRow)
-                self.displayed[id] = hwRow
+            dateName = str(homework["dueDate"])
+            date = datetime.datetime.strptime(dateName, "%Y%m%d")
+            completed = homework["completed"]
+            dayName = dateName + str(completed)
 
-                if self.scrollTo is None:
-                    if now.year <= dt.year:
-                        if now.month <= dt.month:
-                            if now.day <= dt.day:
-                                self.scrollTo = date
-
-        for id in self.displayed:
-            if id not in displayedIDs:
-                widget = self.displayed[id]
-                parent = widget.get_ancestor(Adw.PreferencesGroup)
-                parent.remove(widget)
-                del self.displayed[id]
-        for date in self.days:
-            if date not in displayedDays:
-                self.container.remove(self.days[date])
+            if dayName in self.days:
+                day = self.days[dayName][1]
+            else:
+                if completed:
+                    container = self.container_done
+                else:
+                    container = self.container_undone
+                day = Adw.PreferencesGroup(title = date.strftime("%x"))
+                container.add(day)
+                self.days[dayName] = (container, day)
+            row = HomeworkRow(homework)
+            day.add(row)

@@ -8,13 +8,8 @@
         <child type="top">
           <object class="AdwHeaderBar">
             <property name="title-widget">
-              <object class="GtkBox">
-                <child>
-                  <object class="GtkLabel">
-                    <property name="label" translatable="yes">Homework</property>
-                    <property name="halign">GTK_ALIGN_CENTER</property>
-                  </object>
-                </child>
+              <object class="AdwInlineViewSwitcher" id="homework_switcher">
+                <property name="stack">homework_stack</property>
               </object>
             </property>
             <child type="end">
@@ -32,13 +27,41 @@
           </object>
         </child>
         <property name="content">
-          <object class="GtkScrolledWindow" id="scrolled_window">
-            <property name="hscrollbar-policy">never</property>
-            <property name="vscrollbar-policy">automatic</property>
-            <property name="hexpand">True</property>
-            <property name="vexpand">True</property>
+          <object class="AdwViewStack" id="homework_stack">
+            <property name="enable-transitions">True</property>
             <child>
-              <object class="AdwPreferencesPage" id="container"></object>
+              <object class="AdwViewStackPage" id="done_page">
+                <property name="name">done</property>
+                <property name="title" translatable="yes">Completed</property>
+                <property name="child">
+                  <object class="GtkScrolledWindow" id="scrolled_window_done">
+                    <property name="hscrollbar-policy">never</property>
+                    <property name="vscrollbar-policy">automatic</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                    <child>
+                      <object class="AdwPreferencesPage" id="container_done"></object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwViewStackPage" id="undone_page">
+                <property name="name">undone</property>
+                <property name="title" translatable="yes">Ongoing</property>
+                <property name="child">
+                  <object class="GtkScrolledWindow" id="scrolled_window_undone">
+                    <property name="hscrollbar-policy">never</property>
+                    <property name="vscrollbar-policy">automatic</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                    <child>
+                      <object class="AdwPreferencesPage" id="container_undone"></object>
+                    </child>
+                  </object>
+                </property>
+              </object>
             </child>
           </object>
         </property>
