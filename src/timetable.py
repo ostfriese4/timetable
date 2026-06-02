@@ -97,7 +97,7 @@ class Timetable(Gtk.Box):
 
     def update_marker(self):
         for overlay in self.overlays:
-            overlay.queue_draw()
+            overlay[1].queue_draw()
         return True
 
     def enable_bindings(self):
@@ -220,7 +220,7 @@ class Timetable(Gtk.Box):
         self.columns.clear()
 
         for overlay in self.overlays:
-            self.overlay.remove_overlay(overlay)
+            overlay[0].remove_overlay(overlay[1])
         self.overlays.clear()
 
         date = self.startdate
@@ -248,13 +248,14 @@ class Timetable(Gtk.Box):
                 timeMarker.set_draw_func(self.drawTimeMarker, dateLabel, False)
                 timeMarker.set_can_target(False)
                 column.add_overlay(timeMarker)
+                self.overlays.append((column, timeMarker))
 
                 timeMarkerWeek = Gtk.DrawingArea()
                 timeMarkerWeek.set_hexpand(True)
                 timeMarkerWeek.set_vexpand(True)
                 timeMarkerWeek.set_draw_func(self.drawTimeMarker, dateLabel, True)
                 timeMarkerWeek.set_can_target(False)
-                self.overlays.append(timeMarkerWeek)
+                self.overlays.append((self.overlay, timeMarkerWeek))
                 self.overlay.add_overlay(timeMarkerWeek)
 
             x = self.start
