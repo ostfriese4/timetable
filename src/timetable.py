@@ -78,10 +78,10 @@ class Timetable(Gtk.Box):
         GLib.timeout_add(1000*60*10, self.loadData) # Update every ten minutes (will result in every hour because of caching)
 
     def on_header_button(self, data=None):
-        self.date_chooser_dialog.present(self.get_ancestor(Adw.ApplicationWindow))
         self.date_chooser.set_year(self.startdate.year)
         self.date_chooser.set_month(self.startdate.month - 1)
         self.date_chooser.set_day(self.startdate.day)
+        self.date_chooser_dialog.present(self.get_ancestor(Adw.ApplicationWindow))
 
     def on_day_selected(self, date):
         date = datetime.datetime.strptime(self.date_chooser.get_date().format("%d-%m-%Y"), "%d-%m-%Y").date()
@@ -98,6 +98,7 @@ class Timetable(Gtk.Box):
     def update_marker(self):
         for overlay in self.overlays:
             overlay.queue_draw()
+        return True
 
     def enable_bindings(self):
         parent = self.get_ancestor(Adw.ApplicationWindow)
