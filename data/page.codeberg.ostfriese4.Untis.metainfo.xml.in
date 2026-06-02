@@ -18,9 +18,9 @@
   <url type="vcs-browser">https://codeberg.org/ostfriese4/untis</url>
   <url type="bugtracker">https://codeberg.org/ostfriese4/untis/issues</url>
 
-  <recomends>
+  <recommends>
     <display_length compare="ge">360</display_length>
-  </recomends>
+  </recommends>
 
   <supports>
     <control>pointing</control>
