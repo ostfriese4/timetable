@@ -72,7 +72,7 @@ class HomeworkEditWindow(Adw.Dialog):
         setValue(self.current_id, "text", self.task.get_text())
         setValue(self.current_id, "subject", self.subject.get_text())
         setValue(self.current_id, "completed", self.completed.get_active())
-        setValue(self.current_id, "dueDate", int(str(self.date.get_year()).zfill(4) + str(self.date.get_month()).zfill(2) + str(self.date.get_day()).zfill(2)))
+        setValue(self.current_id, "dueDate", int(str(self.date.get_year()).zfill(4) + str(self.date.get_month() + 1).zfill(2) + str(self.date.get_day()).zfill(2)))
         self.close()
         self.row.update()
         self.window.homework.displayAll()

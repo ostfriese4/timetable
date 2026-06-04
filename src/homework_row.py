@@ -19,7 +19,7 @@
 
 from gi.repository import Gtk
 from gi.repository import Adw
-from .homework_api import getById, setValue
+from .homework_api import getById, setValue, getChanges
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/homework_row.ui')
 class HomeworkRow(Gtk.ListBoxRow):
@@ -29,19 +29,41 @@ class HomeworkRow(Gtk.ListBoxRow):
     check_button = Gtk.Template.Child()
     edit_button = Gtk.Template.Child()
     label = Gtk.Template.Child()
+    expander = Gtk.Template.Child()
 
     def __init__(self, homework, **kwargs):
         super().__init__(**kwargs)
 
         self.homework = homework
-        self.update()
         self.check_button.connect("toggled", self.save)
         self.edit_button.connect("clicked", self.edit)
+        self.expanderItems = []
+        self.update()
 
     def update(self):
         self.homework = getById(self.homework["id"])
         self.label.set_label(self.homework["text"])
         self.check_button.set_active(self.homework["completed"])
+        self.updateExpander()
+
+    def updateExpander(self):
+        for item in self.expanderItems:
+            self.expander.remove(item)
+        self.expanderItems.clear()
+
+        changes = getChanges(self.homework["id"])
+        if changes == {}:
+            self.expander.set_visible(False)
+        else:
+            self.expander.set_visible(True)
+        for key in changes:
+            change = changes[key]
+            prop = key
+            old = str(change[0])
+            new = str(change[1])
+            row = Adw.ActionRow(title=_("You have changed %prop from %old to %new").replace("%prop", prop).replace("%old", old).replace("%new", new))
+            self.expanderItems.append(row)
+            self.expander.add_row(row)
 
     def save(self, data = None):
         state = self.check_button.get_active()

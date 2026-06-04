@@ -119,13 +119,16 @@ def applyChanges(item):
             item[key] = changes[key]
     return item
 
-def getAll():
+def getAll(orig = False):
     data = []
     for day in os.listdir(CACHEDIR):
         with open(CACHEDIR + day) as file:
             dayData = json.load(file)
             for item in dayData:
-                data.append(applyChanges(item))
+                if orig:
+                    data.append(item)
+                else:
+                    data.append(applyChanges(item))
     for id in ownData:
         if id.startswith("own"):
             data.append(ownData[id])
@@ -138,9 +141,9 @@ def setValue(id,key,value):
     ownData[id][key] = value
     writeOwnData(ownData)
 
-def getById(id):
+def getById(id, orig = False):
     id = str(id)
-    for item in getAll():
+    for item in getAll(orig):
         if str(item["id"]) == id:
             return item
 
@@ -155,3 +158,19 @@ def getNewId():
     while "own" + str(i) in ownData:
         i+=1
     return "own" + str(i)
+
+def getChanges(id):
+    id = str(id)
+    if id.startswith("own"):
+        return {}
+    elif id in ownData:
+        orig = getById(id, True)
+        out = {}
+        for key in ownData[id]:
+            if key != "id":
+                old = orig[key]
+                new = ownData[id][key]
+                if old != new:
+                    out[key] = (old, new)
+        return out
+    return {}
