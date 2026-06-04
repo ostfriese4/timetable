@@ -3,25 +3,7 @@
   <requires lib="gtk" version="4.0"/>
   <template class="Lesson" parent="GtkOverlay">
     <property name="child">
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <property name="hexpand">True</property>
-        <child>
-          <object class="GtkLabel" id="subject_label">
-            <property name="halign">center</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel" id="teacher_label">
-            <property name="halign">center</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel" id="room_label">
-            <property name="halign">center</property>
-          </object>
-        </child>
-      </object>
+      <object class="GtkBox" id="content_box"/>
     </property>
     <child type="overlay">
       <object class="GtkImage" id="homework_indicator">

@@ -18,16 +18,63 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from gi.repository import Gtk
+from gi.repository import Gdk
 from gi.repository import Adw
+
+class ConstrainedScrolledWindow(Gtk.ScrolledWindow):
+    __gtype_name__ = "ConstrainedScrolledWindow"
+    def __init__(self, start, duration, labels, **kwargs):
+        super().__init__(**kwargs)
+        self.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.EXTERNAL)
+        self.start = start
+        self.duration = duration
+        self.box = Gtk.Box(orientation='vertical')
+        self.box.set_hexpand(True)
+        for label in labels:
+            label.set_halign(Gtk.Align.CENTER)
+            self.box.append(label)
+        self.set_child(self.box)
+
+class LessonContent(Gtk.Widget):
+    __gtype_name__ = "LessonContent"
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.set_hexpand(True)
+
+    def add_label(self, lesson):
+        lesson.set_parent(self)
+
+    def do_dispose(self):
+        for child in list(self):
+            child.unparent()
+
+    def do_measure(self, orientation, for_size):
+        w_min, w_nat, b_min, b_nat = 1, 1, -1, -1
+        for child in self:
+            c_min, c_nat, _, _ = child.measure(orientation, -1)
+            if orientation == Gtk.Orientation.VERTICAL:
+                w_min = max(w_min, c_min)
+            else:
+                w_min = max(w_min, c_min)
+                w_nat = max(w_nat, c_nat)
+        w_nat = max(w_min, w_nat)
+        return w_min, w_nat, b_min, b_nat
+
+    def do_size_allocate(self, width, height, baseline):
+        rect = Gdk.Rectangle()
+        rect.x, rect.width = 0, width
+        for child in self:
+            rect.y = child.start * height
+            rect.height = child.duration * height
+            child.size_allocate(rect, baseline)
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/lesson.ui')
 class Lesson(Gtk.Overlay):
     __gtype_name__ = 'Lesson'
 
-    subject_label = Gtk.Template.Child()
-    teacher_label = Gtk.Template.Child()
-    room_label = Gtk.Template.Child()
     homework_indicator = Gtk.Template.Child()
+    content_box = Gtk.Template.Child()
 
     def __init__(self, lesson, window, **kwargs):
         super().__init__(**kwargs)
@@ -39,10 +86,15 @@ class Lesson(Gtk.Overlay):
         self.lesson = lesson
         self.window = window
 
-        self.subject_label.set_label(self.lesson["subject-short"])
-        self.teacher_label.set_label(self.lesson["teacher-short"])
-        self.room_label.set_label(self.lesson["room"])
+        self.subject_label = Gtk.Label(label = self.lesson["subject-short"])
+        self.teacher_label = Gtk.Label(label = self.lesson["teacher-short"])
+        self.room_label = Gtk.Label(label = self.lesson["room"])
 
+        self.content = LessonContent()
+        self.content.add_label(ConstrainedScrolledWindow(0, self.lesson["duration"], [self.subject_label, self.teacher_label, self.room_label]))
+        self.content_box.append(self.content)
+
+        self.set_size_request(-1, self.lesson["duration"])
         self.set_size_request(-1, self.lesson["duration"])
         self.add_css_class("lesson")
         self.add_css_class(self.lesson["color"])
