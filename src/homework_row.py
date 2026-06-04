@@ -20,6 +20,7 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from .homework_api import getById, setValue, getChanges
+import datetime
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/homework_row.ui')
 class HomeworkRow(Gtk.ListBoxRow):
@@ -37,6 +38,7 @@ class HomeworkRow(Gtk.ListBoxRow):
         self.homework = homework
         self.check_button.connect("toggled", self.save)
         self.edit_button.connect("clicked", self.edit)
+        self.expander.add_css_class("changed-homework")
         self.expanderItems = []
         self.update()
 
@@ -58,10 +60,18 @@ class HomeworkRow(Gtk.ListBoxRow):
             self.expander.set_visible(True)
         for key in changes:
             change = changes[key]
-            prop = key
             old = str(change[0])
             new = str(change[1])
-            row = Adw.ActionRow(title=_("You have changed %prop from %old to %new").replace("%prop", prop).replace("%old", old).replace("%new", new))
+            if key == "completed":
+                if old == True:
+                    text = _("Your teacher marked this as completed")
+                else:
+                    text = _("Your teacher didn't mark this as completed")
+            elif key == "text":
+                text = _("The original task was '%t'").replace("%t", old)
+            elif key == "dueDate":
+                text = datetime.datetime.strptime(old, "%Y%m%d").strftime(_("This was originally due on %A %x"))
+            row = Adw.ActionRow(title=text)
             self.expanderItems.append(row)
             self.expander.add_row(row)
 

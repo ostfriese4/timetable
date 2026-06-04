@@ -96,3 +96,19 @@
 .pink.cancelled {
   background: var(--pink);
 }
+
+.changed-homework {
+  background: color-mix(in oklab, var(--accent-red), var(--window-bg-color) 70%);
+  border-radius: 10px;
+  padding: 4px;
+  margin-top: 4px;
+}
+
+.changed-homework row.header {
+  border-radius: 6px;
+}
+
+.changed-homework list.nested {
+  border-radius: 6px;
+  padding: 4px;
+}
