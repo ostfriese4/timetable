@@ -237,7 +237,8 @@ class Timetable(Gtk.Box):
             column.set_child(dayBox)
 
             dateLabel = Gtk.Label()
-            dateLabel.set_label(date.strftime("%d.%m.%y"))
+            # Translators: date format in the timetable
+            dateLabel.set_label(date.strftime(_("%m/%d/%y")))
             dayBox.append(dateLabel)
             dateLabel.add_css_class("day")
             if date == datetime.date.today():
