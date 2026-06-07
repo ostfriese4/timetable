@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-01 21:35+0200\n"
-"PO-Revision-Date: 2026-06-01 21:38+0200\n"
+"POT-Creation-Date: 2026-06-07 21:53+0200\n"
+"PO-Revision-Date: 2026-06-07 22:00+0200\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -73,7 +73,7 @@ msgstr "und"
 msgid "Create homework"
 msgstr "Hausaufgabe erstellen"
 
-#: src/create_homework.py:68 src/homework_row.ui:27
+#: src/create_homework.py:68 src/homework_row.ui:30
 msgid "Edit homework"
 msgstr "Hausaufgabe bearbeiten"
 
@@ -121,9 +121,29 @@ msgstr "Eine neue Hausaufgabe erstellen"
 msgid "Unfinished"
 msgstr "Unerledigt"
 
-#: src/homework_row.ui:12
+#: src/homework_row.py:67
+msgid "Your teacher marked this as completed"
+msgstr ""
+
+#: src/homework_row.py:69
+msgid "Your teacher didn't mark this as completed"
+msgstr ""
+
+#: src/homework_row.py:71
+msgid "The original task was '%t'"
+msgstr "Die ursprüngliche Aufgabe war '%t'"
+
+#: src/homework_row.py:73
+msgid "This was originally due on %A %x"
+msgstr "Dies was ursprünglich am %A dem %x fällig."
+
+#: src/homework_row.ui:15
 msgid "Mark as completed"
 msgstr "Als erledigt markieren"
+
+#: src/homework_row.ui:37
+msgid "You have changed this"
+msgstr "Sie haben dies geändert"
 
 #: src/information.py:46 src/information.py:89
 msgid "Room"
@@ -264,9 +284,14 @@ msgstr "Lehrkräfte"
 msgid "Search term"
 msgstr "Suchbegriff"
 
-#: src/timetable.py:197
+#: src/timetable.py:198
 msgid "Week %W"
 msgstr "%W. Woche"
+
+#. Translators: date format in the timetable
+#: src/timetable.py:241
+msgid "%m/%d/%y"
+msgstr "%d.%m.%y"
 
 #: src/timetable.ui:16
 msgid "Previous week"
