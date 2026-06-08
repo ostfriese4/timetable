@@ -66,7 +66,7 @@ class LessonContent(Gtk.Widget):
         rect.x, rect.width = 0, width
         for child in self:
             rect.y = child.start * height
-            rect.height = child.duration * height
+            rect.height = child.duration
             child.size_allocate(rect, baseline)
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/lesson.ui')
