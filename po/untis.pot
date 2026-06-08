@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-07 21:53+0200\n"
+"POT-Creation-Date: 2026-06-08 19:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -275,12 +275,12 @@ msgstr ""
 msgid "Search term"
 msgstr ""
 
-#: src/timetable.py:198
+#: src/timetable.py:202
 msgid "Week %W"
 msgstr ""
 
 #. Translators: date format in the timetable
-#: src/timetable.py:241
+#: src/timetable.py:245
 msgid "%m/%d/%y"
 msgstr ""
 
