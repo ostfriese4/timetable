@@ -45,14 +45,6 @@ class UntisWindow(Adw.ApplicationWindow):
         self.login_window = LoginWindow(self)
         self.homeworkEditWindow = HomeworkEditWindow(self)
 
-        def onKeyPress(click,key,x,y):
-            if key == 65363:
-                self.timetable.next()
-            elif key == 65361:
-                self.timetable.previous()
-        keyPress = Gtk.EventControllerKey.new()
-        keyPress.connect("key-pressed", onKeyPress)
-        self.add_controller(keyPress)
         self.timetable.enable_bindings()
         self.homework.enable_bindings(self)
         self.teachers.enable_bindings(self)
