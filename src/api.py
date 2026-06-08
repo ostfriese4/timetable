@@ -25,7 +25,7 @@ import traceback
 import webuntis
 from .credentials import getCredentials, setCredentials
 
-version = "3.0"
+version = "3.1"
 useragent = "page.codeberg.ostrfiese4.Untis " + version
 
 class untisApi:

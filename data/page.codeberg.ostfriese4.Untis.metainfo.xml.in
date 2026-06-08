@@ -57,6 +57,16 @@
   </screenshots>
 
   <releases>
+    <release version="3.1" date="2026-06-08">
+      <description translate="no">
+        <p>Bugfixes</p>
+        <ul>
+          <li>fixed height of short lessons</li>
+          <li>improved homeworks</li>
+          <li>disable forward/backward using keyboard</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.0" date="2026-06-01">
       <description translate="no">
         <ul>
