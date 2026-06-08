@@ -170,16 +170,20 @@ class Timetable(Gtk.Box):
 
     def displayHomeworks(self, data):
         for homework in data:
+            lessons = []
             for lesson in self.lessons:
                 ld = lesson[2]
                 if ld["subject-short"] == homework["subject"]:
                     if str(homework["dueDate"]) == ld["date"]:
                         lesson[1].addHomework(homework)
+                        break
                 if "original" in ld:
                     if "subject-short" in ld["original"]:
                         if ld["original"]["subject-short"] == homework["subject"]:
                             if str(homework["dueDate"]) == ld["date"]:
-                                lesson[1].addHomework(homework)
+                                lessons.append(lesson[1])
+            for lesson in lessons:
+                lesson.addHomework(homework)
 
     def drawTimeMarker(self, area, context, width, height, dateLabel, week):
         now = datetime.datetime.now()
