@@ -37,4 +37,6 @@ def getCredentials():
             return getCredentials()
         raise FileNotFoundError("no password set")
     data["password"] = password
+    if not data["server"].startswith("https://"):
+        data["server"] = "https://" + data["server"]
     return data

@@ -17,17 +17,17 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from .api import api
-
 import sys
 import gi
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
+from .api import session, version, id
+s = session()
+
 from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow
-from .api import version, id
 
 developers = ["Ostfriese4"]
 
