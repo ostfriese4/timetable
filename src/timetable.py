@@ -189,6 +189,8 @@ class Timetable(Gtk.Box):
         now = datetime.datetime.now()
         y = now.hour * 60 + now.minute - self.start + dateLabel.get_allocated_height()
 
+        #y = 200 # fake time for screenshots
+
         context.set_source_rgb(1, 0, 0)
         if week:
             context.set_line_width(1)
