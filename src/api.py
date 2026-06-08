@@ -326,7 +326,7 @@ class untisApi:
                     equal = False
                 elif daydata[-1] is None or lessondata is None:
                     equal = False
-                elif lessondata["start"] != daydata[-1]["end"]:
+                elif lessondata["start"] != daydata[-1]["end"] and lessondata["start"] != daydata[-1]["start"]: # break between
                     equal = False
                 else:
                     for key in importantKeys:
