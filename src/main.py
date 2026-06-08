@@ -24,7 +24,10 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from .api import session, version, id
+import datetime
+
 s = session()
+s.getNewsOfDay(datetime.date.today())
 
 from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow

@@ -45,7 +45,7 @@ class session:
 
     def _readCacheIndex(self):
         path = self.CACHEDIR + "index.json"
-        if os.file.exists(file):
+        if os.path.exists(path):
             with open(path) as file:
                 self.cacheIndex = json.load(file)
         else:
@@ -83,12 +83,17 @@ class session:
             try:
                 response = self.session.get(self.server + path, headers=headers)
                 data = response.json()
-                self._writeToCache("requests/" + md5(path.encode()), data)
+                self._writeToCache("requests/" + md5(path.encode()).hexdigest(), data)
                 return data
             except:
                 raise
                 mode = "cache"
         if mode == "cache":
-            return self._readFromCache("requests/" + md5(path.encode()))
+            return self._readFromCache("requests/" + md5(path.encode()).hexdigest())
+
+    def getNewsOfDay(self, day):
+        path = "/WebUntis/api/public/news/newsWidgetData?date=" + day.strftime("%Y%m%d")
+        data = self._getRequest(path)["data"]["messagesOfDay"]
+        return data
 
 
