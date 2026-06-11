@@ -16,6 +16,10 @@
   border-radius: 5px;
 }
 
+.lesson.past {
+  opacity: 50%;
+}
+
 .cancelled {
   border: 2px solid red;
   opacity: 0.5;

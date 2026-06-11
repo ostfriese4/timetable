@@ -230,6 +230,9 @@ class Timetable(Gtk.Box):
         self.overlays.clear()
 
         date = self.startdate
+        past = True
+        now = datetime.datetime.now()
+        today = now.date()
         for day in table:
             column = Gtk.Overlay()
             self.timetable.append(column)
@@ -247,7 +250,7 @@ class Timetable(Gtk.Box):
             dateLabel.set_label(date.strftime(_("%m/%d/%y")))
             dayBox.append(dateLabel)
             dateLabel.add_css_class("day")
-            if date == datetime.date.today():
+            if date == today:
                 dateLabel.add_css_class("today")
                 timeMarker = Gtk.DrawingArea()
                 timeMarker.set_hexpand(True)
@@ -279,4 +282,14 @@ class Timetable(Gtk.Box):
                 x = lesson["end"]
                 dayBox.append(block)
                 self.lessons.append((dayBox, block, lesson))
+
+                if past:
+                    if date > today:
+                        past = False
+                    if date == today:
+                        if lesson["end"] >= now.minute + now.hour*60:
+                            past = False
+                if past:
+                    block.add_css_class("past")
+
             date += datetime.timedelta(days=1)
