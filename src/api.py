@@ -2,6 +2,7 @@ import requests
 import os
 import json
 import time
+import datetime
 from pathlib import Path
 from .credentials import getCredentials
 from hashlib import md5
@@ -83,17 +84,58 @@ class session:
             try:
                 response = self.session.get(self.server + path, headers=headers)
                 data = response.json()
-                self._writeToCache("requests/" + md5(path.encode()).hexdigest(), data)
-                return data
+                if "errorCode" in data:
+                    print("ERROR: PATH:", self.server + path, data)
+                    mode = "cache"
+                else:
+                    self._writeToCache("requests/" + md5(path.encode()).hexdigest(), data)
+                    return data
             except:
                 raise
                 mode = "cache"
         if mode == "cache":
             return self._readFromCache("requests/" + md5(path.encode()).hexdigest())
 
-    def getNewsOfDay(self, day):
+    def getNewsOfDay(self, day = None):
+        if day is None:
+            day = datetime.date.today()
         path = "/WebUntis/api/public/news/newsWidgetData?date=" + day.strftime("%Y%m%d")
         data = self._getRequest(path)["data"]["messagesOfDay"]
         return data
+
+    def getMyTimetable(self, start, end):
+        path = "/WebUntis/api/rest/view/v1/timetable/entries?start=" + start.strftime("%Y-%m-%d") + "&end=" + end.strftime("%Y-%m-%d") + "&format=2&resourceType=STUDENT&timetableType=MY_TIMETABLE&layout=START_TIME"
+        data = self._getRequest(path)
+        print(data)
+
+    def getMyData(self):
+        path = "/WebUntis/api/rest/view/v1/timetable/filter?resourceType=STUDENT"
+        data = self._getRequest(path)
+        print(data)
+
+    def getSchoolYears(self):
+        path = "/WebUntis/api/rest/view/v1/schoolyears"
+        data = self._getRequest(path)
+        return data
+
+    def getCurrentSchoolYear(self):
+        now = datetime.date.today()
+        years = self.getSchoolYears()
+        for year in years:
+            start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")
+            end = datetime.datetime.strptime(year["dateRange"]["end"], "%Y-%m-%d")
+            if start < now < end:
+                return year
+
+    def getAbsences(self, start=None, end=None):
+        year = self.getCurrentSchoolYear()
+        if start is None:
+            start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")
+        if end is None:
+            end = datetime.datetime.strptime(year["dateRange"]["end"], "%Y-%m-%d")
+
+        path="/WebUntis/api/classreg/absences/students?startDate=" + start.strftime("%Y%m%d") + "&endDate=" + end.strftime("%Y%m%d") + "&studentId=23225&excuseStatusId=-1"
+        data = self._getRequest(path)
+        print(data)
 
 

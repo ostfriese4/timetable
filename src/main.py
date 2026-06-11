@@ -27,7 +27,8 @@ from .api import session, version, id
 import datetime
 
 s = session()
-s.getNewsOfDay(datetime.date.today())
+print(s.getNewsOfDay())
+s.getAbsences()
 
 from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow
