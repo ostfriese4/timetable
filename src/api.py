@@ -11,10 +11,14 @@ version = "3.1"
 id = "page.codeberg.ostfriese4.Untis"
 useragent = id + " " + version
 
-headers = {"User-Agent": useragent}
+headers = {
+    "User-Agent": useragent
+}
 
 def _login(credentials):
     s = requests.Session()
+    s.headers.update(headers)
+    s.headers.update({"Referer": credentials["server"] + "/"})
 
     form_data = {
         "school": credentials["school"],
@@ -22,9 +26,11 @@ def _login(credentials):
         "j_password": credentials["password"],
     }
     url = credentials["server"] + "/WebUntis/j_spring_security_check"
-    response = s.post(url, data=form_data, headers=headers)
+    response = s.post(url, data=form_data)
 
     if response.status_code == 200:
+        token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
+        s.headers.update({"Authorization": "Bearer " + token})
         return s
     else:
         print(response)
@@ -82,7 +88,7 @@ class session:
                 mode = "online"
         if mode == "online":
             try:
-                response = self.session.get(self.server + path, headers=headers)
+                response = self.session.get(self.server + path)
                 data = response.json()
                 if "errorCode" in data:
                     print("ERROR: PATH:", self.server + path, data)
@@ -118,8 +124,13 @@ class session:
         data = self._getRequest(path)
         return data
 
+    def getGeneralData(self):
+        path = "/WebUntis/api/rest/view/v1/app/data"
+        data = self._getRequest(path)
+        return data
+
     def getCurrentSchoolYear(self):
-        now = datetime.date.today()
+        now = datetime.datetime.now()
         years = self.getSchoolYears()
         for year in years:
             start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")

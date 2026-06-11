@@ -28,6 +28,7 @@ import datetime
 
 s = session()
 print(s.getNewsOfDay())
+print(s.getGeneralData())
 s.getAbsences()
 
 from gi.repository import Gtk, Gio, Adw
