@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-08 19:28+0200\n"
-"PO-Revision-Date: 2026-05-19 19:46+0200\n"
+"PO-Revision-Date: 2026-06-11 21:26+0200\n"
 "Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -52,7 +52,7 @@ msgstr "Finestra di dialogo che mostra le informazioni su una lezione"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:55
 msgid "Editing a homework"
-msgstr ""
+msgstr "Revisionare un compito"
 
 #: src/api.py:99
 msgid "No data available"
@@ -67,38 +67,36 @@ msgid "and"
 msgstr "e"
 
 #: src/create_homework.py:50
-#, fuzzy
 msgid "Create homework"
-msgstr "Compiti a casa"
+msgstr "Crea compiti percasa"
 
 #: src/create_homework.py:68 src/homework_row.ui:30
-#, fuzzy
 msgid "Edit homework"
-msgstr "Compiti a casa"
+msgstr "Modifica compiti per casa"
 
 #: src/create_homework.py:82
 msgid "Do you really want to delete this homework?"
-msgstr ""
+msgstr "Vuoi davvero eliminare questo compito?"
 
 #: src/create_homework.py:83
 msgid "Delete?"
-msgstr ""
+msgstr "Eliminare?"
 
 #: src/create_homework.py:84
 msgid "Cancel"
-msgstr ""
+msgstr "Annulla"
 
 #: src/create_homework.py:85 src/create_homework.ui:55
 msgid "Delete"
-msgstr ""
+msgstr "Elimina"
 
 #: src/create_homework.ui:23
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: src/create_homework.ui:36
 msgid "Task"
-msgstr ""
+msgstr "Compito"
 
 #: src/create_homework.ui:41 src/information.py:45 src/information.py:88
 msgid "Subject"
@@ -106,44 +104,43 @@ msgstr "Materia"
 
 #: src/create_homework.ui:46 src/homework.ui:36
 msgid "Completed"
-msgstr ""
+msgstr "Completato"
 
 #: src/create_homework.ui:64
 msgid "Save"
-msgstr ""
+msgstr "Salva"
 
 #: src/homework.ui:19
-#, fuzzy
 msgid "Create a new homework"
-msgstr "Compiti a casa"
+msgstr "Crea un nuovo compito"
 
 #: src/homework.ui:53
 msgid "Unfinished"
-msgstr ""
+msgstr "Non completato"
 
 #: src/homework_row.py:67
 msgid "Your teacher marked this as completed"
-msgstr ""
+msgstr "Il tuo insegnante l'ha contrassegnato come completato"
 
 #: src/homework_row.py:69
 msgid "Your teacher didn't mark this as completed"
-msgstr ""
+msgstr "Il tuo insegnante non l'ha contrassegnato come completato"
 
 #: src/homework_row.py:71
 msgid "The original task was '%t'"
-msgstr ""
+msgstr "Il compito originale era '%t'"
 
 #: src/homework_row.py:73
 msgid "This was originally due on %A %x"
-msgstr ""
+msgstr "La scadenza originale era %A %x"
 
 #: src/homework_row.ui:15
 msgid "Mark as completed"
-msgstr ""
+msgstr "Segna come completato"
 
 #: src/homework_row.ui:37
 msgid "You have changed this"
-msgstr ""
+msgstr "Hai modificato questo elemento"
 
 #: src/information.py:46 src/information.py:89
 msgid "Room"
@@ -171,7 +168,7 @@ msgstr "Minuti"
 
 #: src/information.py:69 src/information.py:98 src/window.ui:62
 msgid "Homework"
-msgstr "Compiti a casa"
+msgstr "Compiti per casa"
 
 #: src/information.py:73
 msgid "Original lesson"
@@ -245,7 +242,7 @@ msgstr ""
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:59
 msgid "translator-credits"
-msgstr "Metti il tuo nome o username qui"
+msgstr "Albano Battistella"
 
 #: src/shortcuts-dialog.ui:6
 msgid "Shortcuts"
@@ -262,10 +259,9 @@ msgid "Login"
 msgstr "Accedi"
 
 #: src/shortcuts-dialog.ui:21
-#, fuzzy
 msgctxt "shortcut window"
 msgid "create homework"
-msgstr "Compiti a casa"
+msgstr "Crea compito"
 
 #: src/shortcuts-dialog.ui:27
 msgctxt "shortcut window"
@@ -279,20 +275,20 @@ msgstr "Esci"
 
 #: src/teachers.ui:12 src/window.ui:72
 msgid "Teachers"
-msgstr ""
+msgstr "Insegnanti"
 
 #: src/teachers.ui:34
 msgid "Search term"
-msgstr ""
+msgstr "Termine di ricerca"
 
 #: src/timetable.py:202
 msgid "Week %W"
-msgstr ""
+msgstr "Settimana %W"
 
 #. Translators: date format in the timetable
 #: src/timetable.py:245
 msgid "%m/%d/%y"
-msgstr ""
+msgstr "%d/%m/%y"
 
 #: src/timetable.ui:16
 msgid "Previous week"
@@ -300,14 +296,13 @@ msgstr "Settimana precedente"
 
 #: src/timetable.ui:21 src/timetable.ui:84
 msgid "Jump to date"
-msgstr ""
+msgstr "Vai alla data"
 
 #: src/timetable.ui:27
 msgid "Next week"
 msgstr "Settimana successiva"
 
 #: src/timetable.ui:41
-#, fuzzy
 msgid "Refresh"
 msgstr "Aggiorna"
 
@@ -321,7 +316,7 @@ msgstr "Menu principale"
 
 #: src/window.ui:52
 msgid "My timetable"
-msgstr ""
+msgstr "Il mio orario"
 
 #: src/window.ui:89
 msgid "_Login"
