@@ -147,6 +147,17 @@ class session:
 
         path="/WebUntis/api/classreg/absences/students?startDate=" + start.strftime("%Y%m%d") + "&endDate=" + end.strftime("%Y%m%d") + "&studentId=23225&excuseStatusId=-1"
         data = self._getRequest(path)
-        print(data)
+        return data["data"]["absences"]
+
+    def getHomeworks(self, start=None, end=None):
+        year = self.getCurrentSchoolYear()
+        if start is None:
+            start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")
+        if end is None:
+            end = datetime.datetime.strptime(year["dateRange"]["end"], "%Y-%m-%d")
+
+        path="/WebUntis/api/homeworks/lessons?startDate=" + start.strftime("%Y%m%d") + "&endDate=" + end.strftime("%Y%m%d")
+        data = self._getRequest(path)
+        return data["data"]
 
 

@@ -1,13 +1,14 @@
-from .api import api
 import json
-from webuntis.utils.remote import rpc_request
 import datetime
 import os
-import requests
-from .credentials import getCredentials
 
 CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-hw/"
 DATAPATH = os.environ.get("XDG_DATA_HOME", ".untis") + "/homework.json"
+
+session = None
+def setSession(new):
+    global session
+    session = new
 
 if not os.path.exists(CACHEDIR):
     os.mkdir(CACHEDIR)
@@ -38,75 +39,30 @@ def loadDay(date):
     with open(CACHEDIR + name) as file:
         return json.load(file)
 
-def fetchHomeworks(start, end, useCache = False):
+def fetchHomeworks(start, end, mode = "normal"):
     day_count = (end-start).days + 1
-    if not useCache:
-        useCache = True
-        for date in (start + datetime.timedelta(n) for n in range(day_count)):
-            if not api.useCacheName(date.strftime("%Y%m%d") + "hw"):
-                useCache = False
-                break
+    data = session.getHomeworks(start, end)
+    lessons = data["lessons"]
+    homeworks = data["homeworks"]
 
-    if not useCache:
-        if not api.testLogin():
-            print("login failed")
-            return []
-        try:
-            session = api.login()
+    days = {}
+    for date in (start + datetime.timedelta(n) for n in range(day_count)):
+        days[date.strftime("%Y%m%d")] = []
 
-            jsessionid = session.config["jsessionid"]
-            useragent = session.config["useragent"]
-            server = getCredentials()["server"]
-            school = session.config["school"]
+    for homework in homeworks:
+        day = str(homework["dueDate"])
+        days[day].append(homework)
+        for lesson in lessons:
+            if lesson["id"] == homework["lessonId"]:
+                homework["subject"] = lesson["subject"]
 
-            s = session.config["_http_session"]
+    result = []
+    for day in days:
+        writeDay(day, days[day])
+        for item in days[day]:
+            result.append(applyChanges(item))
 
-            url = server + "/WebUntis/api/homeworks/lessons?startDate=" + start.strftime("%Y%m%d") + "&endDate=" + end.strftime("%Y%m%d") + "&school=" + school
-            if not url.startswith("https://"):
-                url = "https://" + url
-
-            headers = {
-                u'User-Agent': useragent,
-                u'Content-Type': u'application/json'
-            }
-            headers['Cookie'] = u'JSESSIONID=' + jsessionid
-
-            r = s.get(url, headers=headers)
-            result = json.loads(r.text)
-
-            data = result["data"]
-            lessons = data["lessons"]
-            homeworks = data["homeworks"]
-
-            days = {}
-            for date in (start + datetime.timedelta(n) for n in range(day_count)):
-                days[date.strftime("%Y%m%d")] = []
-
-            for homework in homeworks:
-                day = str(homework["dueDate"])
-                days[day].append(homework)
-                for lesson in lessons:
-                    if lesson["id"] == homework["lessonId"]:
-                        homework["subject"] = lesson["subject"]
-
-            result = []
-            for day in days:
-                writeDay(day, days[day])
-                for item in days[day]:
-                    result.append(applyChanges(item))
-
-            session.logout()
-
-            return result
-        except requests.exceptions.ConnectionError:
-            useCache = True
-    if useCache:
-        result = []
-        for date in (start + datetime.timedelta(n) for n in range(day_count)):
-            day = loadDay(date.strftime("%Y%m%d"))
-            for item in day:
-                result.append(applyChanges(item))
-        return result
+    return result
 
 def applyChanges(item):
     id = str(item["id"])
