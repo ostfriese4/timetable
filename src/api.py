@@ -26,7 +26,8 @@ import webuntis
 from .credentials import getCredentials, setCredentials
 
 version = "3.1"
-useragent = "page.codeberg.ostrfiese4.Untis " + version
+id = "page.codeberg.ostfriese4.Untis"
+useragent = id + " " + version
 
 class untisApi:
     def __init__(self):

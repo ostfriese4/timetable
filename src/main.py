@@ -27,7 +27,9 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow
-from .api import version
+from .api import version, id
+
+developers = ["Ostfriese4"]
 
 
 class UntisApplication(Adw.Application):
@@ -49,14 +51,16 @@ class UntisApplication(Adw.Application):
 
     def on_about_action(self, *args):
         """Callback for the app.about action."""
-        about = Adw.AboutDialog(application_name=_('Timetable'),
-                                application_icon='page.codeberg.ostfriese4.Untis',
-                                developer_name='Ostfriese4',
-                                version=version,
-                                developers=['Ostfriese4'],
-                                copyright='© 2026 Ostfriese4')
+        about = Adw.AboutDialog(application_name = _('Timetable'),
+                                application_icon = id,
+                                developer_name   = developers[0],
+                                version          = version,
+                                developers       = developers,
+                                copyright        = '© 2026 ' + developers[0])
         # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
         about.set_translator_credits(_('translator-credits'))
+        about.set_license_type(Gtk.License.GPL_3_0)
+        about.set_issue_url("https://codeberg.org/ostfriese4/untis/issues")
         about.present(self.props.active_window)
 
     def on_login_action(self, widget, _):
