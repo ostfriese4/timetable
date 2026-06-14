@@ -54,9 +54,12 @@ class HomeworkList(Gtk.Box):
             if parent.main_view_stack.get_visible_child_name() == "homework":
                 self.displayAll()
         parent.main_view_stack.connect("notify::visible-child-name", on_visible)
+        self.shared = parent.shared
 
         self.page = parent.homework_page
         self.displayAll()
+
+        GLib.idle_add(self.shared.session.getHomeworks)
 
     def scroll(self, data = None, y = None):
         if self.scrollTo is not None:

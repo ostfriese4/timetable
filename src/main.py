@@ -24,18 +24,16 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from .api import session, version, id
-import datetime
-
-s = session()
-print(s.getNewsOfDay())
-print("\n"*5)
-s.getAbsences()
-
+from .homework_api import setSession
 from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow
+import datetime
+
 
 developers = ["Ostfriese4"]
 
+
+class shared:pass
 
 class UntisApplication(Adw.Application):
     def __init__(self):
@@ -48,10 +46,14 @@ class UntisApplication(Adw.Application):
         self.create_action('refresh', self.on_refresh_action, ['<control>r'])
         self.create_action('create_homework', self.on_create_homework_action, ['<control>n'])
 
+        self.shared = shared
+        self.shared.session = session()
+        setSession(self.shared.session)
+
     def do_activate(self):
         win = self.props.active_window
         if not win:
-            win = UntisWindow(application=self)
+            win = UntisWindow(self.shared, application=self)
         win.present()
 
     def on_about_action(self, *args):

@@ -17,7 +17,6 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from .api import api
 from .login import LoginWindow
 from .timetable import Timetable
 from .homework import HomeworkList
@@ -39,12 +38,13 @@ class UntisWindow(Adw.ApplicationWindow):
     split_view = Gtk.Template.Child()
     teachers = Gtk.Template.Child()
 
-    def __init__(self, **kwargs):
+    def __init__(self, shared, **kwargs):
         super().__init__(**kwargs)
 
+        self.shared = shared
         self.login_window = LoginWindow(self)
         self.homeworkEditWindow = HomeworkEditWindow(self)
 
-        self.timetable.enable_bindings()
+        self.timetable.enable_bindings(self)
         self.homework.enable_bindings(self)
         self.teachers.enable_bindings(self)

@@ -35,6 +35,9 @@ def _login(credentials):
     else:
         print(response)
 
+def testCredentials(credentials):
+    return _login(credentials) is not None
+
 class session:
     def __init__(self, credentials = None):
         if credentials is None:
@@ -64,8 +67,11 @@ class session:
             json.dump(self.cacheIndex, file)
 
     def _readFromCache(self, object):
-        with open(self.CACHEDIR + object) as file:
-            return json.load(file)
+        try:
+            with open(self.CACHEDIR + object) as file:
+                return json.load(file)
+        except FileNotFoundError:
+            return
 
     def _writeToCache(self, object, content):
         path = self.CACHEDIR + object
@@ -109,10 +115,21 @@ class session:
         data = self._getRequest(path)["data"]["messagesOfDay"]
         return data
 
-    def getMyTimetable(self, start, end):
-        path = "/WebUntis/api/rest/view/v1/timetable/entries?start=" + start.strftime("%Y-%m-%d") + "&end=" + end.strftime("%Y-%m-%d") + "&format=2&resourceType=STUDENT&timetableType=MY_TIMETABLE&layout=START_TIME"
-        data = self._getRequest(path)
-        print(data)
+    def getOwnTimetable(self, start=None, end=None, mode="normal"):
+        year = self.getCurrentSchoolYear()
+        if start is None:
+            start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")
+        if end is None:
+            end = datetime.datetime.strptime(year["dateRange"]["end"], "%Y-%m-%d")
+
+        path = "/WebUntis/api/rest/view/v1/timetable/entries?start=" + start.strftime("%Y-%m-%d") + "&end=" + end.strftime("%Y-%m-%d") + "&format=2&resourceType=STUDENT&resources=" + str(self.getOwnId()) + "&periodTypes=&timetableType=MY_TIMETABLE&layout=START_TIME"
+        data = self._getRequest(path, mode)
+        return self.analyzeTimetable(data)
+
+    def analyzeTimetable(self, data):
+        timetable = []
+    def getOwnId(self):
+        return self.getGeneralData()["user"]["person"]["id"]
 
     def getMyData(self):
         path = "/WebUntis/api/rest/view/v1/timetable/filter?resourceType=STUDENT"

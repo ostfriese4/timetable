@@ -20,7 +20,6 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from gi.repository import GObject
-from .api import api
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/teachers.ui')
 class TeacherPage(Gtk.Box):
@@ -48,6 +47,7 @@ class TeacherPage(Gtk.Box):
             if parent.main_view_stack.get_visible_child_name() == "teachers":
                 self.displayResults()
         parent.main_view_stack.connect("notify::visible-child-name", on_visible)
+        self.shared = parent.shared
 
     def displayResults(self, data = None):
         term = self.search.get_text().lower()

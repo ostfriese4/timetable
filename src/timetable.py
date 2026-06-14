@@ -26,7 +26,6 @@ from .homework_api import fetchHomeworks
 from .information import InformationWindow
 from .lesson import Lesson
 from .holiday import Holiday
-from .api import api
 import datetime
 import threading
 
@@ -59,8 +58,6 @@ class Timetable(Gtk.Box):
         self.previous_button.connect("clicked", self.previous)
         self.header_button.connect("clicked", self.on_header_button)
         self.date_chooser.connect("day-selected", self.on_day_selected)
-
-        self.jump_to(datetime.date.today())
 
         self.info_rows = []
 
@@ -100,8 +97,7 @@ class Timetable(Gtk.Box):
             overlay[1].queue_draw()
         return True
 
-    def enable_bindings(self):
-        parent = self.get_ancestor(Adw.ApplicationWindow)
+    def enable_bindings(self, parent):
         parent.split_view.bind_property(
             "show-sidebar",
             self.show_sidebar_button,
@@ -109,6 +105,9 @@ class Timetable(Gtk.Box):
             GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL
         )
         parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
+        self.shared = parent.shared
+
+        self.jump_to(datetime.date.today())
 
     def next(self, data = None):
         self.startdate += datetime.timedelta(days=7)
@@ -153,10 +152,10 @@ class Timetable(Gtk.Box):
     def loadData(self):
         s = self.startdate
         def load():
-            table = api.getTimetable(self.startdate, self.enddate, useCache = True)
+            table = self.shared.session.getOwnTimetable(self.startdate, self.enddate, mode = "cache")
             if s == self.startdate:
                 GLib.idle_add(self.displayData, table)
-                table = api.getTimetable(self.startdate, self.enddate)
+                table = self.shared.session.getOwnTimetable(self.startdate, self.enddate, mode = "normal")
                 if s == self.startdate:
                     GLib.idle_add(self.displayData, table)
                     homeworks = fetchHomeworks(self.startdate, self.enddate)
@@ -201,6 +200,8 @@ class Timetable(Gtk.Box):
         context.stroke()
 
     def displayData(self, table):
+        if data is None:
+            return
         self.header_button.set_label(self.startdate.strftime(_("Week %W")))
         if api.cache:
             if not api.testLogin():
