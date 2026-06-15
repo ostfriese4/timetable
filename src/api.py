@@ -277,6 +277,23 @@ class session:
         data = self._getRequest(path)
         return data
 
+    def getHolidays(self):
+        return self.getGeneralData()["holidays"]
+
+    def getHoliday(self, day):
+        for holiday in self.getHolidays():
+            start = datetime.datetime.strptime(holiday["start"], "%Y-%m-%dT%H:%M:%S")
+            end = datetime.datetime.strptime(holiday["end"], "%Y-%m-%dT%H:%M:%S")
+            if start <= day <= end:
+                holiday["start"] = start
+                holiday["end"] = end
+                return holiday
+        return {
+            "start": day,
+            "end": day,
+            "name": _("No data")
+        }
+
     def getCurrentSchoolYear(self):
         now = datetime.datetime.now()
         years = self.getSchoolYears()

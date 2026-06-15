@@ -129,8 +129,6 @@ class Timetable(Gtk.Box):
             while self.prefetching != []:
                 day = self.prefetching[0]
                 data = self.shared.session.getOwnTimetable(day, day)
-                if data == [[]]:
-                    api.getHoliday(day)
                 self.prefetching.remove(day)
             return False
 
