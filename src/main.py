@@ -24,9 +24,10 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from .api import session, version, id
-from .homework_api import setSession
+from .homework_api import setSession, testCredentials
 from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow
+from .credentials import getCredentials
 import datetime
 
 
@@ -47,7 +48,10 @@ class UntisApplication(Adw.Application):
         self.create_action('create_homework', self.on_create_homework_action, ['<control>n'])
 
         self.shared = shared
-        self.shared.session = session()
+
+        if not testCredentials(getCredentials()):
+            self.on_login_action()
+        self.shared.session = session(getCredentials())
         setSession(self.shared.session)
 
     def do_activate(self):

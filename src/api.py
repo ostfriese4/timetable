@@ -4,7 +4,6 @@ import json
 import time
 import datetime
 from pathlib import Path
-from .credentials import getCredentials
 from hashlib import md5
 
 version = "3.1"
@@ -48,9 +47,7 @@ def testCredentials(credentials):
     return _login(credentials) is not None and not offline
 
 class session:
-    def __init__(self, credentials = None):
-        if credentials is None:
-            credentials = getCredentials()
+    def __init__(self, credentials):
         self.session = _login(credentials)
         self.server = credentials["server"]
 
