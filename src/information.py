@@ -42,12 +42,14 @@ class InformationWindow(Adw.Dialog):
         data = {}
         rows.append(("", data))
 
-        data[_("Subject")] = lesson["subject-long"]
+        data[_("Subject")] = lesson["subject"]["longName"]
         data[_("Room")] = lesson["room"]
-        data[_("Teacher")] = lesson["teacher-long"]
-        if lesson["text"] != "":
-            data[_("Information about this lesson")] = lesson["text"]
-        if lesson["code"] == "cancelled":
+        data[_("Teacher")] = lesson["teachers-long"]
+        if lesson["lessonInfo"] is not None:
+            data[_("Information about this lesson")] = lesson["lessonInfo"]
+        if lesson["teachingContent"] is not None:
+            data[_("Teaching content")] = lesson["teachingContent"]
+        if lesson["status"] == "CANCELLED":
             data[_("Cancelled")] = ""
         minutes_start = lesson["start"] % 60
         hours_start = int((lesson["start"] - minutes_start) / 60)
@@ -85,9 +87,9 @@ class InformationWindow(Adw.Dialog):
             else:
                 td = lesson
 
-            data[_("Subject")] = sd["subject-long"]
+            data[_("Subject")] = sd["subject"]["longName"]
             data[_("Room")] = rd["room"]
-            data[_("Teacher")] = td["teacher-long"]
+            data[_("Teacher")] = td["teachers-long"]
 
 
         for r in rows:
