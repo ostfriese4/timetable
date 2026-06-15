@@ -239,7 +239,27 @@ class session:
             lessons = timetable[-1]
             for lesson in day["gridEntries"]:
                 details = self.getLessonDetails(own, lesson["duration"]["start"], lesson["duration"]["end"], mode)
-                lessons.append(self.analyzeLesson(details))
+                analyzed = self.analyzeLesson(details)
+
+                merge = True
+                if lessons == []:
+                    merge = False
+                else:
+                    keys = ["rooms", "room", "room-info", "subject", "teachers-long", "teachers-short"]
+                    for key in keys:
+                        if analyzed[key] != lessons[-1][key]:
+                            merge = False
+                            break
+                    if analyzed["start"] != lessons[-1]["end"]: # break betewen
+                        if analyzed["start"] != lessons[-1]["start"]:
+                            merge = False
+
+                if merge:
+                    lessons[-1]["end"] = analyzed["end"]
+                    lessons[-1]["endDateTime"] = analyzed["endDateTime"]
+                    lessons[-1]["duration"] = lessons[-1]["end"] - lessons[-1]["start"]
+                else:
+                    lessons.append(analyzed)
         return timetable
 
     def getOwnId(self):
