@@ -113,6 +113,7 @@ class Lesson(Gtk.Overlay):
                 self.room_label.add_css_class("changed")
 
         self.markedAsHidden = False
+        self.lesson["homeworks"] = []
 
     def markAsHidden(self):
         self.markedAsHidden = True

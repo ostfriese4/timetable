@@ -22,7 +22,7 @@ def writeOwnData(data):
 
 ownData = loadOwnData()
 
-def fetchHomeworks(start = None, end = None, mode = "normal"):
+def fetchHomeworks(start = None, end = None, mode = "normal", orig = False):
     data = session.getHomeworks(start, end)
     lessons = data["lessons"]
     homeworks = data["homeworks"]
@@ -34,7 +34,10 @@ def fetchHomeworks(start = None, end = None, mode = "normal"):
         for lesson in lessons:
             if lesson["id"] == homework["lessonId"]:
                 homework["subject"] = lesson["subject"]
-        result.append(applyChanges(homework))
+        if orig:
+            result.append(homework)
+        else:
+            result.append(applyChanges(homework))
 
     return result
 
@@ -53,7 +56,7 @@ def applyChanges(item):
     return item
 
 def getAll(orig = False):
-    data = fetchHomeworks()
+    data = fetchHomeworks(orig = orig)
     for id in ownData:
         if id.startswith("own"):
             data.append(ownData[id])
