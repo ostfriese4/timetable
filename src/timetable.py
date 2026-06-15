@@ -151,7 +151,10 @@ class Timetable(Gtk.Box):
     def loadData(self):
         s = self.startdate
         def load():
-            table = self.shared.session.getOwnTimetable(self.startdate, self.enddate, mode = "cache")
+            try:
+                table = self.shared.session.getOwnTimetable(self.startdate, self.enddate, mode = "cache")
+            except:
+                table = None
             if s == self.startdate:
                 GLib.idle_add(self.displayData, table)
                 table = self.shared.session.getOwnTimetable(self.startdate, self.enddate, mode = "normal")
