@@ -1,8 +1,8 @@
 {
-    "name": "python3-webuntis",
+    "name": "python3-requests",
     "buildsystem": "simple",
     "build-commands": [
-        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"webuntis\" --no-build-isolation"
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"requests\" --no-build-isolation"
     ],
     "sources": [
         {
@@ -29,11 +29,6 @@
             "type": "file",
             "url": "https://files.pythonhosted.org/packages/7f/3e/5db95bcf282c52709639744ca2a8b149baccf648e39c8cc87553df9eae0c/urllib3-2.7.0-py3-none-any.whl",
             "sha256": "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897"
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/51/53/798c9a321916fc40f91f392915ff539cac1ad71ceb8957f493835c0a4d88/webuntis-0.1.24-py2.py3-none-any.whl",
-            "sha256": "362fe2c6d912c707ffe7c7809f027baec574555105052f922539f211fbb409a0"
         }
     ]
 }
