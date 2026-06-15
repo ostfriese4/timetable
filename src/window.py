@@ -21,6 +21,7 @@ from .login import LoginWindow
 from .timetable import Timetable
 from .homework import HomeworkList
 from .teachers import TeacherPage
+from .messages import MessagesPage
 from .create_homework import HomeworkEditWindow
 from gi.repository import Adw
 from gi.repository import Gtk
@@ -37,6 +38,7 @@ class UntisWindow(Adw.ApplicationWindow):
     sidebar_breakpoint = Gtk.Template.Child()
     split_view = Gtk.Template.Child()
     teachers = Gtk.Template.Child()
+    messages = Gtk.Template.Child()
 
     def __init__(self, shared, **kwargs):
         super().__init__(**kwargs)
@@ -48,3 +50,4 @@ class UntisWindow(Adw.ApplicationWindow):
         self.timetable.enable_bindings(self)
         self.homework.enable_bindings(self)
         self.teachers.enable_bindings(self)
+        self.messages.enable_bindings(self)

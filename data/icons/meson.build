@@ -16,6 +16,10 @@ install_data(
   install_dir: get_option('datadir') / 'icons' / scalable_dir / 'status'
 )
 install_data(
+  scalable_dir / 'status' / ('mail-unread-symbolic.svg'),
+  install_dir: get_option('datadir') / 'icons' / scalable_dir / 'status'
+)
+install_data(
   scalable_dir / 'actions' / ('document-edit-symbolic.svg'),
   install_dir: get_option('datadir') / 'icons' / scalable_dir / 'actions'
 )

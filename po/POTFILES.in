@@ -18,6 +18,8 @@ src/lesson.ui
 src/login.py
 src/login.ui
 src/main.py
+src/messages.py
+src/messages.ui
 src/shortcuts-dialog.ui
 src/teachers.py
 src/teachers.ui

@@ -166,6 +166,11 @@ class session:
         data = self._getRequest(path)
         return data["data"]["absences"]
 
+    def getMessages(self):
+        path = "/WebUntis/api/rest/view/v1/messages"
+        data = self._getRequest(path)
+        return data["incomingMessages"]
+
     def getHomeworks(self, start=None, end=None):
         year = self.getCurrentSchoolYear()
         if start is None:

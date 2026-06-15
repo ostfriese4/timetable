@@ -76,6 +76,16 @@
                     </property>
                   </object>
                 </child>
+                <child>
+                  <object class="AdwViewStackPage">
+                    <property name="name">messages</property>
+                    <property name="title" translatable="yes">Messages</property>
+                    <property name="icon-name">mail-unread-symbolic</property>
+                    <property name="child">
+                      <object class="MessagesPage" id="messages"></object>
+                    </property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
