@@ -2,16 +2,12 @@ import json
 import datetime
 import os
 
-CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-hw/"
 DATAPATH = os.environ.get("XDG_DATA_HOME", ".untis") + "/homework.json"
 
 session = None
 def setSession(new):
     global session
     session = new
-
-if not os.path.exists(CACHEDIR):
-    os.mkdir(CACHEDIR)
 
 def loadOwnData():
     if os.path.exists(DATAPATH):
@@ -26,45 +22,26 @@ def writeOwnData(data):
 
 ownData = loadOwnData()
 
-def writeDay(date, data):
-    name = date + "hw"
-    print("wrtiting homeworks",date)
-    with open(CACHEDIR + name, "w") as file:
-        json.dump(data, file)
-    api.updateCache(name)
-
-def loadDay(date):
-    name = date + "hw"
-    print("reading homeworks",date)
-    with open(CACHEDIR + name) as file:
-        return json.load(file)
-
-def fetchHomeworks(start, end, mode = "normal"):
-    day_count = (end-start).days + 1
+def fetchHomeworks(start = None, end = None, mode = "normal"):
     data = session.getHomeworks(start, end)
     lessons = data["lessons"]
     homeworks = data["homeworks"]
 
-    days = {}
-    for date in (start + datetime.timedelta(n) for n in range(day_count)):
-        days[date.strftime("%Y%m%d")] = []
+    result = []
 
     for homework in homeworks:
         day = str(homework["dueDate"])
-        days[day].append(homework)
         for lesson in lessons:
             if lesson["id"] == homework["lessonId"]:
                 homework["subject"] = lesson["subject"]
-
-    result = []
-    for day in days:
-        writeDay(day, days[day])
-        for item in days[day]:
-            result.append(applyChanges(item))
+        result.append(applyChanges(homework))
 
     return result
 
 def applyChanges(item):
+    if type(item) != dict:
+        print(item)
+        return
     id = str(item["id"])
     if id in ownData:
         changes = ownData[id]
@@ -76,15 +53,7 @@ def applyChanges(item):
     return item
 
 def getAll(orig = False):
-    data = []
-    for day in os.listdir(CACHEDIR):
-        with open(CACHEDIR + day) as file:
-            dayData = json.load(file)
-            for item in dayData:
-                if orig:
-                    data.append(item)
-                else:
-                    data.append(applyChanges(item))
+    data = fetchHomeworks()
     for id in ownData:
         if id.startswith("own"):
             data.append(ownData[id])

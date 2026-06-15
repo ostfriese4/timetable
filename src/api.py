@@ -62,6 +62,15 @@ class session:
 
         self._readCacheIndex()
 
+        try:
+            with open(os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-colors.json") as file:
+                self.colors = json.load(file)
+        except:
+            self.colors = {}
+
+    def getOffline(self):
+        return offline
+
     def _readCacheIndex(self):
         path = self.CACHEDIR + "index.json"
         if os.path.exists(path):
@@ -96,8 +105,10 @@ class session:
         return False
 
     def _getRequest(self, path, mode = "normal", maxage = 3600):
+        global offline
+        hashed = "requests/" + md5(path.encode()).hexdigest()
         if mode == "normal":
-            if self._useCache(path, maxage = maxage):
+            if self._useCache(hashed, maxage = maxage):
                 mode = "cache"
             else:
                 mode = "online"
@@ -105,20 +116,22 @@ class session:
             try:
                 response = self.session.get(self.server + path)
                 data = response.json()
+                offline = False
                 if "errorCode" in data:
                     print("ERROR: PATH:", self.server + path, data)
                     mode = "cache"
                 else:
-                    self._writeToCache("requests/" + md5(path.encode()).hexdigest(), data)
+                    self._writeToCache(hashed, data)
                     return data
             except requests.exceptions.ConnectionError:
                 mode = "cache"
+                offline = True
             except Exception:
                 raise
                 mode = "cache"
 
         if mode == "cache":
-            return self._readFromCache("requests/" + md5(path.encode()).hexdigest())
+            return self._readFromCache(hashed)
 
     def getNewsOfDay(self, day = None):
         if day is None:
@@ -129,17 +142,106 @@ class session:
 
     def getOwnTimetable(self, start=None, end=None, mode="normal"):
         year = self.getCurrentSchoolYear()
+
+        s_start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")
+        s_end = datetime.datetime.strptime(year["dateRange"]["end"], "%Y-%m-%d")
         if start is None:
-            start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")
-        if end is None:
-            end = datetime.datetime.strptime(year["dateRange"]["end"], "%Y-%m-%d")
+            start = s_start
+        if end is None or start < s_end < end:
+            end = s_end
 
         path = "/WebUntis/api/rest/view/v1/timetable/entries?start=" + start.strftime("%Y-%m-%d") + "&end=" + end.strftime("%Y-%m-%d") + "&format=2&resourceType=STUDENT&resources=" + str(self.getOwnId()) + "&periodTypes=&timetableType=MY_TIMETABLE&layout=START_TIME"
         data = self._getRequest(path, mode)
-        return self.analyzeTimetable(data)
+        return self.analyzeTimetable(data, mode)
 
-    def analyzeTimetable(self, data):
+    def createList(self, data, key, long):
+        text = ""
+        i=0
+        for item in data:
+            text += item[key]
+            if i == len(data) - 1:
+                return text
+            elif long and i == len(data) - 2:
+                text += " " + _("and") + " "
+            else:
+                text += ", "
+            i+=1
+        if long:
+            return _("Unknown")
+        else:
+            return "???"
+
+    def getColor(self, subject):
+        if subject in self.colors:
+            return self.colors[subject]
+        colors = [
+            "green",
+            "red",
+            "blue",
+            "orange",
+            "purple",
+            "teal",
+            "yellow",
+            "slate",
+            "pink"
+        ]
+        color = colors[0]
+        count = 0
+        for key in self.colors:
+            if self.colors[key] == color:
+                count += 1
+        for c in colors:
+            n = 0
+            for key in self.colors:
+                if self.colors[key] == c:
+                    n += 1
+            if n < count:
+                count = n
+                color = c
+        self.colors[subject] = color
+
+        with open(os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-colors.json", "w") as file:
+            json.dump(self.colors, file)
+
+        return color
+
+
+    def analyzeLesson(self, lesson):
+        start = datetime.datetime.strptime(lesson["startDateTime"], "%Y-%m-%dT%H:%M:%S")
+        end = datetime.datetime.strptime(lesson["endDateTime"], "%Y-%m-%dT%H:%M:%S")
+        lesson["start"] = start.hour * 60 + start.minute
+        lesson["end"] = end.hour * 60 + end.minute
+        lesson["duration"] = lesson["end"] - lesson["start"]
+        lesson["startDateTime"] = start
+        lesson["endDateTime"] = end
+
+        if lesson["subject"] == None:
+            lesson["subject"] = {
+                "shortName": "???",
+                "longName": _("Unknown")
+            }
+
+        lesson["teachers-short"] = self.createList(lesson["teachers"], "shortName", False)
+        lesson["room"] = self.createList(lesson["rooms"], "shortName", False)
+
+        lesson["teachers-long"] = self.createList(lesson["teachers"], "longName", True)
+        lesson["room-info"] = self.createList(lesson["rooms"], "longName", True)
+
+        lesson["color"] = self.getColor(lesson["subject"]["shortName"])
+
+        return lesson
+
+    def analyzeTimetable(self, data, mode="normal"):
+        own = self.getOwnId()
         timetable = []
+        for day in data["days"]:
+            timetable.append([])
+            lessons = timetable[-1]
+            for lesson in day["gridEntries"]:
+                details = self.getLessonDetails(own, lesson["duration"]["start"], lesson["duration"]["end"], mode)
+                lessons.append(self.analyzeLesson(details))
+        return timetable
+
     def getOwnId(self):
         return self.getGeneralData()["user"]["person"]["id"]
 
@@ -195,6 +297,24 @@ class session:
                     return message
         else:
             return data
+
+    def getTeacherById(self, id):
+        path = "/WebUntis/api/rest/view/v1/teachers/" + str(id)
+        data = self._getRequest(path)
+        return data
+
+    def getLessonDetails(self, id, start, end, mode="normal"):
+        path = "/WebUntis/api/rest/view/v2/calendar-entry/detail?elementId=" + str(id) + "&elementType=5&endDateTime=" + end + "&homeworkOption=DUE&startDateTime=" + start
+        data = self._getRequest(path, mode)
+        return data["calendarEntries"][0]
+
+    def getAllRooms(self):
+        year = self.getCurrentSchoolYear()
+        start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")
+        end = datetime.datetime.strptime(year["dateRange"]["end"], "%Y-%m-%d")
+        path = "/WebUntis/api/rest/view/v1/calendar-entry/rooms/form?endDateTime=" + end.strftime("%Y-%m-%dT%H:%M:%S") + "&startDateTime=" + start.strftime("%Y-%m-%dT%H:%M:%S")
+        data = self._getRequest(path)
+        return data
 
     def getHomeworks(self, start=None, end=None):
         year = self.getCurrentSchoolYear()

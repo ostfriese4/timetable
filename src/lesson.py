@@ -86,8 +86,8 @@ class Lesson(Gtk.Overlay):
         self.lesson = lesson
         self.window = window
 
-        self.subject_label = Gtk.Label(label = self.lesson["subject-short"])
-        self.teacher_label = Gtk.Label(label = self.lesson["teacher-short"])
+        self.subject_label = Gtk.Label(label = self.lesson["subject"]["shortName"])
+        self.teacher_label = Gtk.Label(label = self.lesson["teachers-short"])
         self.room_label = Gtk.Label(label = self.lesson["room"])
 
         self.content = LessonContent()
@@ -98,7 +98,7 @@ class Lesson(Gtk.Overlay):
         self.set_size_request(-1, self.lesson["duration"])
         self.add_css_class("lesson")
         self.add_css_class(self.lesson["color"])
-        if self.lesson["code"] == "cancelled":
+        if self.lesson["status"] == "CANCELLED":
             self.add_css_class("cancelled")
         if "original" in self.lesson:
             self.add_css_class("changed")

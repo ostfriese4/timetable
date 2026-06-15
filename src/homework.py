@@ -59,8 +59,6 @@ class HomeworkList(Gtk.Box):
         self.page = parent.homework_page
         self.displayAll()
 
-        GLib.idle_add(self.shared.session.getHomeworks)
-
     def scroll(self, data = None, y = None):
         if self.scrollTo is not None:
             y = self.days[self.scrollTo].get_allocation().y

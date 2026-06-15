@@ -107,7 +107,8 @@ class Timetable(Gtk.Box):
         parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
         self.shared = parent.shared
 
-        self.jump_to(datetime.date.today())
+        self.jump_to(datetime.datetime.now())
+        self.shared.session.getHomeworks()
 
     def next(self, data = None):
         self.startdate += datetime.timedelta(days=7)
@@ -127,15 +128,13 @@ class Timetable(Gtk.Box):
         def code():
             while self.prefetching != []:
                 day = self.prefetching[0]
-                if not day.strftime("%Y-%m-%d") in api.cacheFile:
-                    data = api.getTimetable(day, day)
-                    if data == [[]]:
-                        api.getHoliday(day)
+                data = self.shared.session.getOwnTimetable(day, day)
+                if data == [[]]:
+                    api.getHoliday(day)
                 self.prefetching.remove(day)
+            return False
 
         ok = (self.prefetching == [])
-
-        fetchHomeworks(self.startdate - datetime.timedelta(days=14), self.enddate + datetime.timedelta(days=14))
 
         start = self.startdate + datetime.timedelta(days=7)
         for date in (start + datetime.timedelta(n) for n in range(5)):
@@ -162,6 +161,7 @@ class Timetable(Gtk.Box):
                     if s == self.startdate:
                         GLib.idle_add(self.displayHomeworks, homeworks)
                         self.prefetch()
+            return False
 
         thread = threading.Thread(target=load, daemon=True)
         thread.start()
@@ -172,13 +172,13 @@ class Timetable(Gtk.Box):
             lessons = []
             for lesson in self.lessons:
                 ld = lesson[2]
-                if ld["subject-short"] == homework["subject"]:
-                    if str(homework["dueDate"]) == ld["date"]:
+                if ld["subject"]["shortName"] == homework["subject"]:
+                    if str(homework["dueDate"]) == ld["startDateTime"].strftime("%Y%m%d"):
                         lesson[1].addHomework(homework)
                         break
                 if "original" in ld:
-                    if "subject-short" in ld["original"]:
-                        if ld["original"]["subject-short"] == homework["subject"]:
+                    if "subject" in ld["original"]:
+                        if ld["original"]["subject"]["shortName"] == homework["subject"]:
                             if str(homework["dueDate"]) == ld["date"]:
                                 lessons.append(lesson[1])
             for lesson in lessons:
@@ -200,14 +200,11 @@ class Timetable(Gtk.Box):
         context.stroke()
 
     def displayData(self, table):
-        if data is None:
+        if table is None:
             return
         self.header_button.set_label(self.startdate.strftime(_("Week %W")))
-        if api.cache:
-            if not api.testLogin():
-                self.get_ancestor(Adw.ApplicationWindow).login_window.requestLogin()
-            else:
-                self.offline.set_revealed(revealed=True)
+        if self.shared.session.getOffline():
+            self.offline.set_revealed(revealed=True)
         else:
             self.offline.set_revealed(revealed=False)
 
@@ -233,7 +230,6 @@ class Timetable(Gtk.Box):
         date = self.startdate
         past = True
         now = datetime.datetime.now()
-        today = now.date()
         for day in table:
             column = Gtk.Overlay()
             self.timetable.append(column)
@@ -251,7 +247,7 @@ class Timetable(Gtk.Box):
             dateLabel.set_label(date.strftime(_("%m/%d/%y")))
             dayBox.append(dateLabel)
             dateLabel.add_css_class("day")
-            if date == today:
+            if date.date() == now.date():
                 dateLabel.add_css_class("today")
                 timeMarker = Gtk.DrawingArea()
                 timeMarker.set_hexpand(True)
@@ -271,7 +267,7 @@ class Timetable(Gtk.Box):
 
             x = self.start
             if day == []:
-                holiday = api.getHoliday(date)
+                holiday = self.shared.session.getHoliday(date)
                 obj = Holiday(holiday["name"])
                 dayBox.append(obj)
             for lesson in day:
@@ -285,10 +281,10 @@ class Timetable(Gtk.Box):
                 self.lessons.append((dayBox, block, lesson))
 
                 if past:
-                    if date > today:
+                    if date > now:
                         past = False
-                    if date == today:
-                        if lesson["end"] >= now.minute + now.hour*60:
+                    if date.date() == now.date():
+                        if lesson["endDateTime"] >= now:
                             past = False
                 if past:
                     block.add_css_class("past")
