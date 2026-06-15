@@ -15,28 +15,37 @@ headers = {
     "User-Agent": useragent
 }
 
+offline = False
+
 def _login(credentials):
+    global offline
     s = requests.Session()
     s.headers.update(headers)
     s.headers.update({"Referer": credentials["server"] + "/"})
 
-    form_data = {
-        "school": credentials["school"],
-        "j_username": credentials["user"],
-        "j_password": credentials["password"],
-    }
-    url = credentials["server"] + "/WebUntis/j_spring_security_check"
-    response = s.post(url, data=form_data)
+    try:
+        form_data = {
+            "school": credentials["school"],
+            "j_username": credentials["user"],
+            "j_password": credentials["password"],
+        }
 
-    if response.status_code == 200:
-        token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
-        s.headers.update({"Authorization": "Bearer " + token})
-        return s
-    else:
-        print(response)
+        url = credentials["server"] + "/WebUntis/j_spring_security_check"
+        response = s.post(url, data=form_data)
+
+        if response.status_code == 200:
+            token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
+            s.headers.update({"Authorization": "Bearer " + token})
+            offline = False
+            return s
+        else:
+            print(response)
+    except requests.exceptions.ConnectionError:
+        offline = True
+        return s # don't fail login at startup
 
 def testCredentials(credentials):
-    return _login(credentials) is not None
+    return _login(credentials) is not None and not offline
 
 class session:
     def __init__(self, credentials = None):
@@ -102,9 +111,12 @@ class session:
                 else:
                     self._writeToCache("requests/" + md5(path.encode()).hexdigest(), data)
                     return data
-            except:
+            except requests.exceptions.ConnectionError:
+                mode = "cache"
+            except Exception:
                 raise
                 mode = "cache"
+
         if mode == "cache":
             return self._readFromCache("requests/" + md5(path.encode()).hexdigest())
 
@@ -170,6 +182,19 @@ class session:
         path = "/WebUntis/api/rest/view/v1/messages"
         data = self._getRequest(path)
         return data["incomingMessages"]
+
+    def getMessageById(self, id):
+        path = "/WebUntis/api/rest/view/v1/messages/" + str(id)
+        data = self._getRequest(path)
+
+        if data is None:
+            all = self.getMessages()
+            for message in all:
+                if message["id"] == id:
+                    message["content"] = message["contentPreview"]
+                    return message
+        else:
+            return data
 
     def getHomeworks(self, start=None, end=None):
         year = self.getCurrentSchoolYear()

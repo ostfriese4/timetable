@@ -21,6 +21,30 @@ from gi.repository import Gtk
 from gi.repository import Adw
 from gi.repository import GObject
 
+class Message(Adw.ExpanderRow):
+    __gtype_name__ = 'Message'
+
+    def __init__(self, message, session, **kwargs):
+        super().__init__(**kwargs)
+
+        self.set_title(message["subject"])
+        self.set_subtitle(message["contentPreview"])
+        self.set_subtitle_lines(1)
+
+        self.message = message
+        self.loaded = False
+        self.session = session
+
+        self.connect("notify::expanded", self.load)
+
+    def load(self, a, b):
+        if not self.loaded:
+            self.loaded = True
+            message = self.session.getMessageById(self.message["id"])
+
+            content = Adw.ActionRow(title = message["content"])
+            self.add_row(content)
+
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/messages.ui')
 class MessagesPage(Gtk.Box):
     __gtype_name__ = 'MessagesPage'
@@ -55,6 +79,6 @@ class MessagesPage(Gtk.Box):
             self.container.remoev(row)
 
         for message in messages:
-            row = Adw.ActionRow(title=message["subject"])
+            row = Message(message, self.shared.session)
             self.container.add(row)
             self.displayed.append(row)

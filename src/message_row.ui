@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="HomeworkRow" parent="GtkListBoxRow">
+    <property name="child">
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox" id="box">
+            <property name="orientation">horizontal</property>
+            <child>
+              <object class="GtkCheckButton" id="check_button">
+                <property name="hexpand">False</property>
+                <property name="valign">start</property>
+                <property name="tooltip-text" translatable="yes">Mark as completed</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label">
+                <property name="hexpand">True</property>
+                <property name="wrap">True</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="edit_button">
+                <property name="hexpand">False</property>
+                <property name="valign">start</property>
+                <property name="icon-name">document-edit-symbolic</property>
+                <property name="tooltip-text" translatable="yes">Edit homework</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwExpanderRow" id="expander">
+            <property name="title" translatable="yes">You have changed this</property>
+          </object>
+        </child>
+      </object>
+    </property>
+  </template>
+</interface>
