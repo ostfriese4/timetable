@@ -154,8 +154,16 @@ class session:
         if end is None or start < s_end < end:
             end = s_end
 
-        path = "/WebUntis/api/rest/view/v1/timetable/entries?start=" + start.strftime("%Y-%m-%d") + "&end=" + end.strftime("%Y-%m-%d") + "&format=2&resourceType=STUDENT&resources=" + str(self.getOwnId()) + "&periodTypes=&timetableType=MY_TIMETABLE&layout=START_TIME"
-        data = self._getRequest(path, mode)
+        data = []
+        start = start.date()
+        end = end.date()
+        day = start
+        while day <= end:
+            path = "/WebUntis/api/rest/view/v1/timetable/entries?start=" + day.strftime("%Y-%m-%d") + "&end=" + day.strftime("%Y-%m-%d") + "&format=2&resourceType=STUDENT&resources=" + str(self.getOwnId()) + "&periodTypes=&timetableType=MY_TIMETABLE&layout=START_TIME"
+            dayData = self._getRequest(path, mode)
+            data.append(dayData["days"][0])
+            day += datetime.timedelta(days=1)
+
         return self.analyzeTimetable(data, mode)
 
     def createList(self, data, key, long, integrate = None):
@@ -257,7 +265,7 @@ class session:
     def analyzeTimetable(self, data, mode="normal"):
         own = self.getOwnId()
         timetable = []
-        for day in data["days"]:
+        for day in data:
             timetable.append([])
             lessons = timetable[-1]
             for lesson in day["gridEntries"]:
