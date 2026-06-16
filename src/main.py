@@ -24,7 +24,7 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from .api import session, version, id, testCredentials
-from .homework_api import setSession
+from .homework_api import setShared
 from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow
 from .credentials import getCredentials
@@ -52,7 +52,7 @@ class UntisApplication(Adw.Application):
         if not testCredentials(getCredentials()):
             self.on_login_action()
         self.shared.session = session(getCredentials())
-        setSession(self.shared.session)
+        setShared(self.shared)
 
     def do_activate(self):
         win = self.props.active_window

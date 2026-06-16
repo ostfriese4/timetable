@@ -4,10 +4,10 @@ import os
 
 DATAPATH = os.environ.get("XDG_DATA_HOME", ".untis") + "/homework.json"
 
-session = None
-def setSession(new):
-    global session
-    session = new
+shared = None
+def setShared(new):
+    global shared
+    shared = new
 
 def loadOwnData():
     if os.path.exists(DATAPATH):
@@ -23,7 +23,7 @@ def writeOwnData(data):
 ownData = loadOwnData()
 
 def fetchHomeworks(start = None, end = None, mode = "normal", orig = False):
-    data = session.getHomeworks(start, end)
+    data = shared.session.getHomeworks(start, end)
     lessons = data["lessons"]
     homeworks = data["homeworks"]
 
