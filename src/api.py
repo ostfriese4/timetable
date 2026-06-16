@@ -151,11 +151,13 @@ class session:
         data = self._getRequest(path, mode)
         return self.analyzeTimetable(data, mode)
 
-    def createList(self, data, key, long):
+    def createList(self, data, key, long, integrate = None):
         text = ""
         i=0
         for item in data:
             text += item[key]
+            if integrate is not None:
+                text += " (" + item[integrate] + ")"
             if i == len(data) - 1:
                 return text
             elif long and i == len(data) - 2:
@@ -221,7 +223,7 @@ class session:
         lesson["teachers-short"] = self.createList(lesson["teachers"], "shortName", False)
         lesson["room"] = self.createList(lesson["rooms"], "shortName", False)
 
-        lesson["teachers-long"] = self.createList(lesson["teachers"], "longName", True)
+        lesson["teachers-long"] = self.createList(lesson["teachers"], "longName", True, integrate = "shortName")
         lesson["room-info"] = self.createList(lesson["rooms"], "longName", True)
 
         lesson["color"] = self.getColor(lesson["subject"]["shortName"])
