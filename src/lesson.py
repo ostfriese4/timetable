@@ -102,13 +102,13 @@ class Lesson(Gtk.Overlay):
             self.add_css_class("cancelled")
         if "original" in self.lesson:
             self.add_css_class("changed")
-            if "teacher-short" in self.lesson["original"]:
+            if self.lesson["original"]["teachers-short"] != self.lesson["teachers-short"]:
                 self.teacher_label.add_css_class("label")
                 self.teacher_label.add_css_class("changed")
-            if "subject-short" in self.lesson["original"]:
+            if self.lesson["original"]["subject"]["shortName"] != self.lesson["subject"]["shortName"]:
                 self.subject_label.add_css_class("label")
                 self.subject_label.add_css_class("changed")
-            if "room" in self.lesson["original"]:
+            if self.lesson["original"]["room"] != self.lesson["room"]:
                 self.room_label.add_css_class("label")
                 self.room_label.add_css_class("changed")
 

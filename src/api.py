@@ -206,6 +206,20 @@ class session:
 
 
     def analyzeLesson(self, lesson):
+        rooms = lesson["rooms"]
+        old = rooms.copy()
+        change = False
+        for room in rooms.copy():
+            if room["status"] == "REMOVED":
+                change = True
+                rooms.remove(room)
+                room["status"] = "LATER_REMOVED"
+            else:
+                old.remove(room)
+        if change and not "original" in lesson:
+            lesson["original"] = lesson.copy()
+            lesson["original"]["rooms"] = old
+
         start = datetime.datetime.strptime(lesson["startDateTime"], "%Y-%m-%dT%H:%M:%S")
         end = datetime.datetime.strptime(lesson["endDateTime"], "%Y-%m-%dT%H:%M:%S")
         lesson["start"] = start.hour * 60 + start.minute
@@ -221,12 +235,15 @@ class session:
             }
 
         lesson["teachers-short"] = self.createList(lesson["teachers"], "shortName", False)
-        lesson["room"] = self.createList(lesson["rooms"], "shortName", False)
+        lesson["room"] = self.createList(rooms, "shortName", False)
 
         lesson["teachers-long"] = self.createList(lesson["teachers"], "longName", True, integrate = "shortName")
-        lesson["room-info"] = self.createList(lesson["rooms"], "longName", True)
+        lesson["room-info"] = self.createList(rooms, "longName", True)
 
         lesson["color"] = self.getColor(lesson["subject"]["shortName"])
+
+        if "original" in lesson:
+            lesson["original"] = self.analyzeLesson(lesson["original"])
 
         return lesson
 
@@ -342,7 +359,24 @@ class session:
     def getLessonDetails(self, id, start, end, mode="normal"):
         path = "/WebUntis/api/rest/view/v2/calendar-entry/detail?elementId=" + str(id) + "&elementType=5&endDateTime=" + end + "&homeworkOption=DUE&startDateTime=" + start
         data = self._getRequest(path, mode)
-        return data["calendarEntries"][0]
+        data = data["calendarEntries"]
+
+        takingPlace = []
+        cancelled = []
+        for lesson in data:
+            if lesson["status"] == "CANCELLED":
+                cancelled.append(lesson)
+            else:
+                takingPlace.append(lesson)
+
+        if takingPlace != []:
+            lesson = takingPlace[0]
+            if cancelled != []:
+                lesson["original"] = cancelled[0]
+        else:
+            lesson = cancelled[0]
+
+        return lesson
 
     def getAllRooms(self):
         year = self.getCurrentSchoolYear()

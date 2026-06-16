@@ -74,22 +74,9 @@ class InformationWindow(Adw.Dialog):
             data = {}
             rows.append((_("Original lesson"), data))
             original = lesson["original"]
-            if "subject-short" in original:
-                sd = original
-            else:
-                sd = lesson
-            if "room" in original:
-                rd = original
-            else:
-                rd = lesson
-            if "teacher-short" in original:
-                td = original
-            else:
-                td = lesson
-
-            data[_("Subject")] = sd["subject"]["longName"]
-            data[_("Room")] = rd["room"]
-            data[_("Teacher")] = td["teachers-long"]
+            data[_("Subject")] = original["subject"]["longName"]
+            data[_("Room")] = original["room"]
+            data[_("Teacher")] = original["teachers-long"]
 
 
         for r in rows:
