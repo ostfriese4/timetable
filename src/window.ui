@@ -90,7 +90,7 @@
                   <object class="AdwViewStackPage">
                     <property name="name">absences</property>
                     <property name="title" translatable="yes">Absences</property>
-                    <property name="icon-name">mail-unread-symbolic</property>
+                    <property name="icon-name">appointment-soon-symbolic</property>
                     <property name="child">
                       <object class="AbsencesPage" id="absences"></object>
                     </property>
