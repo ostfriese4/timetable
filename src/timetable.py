@@ -124,28 +124,6 @@ class Timetable(Gtk.Box):
         api.refresh()
         self.loadData()
 
-    def prefetch(self):
-        def code():
-            while self.prefetching != []:
-                day = self.prefetching[0]
-                data = self.shared.session.getOwnTimetable(day, day)
-                self.prefetching.remove(day)
-            return False
-
-        ok = (self.prefetching == [])
-
-        start = self.startdate + datetime.timedelta(days=7)
-        for date in (start + datetime.timedelta(n) for n in range(5)):
-            self.prefetching.append(date)
-        start = self.startdate - datetime.timedelta(days=7)
-        for date in (start + datetime.timedelta(n) for n in range(5)):
-            self.prefetching.append(date)
-
-        if ok:
-            thread = threading.Thread(target=code, daemon=True)
-            thread.start()
-
-
     def loadData(self):
         s = self.startdate
         def load():
@@ -161,7 +139,6 @@ class Timetable(Gtk.Box):
                     homeworks = fetchHomeworks(self.startdate, self.enddate)
                     if s == self.startdate:
                         GLib.idle_add(self.displayHomeworks, homeworks)
-                        self.prefetch()
             return False
 
         thread = threading.Thread(target=load, daemon=True)
