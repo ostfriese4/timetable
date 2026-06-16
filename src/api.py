@@ -81,6 +81,10 @@ class session:
         with open(path, "w") as file:
             json.dump(self.cacheIndex, file)
 
+    def refresh(self):
+        self.cacheIndex["last-refresh"] = time.time()
+        self._saveCacheIndex()
+
     def _readFromCache(self, object):
         try:
             with open(self.CACHEDIR + object) as file:
@@ -98,7 +102,10 @@ class session:
 
     def _useCache(self, object, maxage = 3600):
         if object in self.cacheIndex:
-            return self.cacheIndex[object] + maxage >= time.time()
+            if self.cacheIndex[object] < self.cacheIndex["last-refresh"]:
+                return False
+            else:
+                return self.cacheIndex[object] + maxage >= time.time()
         return False
 
     def _getRequest(self, path, mode = "normal", maxage = 3600):

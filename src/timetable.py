@@ -121,7 +121,7 @@ class Timetable(Gtk.Box):
         self.loadData()
 
     def refresh(self):
-        api.refresh()
+        self.shared.session.refresh()
         self.loadData()
 
     def loadData(self):
