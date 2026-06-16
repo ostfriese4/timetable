@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-08 19:28+0200\n"
+"POT-Creation-Date: 2026-06-16 21:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:52
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:65
 #: src/window.ui:6 src/window.ui:19 src/window.ui:45
 msgid "Timetable"
 msgstr ""
@@ -53,16 +53,32 @@ msgstr ""
 msgid "Editing a homework"
 msgstr ""
 
-#: src/api.py:99
-msgid "No data available"
+#: src/absences.py:40
+msgid "Text"
 msgstr ""
 
-#: src/api.py:197
+#: src/absences.py:43
+msgid "Start"
+msgstr ""
+
+#: src/absences.py:46
+msgid "End"
+msgstr ""
+
+#: src/absences.ui:12 src/window.ui:82
+msgid "Absences"
+msgstr ""
+
+#: src/api.py:171
+msgid "and"
+msgstr ""
+
+#: src/api.py:176 src/api.py:241
 msgid "Unknown"
 msgstr ""
 
-#: src/api.py:209
-msgid "and"
+#: src/api.py:320
+msgid "No data"
 msgstr ""
 
 #: src/create_homework.py:50
@@ -89,7 +105,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: src/create_homework.ui:23
+#: src/create_homework.ui:23 src/messages.py:50
 msgid "Date"
 msgstr ""
 
@@ -97,7 +113,7 @@ msgstr ""
 msgid "Task"
 msgstr ""
 
-#: src/create_homework.ui:41 src/information.py:45 src/information.py:88
+#: src/create_homework.ui:41 src/information.py:45 src/information.py:78
 msgid "Subject"
 msgstr ""
 
@@ -141,35 +157,43 @@ msgstr ""
 msgid "You have changed this"
 msgstr ""
 
-#: src/information.py:46 src/information.py:89
+#: src/information.py:46 src/information.py:79
 msgid "Room"
 msgstr ""
 
-#: src/information.py:47 src/information.py:90
+#: src/information.py:47 src/information.py:80
+msgid "Room description"
+msgstr ""
+
+#: src/information.py:48 src/information.py:81
 msgid "Teacher"
 msgstr ""
 
-#: src/information.py:49
+#: src/information.py:50
 msgid "Information about this lesson"
 msgstr ""
 
-#: src/information.py:51
+#: src/information.py:52
+msgid "Teaching content"
+msgstr ""
+
+#: src/information.py:54
 msgid "Cancelled"
 msgstr ""
 
-#: src/information.py:60
+#: src/information.py:63
 msgid "Duration"
 msgstr ""
 
-#: src/information.py:60
+#: src/information.py:63
 msgid "Minutes"
 msgstr ""
 
-#: src/information.py:69 src/information.py:98 src/window.ui:62
+#: src/information.py:72 src/information.py:89 src/window.ui:62
 msgid "Homework"
 msgstr ""
 
-#: src/information.py:73
+#: src/information.py:76
 msgid "Original lesson"
 msgstr ""
 
@@ -234,8 +258,20 @@ msgid ""
 msgstr ""
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:59
+#: src/main.py:72
 msgid "translator-credits"
+msgstr ""
+
+#: src/messages.py:53
+msgid "Sender"
+msgstr ""
+
+#: src/messages.ui:12 src/messages.ui:39 src/window.ui:72
+msgid "Messages"
+msgstr ""
+
+#: src/messages.ui:34
+msgid "News of Day"
 msgstr ""
 
 #: src/shortcuts-dialog.ui:6
@@ -267,20 +303,12 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr ""
 
-#: src/teachers.ui:12 src/window.ui:72
-msgid "Teachers"
-msgstr ""
-
-#: src/teachers.ui:34
-msgid "Search term"
-msgstr ""
-
-#: src/timetable.py:202
+#: src/timetable.py:183
 msgid "Week %W"
 msgstr ""
 
 #. Translators: date format in the timetable
-#: src/timetable.py:245
+#: src/timetable.py:225
 msgid "%m/%d/%y"
 msgstr ""
 
@@ -312,14 +340,14 @@ msgstr ""
 msgid "My timetable"
 msgstr ""
 
-#: src/window.ui:89
+#: src/window.ui:99
 msgid "_Login"
 msgstr ""
 
-#: src/window.ui:93
+#: src/window.ui:103
 msgid "_Keyboard Shortcuts"
 msgstr ""
 
-#: src/window.ui:97
+#: src/window.ui:107
 msgid "_About Timetable"
 msgstr ""
