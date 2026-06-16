@@ -180,7 +180,7 @@ class Timetable(Gtk.Box):
                 if "original" in ld:
                     if "subject" in ld["original"]:
                         if ld["original"]["subject"]["shortName"] == homework["subject"]:
-                            if str(homework["dueDate"]) == ld["date"]:
+                            if str(homework["dueDate"]) == ld["startDateTime"].strftime("%Y%m%d"):
                                 lessons.append(lesson[1])
             for lesson in lessons:
                 lesson.addHomework(homework)
