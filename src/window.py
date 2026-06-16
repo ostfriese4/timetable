@@ -22,6 +22,7 @@ from .timetable import Timetable
 from .homework import HomeworkList
 from .teachers import TeacherPage
 from .messages import MessagesPage
+from .absences import AbsencesPage
 from .create_homework import HomeworkEditWindow
 from gi.repository import Adw
 from gi.repository import Gtk
@@ -32,6 +33,7 @@ class UntisWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'UntisWindow'
 
     timetable = Gtk.Template.Child()
+    absences = Gtk.Template.Child()
     homework = Gtk.Template.Child()
     homework_page = Gtk.Template.Child()
     main_view_stack = Gtk.Template.Child()
@@ -51,3 +53,4 @@ class UntisWindow(Adw.ApplicationWindow):
         self.homework.enable_bindings(self)
         self.teachers.enable_bindings(self)
         self.messages.enable_bindings(self)
+        self.absences.enable_bindings(self)

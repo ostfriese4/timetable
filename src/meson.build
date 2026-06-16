@@ -28,6 +28,7 @@ configure_file(
 
 untis_sources = [
   '__init__.py',
+  'absences.py',
   'api.py',
   'credentials.py',
   'create_homework.py',

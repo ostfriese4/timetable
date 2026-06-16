@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/page/codeberg/ostfriese4/Untis">
+    <file preprocess="xml-stripblanks">absences.ui</file>
     <file preprocess="xml-stripblanks">create_homework.ui</file>
     <file preprocess="xml-stripblanks">information.ui</file>
     <file preprocess="xml-stripblanks">holiday.ui</file>
