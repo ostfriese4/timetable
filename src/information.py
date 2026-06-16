@@ -44,6 +44,7 @@ class InformationWindow(Adw.Dialog):
 
         data[_("Subject")] = lesson["subject"]["longName"]
         data[_("Room")] = lesson["room"]
+        data[_("Room description")] = lesson["room-info"]
         data[_("Teacher")] = lesson["teachers-long"]
         if lesson["lessonInfo"] is not None:
             data[_("Information about this lesson")] = lesson["lessonInfo"]
@@ -76,6 +77,7 @@ class InformationWindow(Adw.Dialog):
             original = lesson["original"]
             data[_("Subject")] = original["subject"]["longName"]
             data[_("Room")] = original["room"]
+            data[_("Room description")] = original["room-info"]
             data[_("Teacher")] = original["teachers-long"]
 
 
