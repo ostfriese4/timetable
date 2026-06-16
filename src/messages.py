@@ -42,7 +42,7 @@ class Message(Adw.ExpanderRow):
             self.loaded = True
             message = self.session.getMessageById(self.message["id"])
 
-            content = Adw.ActionRow(title = message["content"])
+            content = Adw.ActionRow(title = message["content"].replace("<br>", "\n"))
             self.add_row(content)
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/messages.ui')
@@ -51,10 +51,12 @@ class MessagesPage(Gtk.Box):
 
     show_sidebar_button = Gtk.Template.Child()
     container = Gtk.Template.Child()
+    news_of_day = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.displayed = []
+        self.displayedNews = []
 
     def enable_bindings(self, parent):
         parent.split_view.bind_property(
@@ -76,9 +78,21 @@ class MessagesPage(Gtk.Box):
 
         while self.displayed != []:
             row = self.displayed.pop()
-            self.container.remoev(row)
+            self.container.remove(row)
+        while self.displayedNews != []:
+            row = self.displayedNews.pop()
+            self.news_of_day.remove(row)
 
         for message in messages:
             row = Message(message, self.shared.session)
             self.container.add(row)
             self.displayed.append(row)
+
+        news = self.shared.session.getNewsOfDay()
+        for item in news:
+            text = item["text"]
+            text = text.replace("<br>", "\n")
+
+            row = Adw.ActionRow(title=item["subject"], subtitle=text)
+            self.news_of_day.add(row)
+            self.displayedNews.append(row)

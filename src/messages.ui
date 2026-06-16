@@ -30,8 +30,13 @@
             <child>
               <object class="AdwPreferencesPage">
                 <child>
+                  <object class="AdwPreferencesGroup" id="news_of_day">
+                    <property name="title" translatable="yes">News of Day</property>
+                  </object>
+                </child>
+                <child>
                   <object class="AdwPreferencesGroup" id="container">
-                    <property name="hexpand">True</property>
+                    <property name="title" translatable="yes">Messages</property>
                   </object>
                 </child>
               </object>
