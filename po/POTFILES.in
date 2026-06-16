@@ -23,8 +23,6 @@ src/main.py
 src/messages.py
 src/messages.ui
 src/shortcuts-dialog.ui
-src/teachers.py
-src/teachers.ui
 src/timetable.py
 src/timetable.ui
 src/window.py
