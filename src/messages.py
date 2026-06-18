@@ -91,12 +91,16 @@ class MessagesPage(Gtk.Box):
             row = self.displayedNews.pop()
             self.news_of_day.remove(row)
 
+        self.container.set_visible(True)
         for message in messages:
             row = Message(message, self.shared.session)
             self.container.add(row)
             self.displayed.append(row)
+        if messages == []:
+            self.container.set_visible(False)
 
         news = self.shared.session.getNewsOfDay()
+        self.news_of_day.set_visible(True)
         for item in news:
             text = item["text"]
             text = text.replace("<br>", "\n")
@@ -104,3 +108,5 @@ class MessagesPage(Gtk.Box):
             row = Adw.ActionRow(title=item["subject"], subtitle=text)
             self.news_of_day.add(row)
             self.displayedNews.append(row)
+        if news == []:
+            self.news_of_day.set_visible(False)
