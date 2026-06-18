@@ -25,8 +25,10 @@ def setCredentials(server, school, user, password, profile = "0"):
 
     if not "default-profile" in data:
         data["default-profile"] = profile
+    if not "credentials" in data:
+        data["credentials"] = {}
 
-    data[profile] = {
+    data["credentials"][profile] = {
             "user": user,
             "server": server,
             "school": school
@@ -34,7 +36,7 @@ def setCredentials(server, school, user, password, profile = "0"):
 
     with open(credentialsPath, "w") as file:
         json.dump(data, file, indent = 4)
-    Secret.password_store_sync(SCHEMA, data[profile], Secret.COLLECTION_DEFAULT, "Untis Password", password, None)
+    Secret.password_store_sync(SCHEMA, data["credentials"][profile], Secret.COLLECTION_DEFAULT, "Untis Password", password, None)
 
 def getPassword(user):
     password = Secret.password_lookup_sync(SCHEMA, user, None)
@@ -58,7 +60,7 @@ def getCredentials(profile = "0"):
         setCredentials(data["server"], data["school"], data["user"], getPassword(data), profile)
         return getCredentials()
 
-    data = data[profile]
+    data = data["credentials"][profile]
     data["password"] = getPassword(data)
 
     if not data["server"].startswith("https://"):
