@@ -17,7 +17,7 @@
 }
 
 .lesson.past {
-  opacity: 50%;
+  opacity: 0.75;
 }
 
 .cancelled {
