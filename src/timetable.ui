@@ -71,6 +71,14 @@
                         <property name="margin-bottom">5</property>
                       </object>
                     </child>
+                    <child type="overlay">
+                      <object class="GtkProgressBar" id="progress">
+                        <property name="valign">top</property>
+                        <property name="visible">False</property>
+                        <property name="can-target">False</property>
+                        <property name="pulse-step">0.3</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>

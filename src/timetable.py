@@ -27,6 +27,7 @@ from .information import InformationWindow
 from .lesson import Lesson
 from .holiday import Holiday
 import datetime
+import time
 import threading
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/timetable.ui')
@@ -39,6 +40,8 @@ class Timetable(Gtk.Box):
     next_button = Gtk.Template.Child()
     previous_button = Gtk.Template.Child()
     show_sidebar_button = Gtk.Template.Child()
+
+    progress = Gtk.Template.Child()
 
     header_button = Gtk.Template.Child()
     date_chooser = Gtk.Template.Child()
@@ -58,6 +61,9 @@ class Timetable(Gtk.Box):
         self.previous_button.connect("clicked", self.previous)
         self.header_button.connect("clicked", self.on_header_button)
         self.date_chooser.connect("day-selected", self.on_day_selected)
+
+        self.progress.add_css_class("osd")
+        self.loading = False
 
         self.info_rows = []
 
@@ -145,8 +151,22 @@ class Timetable(Gtk.Box):
             thread = threading.Thread(target=code, daemon=True)
             thread.start()
 
+    def loadingAnimation(self):
+        if not self.loading:
+            self.loading = True
+            self.progress.set_visible(True)
+
+            def code():
+                while self.loading:
+                    self.progress.pulse()
+                    time.sleep(0.2)
+                self.progress.set_visible(False)
+
+            thread = threading.Thread(target=code, daemon=True)
+            thread.start()
 
     def loadData(self):
+        self.loadingAnimation()
         s = self.startdate
         def load():
             try:
@@ -161,6 +181,7 @@ class Timetable(Gtk.Box):
                     homeworks = fetchHomeworks(self.startdate, self.enddate)
                     if s == self.startdate:
                         GLib.idle_add(self.displayHomeworks, homeworks)
+                        self.loading = False
                         self.prefetch()
             return False
 
