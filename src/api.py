@@ -157,7 +157,7 @@ class session:
         s_end = datetime.datetime.strptime(year["dateRange"]["end"], "%Y-%m-%d")
         if start is None:
             start = s_start
-        if end is None or start < s_end < end:
+        if end is None:
             end = s_end
 
         data = []
