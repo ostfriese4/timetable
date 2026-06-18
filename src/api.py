@@ -138,10 +138,10 @@ class session:
         if mode == "cache":
             try:
                 return self._readFromCache(hashed)
-            except json.decoder.JSONDecoderError:
+            except json.decoder.JSONDecodeError:
                 if orig != "online":
                     print("repairing cache", path)
-                    return self.getRequest(path, "online")
+                    return self._getRequest(path, "online")
 
     def getNewsOfDay(self, day = None):
         if day is None:
