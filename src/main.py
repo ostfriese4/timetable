@@ -50,7 +50,7 @@ class UntisApplication(Adw.Application):
         self.shared = shared
 
         if not testCredentials(getCredentials()):
-            self.on_login_action()
+            self.on_login_action(None, None)
         self.shared.session = session(getCredentials())
         setShared(self.shared)
 

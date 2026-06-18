@@ -44,7 +44,7 @@ def _login(credentials):
         return s # don't fail login at startup
 
 def testCredentials(credentials):
-    return _login(credentials) is not None and not offline
+    return _login(credentials) is not None or offline
 
 class session:
     def __init__(self, credentials):
