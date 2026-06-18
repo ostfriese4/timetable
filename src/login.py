@@ -19,7 +19,7 @@
 
 from gi.repository import Gtk
 from gi.repository import Adw
-from .api import _login, testCredentials
+from .api import _login, testCredentials, searchSchool
 from .credentials import getCredentials, setCredentials
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/login.ui')
@@ -67,7 +67,7 @@ class LoginWindow(Adw.Dialog):
         self.results.clear()
 
         name = self.search_entry.get_text()
-        schools = api.school_search(name)
+        schools = searchSchool(name)
 
         if len(schools) == 1:
             if type(schools[0]) == str:

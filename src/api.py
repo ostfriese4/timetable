@@ -43,6 +43,32 @@ def _login(credentials):
         offline = True
         return s # don't fail login at startup
 
+# from https://github.com/l-koehler/untis-py (api.py)
+def searchSchool(query):
+    # return: [display name, server URL]
+
+    if query == "":
+        return ["too many results"]
+
+    baseurl = "https://schoolsearch.webuntis.com/schoolquery2"
+    json = {
+        "id": useragent,
+        "jsonrpc": "2.0",
+        "method": "searchSchool",
+        "params": [{
+            "search": f"{query}"
+        }]
+    }
+    try:
+        data = requests.post(url=baseurl, json=json).json()
+        if "error" in data:
+            return [data["error"]["message"]]
+        return [
+            [school["loginName"], school["server"]] for school in data["result"]["schools"]
+        ]
+    except requests.exceptions.ConnectionError:
+        return ["offline"]
+
 def testCredentials(credentials):
     return _login(credentials) is not None or offline
 
