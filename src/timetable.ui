@@ -73,7 +73,7 @@
                     </child>
                     <child type="overlay">
                       <object class="GtkProgressBar" id="progress">
-                        <property name="valign">top</property>
+                        <property name="valign">start</property>
                         <property name="visible">False</property>
                         <property name="can-target">False</property>
                         <property name="pulse-step">0.3</property>
