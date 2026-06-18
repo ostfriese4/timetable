@@ -87,7 +87,7 @@ class Timetable(Gtk.Box):
         self.date_chooser_dialog.present(self.get_ancestor(Adw.ApplicationWindow))
 
     def on_day_selected(self, date):
-        date = datetime.datetime.strptime(self.date_chooser.get_date().format("%d-%m-%Y"), "%d-%m-%Y").date()
+        date = datetime.datetime.strptime(self.date_chooser.get_date().format("%d-%m-%Y"), "%d-%m-%Y")
         self.date_chooser_dialog.close()
         self.jump_to(date)
 
