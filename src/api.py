@@ -63,9 +63,7 @@ def searchSchool(query):
         data = requests.post(url=baseurl, json=json).json()
         if "error" in data:
             return [data["error"]["message"]]
-        return [
-            [school["loginName"], school["server"]] for school in data["result"]["schools"]
-        ]
+        return data["result"]["schools"]
     except requests.exceptions.ConnectionError:
         return ["offline"]
 

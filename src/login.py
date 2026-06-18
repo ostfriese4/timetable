@@ -69,47 +69,37 @@ class LoginWindow(Adw.Dialog):
         name = self.search_entry.get_text()
         schools = searchSchool(name)
 
-        if len(schools) == 1:
-            if type(schools[0]) == str:
+        if (len(schools) and type(schools[0]) == str) or schools == []:
+            if schools == []:
+                error = _("No results")
+            else:
                 error = schools[0]
                 if error == "too many results":
-                    schools = [
-                        [
-                            _("Too many results"),
-                            ""
-                        ]
-                    ]
+                    error = _("Too many results")
                 elif error == "offline":
-                    schools = [
-                        [
-                            _("Offline"),
-                            ""
-                        ]
-                    ]
+                    error = _("Offline")
                 else:
-                    schools = [
-                        [
-                            _("Error"),
-                            str(error)
-                        ]
-                    ]
-        if schools == []:
-            schools = [
-                [
-                    _("No results"),
-                    ""
-                ]
-            ]
+                    error = _("Error")
+
+            schools = [{
+                "displayName": error,
+                "loginName": "",
+                "server": "",
+                "address": ""
+            }]
 
         for school in schools:
-            name = school[0]
-            server = school[1]
-            result = Adw.ButtonRow(title = name)
+            display = school["displayName"]
+            name = school["loginName"]
+            server = school["server"]
+            address = school["address"]
+            result = Adw.ButtonRow(title = display)
 
             def onClick(click, name=name, server=server):
-                self.search_window.close()
-                self.school_entry.set_text(name)
-                self.server_entry.set_text(server)
+                if server != "":
+                    self.search_window.close()
+                    self.school_entry.set_text(name)
+                    self.server_entry.set_text(server)
 
             result.connect("activated", onClick)
 
@@ -123,16 +113,10 @@ class LoginWindow(Adw.Dialog):
                        school = self.school_entry.get_text(),
                        server = self.server_entry.get_text()
                        )
-        credentials = {
-            "user": self.usr_entry.get_text(),
-            "password": self.pswd_entry.get_text(),
-            "school": self.school_entry.get_text(),
-            "server": self.server_entry.get_text()
-        }
 
-        if testCredentials(credentials):
+        if testCredentials(getCredentials()):
             self.close()
-            self.window.shared.session.session = _login(credentials)
+            self.window.shared.session.session = _login(getCredentials())
             self.window.timetable.loadData()
 
     def requestLogin(self):
