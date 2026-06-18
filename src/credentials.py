@@ -16,27 +16,51 @@ SCHEMA = Secret.Schema.new("page.codeberg.ostfriese4.Untis.Store",
     }
 )
 
-def setCredentials(server, school, user, password):
-    data = {
+def setCredentials(server, school, user, password, profile = "0"):
+    try:
+        with open(credentialsPath) as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        data = {}
+
+    if not "default-profile" in data:
+        data["default-profile"] = profile
+
+    data[profile] = {
             "user": user,
             "server": server,
             "school": school
            }
-    with open(credentialsPath, "w") as file:
-        json.dump(data, file)
-    Secret.password_store_sync(SCHEMA, data, Secret.COLLECTION_DEFAULT, "Untis Password", password, None)
 
-def getCredentials():
+    with open(credentialsPath, "w") as file:
+        json.dump(data, file, indent = 4)
+    Secret.password_store_sync(SCHEMA, data[profile], Secret.COLLECTION_DEFAULT, "Untis Password", password, None)
+
+def getPassword(user):
+    password = Secret.password_lookup_sync(SCHEMA, user, None)
+    if password == None:
+        raise FileNotFoundError("no password set")
+    return password
+
+def getCredentials(profile = "0"):
     with open(credentialsPath) as file:
         data = json.load(file)
-    password = Secret.password_lookup_sync(SCHEMA, data, None)
-    if password == None:
-        if "password" in data: # not yet migrated
-            print("migrating password")
-            setCredentials(data["server"], data["school"], data["username"], data["password"])
-            return getCredentials()
-        raise FileNotFoundError("no password set")
-    data["password"] = password
+
+    if "password" in data: # not yet migrated to secrets
+        print("migrating password to secrets")
+        setCredentials(data["server"], data["school"], data["username"], data["password"])
+        return getCredentials()
+
+    if not "default-profile" in data: # not yet migrated to profiles
+        print("migrating password to profiles")
+        with open(credentialsPath, "w") as file:
+            json.dump({}, file)
+        setCredentials(data["server"], data["school"], data["user"], getPassword(data), profile)
+        return getCredentials()
+
+    data = data[profile]
+    data["password"] = getPassword(data)
+
     if not data["server"].startswith("https://"):
         data["server"] = "https://" + data["server"]
     return data
