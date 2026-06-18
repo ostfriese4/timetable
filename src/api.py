@@ -110,6 +110,7 @@ class session:
 
     def _getRequest(self, path, mode = "normal", maxage = 3600):
         global offline
+        orig = mode
         hashed = "requests/" + md5(path.encode()).hexdigest()
         if mode == "normal":
             if self._useCache(hashed, maxage = maxage):
@@ -135,7 +136,12 @@ class session:
                 mode = "cache"
 
         if mode == "cache":
-            return self._readFromCache(hashed)
+            try:
+                return self._readFromCache(hashed)
+            except json.decoder.JSONDecoderError:
+                if orig != "online":
+                    print("repairing cache", path)
+                    return self.getRequest(path, "online")
 
     def getNewsOfDay(self, day = None):
         if day is None:
