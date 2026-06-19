@@ -12,11 +12,12 @@ SCHEMA = Secret.Schema.new("page.codeberg.ostfriese4.Untis.Store",
     {
         "server": Secret.SchemaAttributeType.STRING,
         "school": Secret.SchemaAttributeType.STRING,
-        "user": Secret.SchemaAttributeType.STRING
+        "user": Secret.SchemaAttributeType.STRING,
+        "type": Secret.SchemaAttributeType.STRING
     }
 )
 
-def setCredentials(server, school, user, password, profile = "0"):
+def setCredentials(server, school, user, password, credType, profile = "0"):
     try:
         with open(credentialsPath) as file:
             data = json.load(file)
@@ -31,7 +32,8 @@ def setCredentials(server, school, user, password, profile = "0"):
     data["credentials"][profile] = {
             "user": user,
             "server": server,
-            "school": school
+            "school": school,
+            "type": credType
            }
 
     with open(credentialsPath, "w") as file:
@@ -57,7 +59,7 @@ def getCredentials(profile = "0"):
         print("migrating password to profiles")
         with open(credentialsPath, "w") as file:
             json.dump({}, file)
-        setCredentials(data["server"], data["school"], data["user"], getPassword(data), profile)
+        setCredentials(data["server"], data["school"], data["user"], getPassword(data), "password", profile)
         return getCredentials()
 
     data = data["credentials"][profile]

@@ -31,6 +31,7 @@ class LoginWindow(Adw.Dialog):
     usr_entry = Gtk.Template.Child()
     school_entry = Gtk.Template.Child()
     server_entry = Gtk.Template.Child()
+    method = Gtk.Template.Child()
 
     search_button = Gtk.Template.Child()
     search_window = Gtk.Template.Child()
@@ -53,6 +54,8 @@ class LoginWindow(Adw.Dialog):
         self.login_button.add_css_class("suggested-action")
 
         self.sso_info_button.connect("activated", self.openSSOInfoWindow)
+        self.method.connect("notify::selected-item", self.on_method_changed)
+        self.on_method_changed()
 
     def openSSOInfoWindow(self, a = None):
         self.sso_info_window.present(self)
@@ -60,6 +63,9 @@ class LoginWindow(Adw.Dialog):
     def openSearchSchoolWindow(self, data = None):
         self.searchSchool()
         self.search_window.present(self)
+
+    def on_method_changed(self, a=None, b=None):
+        self.pswd_entry.set_title(self.method.get_selected_item().get_string())
 
     def searchSchool(self, data = None):
         for result in self.results:
@@ -108,12 +114,19 @@ class LoginWindow(Adw.Dialog):
 
     def login(self, data = None):
         print("login")
+        if self.method.get_selected_item().get_string() == _("Token"):
+            credType = "token"
+        else:
+            credType = "password"
+
         setCredentials(user = self.usr_entry.get_text(),
                        password = self.pswd_entry.get_text(),
                        school = self.school_entry.get_text(),
-                       server = self.server_entry.get_text()
+                       server = self.server_entry.get_text(),
+                       credType = credType
                        )
 
+        print(getCredentials())
         if testCredentials(getCredentials()):
             self.close()
             self.window.shared.session.session = _login(getCredentials())
@@ -127,5 +140,11 @@ class LoginWindow(Adw.Dialog):
             self.pswd_entry.set_text(credentials["password"])
             self.school_entry.set_text(credentials["school"])
             self.server_entry.set_text(credentials["server"])
+            match credentials["type"]:
+                case "token":
+                    position = 0
+                case "password":
+                    position = 1
+            self.method.set_selected(position)
         except FileNotFoundError:
             pass # first run

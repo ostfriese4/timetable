@@ -11,7 +11,8 @@ id = "page.codeberg.ostfriese4.Untis"
 useragent = id + " " + version
 
 headers = {
-    "User-Agent": useragent
+    "User-Agent": useragent,
+    "Accept": "application/json"
 }
 
 offline = False
@@ -26,13 +27,23 @@ def _login(credentials):
         form_data = {
             "school": credentials["school"],
             "j_username": credentials["user"],
-            "j_password": credentials["password"],
         }
+
+        match credentials["type"]:
+            case "password":
+                form_data["j_password"] = credentials["password"]
+            case "token":
+                form_data["token"] = credentials["password"]
 
         url = credentials["server"] + "/WebUntis/j_spring_security_check"
         response = s.post(url, data=form_data)
 
         if response.status_code == 200:
+            json = response.json()
+            if json["state"] == "LOGIN_ERROR":
+                print(json)
+                return
+
             token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
             s.headers.update({"Authorization": "Bearer " + token})
             offline = False

@@ -48,9 +48,6 @@ class UntisApplication(Adw.Application):
         self.create_action('create_homework', self.on_create_homework_action, ['<control>n'])
 
         self.shared = shared
-
-        if not testCredentials(getCredentials()):
-            self.on_login_action(None, None)
         self.shared.session = session(getCredentials())
         setShared(self.shared)
 
@@ -59,6 +56,9 @@ class UntisApplication(Adw.Application):
         if not win:
             win = UntisWindow(self.shared, application=self)
         win.present()
+
+        if not testCredentials(getCredentials()):
+            self.on_login_action(None, None)
 
     def on_about_action(self, *args):
         """Callback for the app.about action."""

@@ -54,8 +54,20 @@
                   </object>
                 </child>
                 <child>
+                  <object class="AdwComboRow" id="method">
+                    <property name="title" translatable="yes">Authentication method</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">Token</item>
+                          <item translatable="yes">Password</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+                <child>
                   <object class="AdwPasswordEntryRow" id="pswd_entry">
-                    <property name="title" translatable="yes">Password</property>
                   </object>
                 </child>
               </object>
