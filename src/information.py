@@ -91,6 +91,8 @@ class InformationWindow(Adw.Dialog):
                 else:
                     row = Adw.ActionRow(title = key)
                     row.set_subtitle(value)
+                    if value != "":
+                        row.add_css_class("property")
                 table.add(row)
             self.info_rows.append(table)
 

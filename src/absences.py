@@ -42,9 +42,11 @@ class Absence(Adw.ExpanderRow):
 
         startRow = Adw.ActionRow(title = _("Start"), subtitle = start.strftime("%c"))
         self.add_row(startRow)
+        startRow.add_css_class("property")
 
         endRow = Adw.ActionRow(title = _("End"), subtitle = end.strftime("%c"))
         self.add_row(endRow)
+        endRow.add_css_class("property")
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/absences.ui')
 class AbsencesPage(Gtk.Box):

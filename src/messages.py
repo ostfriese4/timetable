@@ -46,12 +46,15 @@ class Message(Adw.ExpanderRow):
 
             content = Adw.ActionRow(title = message["content"].replace("<br>", "\n"))
             self.add_row(content)
+            content.add_css_class("property")
 
             date = Adw.ActionRow(title = _("Date"), subtitle = datetime.datetime.strptime(self.message["sentDateTime"], "%Y-%m-%dT%H:%M:%S").strftime("%c"))
             self.add_row(date)
+            date.add_css_class("property")
 
             sender = Adw.ActionRow(title = _("Sender"), subtitle = self.message["sender"]["displayName"])
             self.add_row(sender)
+            sender.add_css_class("property")
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/messages.ui')
 class MessagesPage(Gtk.Box):
