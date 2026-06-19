@@ -23,6 +23,7 @@ from .homework import HomeworkList
 from .messages import MessagesPage
 from .absences import AbsencesPage
 from .create_homework import HomeworkEditWindow
+from .profiles import ProfilesWindow
 from gi.repository import Adw
 from gi.repository import Gtk
 
@@ -46,8 +47,14 @@ class UntisWindow(Adw.ApplicationWindow):
         self.shared = shared
         self.login_window = LoginWindow(self)
         self.homeworkEditWindow = HomeworkEditWindow(self)
+        self.profiles_window = ProfilesWindow(self)
 
         self.timetable.enable_bindings(self)
         self.homework.enable_bindings(self)
         self.messages.enable_bindings(self)
         self.absences.enable_bindings(self)
+
+    def reload(self):
+        self.main_view_stack.set_visible_child_name("timetable")
+        self.timetable.loadData()
+        self.homework.displayAll()

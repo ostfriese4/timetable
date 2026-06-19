@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="ProfilesWindow" parent="AdwDialog">
+    <property name="title" translatable="yes">Manage profiles</property>
+    <property name="content-width">400</property>
+    <property name="can-close">True</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <child type="end">
+              <object class="GtkButton" id="add_button">
+                <property name="icon-name">list-add-symbolic</property>
+                <property name="tooltip-text" translatable="yes">Create a new profile</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="AdwPreferencesPage">
+            <child>
+              <object class="AdwPreferencesGroup" id="container"/>
+            </child>
+          </object>
+        </property>
+      </object>
+    </child>
+  </template>
+</interface>

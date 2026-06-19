@@ -41,6 +41,7 @@ untis_sources = [
   'login.py',
   'main.py',
   'messages.py',
+  'profiles.py',
   'timetable.py',
   'window.py',
 ]

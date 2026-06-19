@@ -18,7 +18,13 @@
         </child>
         <child>
           <object class="AdwShortcutsItem">
-            <property name="title" translatable="yes" context="shortcut window">create homework</property>
+            <property name="title" translatable="yes" context="shortcut window">Manage profiles</property>
+            <property name="action-name">app.profiles</property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwShortcutsItem">
+            <property name="title" translatable="yes" context="shortcut window">Create homework</property>
             <property name="action-name">app.create_homework</property>
           </object>
         </child>

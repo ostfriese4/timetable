@@ -19,8 +19,8 @@
 
 from gi.repository import Gtk
 from gi.repository import Adw
-from .api import _login, testCredentials, searchSchool
-from .credentials import getCredentials, setCredentials
+from .api import session, testCredentials, searchSchool
+from .credentials import getCredentials, setCredentials, setProfiles
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/login.ui')
 class LoginWindow(Adw.Dialog):
@@ -32,6 +32,7 @@ class LoginWindow(Adw.Dialog):
     school_entry = Gtk.Template.Child()
     server_entry = Gtk.Template.Child()
     method = Gtk.Template.Child()
+    profile_entry = Gtk.Template.Child()
 
     search_button = Gtk.Template.Child()
     search_window = Gtk.Template.Child()
@@ -46,6 +47,7 @@ class LoginWindow(Adw.Dialog):
 
         self.window = window
         self.results = []
+        self.profile = "1"
 
         self.login_button.connect("activated", self.login)
         self.search_button.connect("activated", self.openSearchSchoolWindow)
@@ -101,6 +103,7 @@ class LoginWindow(Adw.Dialog):
             address = school["address"]
             result = Adw.ActionRow(title = display, subtitle = address)
             result.set_activatable(True)
+            result.set_use_markup(False)
 
             def onClick(click, name=name, server=server):
                 if server != "":
@@ -124,19 +127,26 @@ class LoginWindow(Adw.Dialog):
                        password = self.pswd_entry.get_text(),
                        school = self.school_entry.get_text(),
                        server = self.server_entry.get_text(),
-                       credType = credType
+                       credType = credType,
+                       profile = self.profile
                        )
 
-        print(getCredentials())
-        if testCredentials(getCredentials()):
-            self.close()
-            self.window.shared.session.session = _login(getCredentials())
-            self.window.timetable.loadData()
+        self.window.shared.profiles["profiles"][self.profile]["name"] = self.profile_entry.get_text()
+        setProfiles(self.window.shared.profiles)
 
-    def requestLogin(self):
+        credentials = getCredentials(self.profile)
+        print(credentials)
+        if testCredentials(credentials):
+            self.close()
+            self.window.shared.session = session(credentials)
+            self.window.reload()
+
+    def requestLogin(self, profile):
         self.present(self.window)
+        self.profile = profile
+        print("login", profile)
         try:
-            credentials = getCredentials()
+            credentials = getCredentials(profile)
             self.usr_entry.set_text(credentials["user"])
             self.pswd_entry.set_text(credentials["password"])
             self.school_entry.set_text(credentials["school"])
@@ -147,5 +157,6 @@ class LoginWindow(Adw.Dialog):
                 case "password":
                     position = 1
             self.method.set_selected(position)
+            self.profile_entry.set_text(self.window.shared.profiles["profiles"][self.profile]["name"])
         except FileNotFoundError:
             pass # first run

@@ -96,6 +96,10 @@
   <menu id="primary_menu">
     <section>
       <item>
+        <attribute name="label" translatable="yes">Manage _profiles</attribute>
+        <attribute name="action">app.profiles</attribute>
+      </item>
+      <item>
         <attribute name="label" translatable="yes">_Login</attribute>
         <attribute name="action">app.login</attribute>
       </item>

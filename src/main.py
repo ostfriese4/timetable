@@ -27,7 +27,7 @@ from .api import session, version, id, testCredentials
 from .homework_api import setShared
 from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow
-from .credentials import getCredentials
+from .credentials import getCredentials, getProfiles
 import datetime
 
 
@@ -44,11 +44,13 @@ class UntisApplication(Adw.Application):
         self.create_action('quit', lambda *_: self.quit(), ['<control>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('login', self.on_login_action, ['<control>l'])
+        self.create_action('profiles', self.on_profiles_action, ['<control>p'])
         self.create_action('refresh', self.on_refresh_action, ['<control>r'])
         self.create_action('create_homework', self.on_create_homework_action, ['<control>n'])
 
         self.shared = shared
-        self.shared.session = session(getCredentials())
+        self.shared.profiles = getProfiles()
+        self.shared.session = session(getCredentials(self.shared.profiles["default-profile"]))
         setShared(self.shared)
 
     def do_activate(self):
@@ -57,7 +59,7 @@ class UntisApplication(Adw.Application):
             win = UntisWindow(self.shared, application=self)
         win.present()
 
-        if not testCredentials(getCredentials()):
+        if not testCredentials(getCredentials(self.shared.profiles["default-profile"])):
             self.on_login_action(None, None)
 
     def on_about_action(self, *args):
@@ -75,7 +77,10 @@ class UntisApplication(Adw.Application):
         about.present(self.props.active_window)
 
     def on_login_action(self, widget, _):
-        self.props.active_window.login_window.requestLogin()
+        self.props.active_window.login_window.requestLogin(self.shared.profiles["default-profile"])
+
+    def on_profiles_action(self, widget, _):
+        self.props.active_window.profiles_window.manage()
 
     def on_refresh_action(self, widget, _):
         self.props.active_window.timetable.refresh()

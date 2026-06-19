@@ -52,6 +52,8 @@ def _login(credentials):
     except requests.exceptions.ConnectionError:
         offline = True
         return s # don't fail login at startup
+    except requests.exceptions.InvalidURL:
+        return
 
 # from https://github.com/l-koehler/untis-py (api.py)
 def searchSchool(query):
@@ -85,7 +87,7 @@ class session:
         self.session = _login(credentials)
         self.server = credentials["server"]
 
-        self.name = credentials["school"] + credentials["user"]
+        self.name = credentials["school"] + credentials["user"] + credentials["server"]
         self.name = md5(self.name.encode()).hexdigest()
         self.CACHEDIR = os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis/" + self.name + "/"
         if not os.path.exists(self.CACHEDIR + "requests"):
@@ -151,6 +153,9 @@ class session:
                 mode = "cache"
             else:
                 mode = "online"
+        if self.session is None:
+            mode = "cache"
+
         if mode == "online":
             try:
                 response = self.session.get(self.server + path)
@@ -165,6 +170,8 @@ class session:
             except requests.exceptions.ConnectionError:
                 mode = "cache"
                 offline = True
+            except requests.exceptions.InvalidURL:
+                mode = "cache"
             except Exception:
                 raise
                 mode = "cache"

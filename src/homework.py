@@ -57,7 +57,10 @@ class HomeworkList(Gtk.Box):
         self.shared = parent.shared
 
         self.page = parent.homework_page
-        self.displayAll()
+        try:
+            self.displayAll()
+        except:
+            pass
 
     def scroll(self, data = None, y = None):
         if self.scrollTo is not None:

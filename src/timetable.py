@@ -114,7 +114,10 @@ class Timetable(Gtk.Box):
         self.shared = parent.shared
 
         self.jump_to(datetime.datetime.now())
-        self.shared.session.getHomeworks()
+        try:
+            self.shared.session.getHomeworks()
+        except:
+            pass
 
     def next(self, data = None):
         self.startdate += datetime.timedelta(days=7)
@@ -173,16 +176,20 @@ class Timetable(Gtk.Box):
                 table = self.shared.session.getOwnTimetable(self.startdate, self.enddate, mode = "cache")
             except:
                 table = None
-            if s == self.startdate:
-                GLib.idle_add(self.displayData, table)
-                table = self.shared.session.getOwnTimetable(self.startdate, self.enddate, mode = "normal")
+            try:
                 if s == self.startdate:
                     GLib.idle_add(self.displayData, table)
-                    homeworks = fetchHomeworks(self.startdate, self.enddate)
+                    table = self.shared.session.getOwnTimetable(self.startdate, self.enddate, mode = "normal")
                     if s == self.startdate:
-                        GLib.idle_add(self.displayHomeworks, homeworks)
-                        self.loading = False
-                        self.prefetch()
+                        GLib.idle_add(self.displayData, table)
+                        homeworks = fetchHomeworks(self.startdate, self.enddate)
+                        if s == self.startdate:
+                            GLib.idle_add(self.displayHomeworks, homeworks)
+                            self.loading = False
+                            self.prefetch()
+            except:
+                print("loading timetable failed")
+                self.loading = False
             return False
 
         thread = threading.Thread(target=load, daemon=True)

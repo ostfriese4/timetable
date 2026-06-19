@@ -17,7 +17,7 @@ SCHEMA = Secret.Schema.new("page.codeberg.ostfriese4.Untis.Store",
     }
 )
 
-def setCredentials(server, school, user, password, credType, profile = "0"):
+def setCredentials(server, school, user, password, credType, profile = "1"):
     try:
         with open(credentialsPath) as file:
             data = json.load(file)
@@ -28,6 +28,10 @@ def setCredentials(server, school, user, password, credType, profile = "0"):
         data["default-profile"] = profile
     if not "credentials" in data:
         data["credentials"] = {}
+    if not "profiles" in data:
+        data["profiles"] = {}
+    if not profile in data["profiles"]:
+        data["profiles"][profile] = {"name": _("Profile") + " " + profile}
 
     data["credentials"][profile] = {
             "user": user,
@@ -46,7 +50,7 @@ def getPassword(user):
         raise FileNotFoundError("no password set")
     return password
 
-def getCredentials(profile = "0"):
+def getCredentials(profile = "1"):
     with open(credentialsPath) as file:
         data = json.load(file)
 
@@ -62,9 +66,32 @@ def getCredentials(profile = "0"):
         setCredentials(data["server"], data["school"], data["user"], getPassword(data), "password", profile)
         return getCredentials()
 
+    if not profile in data["credentials"]:
+        raise FileNotFoundError("no password set")
+
     data = data["credentials"][profile]
     data["password"] = getPassword(data)
 
     if not data["server"].startswith("https://"):
         data["server"] = "https://" + data["server"]
     return data
+
+def getProfiles():
+    with open(credentialsPath) as file:
+        data = json.load(file)
+        try:
+            return {
+                "profiles": data["profiles"],
+                "default-profile": data["default-profile"]
+            }
+        except:
+            getCredentials() # not migrated
+            return getProfiles()
+
+def setProfiles(new):
+    with open(credentialsPath) as file:
+        data = json.load(file)
+    data["profiles"] = new["profiles"]
+    data["default-profile"] = new["default-profile"]
+    with open(credentialsPath, "w") as file:
+        json.dump(data, file, indent = 4)
