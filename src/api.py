@@ -40,14 +40,13 @@ def _login(credentials):
 
         if response.status_code == 200:
             json = response.json()
-            if json["state"] == "LOGIN_ERROR":
-                print(json)
-                return
+            print("login returned", json)
 
-            token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
-            s.headers.update({"Authorization": "Bearer " + token})
-            offline = False
-            return s
+            if json["state"] == "SUCCESS":
+                token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
+                s.headers.update({"Authorization": "Bearer " + token})
+                offline = False
+                return s
         else:
             print(response)
     except requests.exceptions.ConnectionError:
