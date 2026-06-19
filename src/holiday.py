@@ -20,19 +20,20 @@
 from gi.repository import Gtk, Pango, PangoCairo, Gdk, Graphene
 import math
 
-@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/holiday.ui')
+
+@Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/holiday.ui")
 class Holiday(Gtk.DrawingArea):
-    __gtype_name__ = 'Holiday'
+    __gtype_name__ = "Holiday"
 
     def __init__(self, name, **kwargs):
         super().__init__(**kwargs)
         self.label = name
         self.set_draw_func(self.drawVerticalLabel)
-        self.set_size_request(20,20)
+        self.set_size_request(20, 20)
 
     def drawVerticalLabel(self, area, context, width, height):
         if Gtk.Settings.get_default().get_property("gtk-application-prefer-dark-theme"):
-            context.set_source_rgb(1,1,1)
+            context.set_source_rgb(1, 1, 1)
 
         layout = PangoCairo.create_layout(context)
         layout.set_text(self.label, -1)

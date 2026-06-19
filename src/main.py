@@ -20,8 +20,8 @@
 import sys
 import gi
 
-gi.require_version('Gtk', '4.0')
-gi.require_version('Adw', '1')
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
 
 from .api import session, version, id, testCredentials
 from .homework_api import setShared
@@ -34,23 +34,31 @@ import datetime
 developers = ["Ostfriese4"]
 
 
-class shared:pass
+class shared:
+    pass
+
 
 class UntisApplication(Adw.Application):
     def __init__(self):
-        super().__init__(application_id='page.codeberg.ostfriese4.Untis',
-                         flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
-                         resource_base_path='/page/codeberg/ostfriese4/Untis')
-        self.create_action('quit', lambda *_: self.quit(), ['<control>q'])
-        self.create_action('about', self.on_about_action)
-        self.create_action('login', self.on_login_action, ['<control>l'])
-        self.create_action('profiles', self.on_profiles_action, ['<control>p'])
-        self.create_action('refresh', self.on_refresh_action, ['<control>r'])
-        self.create_action('create_homework', self.on_create_homework_action, ['<control>n'])
+        super().__init__(
+            application_id="page.codeberg.ostfriese4.Untis",
+            flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
+            resource_base_path="/page/codeberg/ostfriese4/Untis",
+        )
+        self.create_action("quit", lambda *_: self.quit(), ["<control>q"])
+        self.create_action("about", self.on_about_action)
+        self.create_action("login", self.on_login_action, ["<control>l"])
+        self.create_action("profiles", self.on_profiles_action, ["<control>p"])
+        self.create_action("refresh", self.on_refresh_action, ["<control>r"])
+        self.create_action(
+            "create_homework", self.on_create_homework_action, ["<control>n"]
+        )
 
         self.shared = shared
         self.shared.profiles = getProfiles()
-        self.shared.session = session(getCredentials(self.shared.profiles["default-profile"]))
+        self.shared.session = session(
+            getCredentials(self.shared.profiles["default-profile"])
+        )
         setShared(self.shared)
 
     def do_activate(self):
@@ -64,20 +72,24 @@ class UntisApplication(Adw.Application):
 
     def on_about_action(self, *args):
         """Callback for the app.about action."""
-        about = Adw.AboutDialog(application_name = _('Timetable'),
-                                application_icon = id,
-                                developer_name   = developers[0],
-                                version          = version,
-                                developers       = developers,
-                                copyright        = '© 2026 ' + developers[0])
+        about = Adw.AboutDialog(
+            application_name=_("Timetable"),
+            application_icon=id,
+            developer_name=developers[0],
+            version=version,
+            developers=developers,
+            copyright="© 2026 " + developers[0],
+        )
         # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-        about.set_translator_credits(_('translator-credits'))
+        about.set_translator_credits(_("translator-credits"))
         about.set_license_type(Gtk.License.GPL_3_0)
         about.set_issue_url("https://codeberg.org/ostfriese4/untis/issues")
         about.present(self.props.active_window)
 
     def on_login_action(self, widget, _):
-        self.props.active_window.login_window.requestLogin(self.shared.profiles["default-profile"])
+        self.props.active_window.login_window.requestLogin(
+            self.shared.profiles["default-profile"]
+        )
 
     def on_profiles_action(self, widget, _):
         self.props.active_window.profiles_window.manage()

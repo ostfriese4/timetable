@@ -23,8 +23,9 @@ from gi.repository import GObject
 
 import datetime
 
+
 class Message(Adw.ExpanderRow):
-    __gtype_name__ = 'Message'
+    __gtype_name__ = "Message"
 
     def __init__(self, message, session, **kwargs):
         super().__init__(**kwargs)
@@ -44,21 +45,29 @@ class Message(Adw.ExpanderRow):
             self.loaded = True
             message = self.session.getMessageById(self.message["id"])
 
-            content = Adw.ActionRow(title = message["content"].replace("<br>", "\n"))
+            content = Adw.ActionRow(title=message["content"].replace("<br>", "\n"))
             self.add_row(content)
             content.add_css_class("property")
 
-            date = Adw.ActionRow(title = _("Date"), subtitle = datetime.datetime.strptime(self.message["sentDateTime"], "%Y-%m-%dT%H:%M:%S").strftime("%c"))
+            date = Adw.ActionRow(
+                title=_("Date"),
+                subtitle=datetime.datetime.strptime(
+                    self.message["sentDateTime"], "%Y-%m-%dT%H:%M:%S"
+                ).strftime("%c"),
+            )
             self.add_row(date)
             date.add_css_class("property")
 
-            sender = Adw.ActionRow(title = _("Sender"), subtitle = self.message["sender"]["displayName"])
+            sender = Adw.ActionRow(
+                title=_("Sender"), subtitle=self.message["sender"]["displayName"]
+            )
             self.add_row(sender)
             sender.add_css_class("property")
 
-@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/messages.ui')
+
+@Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/messages.ui")
 class MessagesPage(Gtk.Box):
-    __gtype_name__ = 'MessagesPage'
+    __gtype_name__ = "MessagesPage"
 
     show_sidebar_button = Gtk.Template.Child()
     container = Gtk.Template.Child()
@@ -74,13 +83,14 @@ class MessagesPage(Gtk.Box):
             "show-sidebar",
             self.show_sidebar_button,
             "active",
-            GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL
+            GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL,
         )
         parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
 
         def on_visible(page, pspec):
             if parent.main_view_stack.get_visible_child_name() == "messages":
                 self.display()
+
         parent.main_view_stack.connect("notify::visible-child-name", on_visible)
         self.shared = parent.shared
 

@@ -22,9 +22,10 @@ from gi.repository import Adw
 from .api import session, testCredentials, searchSchool
 from .credentials import getCredentials, setCredentials, setProfiles
 
-@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/login.ui')
+
+@Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/login.ui")
 class LoginWindow(Adw.Dialog):
-    __gtype_name__ = 'LoginWindow'
+    __gtype_name__ = "LoginWindow"
 
     login_button = Gtk.Template.Child()
     pswd_entry = Gtk.Template.Child()
@@ -59,17 +60,17 @@ class LoginWindow(Adw.Dialog):
         self.method.connect("notify::selected-item", self.on_method_changed)
         self.on_method_changed()
 
-    def openSSOInfoWindow(self, a = None):
+    def openSSOInfoWindow(self, a=None):
         self.sso_info_window.present(self)
 
-    def openSearchSchoolWindow(self, data = None):
+    def openSearchSchoolWindow(self, data=None):
         self.searchSchool()
         self.search_window.present(self)
 
     def on_method_changed(self, a=None, b=None):
         self.pswd_entry.set_title(self.method.get_selected_item().get_string())
 
-    def searchSchool(self, data = None):
+    def searchSchool(self, data=None):
         for result in self.results:
             self.result_list.remove(result)
         self.results.clear()
@@ -89,19 +90,16 @@ class LoginWindow(Adw.Dialog):
                 else:
                     error = _("Error")
 
-            schools = [{
-                "displayName": error,
-                "loginName": "",
-                "server": "",
-                "address": ""
-            }]
+            schools = [
+                {"displayName": error, "loginName": "", "server": "", "address": ""}
+            ]
 
         for school in schools:
             display = school["displayName"]
             name = school["loginName"]
             server = school["server"]
             address = school["address"]
-            result = Adw.ActionRow(title = display, subtitle = address)
+            result = Adw.ActionRow(title=display, subtitle=address)
             result.set_activatable(True)
             result.set_use_markup(False)
 
@@ -116,22 +114,25 @@ class LoginWindow(Adw.Dialog):
             self.result_list.add(result)
             self.results.append(result)
 
-    def login(self, data = None):
+    def login(self, data=None):
         print("login")
         if self.method.get_selected_item().get_string() == _("Token"):
             credType = "token"
         else:
             credType = "password"
 
-        setCredentials(user = self.usr_entry.get_text(),
-                       password = self.pswd_entry.get_text(),
-                       school = self.school_entry.get_text(),
-                       server = self.server_entry.get_text(),
-                       credType = credType,
-                       profile = self.profile
-                       )
+        setCredentials(
+            user=self.usr_entry.get_text(),
+            password=self.pswd_entry.get_text(),
+            school=self.school_entry.get_text(),
+            server=self.server_entry.get_text(),
+            credType=credType,
+            profile=self.profile,
+        )
 
-        self.window.shared.profiles["profiles"][self.profile]["name"] = self.profile_entry.get_text()
+        self.window.shared.profiles["profiles"][self.profile]["name"] = (
+            self.profile_entry.get_text()
+        )
         setProfiles(self.window.shared.profiles)
 
         credentials = getCredentials(self.profile)
@@ -157,6 +158,8 @@ class LoginWindow(Adw.Dialog):
                 case "password":
                     position = 1
             self.method.set_selected(position)
-            self.profile_entry.set_text(self.window.shared.profiles["profiles"][self.profile]["name"])
+            self.profile_entry.set_text(
+                self.window.shared.profiles["profiles"][self.profile]["name"]
+            )
         except FileNotFoundError:
-            pass # first run
+            pass  # first run

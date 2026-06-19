@@ -25,9 +25,10 @@ from .homework_api import getAll
 from .homework_row import HomeworkRow
 import datetime
 
-@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/homework.ui')
+
+@Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/homework.ui")
 class HomeworkList(Gtk.Box):
-    __gtype_name__ = 'HomeworkList'
+    __gtype_name__ = "HomeworkList"
 
     show_sidebar_button = Gtk.Template.Child()
     container_done = Gtk.Template.Child()
@@ -46,13 +47,14 @@ class HomeworkList(Gtk.Box):
             "show-sidebar",
             self.show_sidebar_button,
             "active",
-            GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL
+            GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL,
         )
         parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
 
         def on_visible(page, pspec):
             if parent.main_view_stack.get_visible_child_name() == "homework":
                 self.displayAll()
+
         parent.main_view_stack.connect("notify::visible-child-name", on_visible)
         self.shared = parent.shared
 
@@ -62,7 +64,7 @@ class HomeworkList(Gtk.Box):
         except:
             pass
 
-    def scroll(self, data = None, y = None):
+    def scroll(self, data=None, y=None):
         if self.scrollTo is not None:
             y = self.days[self.scrollTo].get_allocation().y
         if y is not None:
@@ -95,7 +97,9 @@ class HomeworkList(Gtk.Box):
                 i = 0
                 date = datetime.datetime.strptime(str(homework["dueDate"]), "%Y%m%d")
                 for item in new:
-                    itemDate = datetime.datetime.strptime(str(item["dueDate"]), "%Y%m%d")
+                    itemDate = datetime.datetime.strptime(
+                        str(item["dueDate"]), "%Y%m%d"
+                    )
                     if date.year < itemDate.year:
                         break
                     elif date.year == itemDate.year:
@@ -105,7 +109,7 @@ class HomeworkList(Gtk.Box):
                             if date.day <= itemDate.day:
                                 break
                     i += 1
-                new.insert(i,homework)
+                new.insert(i, homework)
         return new
 
     def display(self, data):
@@ -126,7 +130,7 @@ class HomeworkList(Gtk.Box):
                     container = self.container_done
                 else:
                     container = self.container_undone
-                day = Adw.PreferencesGroup(title = date.strftime("%x"))
+                day = Adw.PreferencesGroup(title=date.strftime("%x"))
                 container.add(day)
                 self.days[dayName] = (container, day)
             row = HomeworkRow(homework)

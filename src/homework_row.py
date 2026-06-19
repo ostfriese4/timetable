@@ -22,9 +22,10 @@ from gi.repository import Adw
 from .homework_api import getById, setValue, getChanges
 import datetime
 
-@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/homework_row.ui')
+
+@Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/homework_row.ui")
 class HomeworkRow(Gtk.ListBoxRow):
-    __gtype_name__ = 'HomeworkRow'
+    __gtype_name__ = "HomeworkRow"
 
     box = Gtk.Template.Child()
     check_button = Gtk.Template.Child()
@@ -70,12 +71,14 @@ class HomeworkRow(Gtk.ListBoxRow):
             elif key == "text":
                 text = _("The original task was '%t'").replace("%t", old)
             elif key == "dueDate":
-                text = datetime.datetime.strptime(old, "%Y%m%d").strftime(_("This was originally due on %A %x"))
+                text = datetime.datetime.strptime(old, "%Y%m%d").strftime(
+                    _("This was originally due on %A %x")
+                )
             row = Adw.ActionRow(title=text)
             self.expanderItems.append(row)
             self.expander.add_row(row)
 
-    def save(self, data = None):
+    def save(self, data=None):
         state = self.check_button.get_active()
         if state != self.homework["completed"]:
             setValue(self.homework["id"], "completed", state)
@@ -85,12 +88,14 @@ class HomeworkRow(Gtk.ListBoxRow):
             else:
                 diff = 1
                 if state == True:
-                    diff  = -1
+                    diff = -1
                 page.set_number(page.get_number() + diff)
         self.update()
 
-    def edit(self, data = None):
-        self.get_ancestor(Adw.ApplicationWindow).homeworkEditWindow.edit(self.homework["id"], row = self)
+    def edit(self, data=None):
+        self.get_ancestor(Adw.ApplicationWindow).homeworkEditWindow.edit(
+            self.homework["id"], row=self
+        )
 
     def delete(self):
         self.get_ancestor(Adw.PreferencesGroup).remove(self)

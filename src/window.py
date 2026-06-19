@@ -28,9 +28,9 @@ from gi.repository import Adw
 from gi.repository import Gtk
 
 
-@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/window.ui')
+@Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/window.ui")
 class UntisWindow(Adw.ApplicationWindow):
-    __gtype_name__ = 'UntisWindow'
+    __gtype_name__ = "UntisWindow"
 
     timetable = Gtk.Template.Child()
     absences = Gtk.Template.Child()

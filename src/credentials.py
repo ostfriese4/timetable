@@ -1,5 +1,6 @@
 import gi
-gi.require_version('Secret', '1')
+
+gi.require_version("Secret", "1")
 
 from gi.repository import Secret
 import json
@@ -7,17 +8,19 @@ import os
 
 credentialsPath = os.environ.get("XDG_DATA_HOME", ".untis/data") + "/credentials.json"
 
-SCHEMA = Secret.Schema.new("page.codeberg.ostfriese4.Untis.Store",
+SCHEMA = Secret.Schema.new(
+    "page.codeberg.ostfriese4.Untis.Store",
     Secret.SchemaFlags.NONE,
     {
         "server": Secret.SchemaAttributeType.STRING,
         "school": Secret.SchemaAttributeType.STRING,
         "user": Secret.SchemaAttributeType.STRING,
-        "type": Secret.SchemaAttributeType.STRING
-    }
+        "type": Secret.SchemaAttributeType.STRING,
+    },
 )
 
-def setCredentials(server, school, user, password, credType, profile = "1"):
+
+def setCredentials(server, school, user, password, credType, profile="1"):
     try:
         with open(credentialsPath) as file:
             data = json.load(file)
@@ -34,15 +37,23 @@ def setCredentials(server, school, user, password, credType, profile = "1"):
         data["profiles"][profile] = {"name": _("Profile") + " " + profile}
 
     data["credentials"][profile] = {
-            "user": user,
-            "server": server,
-            "school": school,
-            "type": credType
-           }
+        "user": user,
+        "server": server,
+        "school": school,
+        "type": credType,
+    }
 
     with open(credentialsPath, "w") as file:
-        json.dump(data, file, indent = 4)
-    Secret.password_store_sync(SCHEMA, data["credentials"][profile], Secret.COLLECTION_DEFAULT, "Untis Password", password, None)
+        json.dump(data, file, indent=4)
+    Secret.password_store_sync(
+        SCHEMA,
+        data["credentials"][profile],
+        Secret.COLLECTION_DEFAULT,
+        "Untis Password",
+        password,
+        None,
+    )
+
 
 def getPassword(user):
     password = Secret.password_lookup_sync(SCHEMA, user, None)
@@ -50,20 +61,30 @@ def getPassword(user):
         raise FileNotFoundError("no password set")
     return password
 
-def getCredentials(profile = "1"):
+
+def getCredentials(profile="1"):
     with open(credentialsPath) as file:
         data = json.load(file)
 
-    if "password" in data: # not yet migrated to secrets
+    if "password" in data:  # not yet migrated to secrets
         print("migrating password to secrets")
-        setCredentials(data["server"], data["school"], data["username"], data["password"])
+        setCredentials(
+            data["server"], data["school"], data["username"], data["password"]
+        )
         return getCredentials()
 
-    if not "default-profile" in data: # not yet migrated to profiles
+    if not "default-profile" in data:  # not yet migrated to profiles
         print("migrating password to profiles")
         with open(credentialsPath, "w") as file:
             json.dump({}, file)
-        setCredentials(data["server"], data["school"], data["user"], getPassword(data), "password", profile)
+        setCredentials(
+            data["server"],
+            data["school"],
+            data["user"],
+            getPassword(data),
+            "password",
+            profile,
+        )
         return getCredentials()
 
     if not profile in data["credentials"]:
@@ -76,17 +97,19 @@ def getCredentials(profile = "1"):
         data["server"] = "https://" + data["server"]
     return data
 
+
 def getProfiles():
     with open(credentialsPath) as file:
         data = json.load(file)
         try:
             return {
                 "profiles": data["profiles"],
-                "default-profile": data["default-profile"]
+                "default-profile": data["default-profile"],
             }
         except:
-            getCredentials() # not migrated
+            getCredentials()  # not migrated
             return getProfiles()
+
 
 def setProfiles(new):
     with open(credentialsPath) as file:
@@ -94,4 +117,4 @@ def setProfiles(new):
     data["profiles"] = new["profiles"]
     data["default-profile"] = new["default-profile"]
     with open(credentialsPath, "w") as file:
-        json.dump(data, file, indent = 4)
+        json.dump(data, file, indent=4)

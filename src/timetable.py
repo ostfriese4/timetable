@@ -30,9 +30,10 @@ import datetime
 import time
 import threading
 
-@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/timetable.ui')
+
+@Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/timetable.ui")
 class Timetable(Gtk.Box):
-    __gtype_name__ = 'Timetable'
+    __gtype_name__ = "Timetable"
 
     overlay = Gtk.Template.Child()
     offline = Gtk.Template.Child()
@@ -67,18 +68,21 @@ class Timetable(Gtk.Box):
 
         self.info_rows = []
 
-        def onSwipe(gesture,x,y):
+        def onSwipe(gesture, x, y):
             if abs(y) < abs(x) * 0.5:
                 if x > 100:
                     self.previous()
                 elif x < 100:
                     self.next()
+
         swipe = Gtk.GestureSwipe()
         swipe.connect("swipe", onSwipe)
         self.timetable.add_controller(swipe)
 
-        GLib.timeout_add(1000*60, self.update_marker) # update time-marker
-        GLib.timeout_add(1000*60*10, self.loadData) # Update every ten minutes (will result in every hour because of caching)
+        GLib.timeout_add(1000 * 60, self.update_marker)  # update time-marker
+        GLib.timeout_add(
+            1000 * 60 * 10, self.loadData
+        )  # Update every ten minutes (will result in every hour because of caching)
 
     def on_header_button(self, data=None):
         self.date_chooser.set_year(self.startdate.year)
@@ -87,7 +91,9 @@ class Timetable(Gtk.Box):
         self.date_chooser_dialog.present(self.get_ancestor(Adw.ApplicationWindow))
 
     def on_day_selected(self, date):
-        date = datetime.datetime.strptime(self.date_chooser.get_date().format("%d-%m-%Y"), "%d-%m-%Y")
+        date = datetime.datetime.strptime(
+            self.date_chooser.get_date().format("%d-%m-%Y"), "%d-%m-%Y"
+        )
         self.date_chooser_dialog.close()
         self.jump_to(date)
 
@@ -108,7 +114,7 @@ class Timetable(Gtk.Box):
             "show-sidebar",
             self.show_sidebar_button,
             "active",
-            GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL
+            GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL,
         )
         parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
         self.shared = parent.shared
@@ -119,12 +125,12 @@ class Timetable(Gtk.Box):
         except:
             pass
 
-    def next(self, data = None):
+    def next(self, data=None):
         self.startdate += datetime.timedelta(days=7)
         self.enddate += datetime.timedelta(days=7)
         self.loadData()
 
-    def previous(self, data = None):
+    def previous(self, data=None):
         self.startdate -= datetime.timedelta(days=7)
         self.enddate -= datetime.timedelta(days=7)
         self.loadData()
@@ -141,7 +147,7 @@ class Timetable(Gtk.Box):
                 self.prefetching.remove(day)
             return False
 
-        ok = (self.prefetching == [])
+        ok = self.prefetching == []
 
         start = self.startdate + datetime.timedelta(days=7)
         for date in (start + datetime.timedelta(n) for n in range(5)):
@@ -171,15 +177,20 @@ class Timetable(Gtk.Box):
     def loadData(self):
         self.loadingAnimation()
         s = self.startdate
+
         def load():
             try:
-                table = self.shared.session.getOwnTimetable(self.startdate, self.enddate, mode = "cache")
+                table = self.shared.session.getOwnTimetable(
+                    self.startdate, self.enddate, mode="cache"
+                )
             except:
                 table = None
             try:
                 if s == self.startdate:
                     GLib.idle_add(self.displayData, table)
-                    table = self.shared.session.getOwnTimetable(self.startdate, self.enddate, mode = "normal")
+                    table = self.shared.session.getOwnTimetable(
+                        self.startdate, self.enddate, mode="normal"
+                    )
                     if s == self.startdate:
                         GLib.idle_add(self.displayData, table)
                         homeworks = fetchHomeworks(self.startdate, self.enddate)
@@ -194,7 +205,7 @@ class Timetable(Gtk.Box):
 
         thread = threading.Thread(target=load, daemon=True)
         thread.start()
-        return True # To repeat
+        return True  # To repeat
 
     def displayHomeworks(self, data):
         for homework in data:
@@ -202,13 +213,20 @@ class Timetable(Gtk.Box):
             for lesson in self.lessons:
                 ld = lesson[2]
                 if ld["subject"]["shortName"] == homework["subject"]:
-                    if str(homework["dueDate"]) == ld["startDateTime"].strftime("%Y%m%d"):
+                    if str(homework["dueDate"]) == ld["startDateTime"].strftime(
+                        "%Y%m%d"
+                    ):
                         lesson[1].addHomework(homework)
                         break
                 if "original" in ld:
                     if "subject" in ld["original"]:
-                        if ld["original"]["subject"]["shortName"] == homework["subject"]:
-                            if str(homework["dueDate"]) == ld["startDateTime"].strftime("%Y%m%d"):
+                        if (
+                            ld["original"]["subject"]["shortName"]
+                            == homework["subject"]
+                        ):
+                            if str(homework["dueDate"]) == ld["startDateTime"].strftime(
+                                "%Y%m%d"
+                            ):
                                 lessons.append(lesson[1])
             for lesson in lessons:
                 lesson.addHomework(homework)
@@ -217,7 +235,7 @@ class Timetable(Gtk.Box):
         now = datetime.datetime.now()
         y = now.hour * 60 + now.minute - self.start + dateLabel.get_allocated_height()
 
-        #y = 200 # fake time for screenshots
+        # y = 200 # fake time for screenshots
 
         context.set_source_rgb(1, 0, 0)
         if week:
@@ -237,7 +255,7 @@ class Timetable(Gtk.Box):
         else:
             self.offline.set_revealed(revealed=False)
 
-        self.start = 1440 # One day in minutes (max possible value)
+        self.start = 1440  # One day in minutes (max possible value)
         for day in table:
             for lesson in day:
                 if lesson["start"] < self.start:

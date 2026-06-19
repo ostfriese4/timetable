@@ -21,9 +21,10 @@ from gi.repository import Gtk
 from gi.repository import Adw
 from .homework_api import getNewId, setValue, getById, delete
 
-@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/create_homework.ui')
+
+@Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/create_homework.ui")
 class HomeworkEditWindow(Adw.Dialog):
-    __gtype_name__ = 'HomeworkEditWindow'
+    __gtype_name__ = "HomeworkEditWindow"
 
     completed = Gtk.Template.Child()
     date = Gtk.Template.Child()
@@ -50,7 +51,7 @@ class HomeworkEditWindow(Adw.Dialog):
         self.set_title(_("Create homework"))
         self.present(self.window)
 
-    def edit(self, id, row = None):
+    def edit(self, id, row=None):
         self.row = row
         self.current_id = id
         item = getById(id)
@@ -68,11 +69,19 @@ class HomeworkEditWindow(Adw.Dialog):
         self.set_title(_("Edit homework"))
         self.present(self.window)
 
-    def on_save(self, data = None):
+    def on_save(self, data=None):
         setValue(self.current_id, "text", self.task.get_text())
         setValue(self.current_id, "subject", self.subject.get_text())
         setValue(self.current_id, "completed", self.completed.get_active())
-        setValue(self.current_id, "dueDate", int(str(self.date.get_year()).zfill(4) + str(self.date.get_month() + 1).zfill(2) + str(self.date.get_day()).zfill(2)))
+        setValue(
+            self.current_id,
+            "dueDate",
+            int(
+                str(self.date.get_year()).zfill(4)
+                + str(self.date.get_month() + 1).zfill(2)
+                + str(self.date.get_day()).zfill(2)
+            ),
+        )
         self.close()
         self.row.update()
         self.window.homework.displayAll()
@@ -86,9 +95,11 @@ class HomeworkEditWindow(Adw.Dialog):
         warning.set_default_response("cancel")
         warning.set_close_response("cancel")
         warning.set_response_appearance("delete", 2)
+
         def on_answer(warning, answer):
             if answer == "delete":
                 self.deleteData()
+
         warning.connect("response", on_answer)
         warning.present(self.get_ancestor(Adw.ApplicationWindow))
 
@@ -99,4 +110,3 @@ class HomeworkEditWindow(Adw.Dialog):
         if getById(self.current_id) is None:
             self.row.delete()
         self.window.homework.displayAll()
-

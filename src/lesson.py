@@ -21,19 +21,22 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Adw
 
+
 class ConstrainedScrolledWindow(Gtk.ScrolledWindow):
     __gtype_name__ = "ConstrainedScrolledWindow"
+
     def __init__(self, start, duration, labels, **kwargs):
         super().__init__(**kwargs)
         self.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.EXTERNAL)
         self.start = start
         self.duration = duration
-        self.box = Gtk.Box(orientation='vertical')
+        self.box = Gtk.Box(orientation="vertical")
         self.box.set_hexpand(True)
         for label in labels:
             label.set_halign(Gtk.Align.CENTER)
             self.box.append(label)
         self.set_child(self.box)
+
 
 class LessonContent(Gtk.Widget):
     __gtype_name__ = "LessonContent"
@@ -69,9 +72,10 @@ class LessonContent(Gtk.Widget):
             rect.height = child.duration - 4
             child.size_allocate(rect, baseline)
 
-@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/lesson.ui')
+
+@Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/lesson.ui")
 class Lesson(Gtk.Overlay):
-    __gtype_name__ = 'Lesson'
+    __gtype_name__ = "Lesson"
 
     homework_indicator = Gtk.Template.Child()
     content_box = Gtk.Template.Child()
@@ -86,12 +90,18 @@ class Lesson(Gtk.Overlay):
         self.lesson = lesson
         self.window = window
 
-        self.subject_label = Gtk.Label(label = self.lesson["subject"]["shortName"])
-        self.teacher_label = Gtk.Label(label = self.lesson["teachers-short"])
-        self.room_label = Gtk.Label(label = self.lesson["room"])
+        self.subject_label = Gtk.Label(label=self.lesson["subject"]["shortName"])
+        self.teacher_label = Gtk.Label(label=self.lesson["teachers-short"])
+        self.room_label = Gtk.Label(label=self.lesson["room"])
 
         self.content = LessonContent()
-        self.content.add_label(ConstrainedScrolledWindow(0, self.lesson["duration"], [self.subject_label, self.teacher_label, self.room_label]))
+        self.content.add_label(
+            ConstrainedScrolledWindow(
+                0,
+                self.lesson["duration"],
+                [self.subject_label, self.teacher_label, self.room_label],
+            )
+        )
         self.content_box.append(self.content)
 
         self.set_size_request(-1, self.lesson["duration"])
@@ -104,10 +114,16 @@ class Lesson(Gtk.Overlay):
             self.add_css_class("past")
         if "original" in self.lesson:
             self.add_css_class("changed")
-            if self.lesson["original"]["teachers-short"] != self.lesson["teachers-short"]:
+            if (
+                self.lesson["original"]["teachers-short"]
+                != self.lesson["teachers-short"]
+            ):
                 self.teacher_label.add_css_class("label")
                 self.teacher_label.add_css_class("changed")
-            if self.lesson["original"]["subject"]["shortName"] != self.lesson["subject"]["shortName"]:
+            if (
+                self.lesson["original"]["subject"]["shortName"]
+                != self.lesson["subject"]["shortName"]
+            ):
                 self.subject_label.add_css_class("label")
                 self.subject_label.add_css_class("changed")
             if self.lesson["original"]["room"] != self.lesson["room"]:

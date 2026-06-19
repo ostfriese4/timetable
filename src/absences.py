@@ -23,8 +23,9 @@ from gi.repository import GObject
 
 import datetime
 
+
 class Absence(Adw.ExpanderRow):
-    __gtype_name__ = 'Absence'
+    __gtype_name__ = "Absence"
 
     def __init__(self, absence, **kwargs):
         super().__init__(**kwargs)
@@ -33,24 +34,29 @@ class Absence(Adw.ExpanderRow):
         self.set_subtitle(absence["text"])
         self.set_subtitle_lines(1)
 
-        start = datetime.datetime.strptime(str(absence["startDate"]) + str(absence["startTime"]), "%Y%m%d%H%M")
-        end = datetime.datetime.strptime(str(absence["endDate"]) + str(absence["endTime"]), "%Y%m%d%H%M")
+        start = datetime.datetime.strptime(
+            str(absence["startDate"]) + str(absence["startTime"]), "%Y%m%d%H%M"
+        )
+        end = datetime.datetime.strptime(
+            str(absence["endDate"]) + str(absence["endTime"]), "%Y%m%d%H%M"
+        )
 
         if absence["text"] != "":
-            text = Adw.ActionRow(title = _("Text"), subtitle = absence["text"])
+            text = Adw.ActionRow(title=_("Text"), subtitle=absence["text"])
             self.add_row(text)
 
-        startRow = Adw.ActionRow(title = _("Start"), subtitle = start.strftime("%c"))
+        startRow = Adw.ActionRow(title=_("Start"), subtitle=start.strftime("%c"))
         self.add_row(startRow)
         startRow.add_css_class("property")
 
-        endRow = Adw.ActionRow(title = _("End"), subtitle = end.strftime("%c"))
+        endRow = Adw.ActionRow(title=_("End"), subtitle=end.strftime("%c"))
         self.add_row(endRow)
         endRow.add_css_class("property")
 
-@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/absences.ui')
+
+@Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/absences.ui")
 class AbsencesPage(Gtk.Box):
-    __gtype_name__ = 'AbsencesPage'
+    __gtype_name__ = "AbsencesPage"
 
     show_sidebar_button = Gtk.Template.Child()
     container = Gtk.Template.Child()
@@ -64,13 +70,14 @@ class AbsencesPage(Gtk.Box):
             "show-sidebar",
             self.show_sidebar_button,
             "active",
-            GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL
+            GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL,
         )
         parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
 
         def on_visible(page, pspec):
             if parent.main_view_stack.get_visible_child_name() == "absences":
                 self.display()
+
         parent.main_view_stack.connect("notify::visible-child-name", on_visible)
         self.shared = parent.shared
 

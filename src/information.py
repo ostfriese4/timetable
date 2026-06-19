@@ -21,9 +21,10 @@ from gi.repository import Gtk
 from gi.repository import Adw
 from .homework_row import HomeworkRow
 
-@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/information.ui')
+
+@Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/information.ui")
 class InformationWindow(Adw.Dialog):
-    __gtype_name__ = 'InformationWindow'
+    __gtype_name__ = "InformationWindow"
 
     info_table = Gtk.Template.Child()
 
@@ -60,7 +61,20 @@ class InformationWindow(Adw.Dialog):
         hours_end = int((lesson["end"] - minutes_end) / 60)
         if len(str(minutes_end)) == 1:
             minutes_end = "0" + str(minutes_end)
-        data[_("Duration")] = str(lesson["duration"]) + " " + _("Minutes") + " (" + str(hours_start) + ":" + str(minutes_start) + " - " + str(hours_end) + ":" + str(minutes_end) + ")"
+        data[_("Duration")] = (
+            str(lesson["duration"])
+            + " "
+            + _("Minutes")
+            + " ("
+            + str(hours_start)
+            + ":"
+            + str(minutes_start)
+            + " - "
+            + str(hours_end)
+            + ":"
+            + str(minutes_end)
+            + ")"
+        )
 
         if lesson["homeworks"] != []:
             homeworks = lesson["homeworks"]
@@ -80,7 +94,6 @@ class InformationWindow(Adw.Dialog):
             data[_("Room description")] = original["room-info"]
             data[_("Teacher")] = original["teachers-long"]
 
-
         for r in rows:
             data = r[1]
             table = Adw.PreferencesGroup(title=r[0])
@@ -89,7 +102,7 @@ class InformationWindow(Adw.Dialog):
                 if r[0] == _("Homework"):
                     row = HomeworkRow(value)
                 else:
-                    row = Adw.ActionRow(title = key)
+                    row = Adw.ActionRow(title=key)
                     row.set_subtitle(value)
                     if value != "":
                         row.add_css_class("property")
@@ -97,4 +110,3 @@ class InformationWindow(Adw.Dialog):
             self.info_rows.append(table)
 
         self.present(self.window)
-

@@ -21,8 +21,9 @@ from gi.repository import Gtk
 from gi.repository import Adw
 from .credentials import getProfiles, setProfiles
 
+
 class ProfileRow(Gtk.ListBoxRow):
-    __gttype_name__ = 'ProfileRow'
+    __gttype_name__ = "ProfileRow"
 
     def __init__(self, id, data, window):
         super().__init__()
@@ -52,15 +53,18 @@ class ProfileRow(Gtk.ListBoxRow):
 
         def on_delete(a):
             window.deleteProfile(id)
+
         delete.connect("clicked", on_delete)
 
         def on_edit(a):
             window.editProfile(id)
+
         edit.connect("clicked", on_edit)
 
-@Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/profiles.ui')
+
+@Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/profiles.ui")
 class ProfilesWindow(Adw.Dialog):
-    __gtype_name__ = 'ProfilesWindow'
+    __gtype_name__ = "ProfilesWindow"
 
     container = Gtk.Template.Child()
     add_button = Gtk.Template.Child()
@@ -114,6 +118,7 @@ class ProfilesWindow(Adw.Dialog):
             error.add_response("cancel", _("Cancel"))
             error.present(self.get_ancestor(Adw.ApplicationWindow))
         else:
+
             def confirm(warning, answer):
                 if answer == "delete":
                     del data["profiles"][id]
@@ -122,6 +127,7 @@ class ProfilesWindow(Adw.Dialog):
                     if id == data["default-profile"]:
                         self.switchProfile(list(data["profiles"].keys())[0])
                     self.manage()
+
             warning = Adw.AlertDialog()
             warning.set_body(_("Do you really want to delete this profile?"))
             warning.set_heading(_("Delete?"))
@@ -132,4 +138,3 @@ class ProfilesWindow(Adw.Dialog):
             warning.set_response_appearance("delete", 2)
             warning.connect("response", confirm)
             warning.present(self.get_ancestor(Adw.ApplicationWindow))
-            
