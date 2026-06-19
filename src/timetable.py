@@ -297,18 +297,9 @@ class Timetable(Gtk.Box):
                     gap = Gtk.Label()
                     gap.set_size_request(-1, lesson["start"] - x)
                     dayBox.append(gap)
-                block = Lesson(lesson, self)
+                block = Lesson(lesson, self, now)
                 x = lesson["end"]
                 dayBox.append(block)
                 self.lessons.append((dayBox, block, lesson))
-
-                if past:
-                    if date > now:
-                        past = False
-                    if date.date() == now.date():
-                        if lesson["endDateTime"] >= now:
-                            past = False
-                if past:
-                    block.add_css_class("past")
 
             date += datetime.timedelta(days=1)

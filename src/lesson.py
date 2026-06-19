@@ -76,7 +76,7 @@ class Lesson(Gtk.Overlay):
     homework_indicator = Gtk.Template.Child()
     content_box = Gtk.Template.Child()
 
-    def __init__(self, lesson, window, **kwargs):
+    def __init__(self, lesson, window, now, **kwargs):
         super().__init__(**kwargs)
 
         click = Gtk.GestureClick.new()
@@ -100,6 +100,8 @@ class Lesson(Gtk.Overlay):
         self.add_css_class(self.lesson["color"])
         if self.lesson["status"] == "CANCELLED":
             self.add_css_class("cancelled")
+        if self.lesson["endDateTime"] < now:
+            self.add_css_class("past")
         if "original" in self.lesson:
             self.add_css_class("changed")
             if self.lesson["original"]["teachers-short"] != self.lesson["teachers-short"]:
