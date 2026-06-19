@@ -59,7 +59,7 @@ class Message(Adw.ExpanderRow):
             date.add_css_class("property")
 
             sender = Adw.ActionRow(
-                title=_("Sender"), subtitle=self.message["sender"]["displayName"]
+                title=_("Sender"), subtitle=message["sender"]["displayName"]
             )
             self.add_row(sender)
             sender.add_css_class("property")

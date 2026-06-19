@@ -91,8 +91,6 @@ class session:
         self.CACHEDIR = (
             os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis/" + self.name + "/"
         )
-        if not os.path.exists(self.CACHEDIR + "requests"):
-            os.makedirs(self.CACHEDIR + "requests")
 
         self._readCacheIndex()
 
@@ -103,6 +101,8 @@ class session:
                 self.colors = json.load(file)
         except:
             self.colors = {}
+
+        self.getAllTeachers()
 
     def getOffline(self):
         return offline
@@ -146,6 +146,64 @@ class session:
             else:
                 return self.cacheIndex[object] + maxage >= time.time()
         return False
+
+    def _RPCRequest(self, method, params, mode="normal", maxage=3600):
+        global offline
+        orig = mode
+
+        hashed = method + str(params)
+        hashed = "rpc-requests/" + md5(hashed.encode()).hexdigest()
+
+        payload = {
+            "id": hashed,
+            "method": method,
+            "params": params,
+            "jsonrpc": "2.0"
+        }
+
+        if mode == "normal":
+            if self._useCache(hashed, maxage=maxage):
+                mode = "cache"
+            else:
+                mode = "online"
+        if self.session is None:
+            mode = "cache"
+
+        if mode == "online":
+            try:
+                response = self.session.post(self.server + "/WebUntis/jsonrpc.do", json = payload)
+                data = response.json()["result"]
+                offline = False
+                if "errorCode" in data:
+                    print("ERROR: RPC:", method, params)
+                    mode = "cache"
+                else:
+                    self._writeToCache(hashed, data)
+                    return data
+            except requests.exceptions.ConnectionError:
+                mode = "cache"
+                offline = True
+            except requests.exceptions.InvalidURL:
+                mode = "cache"
+            except Exception:
+                raise
+                mode = "cache"
+
+        if mode == "cache":
+            try:
+                return self._readFromCache(hashed)
+            except json.decoder.JSONDecodeError:
+                if orig != "online":
+                    print("repairing cache", path)
+                    return self._getRequest(path, "online")
+
+    def getAllTeachers(self, mode = "normal", maxage = 86400):
+        return self._RPCRequest(method = "getTeachers", params = {}, mode = mode, maxage = maxage)
+
+    def getTeacherById(self, id, mode = "normal"):
+        for teacher in self.getAllTeachers(mode = mode):
+            if teacher["id"] == id:
+                return teacher
 
     def _getRequest(self, path, mode="normal", maxage=3600):
         global offline
@@ -435,12 +493,14 @@ class session:
                     message["content"] = message["contentPreview"]
                     return message
         else:
+            data["sender"]["displayName"] = self.getFullTeacherNameByShortName(data["sender"]["displayName"])
             return data
 
-    def getTeacherById(self, id):
-        path = "/WebUntis/api/rest/view/v1/teachers/" + str(id)
-        data = self._getRequest(path)
-        return data
+    def getFullTeacherNameByShortName(self, short):
+        for teacher in self.getAllTeachers():
+            if teacher["name"] == short:
+                return teacher["foreName"] + " " +  teacher["longName"]
+        return short
 
     def getLessonDetails(self, id, start, end, mode="normal"):
         path = (
