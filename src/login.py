@@ -99,7 +99,8 @@ class LoginWindow(Adw.Dialog):
             name = school["loginName"]
             server = school["server"]
             address = school["address"]
-            result = Adw.ButtonRow(title = display)
+            result = Adw.ActionRow(title = display, subtitle = address)
+            result.set_activatable(True)
 
             def onClick(click, name=name, server=server):
                 if server != "":
