@@ -301,11 +301,20 @@ class session:
         day = start
         while day <= end:
             name = "days/" + day.strftime("%Y-%m-%d")
-            cache = mode == "cache" and name in self.cache
+            cache = mode == "cache"
+            if mode == "normal":
+                cache = self._useCache(name)
+
             if cache:
-                data.append(self._readFromCache(name))
-                print(name)
-            else:
+                try:
+                    dayData = self._readFromCache(name)
+                    if dayData is not None:
+                        data.append(dayData)
+                    else:
+                        cache = False
+                except:
+                    cache = False
+            if not cache:
                 path = (
                     "/WebUntis/api/rest/view/v1/timetable/entries?start="
                     + day.strftime("%Y-%m-%d")
@@ -317,8 +326,7 @@ class session:
                 )
                 dayData = self._getRequest(path, mode)
                 analyzed = self.analyzeTimetable(dayData["days"], mode)[0]
-                self._writeToRamCache(name, analyzed)
-                self.cacheIndex[name] = time.time()
+                self._writeToCache(name, analyzed)
                 data.append(analyzed)
             day += datetime.timedelta(days=1)
 
@@ -399,8 +407,6 @@ class session:
         lesson["start"] = start.hour * 60 + start.minute
         lesson["end"] = end.hour * 60 + end.minute
         lesson["duration"] = lesson["end"] - lesson["start"]
-        lesson["startDateTime"] = start
-        lesson["endDateTime"] = end
 
         for teacher in lesson["teachers"]:
             short = teacher["shortName"]

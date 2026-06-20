@@ -212,10 +212,9 @@ class Timetable(Gtk.Box):
             lessons = []
             for lesson in self.lessons:
                 ld = lesson[2]
+                dueDate = datetime.datetime.strptime(ld["startDateTime"], "%Y-%m-%dT%H:%M:%S").strftime("%Y%m%d")
                 if ld["subject"]["shortName"] == homework["subject"]:
-                    if str(homework["dueDate"]) == ld["startDateTime"].strftime(
-                        "%Y%m%d"
-                    ):
+                    if str(homework["dueDate"]) == dueDate:
                         lesson[1].addHomework(homework)
                         break
                 if "original" in ld:
@@ -224,9 +223,7 @@ class Timetable(Gtk.Box):
                             ld["original"]["subject"]["shortName"]
                             == homework["subject"]
                         ):
-                            if str(homework["dueDate"]) == ld["startDateTime"].strftime(
-                                "%Y%m%d"
-                            ):
+                            if str(homework["dueDate"]) == dueDate:
                                 lessons.append(lesson[1])
             for lesson in lessons:
                 lesson.addHomework(homework)

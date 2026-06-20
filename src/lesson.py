@@ -20,6 +20,7 @@
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Adw
+import datetime
 
 
 class ConstrainedScrolledWindow(Gtk.ScrolledWindow):
@@ -110,7 +111,7 @@ class Lesson(Gtk.Overlay):
         self.add_css_class(self.lesson["color"])
         if self.lesson["status"] == "CANCELLED":
             self.add_css_class("cancelled")
-        if self.lesson["endDateTime"] < now:
+        if datetime.datetime.strptime(self.lesson["endDateTime"], "%Y-%m-%dT%H:%M:%S") < now:
             self.add_css_class("past")
         if "original" in self.lesson:
             self.add_css_class("changed")
