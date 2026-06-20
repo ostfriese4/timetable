@@ -12,6 +12,7 @@
     <file preprocess="xml-stripblanks">messages.ui</file>
     <file preprocess="xml-stripblanks">profiles.ui</file>
     <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>
+    <file preprocess="xml-stripblanks">teachers.ui</file>
     <file preprocess="xml-stripblanks">timetable.ui</file>
     <file preprocess="xml-stripblanks">window.ui</file>
     <file>style.css</file>

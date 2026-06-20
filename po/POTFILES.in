@@ -25,6 +25,8 @@ src/messages.ui
 src/profiles.py
 src/profiles.ui
 src/shortcuts-dialog.ui
+src/teachers.py
+src/teachers.ui
 src/timetable.py
 src/timetable.ui
 src/window.py
