@@ -3,6 +3,7 @@ import os
 import json
 import time
 import datetime
+import copy
 from pathlib import Path
 from hashlib import md5
 
@@ -91,6 +92,7 @@ class session:
         self.CACHEDIR = (
             os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis/" + self.name + "/"
         )
+        self.cache = {}
 
         self._readCacheIndex()
 
@@ -124,10 +126,22 @@ class session:
         self.cacheIndex["last-refresh"] = time.time()
         self._saveCacheIndex()
 
+    def _writeToRamCache(self, object, content):
+        self.cache[object] = copy.deepcopy(content)
+        if len(self.cache) > 10:
+            oldest = list(self.cache.keys())[0]
+            del self.cache[oldest]
+
     def _readFromCache(self, object):
+        if object in self.cache:
+            item = self.cache.pop(object)
+            self.cache[object] = copy.deepcopy(item)
+            return item
         try:
             with open(self.CACHEDIR + object) as file:
-                return json.load(file)
+                data = json.load(file)
+                self._writeToRamCache(object, data)
+                return data
         except FileNotFoundError:
             return
 
@@ -138,6 +152,7 @@ class session:
             json.dump(content, file)
             self.cacheIndex[object] = time.time()
             self._saveCacheIndex()
+        self._writeToRamCache(object, content)
 
     def _useCache(self, object, maxage=3600):
         if object in self.cacheIndex:
