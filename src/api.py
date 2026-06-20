@@ -127,8 +127,10 @@ class session:
         self._saveCacheIndex()
 
     def _writeToRamCache(self, object, content):
+        if object in self.cache:
+            return
         self.cache[object] = content
-        if len(self.cache) > 10:
+        if len(self.cache) > 50:
             oldest = list(self.cache.keys())[0]
             del self.cache[oldest]
 
@@ -283,20 +285,29 @@ class session:
         end = end.date()
         day = start
         while day <= end:
-            path = (
-                "/WebUntis/api/rest/view/v1/timetable/entries?start="
-                + day.strftime("%Y-%m-%d")
-                + "&end="
-                + day.strftime("%Y-%m-%d")
-                + "&format=2&resourceType=STUDENT&resources="
-                + str(self.getOwnId())
-                + "&periodTypes=&timetableType=MY_TIMETABLE&layout=START_TIME"
-            )
-            dayData = self._getRequest(path, mode)
-            data.append(dayData["days"][0])
+            name = "days/" + day.strftime("%Y-%m-%d")
+            cache = mode == "cache" and name in self.cache
+            if cache:
+                data.append(self._readFromCache(name))
+                print(name)
+            else:
+                path = (
+                    "/WebUntis/api/rest/view/v1/timetable/entries?start="
+                    + day.strftime("%Y-%m-%d")
+                    + "&end="
+                    + day.strftime("%Y-%m-%d")
+                    + "&format=2&resourceType=STUDENT&resources="
+                    + str(self.getOwnId())
+                    + "&periodTypes=&timetableType=MY_TIMETABLE&layout=START_TIME"
+                )
+                dayData = self._getRequest(path, mode)
+                analyzed = self.analyzeTimetable(dayData["days"], mode)[0]
+                self._writeToRamCache(name, analyzed)
+                self.cacheIndex[name] = time.time()
+                data.append(analyzed)
             day += datetime.timedelta(days=1)
 
-        return self.analyzeTimetable(data, mode)
+        return data
 
     def createList(self, data, key, long, integrate=None):
         text = ""
