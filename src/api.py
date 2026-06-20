@@ -216,7 +216,22 @@ class session:
                     return self._getRequest(path, "online")
 
     def getAllTeachers(self, mode = "normal", maxage = 86400):
-        return self._RPCRequest(method = "getTeachers", params = {}, mode = mode, maxage = maxage)
+        name = "data/allTeachers"
+        match mode:
+            case "cache":
+                cache = True
+            case "normal":
+                cache = self._useCache(name, maxage)
+            case "online":
+                cache = False
+        if not cache:
+            data = self._RPCRequest(method = "getTeachers", params = {}, mode = mode, maxage = maxage)
+            out = {}
+            for teacher in data:
+                out[teacher["name"]] = teacher
+            self._writeToCache(name, out)
+            return out
+        return self._readFromCache(name)
 
     def getTeacherById(self, id, mode = "normal"):
         for teacher in self.getAllTeachers(mode = mode):
@@ -530,9 +545,10 @@ class session:
             return data
 
     def getFullTeacherNameByShortName(self, short):
-        for teacher in self.getAllTeachers():
-            if teacher["name"] == short:
-                return teacher["foreName"] + " " +  teacher["longName"]
+        teachers = self.getAllTeachers()
+        if short in teachers:
+            teacher = teachers[short]
+            return teacher["foreName"] + " " +  teacher["longName"]
         return short
 
     def getLessonDetails(self, id, start, end, mode="normal"):
