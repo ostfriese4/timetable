@@ -375,6 +375,12 @@ class session:
         lesson["startDateTime"] = start
         lesson["endDateTime"] = end
 
+        for teacher in lesson["teachers"]:
+            short = teacher["shortName"]
+            long = self.getFullTeacherNameByShortName(short)
+            if short != long:
+                teacher["longName"] = long
+
         if lesson["subject"] == None:
             lesson["subject"] = {"shortName": "???", "longName": _("Unknown")}
 
