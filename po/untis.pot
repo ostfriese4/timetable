@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 21:38+0200\n"
+"POT-Creation-Date: 2026-06-20 18:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:65
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:76
 #: src/window.ui:6 src/window.ui:19 src/window.ui:45
 msgid "Timetable"
 msgstr ""
@@ -53,59 +53,63 @@ msgstr ""
 msgid "Editing a homework"
 msgstr ""
 
-#: src/absences.py:40
+#: src/absences.py:45
 msgid "Text"
 msgstr ""
 
-#: src/absences.py:43
+#: src/absences.py:48
 msgid "Start"
 msgstr ""
 
-#: src/absences.py:46
+#: src/absences.py:52
 msgid "End"
 msgstr ""
 
-#: src/absences.ui:12 src/window.ui:82
+#: src/absences.ui:12 src/window.ui:92
 msgid "Absences"
 msgstr ""
 
-#: src/api.py:171
+#: src/api.py:337
 msgid "and"
 msgstr ""
 
-#: src/api.py:176 src/api.py:241
+#: src/api.py:342 src/api.py:412
 msgid "Unknown"
 msgstr ""
 
-#: src/api.py:320
+#: src/api.py:500
 msgid "No data"
 msgstr ""
 
-#: src/create_homework.py:50
+#: src/credentials.py:37
+msgid "Profile"
+msgstr ""
+
+#: src/create_homework.py:51
 msgid "Create homework"
 msgstr ""
 
-#: src/create_homework.py:68 src/homework_row.ui:30
+#: src/create_homework.py:69 src/homework_row.ui:30
 msgid "Edit homework"
 msgstr ""
 
-#: src/create_homework.py:82
+#: src/create_homework.py:91
 msgid "Do you really want to delete this homework?"
 msgstr ""
 
-#: src/create_homework.py:83
+#: src/create_homework.py:92 src/profiles.py:133
 msgid "Delete?"
 msgstr ""
 
-#: src/create_homework.py:84
+#: src/create_homework.py:93 src/profiles.py:118 src/profiles.py:134
 msgid "Cancel"
 msgstr ""
 
-#: src/create_homework.py:85 src/create_homework.ui:55
+#: src/create_homework.py:94 src/create_homework.ui:55 src/profiles.py:135
 msgid "Delete"
 msgstr ""
 
-#: src/create_homework.ui:23 src/messages.py:50
+#: src/create_homework.ui:23 src/messages.py:53
 msgid "Date"
 msgstr ""
 
@@ -113,7 +117,7 @@ msgstr ""
 msgid "Task"
 msgstr ""
 
-#: src/create_homework.ui:41 src/information.py:45 src/information.py:78
+#: src/create_homework.ui:41 src/information.py:46 src/information.py:92
 msgid "Subject"
 msgstr ""
 
@@ -121,7 +125,7 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: src/create_homework.ui:64
+#: src/create_homework.ui:64 src/login.ui:85
 msgid "Save"
 msgstr ""
 
@@ -133,19 +137,19 @@ msgstr ""
 msgid "Unfinished"
 msgstr ""
 
-#: src/homework_row.py:67
+#: src/homework_row.py:68
 msgid "Your teacher marked this as completed"
 msgstr ""
 
-#: src/homework_row.py:69
+#: src/homework_row.py:70
 msgid "Your teacher didn't mark this as completed"
 msgstr ""
 
-#: src/homework_row.py:71
+#: src/homework_row.py:72
 msgid "The original task was '%t'"
 msgstr ""
 
-#: src/homework_row.py:73
+#: src/homework_row.py:75
 msgid "This was originally due on %A %x"
 msgstr ""
 
@@ -157,43 +161,43 @@ msgstr ""
 msgid "You have changed this"
 msgstr ""
 
-#: src/information.py:46 src/information.py:79
+#: src/information.py:47 src/information.py:93
 msgid "Room"
 msgstr ""
 
-#: src/information.py:47 src/information.py:80
+#: src/information.py:48 src/information.py:94
 msgid "Room description"
 msgstr ""
 
-#: src/information.py:48 src/information.py:81
+#: src/information.py:49 src/information.py:95
 msgid "Teacher"
 msgstr ""
 
-#: src/information.py:50
+#: src/information.py:51
 msgid "Information about this lesson"
 msgstr ""
 
-#: src/information.py:52
+#: src/information.py:53
 msgid "Teaching content"
 msgstr ""
 
-#: src/information.py:54
+#: src/information.py:55
 msgid "Cancelled"
 msgstr ""
 
-#: src/information.py:63
+#: src/information.py:64
 msgid "Duration"
 msgstr ""
 
-#: src/information.py:63
+#: src/information.py:67
 msgid "Minutes"
 msgstr ""
 
-#: src/information.py:72 src/information.py:89 src/window.ui:62
+#: src/information.py:86 src/information.py:102 src/window.ui:62
 msgid "Homework"
 msgstr ""
 
-#: src/information.py:76
+#: src/information.py:90
 msgid "Original lesson"
 msgstr ""
 
@@ -201,55 +205,67 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: src/login.py:78
-msgid "Too many results"
-msgstr ""
-
-#: src/login.py:85
-msgid "Offline"
-msgstr ""
-
-#: src/login.py:92
-msgid "Error"
-msgstr ""
-
-#: src/login.py:99
+#: src/login.py:83
 msgid "No results"
 msgstr ""
 
-#: src/login.ui:6 src/login.ui:68
+#: src/login.py:87
+msgid "Too many results"
+msgstr ""
+
+#: src/login.py:89
+msgid "Offline"
+msgstr ""
+
+#: src/login.py:91 src/profiles.py:117
+msgid "Error"
+msgstr ""
+
+#: src/login.py:119 src/login.ui:67
+msgid "Token"
+msgstr ""
+
+#: src/login.ui:6
 msgid "Login"
 msgstr ""
 
 #: src/login.ui:23
+msgid "Profile name"
+msgstr ""
+
+#: src/login.ui:32
 msgid "I usually log in using a third-party service"
 msgstr ""
 
-#: src/login.ui:33 src/login.ui:81
+#: src/login.ui:38 src/login.ui:98
 msgid "Search school"
 msgstr ""
 
-#: src/login.ui:43
+#: src/login.ui:48
 msgid "Server-URL"
 msgstr ""
 
-#: src/login.ui:48 src/login.ui:93
+#: src/login.ui:53 src/login.ui:110
 msgid "School"
 msgstr ""
 
-#: src/login.ui:53
+#: src/login.ui:58
 msgid "Username"
 msgstr ""
 
-#: src/login.ui:58
+#: src/login.ui:63
+msgid "Authentication method"
+msgstr ""
+
+#: src/login.ui:68
 msgid "Password"
 msgstr ""
 
-#: src/login.ui:114
+#: src/login.ui:131
 msgid "Help"
 msgstr ""
 
-#: src/login.ui:130
+#: src/login.ui:147
 msgid ""
 "If you are logging usually logging into WebUntis using a third party sso "
 "(e.g. IServ), you'll' have to open WebUntis in your browser, go to your "
@@ -258,20 +274,46 @@ msgid ""
 msgstr ""
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:72
+#: src/main.py:84
 msgid "translator-credits"
 msgstr ""
 
-#: src/messages.py:53
+#: src/messages.py:62
 msgid "Sender"
 msgstr ""
 
-#: src/messages.ui:12 src/messages.ui:39 src/window.ui:72
+#: src/messages.ui:12 src/messages.ui:39 src/window.ui:82
 msgid "Messages"
 msgstr ""
 
 #: src/messages.ui:34
 msgid "News of Day"
+msgstr ""
+
+#: src/profiles.py:45
+#, python-format
+msgid "Edit profile %s"
+msgstr ""
+
+#: src/profiles.py:51
+#, python-format
+msgid "Delete profile %s"
+msgstr ""
+
+#: src/profiles.py:116
+msgid "Can not delete only profile"
+msgstr ""
+
+#: src/profiles.py:132
+msgid "Do you really want to delete this profile?"
+msgstr ""
+
+#: src/profiles.ui:6
+msgid "Manage profiles"
+msgstr ""
+
+#: src/profiles.ui:16
+msgid "Create a new profile"
 msgstr ""
 
 #: src/shortcuts-dialog.ui:6
@@ -290,25 +332,38 @@ msgstr ""
 
 #: src/shortcuts-dialog.ui:21
 msgctxt "shortcut window"
-msgid "create homework"
+msgid "Manage profiles"
 msgstr ""
 
 #: src/shortcuts-dialog.ui:27
 msgctxt "shortcut window"
-msgid "Show Shortcuts"
+msgid "Create homework"
 msgstr ""
 
 #: src/shortcuts-dialog.ui:33
 msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr ""
+
+#: src/shortcuts-dialog.ui:39
+msgctxt "shortcut window"
 msgid "Quit"
 msgstr ""
 
-#: src/timetable.py:183
+#: src/teachers.ui:12 src/window.ui:72
+msgid "Teachers"
+msgstr ""
+
+#: src/teachers.ui:34
+msgid "Search term"
+msgstr ""
+
+#: src/timetable.py:252
 msgid "Week %W"
 msgstr ""
 
 #. Translators: date format in the timetable
-#: src/timetable.py:225
+#: src/timetable.py:294
 msgid "%m/%d/%y"
 msgstr ""
 
@@ -316,7 +371,7 @@ msgstr ""
 msgid "Previous week"
 msgstr ""
 
-#: src/timetable.ui:21 src/timetable.ui:84
+#: src/timetable.ui:21 src/timetable.ui:92
 msgid "Jump to date"
 msgstr ""
 
@@ -340,14 +395,18 @@ msgstr ""
 msgid "My timetable"
 msgstr ""
 
-#: src/window.ui:99
+#: src/window.ui:109
+msgid "Manage _profiles"
+msgstr ""
+
+#: src/window.ui:113
 msgid "_Login"
 msgstr ""
 
-#: src/window.ui:103
+#: src/window.ui:117
 msgid "_Keyboard Shortcuts"
 msgstr ""
 
-#: src/window.ui:107
+#: src/window.ui:121
 msgid "_About Timetable"
 msgstr ""
