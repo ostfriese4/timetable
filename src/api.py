@@ -127,7 +127,7 @@ class session:
         self._saveCacheIndex()
 
     def _writeToRamCache(self, object, content):
-        self.cache[object] = copy.deepcopy(content)
+        self.cache[object] = content
         if len(self.cache) > 10:
             oldest = list(self.cache.keys())[0]
             del self.cache[oldest]
@@ -140,12 +140,13 @@ class session:
         try:
             with open(self.CACHEDIR + object) as file:
                 data = json.load(file)
-                self._writeToRamCache(object, data)
+                self._writeToRamCache(object, copy.deepcopy(data))
                 return data
         except FileNotFoundError:
             return
 
     def _writeToCache(self, object, content):
+        content = copy.deepcopy(content)
         path = self.CACHEDIR + object
         Path(path).parent.mkdir(exist_ok=True, parents=True)
         with open(path, "w") as file:
