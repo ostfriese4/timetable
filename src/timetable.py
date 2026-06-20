@@ -119,8 +119,8 @@ class Timetable(Gtk.Box):
         parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
         self.shared = parent.shared
 
-        self.jump_to(datetime.datetime.now())
         try:
+            self.jump_to(datetime.datetime.now())
             self.shared.session.getHomeworks()
         except:
             pass
@@ -199,8 +199,8 @@ class Timetable(Gtk.Box):
                             self.loading = False
                             self.prefetch()
             except:
-                print("loading timetable failed")
                 self.loading = False
+                raise
             return False
 
         thread = threading.Thread(target=load, daemon=True)
