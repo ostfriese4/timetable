@@ -87,7 +87,7 @@ class session:
         self.session = _login(credentials)
         self.server = credentials["server"]
 
-        self.name = credentials["school"] + credentials["user"] + credentials["server"]
+        self.name = credentials["school"] + credentials["user"] + credentials["server"] + credentials["profile"]
         self.name = md5(self.name.encode()).hexdigest()
         self.CACHEDIR = (
             os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis/" + self.name + "/"
@@ -103,8 +103,6 @@ class session:
                 self.colors = json.load(file)
         except:
             self.colors = {}
-
-        self.getAllTeachers()
 
     def getOffline(self):
         return offline

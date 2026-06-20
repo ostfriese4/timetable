@@ -92,6 +92,7 @@ def getCredentials(profile="1"):
 
     data = data["credentials"][profile]
     data["password"] = getPassword(data)
+    data["profile"] = profile
 
     if not data["server"].startswith("https://"):
         data["server"] = "https://" + data["server"]
