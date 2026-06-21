@@ -94,6 +94,10 @@ class ProfilesWindow(Adw.Dialog):
         data["profiles"][id] = {}
         self.editProfile(id)
 
+    def createProfileFromUri(self, uri):
+        self.createProfile()
+        self.window.login_window.fillDataFromUri(uri)
+
     def switchProfile(self, id):
         data = self.window.shared.profiles
         data["default-profile"] = id

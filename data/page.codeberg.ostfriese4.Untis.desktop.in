@@ -8,3 +8,4 @@ Categories=Education;
 Keywords=GTK;untis;school;timetable;students
 StartupNotify=true
 DBusActivatable=true
+MimeType=x-scheme-handler/untis;

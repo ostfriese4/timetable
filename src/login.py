@@ -142,6 +142,27 @@ class LoginWindow(Adw.Dialog):
             self.window.shared.session = session(credentials)
             self.window.reload()
 
+    def fillDataFromUri(self, uri):
+        print("fill", uri)
+        login = "untis://setschool?"
+
+        if uri.startswith(login):
+            uri = uri[len(login):]
+            data = {}
+            parts = uri.split("&")
+            self.method.set_selected(0)
+            for part in parts:
+                key, value = part.split("=")
+                match key:
+                    case "url":
+                        self.server_entry.set_text(value)
+                    case "school":
+                        self.school_entry.set_text(value)
+                    case "key":
+                        self.pswd_entry.set_text(value)
+                    case "user":
+                        self.usr_entry.set_text(value)
+
     def requestLogin(self, profile):
         self.present(self.window)
         self.profile = profile

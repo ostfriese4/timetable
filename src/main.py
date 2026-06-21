@@ -57,17 +57,39 @@ class UntisApplication(Adw.Application):
         self.shared = shared
         self.shared.profiles = getProfiles()
         self.shared.checked = False
-        self.shared.session = session(
-            getCredentials(self.shared.profiles["default-profile"])
-        )
+        self.loginIfPossible = False
+
+        profile = self.shared.profiles["default-profile"]
+
+        credentials = None
+        if profile is not None:
+            try:
+                credentials = getCredentials(profile)
+            except:
+                pass
+        if credentials is not None:
+            self.shared.session = session(credentials)
+        else:
+            self.loginIfPossible = True
+
         setShared(self.shared)
 
-    def do_activate(self):
+        self.set_flags(Gio.ApplicationFlags.HANDLES_OPEN)
+
+    def do_open(self, files, n_files, hint):
+        self.do_activate(check = False)
+        for file in files:
+            url = file.get_uri()
+            self.props.active_window.profiles_window.createProfileFromUri(url)
+
+    def do_activate(self, check = True):
         win = self.props.active_window
         if not win:
             win = UntisWindow(self.shared, application=self)
         win.present()
-        win.checkCredentials()
+
+        if check:
+            win.checkCredentials()
 
     def on_about_action(self, *args):
         """Callback for the app.about action."""
