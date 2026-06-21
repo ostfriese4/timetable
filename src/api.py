@@ -4,6 +4,7 @@ import json
 import time
 import datetime
 import copy
+import pyotp
 from pathlib import Path
 from hashlib import md5
 
@@ -23,25 +24,54 @@ def _login(credentials):
     s.headers.update({"Referer": credentials["server"] + "/"})
 
     try:
-        form_data = {
-            "school": credentials["school"],
-            "j_username": credentials["user"],
-        }
-
         match credentials["type"]:
             case "password":
-                form_data["j_password"] = credentials["password"]
-            case "token":
-                form_data["token"] = credentials["password"]
+                form_data = {
+                    "school": credentials["school"],
+                    "j_username": credentials["user"],
+                    "j_password": credentials["password"],
+                }
 
-        url = credentials["server"] + "/WebUntis/j_spring_security_check"
-        response = s.post(url, data=form_data)
+                url = credentials["server"] + "/WebUntis/j_spring_security_check"
+                response = s.post(url, data=form_data)
+                json = response.json()
+
+                ok = json["state"] == "SUCCESS"
+
+            case "token":
+                totp = pyotp.TOTP(credentials["password"], interval=30)
+                token = totp.now()
+                currentTime = int(datetime.datetime.now().timestamp() * 1000)
+
+                url = credentials["server"] + "/WebUntis/jsonrpc_intern.do"
+                data = {
+                    "id":     "login" + credentials["profile"],
+                    "method": "getUserData2017",
+                    "jsonrpc": "2.0",
+                    "params": [{
+                                "auth": {
+                                        "clientTime": currentTime,
+                                        "user":       credentials["user"],
+                                        "otp":        token
+                                }
+                    }]
+                }
+
+                params = {
+                    "m":      "getUserData2017",
+                    "school": credentials["school"],
+                    "v":      "i2.2"
+                }
+
+                response = s.post(url, json=data)
+                json = response.json()
+
+                ok = not "error" in json
 
         if response.status_code == 200:
-            json = response.json()
             print("login returned", json)
 
-            if json["state"] == "SUCCESS":
+            if ok:
                 token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
                 s.headers.update({"Authorization": "Bearer " + token})
                 offline = False
