@@ -70,11 +70,11 @@ def _login(credentials):
 
         if response.status_code == 200:
             print("login returned", json)
+            offline = False
 
             if ok:
                 token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
                 s.headers.update({"Authorization": "Bearer " + token})
-                offline = False
                 return s
         else:
             print(response)
