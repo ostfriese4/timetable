@@ -19,13 +19,19 @@ SCHEMA = Secret.Schema.new(
     },
 )
 
-
-def setCredentials(server, school, user, password, credType, profile="1"):
+def getCredentialsFile():
     try:
         with open(credentialsPath) as file:
-            data = json.load(file)
+            return json.load(file)
     except FileNotFoundError:
-        data = {}
+        return {
+            "profiles":        {},
+            "credentials":     {},
+            "default-profile": None
+        }
+
+def setCredentials(server, school, user, password, credType, profile="1"):
+    data = getCredentialsFile()
 
     if not "default-profile" in data:
         data["default-profile"] = profile
@@ -63,8 +69,7 @@ def getPassword(user):
 
 
 def getCredentials(profile="1"):
-    with open(credentialsPath) as file:
-        data = json.load(file)
+    data = getCredentialsFile()
 
     if "password" in data:  # not yet migrated to secrets
         print("migrating password to secrets")
@@ -100,21 +105,19 @@ def getCredentials(profile="1"):
 
 
 def getProfiles():
-    with open(credentialsPath) as file:
-        data = json.load(file)
-        try:
-            return {
-                "profiles": data["profiles"],
-                "default-profile": data["default-profile"],
-            }
-        except:
-            getCredentials()  # not migrated
-            return getProfiles()
+    data = getCredentialsFile()
+    try:
+        return {
+            "profiles": data["profiles"],
+            "default-profile": data["default-profile"],
+        }
+    except:
+        getCredentials()  # not migrated
+        return getProfiles()
 
 
 def setProfiles(new):
-    with open(credentialsPath) as file:
-        data = json.load(file)
+    data = getCredentialsFile()
     data["profiles"] = new["profiles"]
     data["default-profile"] = new["default-profile"]
     with open(credentialsPath, "w") as file:
