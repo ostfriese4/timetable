@@ -90,7 +90,11 @@ class ProfilesWindow(Adw.Dialog):
 
     def createProfile(self, a=None):
         data = self.window.shared.profiles
-        id = str(len(data["profiles"]) + 1)
+        id = len(data["profiles"]) + 1
+        while str(id) in data["profiles"]:
+            id+=1
+        id = str(id)
+
         data["profiles"][id] = {}
         self.editProfile(id)
 

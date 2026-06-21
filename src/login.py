@@ -164,6 +164,8 @@ class LoginWindow(Adw.Dialog):
                         self.usr_entry.set_text(value)
 
     def requestLogin(self, profile):
+        if profile is None:
+            profile = "1"
         self.present(self.window)
         self.profile = profile
         print("login", profile)
@@ -179,8 +181,12 @@ class LoginWindow(Adw.Dialog):
                 case "password":
                     position = 1
             self.method.set_selected(position)
-            self.profile_entry.set_text(
-                self.window.shared.profiles["profiles"][self.profile]["name"]
-            )
+
+            profile = self.window.shared.profiles["profiles"][self.profile]["name"]
+            self.profile_entry.set_text(profile)
         except FileNotFoundError:
             pass  # first run
+
+        profileName = self.profile_entry.get_text()
+        if profileName == "":
+            self.profile_entry.set_text(_("Profile") + " " + profile)
