@@ -332,15 +332,14 @@ class session:
             if mode == "normal":
                 cache = self._useCache(name)
 
+            dayData = []
             if cache:
                 try:
                     dayData = self._readFromCache(name)
-                    if dayData is not None:
-                        data.append(dayData)
-                    else:
-                        cache = False
+                    if dayData is None:
+                        dayData = []
                 except:
-                    cache = False
+                    pass
             if not cache:
                 path = (
                     "/WebUntis/api/rest/view/v1/timetable/entries?start="
@@ -351,10 +350,10 @@ class session:
                     + str(self.getOwnId())
                     + "&periodTypes=&timetableType=MY_TIMETABLE&layout=START_TIME"
                 )
-                dayData = self._getRequest(path, mode)
-                analyzed = self.analyzeTimetable(dayData["days"], mode)[0]
-                self._writeToCache(name, analyzed)
-                data.append(analyzed)
+                fetched = self._getRequest(path, mode)
+                dayData = self.analyzeTimetable(fetched["days"], mode)[0]
+                self._writeToCache(name, dayData)
+            data.append(dayData)
             day += datetime.timedelta(days=1)
 
         return data
