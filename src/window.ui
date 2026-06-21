@@ -110,10 +110,6 @@
         <attribute name="action">app.profiles</attribute>
       </item>
       <item>
-        <attribute name="label" translatable="yes">_Login</attribute>
-        <attribute name="action">app.login</attribute>
-      </item>
-      <item>
         <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
         <attribute name="action">app.shortcuts</attribute>
       </item>
