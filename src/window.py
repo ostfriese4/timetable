@@ -24,6 +24,8 @@ from .teachers import TeacherPage
 from .messages import MessagesPage
 from .absences import AbsencesPage
 from .create_homework import HomeworkEditWindow
+from .credentials import getCredentials
+from .api import testCredentials
 from .profiles import ProfilesWindow
 from gi.repository import Adw
 from gi.repository import Gtk
@@ -58,6 +60,14 @@ class UntisWindow(Adw.ApplicationWindow):
         self.absences.enable_bindings(self)
 
     def reload(self):
+        self.checkCredentials()
         self.main_view_stack.set_visible_child_name("timetable")
         self.timetable.loadData()
         self.homework.displayAll()
+
+    def checkCredentials(self):
+        print("check credentials")
+        if not testCredentials(getCredentials(self.shared.profiles["default-profile"])):
+            self.login_window.requestLogin(self.shared.profiles["default-profile"])
+        if not self.shared.session.getOffline():
+            self.shared.checked = True

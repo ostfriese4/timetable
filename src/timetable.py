@@ -119,6 +119,8 @@ class Timetable(Gtk.Box):
         parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
         self.shared = parent.shared
 
+        self.window = parent
+
         try:
             self.jump_to(datetime.datetime.now())
             self.shared.session.getHomeworks()
@@ -177,6 +179,9 @@ class Timetable(Gtk.Box):
     def loadData(self):
         self.loadingAnimation()
         s = self.startdate
+
+        if not self.shared.checked:
+            self.window.checkCredentials()
 
         def load():
             try:

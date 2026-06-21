@@ -56,6 +56,7 @@ class UntisApplication(Adw.Application):
 
         self.shared = shared
         self.shared.profiles = getProfiles()
+        self.shared.checked = False
         self.shared.session = session(
             getCredentials(self.shared.profiles["default-profile"])
         )
@@ -66,9 +67,7 @@ class UntisApplication(Adw.Application):
         if not win:
             win = UntisWindow(self.shared, application=self)
         win.present()
-
-        if not testCredentials(getCredentials(self.shared.profiles["default-profile"])):
-            self.on_login_action(None, None)
+        win.checkCredentials()
 
     def on_about_action(self, *args):
         """Callback for the app.about action."""
