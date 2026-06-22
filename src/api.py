@@ -555,7 +555,9 @@ class session:
             + start.strftime("%Y%m%d")
             + "&endDate="
             + end.strftime("%Y%m%d")
-            + "&studentId=23225&excuseStatusId=-1"
+            + "&studentId="
+            + str(self.getOwnId())
+            + "&excuseStatusId=-1"
         )
         data = self._getRequest(path)
         return data["data"]["absences"]
