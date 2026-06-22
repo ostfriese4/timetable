@@ -2,9 +2,10 @@ import json
 import datetime
 import os
 
-DATAPATH = os.environ.get("XDG_DATA_HOME", ".untis") + "/homework.json"
+DATAPATH = os.environ.get("XDG_DATA_HOME", ".untis")
 
 shared = None
+profile = None
 
 
 def setShared(new):
@@ -12,20 +13,26 @@ def setShared(new):
     shared = new
 
 
-def loadOwnData():
-    if os.path.exists(DATAPATH):
-        with open(DATAPATH) as file:
+def loadOwnData(profile):
+    path = DATAPATH + profile + ".json"
+    if os.path.exists(path):
+        with open(path) as file:
             return json.load(file)
     else:
         return {}
 
+ownData = {}
+def getOwnData():
+    global ownData
+    global profile
+    if profile != shared.profiles["default-profile"]:
+        profile = shared.profiles["default-profile"]
+        ownData = loadOwnData(profile)
+    return ownData
 
 def writeOwnData(data):
-    with open(DATAPATH, "w") as file:
+    with open(DATAPATH + profile + ".json", "w") as file:
         json.dump(data, file, indent=4)
-
-
-ownData = loadOwnData()
 
 
 def fetchHomeworks(start=None, end=None, mode="normal", orig=False):
@@ -49,6 +56,8 @@ def fetchHomeworks(start=None, end=None, mode="normal", orig=False):
 
 
 def applyChanges(item):
+    ownData = getOwnData()
+
     if type(item) != dict:
         print(item)
         return
@@ -64,6 +73,8 @@ def applyChanges(item):
 
 
 def getAll(orig=False):
+    ownData = getOwnData()
+
     data = fetchHomeworks(orig=orig)
     for id in ownData:
         if id.startswith("own"):
@@ -72,6 +83,8 @@ def getAll(orig=False):
 
 
 def setValue(id, key, value):
+    ownData = getOwnData()
+
     id = str(id)
     if not id in ownData:
         ownData[id] = {"id": id}
@@ -87,6 +100,8 @@ def getById(id, orig=False):
 
 
 def delete(id):
+    ownData = getOwnData()
+
     id = str(id)
     if id in ownData:
         del ownData[id]
@@ -94,6 +109,8 @@ def delete(id):
 
 
 def getNewId():
+    ownData = getOwnData()
+
     i = 0
     while "own" + str(i) in ownData:
         i += 1
@@ -101,6 +118,8 @@ def getNewId():
 
 
 def getChanges(id):
+    ownData = getOwnData()
+
     id = str(id)
     if id.startswith("own"):
         return {}

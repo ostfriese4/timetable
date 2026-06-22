@@ -19,10 +19,11 @@
 
 from gi.repository import Gtk
 from gi.repository import Adw
-from .credentials import getProfiles, setProfiles
+from .credentials import getProfiles, setProfiles, getCredentials
+from .api import session
 
 
-class ProfileRow(Gtk.ListBoxRow):
+class ProfileRow(Adw.ActionRow):
     __gttype_name__ = "ProfileRow"
 
     def __init__(self, id, data, window):
@@ -30,26 +31,24 @@ class ProfileRow(Gtk.ListBoxRow):
 
         self.set_activatable(True)
 
-        box = Gtk.Box()
-        box.set_orientation(Gtk.Orientation.HORIZONTAL)
-        box.set_spacing(2)
-        self.set_child(box)
+        try:
+            name = data["name"]
+        except:
+            name = _("Unnamed")
+            data["name"] = name
 
-        label = Gtk.Label()
-        label.set_label(data["name"])
-        label.set_hexpand(True)
-        box.append(label)
+        self.set_title(name)
 
         edit = Gtk.Button()
         edit.set_icon_name("document-edit-symbolic")
-        edit.set_tooltip_text(_("Edit profile %s").replace("%s", data["name"]))
-        box.append(edit)
+        edit.set_tooltip_text(_("Edit profile %s").replace("%s", name))
+        self.add_suffix(edit)
 
         delete = Gtk.Button()
         delete.set_icon_name("user-trash-symbolic")
         delete.add_css_class("destructive-action")
-        delete.set_tooltip_text(_("Delete profile %s").replace("%s", data["name"]))
-        box.append(delete)
+        delete.set_tooltip_text(_("Delete profile %s").replace("%s", name))
+        self.add_suffix(delete)
 
         def on_delete(a):
             print("delete profile", id)
@@ -65,9 +64,9 @@ class ProfileRow(Gtk.ListBoxRow):
 
         def on_enable(a):
             print("enable profile", id)
-            window.editProfile(id)
+            window.switchProfile(id)
 
-        self.connect("activate", on_enable)
+        self.connect("activated", on_enable)
 
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/profiles.ui")
@@ -119,7 +118,7 @@ class ProfilesWindow(Adw.Dialog):
             self.window.shared.session = session(getCredentials(id))
             self.window.reload()
         except:
-            pass
+            print("switching to", id, "failed")
 
     def editProfile(self, id):
         self.switchProfile(id)

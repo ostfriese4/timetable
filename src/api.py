@@ -5,6 +5,7 @@ import time
 import datetime
 import copy
 import pyotp
+import binascii
 from pathlib import Path
 from hashlib import md5
 
@@ -81,6 +82,8 @@ def _login(credentials):
         offline = True
         return s  # don't fail login at startup
     except requests.exceptions.InvalidURL:
+        return
+    except binascii.Error:
         return
 
 

@@ -187,7 +187,7 @@ class LoginWindow(Adw.Dialog):
         try:
             profile = self.window.shared.profiles["profiles"][self.profile]["name"]
             self.profile_entry.set_text(profile)
-        except FileNotFoundError:
+        except:
             pass  # first run
 
         profileName = self.profile_entry.get_text()
