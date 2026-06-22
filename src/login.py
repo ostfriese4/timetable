@@ -181,7 +181,10 @@ class LoginWindow(Adw.Dialog):
                 case "password":
                     position = 1
             self.method.set_selected(position)
+        except FileNotFoundError:
+            pass  # first run
 
+        try:
             profile = self.window.shared.profiles["profiles"][self.profile]["name"]
             self.profile_entry.set_text(profile)
         except FileNotFoundError:

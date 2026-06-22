@@ -52,14 +52,22 @@ class ProfileRow(Gtk.ListBoxRow):
         box.append(delete)
 
         def on_delete(a):
+            print("delete profile", id)
             window.deleteProfile(id)
 
         delete.connect("clicked", on_delete)
 
         def on_edit(a):
+            print("edit profile", id)
             window.editProfile(id)
 
         edit.connect("clicked", on_edit)
+
+        def on_enable(a):
+            print("enable profile", id)
+            window.editProfile(id)
+
+        self.connect("activate", on_enable)
 
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/profiles.ui")

@@ -64,7 +64,7 @@ def setCredentials(server, school, user, password, credType, profile="1"):
 def getPassword(user):
     password = Secret.password_lookup_sync(SCHEMA, user, None)
     if password == None:
-        raise FileNotFoundError("no password set")
+        return ""
     return password
 
 
