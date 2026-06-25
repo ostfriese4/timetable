@@ -87,7 +87,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="AdwViewStackPage">
+                  <object class="AdwViewStackPage" id="absences_page">
                     <property name="name">absences</property>
                     <property name="title" translatable="yes">Absences</property>
                     <property name="icon-name">appointment-soon-symbolic</property>

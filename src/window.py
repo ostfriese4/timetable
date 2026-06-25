@@ -37,6 +37,7 @@ class UntisWindow(Adw.ApplicationWindow):
 
     timetable = Gtk.Template.Child()
     absences = Gtk.Template.Child()
+    absences_page = Gtk.Template.Child()
     homework = Gtk.Template.Child()
     homework_page = Gtk.Template.Child()
     main_view_stack = Gtk.Template.Child()
