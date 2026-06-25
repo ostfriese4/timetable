@@ -45,6 +45,13 @@ class Absence(Adw.ExpanderRow):
             text = Adw.ActionRow(title=_("Text"), subtitle=absence["text"])
             self.add_row(text)
 
+        if absence["isExcused"]:
+            excusedRow = Adw.ActionRow(title=_("Excused"))
+        else:
+            excusedRow = Adw.ActionRow(title=_("Unexcused"))
+            self.add_css_class("unexcused")
+        self.add_row(excusedRow)
+
         startRow = Adw.ActionRow(title=_("Start"), subtitle=start.strftime("%c"))
         self.add_row(startRow)
         startRow.add_css_class("property")

@@ -116,3 +116,7 @@
   border-radius: 6px;
   padding: 4px;
 }
+
+.unexcused {
+  background: color-mix(in oklab, var(--accent-red), var(--window-bg-color) 70%);
+}
