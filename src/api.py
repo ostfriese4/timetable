@@ -117,6 +117,7 @@ def testCredentials(credentials):
 class session:
     def __init__(self, credentials):
         self.session = _login(credentials)
+        self.credentials = credentials
         self.server = credentials["server"]
 
         self.name = credentials["school"] + credentials["user"] + credentials["server"] + credentials["profile"]
@@ -285,8 +286,12 @@ class session:
                 response = self.session.get(self.server + path)
                 data = response.json()
                 offline = False
-                if "errorCode" in data:
+                if "errorCode" in data or "errorMessage" in data:
                     print("ERROR: PATH:", self.server + path, data)
+                    if "errorMessage" in data:
+                        if data["errorMessage"] == "Unauthorized":
+                            print("relogin")
+                            self.session = _login(self.credentials)
                     mode = "cache"
                 else:
                     self._writeToCache(hashed, data)

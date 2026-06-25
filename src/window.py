@@ -59,8 +59,6 @@ class UntisWindow(Adw.ApplicationWindow):
         self.messages.enable_bindings(self)
         self.absences.enable_bindings(self)
 
-        print(self.shared.session.getExams())
-
     def reload(self):
         self.checkCredentials()
         self.main_view_stack.set_visible_child_name("timetable")
