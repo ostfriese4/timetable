@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Timetable
-Exec=untis
+Exec=untis %u
 Icon=page.codeberg.ostfriese4.Untis
 Terminal=false
 Type=Application
