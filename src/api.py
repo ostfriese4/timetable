@@ -547,6 +547,7 @@ class session:
             end = datetime.datetime.strptime(year["dateRange"]["end"], "%Y-%m-%d")
             if start < now < end:
                 return year
+        return years[-1]
 
     def getAbsences(self, start=None, end=None):
         year = self.getCurrentSchoolYear()
