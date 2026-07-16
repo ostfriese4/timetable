@@ -21,6 +21,7 @@ from gi.repository import Gtk
 from gi.repository import Adw
 from .api import session, testCredentials, searchSchool
 from .credentials import getCredentials, setCredentials, setProfiles
+from .dialog import closeOnClickOutside
 
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/login.ui")
@@ -55,6 +56,10 @@ class LoginWindow(Adw.Dialog):
         self.search_entry.connect("changed", self.searchSchool)
 
         self.login_button.add_css_class("suggested-action")
+
+        closeOnClickOutside(self)
+        closeOnClickOutside(self.search_window)
+        closeOnClickOutside(self.sso_info_window)
 
         self.sso_info_button.connect("activated", self.openSSOInfoWindow)
         self.method.connect("notify::selected-item", self.on_method_changed)

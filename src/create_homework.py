@@ -20,6 +20,7 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from .homework_api import getNewId, setValue, getById, delete
+from .dialog import closeOnClickOutside
 
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/create_homework.ui")
@@ -38,6 +39,7 @@ class HomeworkEditWindow(Adw.Dialog):
     def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
         self.window = window
+        closeOnClickOutside(self)
         self.save.add_css_class("suggested-action")
         self.save.connect("activated", self.on_save)
         self.delete_button.add_css_class("destructive-action")
