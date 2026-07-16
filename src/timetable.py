@@ -26,6 +26,7 @@ from .homework_api import fetchHomeworks
 from .information import InformationWindow
 from .lesson import Lesson
 from .holiday import Holiday
+from .dialog import closeOnClickOutside
 import datetime
 import time
 import threading
@@ -62,6 +63,7 @@ class Timetable(Gtk.Box):
         self.previous_button.connect("clicked", self.previous)
         self.header_button.connect("clicked", self.on_header_button)
         self.date_chooser.connect("day-selected", self.on_day_selected)
+        closeOnClickOutside(self.date_chooser_dialog)
 
         self.progress.add_css_class("osd")
         self.loading = False

@@ -32,6 +32,7 @@ untis_sources = [
   'api.py',
   'credentials.py',
   'create_homework.py',
+  'dialog.py',
   'holiday.py',
   'homework.py',
   'homework_api.py',

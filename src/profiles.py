@@ -21,6 +21,7 @@ from gi.repository import Gtk
 from gi.repository import Adw
 from .credentials import getProfiles, setProfiles, getCredentials
 from .api import session
+from .dialog import closeOnClickOutside
 
 
 class ProfileRow(Adw.ActionRow):
@@ -78,6 +79,8 @@ class ProfilesWindow(Adw.Dialog):
 
     def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
+
+        closeOnClickOutside(self)
 
         self.add_button.connect("clicked", self.createProfile)
 
