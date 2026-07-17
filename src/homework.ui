@@ -35,15 +35,7 @@
                 <property name="name">completed</property>
                 <property name="title" translatable="yes">Completed</property>
                 <property name="child">
-                  <object class="GtkScrolledWindow" id="scrolled_window_done">
-                    <property name="hscrollbar-policy">never</property>
-                    <property name="vscrollbar-policy">automatic</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
-                    <child>
-                      <object class="AdwPreferencesPage" id="container_done"/>
-                    </child>
-                  </object>
+                  <object class="AdwPreferencesPage" id="container_done"/>
                 </property>
               </object>
             </child>
@@ -52,11 +44,16 @@
                 <property name="name">unfinished</property>
                 <property name="title" translatable="yes">Unfinished</property>
                 <property name="child">
-                  <object class="GtkScrolledWindow" id="scrolled_window_undone">
-                    <property name="hscrollbar-policy">never</property>
-                    <property name="vscrollbar-policy">automatic</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="AdwStatusPage" id="empty_undone">
+                        <property name="icon-name">checkbox-checked-symbolic</property>
+                        <property name="title" translatable="yes">Everything done</property>
+                        <property name="description" translatable="yes">You have no unfinished homework</property>
+                        <property name="vexpand">True</property>
+                        <property name="hexpand">True</property>
+                      </object>
+                    </child>
                     <child>
                       <object class="AdwPreferencesPage" id="container_undone"/>
                     </child>

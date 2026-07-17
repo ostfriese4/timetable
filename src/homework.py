@@ -32,10 +32,9 @@ class HomeworkList(Gtk.Box):
 
     show_sidebar_button = Gtk.Template.Child()
     container_done = Gtk.Template.Child()
-    scrolled_window_done = Gtk.Template.Child()
     container_undone = Gtk.Template.Child()
-    scrolled_window_undone = Gtk.Template.Child()
     undone_page = Gtk.Template.Child()
+    empty_undone = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -64,16 +63,13 @@ class HomeworkList(Gtk.Box):
         except:
             pass
 
-    def scroll(self, data=None, y=None):
-        if self.scrollTo is not None:
-            y = self.days[self.scrollTo].get_allocation().y
-        if y is not None:
-            adj = self.scrolled_window_done.get_vadjustment()
-            adj.set_value(y)
-
     def set_number(self, unfinished):
         self.page.set_badge_number(unfinished)
         self.undone_page.set_badge_number(unfinished)
+        if unfinished == 0:
+            self.empty_undone.set_visible(True)
+        else:
+            self.empty_undone.set_visible(False)
 
     def get_number(self):
         return self.page.get_badge_number()
@@ -87,7 +83,6 @@ class HomeworkList(Gtk.Box):
                 unfinished += 1
         self.display(data)
         self.set_number(unfinished)
-        GLib.idle_add(self.scroll)
 
     def sortData(self, data):
         new = []
