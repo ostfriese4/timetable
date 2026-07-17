@@ -18,6 +18,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import gi
+gi.require_version('WebKit', '6.0')
 
 from gi.repository import Gtk
 from gi.repository import Adw
