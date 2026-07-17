@@ -27,7 +27,9 @@ from .information import InformationWindow
 from .lesson import Lesson
 from .holiday import Holiday
 from .dialog import closeOnClickOutside
+import cairo
 import datetime
+import math
 import time
 import threading
 
@@ -250,6 +252,52 @@ class Timetable(Gtk.Box):
         context.line_to(width, y)
         context.stroke()
 
+        if week:  # show the current time on the marker, on top of the time axis
+            text = now.strftime("%H:%M")
+            context.select_font_face(
+                "sans", cairo.FontSlant.NORMAL, cairo.FontWeight.BOLD
+            )
+            context.set_font_size(11)
+            extents = context.text_extents(text)
+            chipWidth = extents.width + 12
+            radius = (extents.height + 8) / 2
+            context.new_sub_path()
+            context.arc(2 + radius, y, radius, 0.5 * math.pi, 1.5 * math.pi)
+            context.arc(2 + chipWidth - radius, y, radius, 1.5 * math.pi, 0.5 * math.pi)
+            context.close_path()
+            context.fill()
+            context.set_source_rgb(1, 1, 1)
+            context.move_to(2 + 6, y + extents.height / 2)
+            context.show_text(text)
+
+    def drawTimeAxis(self, area, context, width, height):
+        if self.start >= 1440:  # no lessons this week
+            return
+        color = area.get_color()
+        context.select_font_face(
+            "sans", cairo.FontSlant.NORMAL, cairo.FontWeight.NORMAL
+        )
+        context.set_font_size(11)
+
+        def drawLabel(minutes):
+            y = minutes - self.start
+            text = "%02d:%02d" % (minutes // 60, minutes % 60)
+            extents = context.text_extents(text)
+            context.set_source_rgba(color.red, color.green, color.blue, 0.6)
+            textY = max(y, extents.height / 2 + 1)  # keep the first label visible
+            context.move_to(width - 10 - extents.width, textY + extents.height / 2)
+            context.show_text(text)
+            context.set_source_rgba(color.red, color.green, color.blue, 0.3)
+            context.rectangle(width - 7, y - 0.5, 7, 1)
+            context.fill()
+
+        minutes = (self.start + 59) // 60 * 60  # first full hour on the grid
+        if minutes - self.start >= 20:
+            drawLabel(self.start)  # also label the start of the day
+        while minutes <= self.end:
+            drawLabel(minutes)
+            minutes += 60
+
     def displayData(self, table):
         if table is None:
             return
@@ -260,10 +308,13 @@ class Timetable(Gtk.Box):
             self.offline.set_revealed(revealed=False)
 
         self.start = 1440  # One day in minutes (max possible value)
+        self.end = 0
         for day in table:
             for lesson in day:
                 if lesson["start"] < self.start:
                     self.start = lesson["start"]
+                if lesson["end"] > self.end:
+                    self.end = lesson["end"]
 
         for lesson in self.lessons:
             lesson[0].remove(lesson[1])
@@ -277,6 +328,19 @@ class Timetable(Gtk.Box):
         for overlay in self.overlays:
             overlay[0].remove_overlay(overlay[1])
         self.overlays.clear()
+
+        axisColumn = Gtk.Box()
+        axisColumn.set_orientation(Gtk.Orientation.VERTICAL)
+        axisHeader = Gtk.Label(label=" ")
+        axisHeader.add_css_class("day")
+        axisColumn.append(axisHeader)
+        axis = Gtk.DrawingArea()
+        axis.set_content_width(44)
+        axis.set_vexpand(True)
+        axis.set_draw_func(self.drawTimeAxis)
+        axisColumn.append(axis)
+        self.timetable.append(axisColumn)
+        self.columns.append(axisColumn)
 
         date = self.startdate
         past = True
