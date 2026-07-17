@@ -123,7 +123,7 @@ class session:
         self.name = credentials["school"] + credentials["user"] + credentials["server"] + credentials["profile"]
         self.name = md5(self.name.encode()).hexdigest()
         self.CACHEDIR = (
-            os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis/" + self.name + "/"
+            os.environ.get("XDG_CACHE_HOME", ".untis/cache") + "/untis/" + self.name + "/"
         )
         self.cache = {}
 
@@ -131,7 +131,7 @@ class session:
 
         try:
             with open(
-                os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-colors.json"
+                os.environ.get("XDG_CACHE_HOME", ".untis/cache") + "/untis-colors.json"
             ) as file:
                 self.colors = json.load(file)
         except:
