@@ -27,3 +27,7 @@ install_data(
   scalable_dir / 'actions' / ('document-edit-symbolic.svg'),
   install_dir: get_option('datadir') / 'icons' / scalable_dir / 'actions'
 )
+install_data(
+  scalable_dir / 'ui' / ('checkbox-checked-symbolic.svg'),
+  install_dir: get_option('datadir') / 'icons' / scalable_dir / 'status'
+)
