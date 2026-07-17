@@ -14,6 +14,13 @@
 
 
 
+# Install
+Besides Flathub, Timetable is also available in the [AUR](https://aur.archlinux.org/packages/timetable-bin) for Arch Linux users:
+
+```
+yay -S timetable-bin
+```
+
 # Build
 To build, clone this in GNOME-Builder and press play.
 
