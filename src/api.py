@@ -221,12 +221,16 @@ class session:
         if mode == "online":
             try:
                 response = self.session.post(self.server + "/WebUntis/jsonrpc.do", json = payload)
-                data = response.json()["result"]
+                data = response.json()
                 offline = False
-                if "errorCode" in data:
+                if not "result" in data:  # e.g. "no right for getTeachers()"
+                    print("ERROR: RPC:", method, params, data.get("error"))
+                    mode = "cache"
+                elif "errorCode" in data["result"]:
                     print("ERROR: RPC:", method, params)
                     mode = "cache"
                 else:
+                    data = data["result"]
                     self._writeToCache(hashed, data)
                     return data
             except requests.exceptions.ConnectionError:
@@ -257,12 +261,13 @@ class session:
                 cache = False
         if not cache:
             data = self._RPCRequest(method = "getTeachers", params = {}, mode = mode, maxage = maxage)
-            out = {}
-            for teacher in data:
-                out[teacher["name"]] = teacher
-            self._writeToCache(name, out)
-            return out
-        return self._readFromCache(name)
+            if data is not None:
+                out = {}
+                for teacher in data:
+                    out[teacher["name"]] = teacher
+                self._writeToCache(name, out)
+                return out
+        return self._readFromCache(name) or {}  # no teacher data available
 
     def getTeacherById(self, id, mode = "normal"):
         for teacher in self.getAllTeachers(mode = mode):
@@ -650,4 +655,7 @@ class session:
             + end.strftime("%Y%m%d")
         )
         data = self._getRequest(path)
+        if data is None or not "data" in data:  # e.g. no right for homeworks
+            print("ERROR: homeworks:", data)
+            return {"lessons": [], "homeworks": []}
         return data["data"]
