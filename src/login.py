@@ -40,6 +40,7 @@ class LoginWindow(Adw.Dialog):
     search_window = Gtk.Template.Child()
     search_entry = Gtk.Template.Child()
     result_list = Gtk.Template.Child()
+    toast_overlay = Gtk.Template.Child()
 
     sso_info_button = Gtk.Template.Child()
     sso_info_window = Gtk.Template.Child()
@@ -146,6 +147,10 @@ class LoginWindow(Adw.Dialog):
             self.close()
             self.window.shared.session = session(credentials)
             self.window.reload()
+        else:
+            toast = Adw.Toast()
+            toast.set_title(_("Invalid credentials"))
+            self.toast_overlay.add_toast(toast)
 
     def fillDataFromUri(self, uri):
         print("fill", uri)

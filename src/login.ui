@@ -15,79 +15,83 @@
           </object>
         </child>
         <property name="content">
-          <object class="AdwPreferencesPage">
+          <object class="AdwToastOverlay" id="toast_overlay">
             <child>
-              <object class="AdwPreferencesGroup">
+              <object class="AdwPreferencesPage">
                 <child>
-                  <object class="AdwEntryRow" id="profile_entry">
-                    <property name="title" translatable="yes">Profile name</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <child>
-                  <object class="AdwButtonRow" id="sso_info_button">
-                    <property name="title" translatable="yes">I usually log in using a third-party service</property>
-                    <property name="start-icon-name">dialog-information-symbolic</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwButtonRow" id="search_button">
-                    <property name="title" translatable="yes">Search school</property>
-                    <property name="start-icon-name">system-search</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <child>
-                  <object class="AdwEntryRow" id="server_entry">
-                    <property name="title" translatable="yes">Server-URL</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwEntryRow" id="school_entry">
-                    <property name="title" translatable="yes">School</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwEntryRow" id="usr_entry">
-                    <property name="title" translatable="yes">Username</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwComboRow" id="method">
-                    <property name="title" translatable="yes">Authentication method</property>
-                    <property name="model">
-                      <object class="GtkStringList">
-                        <items>
-                          <item translatable="yes">Token</item>
-                          <item translatable="yes">Password</item>
-                        </items>
+                  <object class="AdwPreferencesGroup">
+                    <child>
+                      <object class="AdwEntryRow" id="profile_entry">
+                        <property name="title" translatable="yes">Profile name</property>
                       </object>
-                    </property>
+                    </child>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwPasswordEntryRow" id="pswd_entry">
+                  <object class="AdwPreferencesGroup">
+                    <child>
+                      <object class="AdwButtonRow" id="sso_info_button">
+                        <property name="title" translatable="yes">I usually log in using a third-party service</property>
+                        <property name="start-icon-name">dialog-information-symbolic</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwButtonRow" id="search_button">
+                        <property name="title" translatable="yes">Search school</property>
+                        <property name="start-icon-name">system-search</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
-              </object>
-            </child>
-
-            <child>
-              <object class="AdwPreferencesGroup">
                 <child>
-                  <object class="AdwButtonRow" id="login_button">
-                    <property name="title" translatable="yes">Save</property>
+                  <object class="AdwPreferencesGroup">
+                    <child>
+                      <object class="AdwEntryRow" id="server_entry">
+                        <property name="title" translatable="yes">Server-URL</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwEntryRow" id="school_entry">
+                        <property name="title" translatable="yes">School</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwEntryRow" id="usr_entry">
+                        <property name="title" translatable="yes">Username</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwComboRow" id="method">
+                        <property name="title" translatable="yes">Authentication method</property>
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">Token</item>
+                              <item translatable="yes">Password</item>
+                            </items>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwPasswordEntryRow" id="pswd_entry">
+                      </object>
+                    </child>
                   </object>
                 </child>
+
+                <child>
+                  <object class="AdwPreferencesGroup">
+                    <child>
+                      <object class="AdwButtonRow" id="login_button">
+                        <property name="title" translatable="yes">Save</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
               </object>
             </child>
-
           </object>
         </property>
       </object>
