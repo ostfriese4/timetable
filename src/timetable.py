@@ -294,7 +294,7 @@ class Timetable(Gtk.Box):
         minutes = (self.start + 59) // 60 * 60  # first full hour on the grid
         if minutes - self.start >= 20:
             drawLabel(self.start)  # also label the start of the day
-        while minutes <= self.end:
+        while minutes <= 1440:
             drawLabel(minutes)
             minutes += 60
 
@@ -308,13 +308,10 @@ class Timetable(Gtk.Box):
             self.offline.set_revealed(revealed=False)
 
         self.start = 1440  # One day in minutes (max possible value)
-        self.end = 0
         for day in table:
             for lesson in day:
                 if lesson["start"] < self.start:
                     self.start = lesson["start"]
-                if lesson["end"] > self.end:
-                    self.end = lesson["end"]
 
         for lesson in self.lessons:
             lesson[0].remove(lesson[1])
