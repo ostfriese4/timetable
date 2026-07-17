@@ -325,7 +325,7 @@ class session:
         data = self._getRequest(path)["data"]["messagesOfDay"]
         return data
 
-    def getOwnTimetable(self, start=None, end=None, mode="normal"):
+    def getTimetable(self, resourceType, resourceId, start = None, end = None, mode = "normal"):
         year = self.getCurrentSchoolYear()
 
         s_start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")
@@ -340,7 +340,7 @@ class session:
         end = end.date()
         day = start
         while day <= end:
-            name = "days/" + day.strftime("%Y-%m-%d")
+            name = "days-" + resourceType + str(resourceId) + "/" + day.strftime("%Y-%m-%d")
             cache = mode == "cache"
             if mode == "normal":
                 cache = self._useCache(name)
@@ -359,8 +359,10 @@ class session:
                     + day.strftime("%Y-%m-%d")
                     + "&end="
                     + day.strftime("%Y-%m-%d")
-                    + "&format=2&resourceType=STUDENT&resources="
-                    + str(self.getOwnId())
+                    + "&format=2&resourceType="
+                    + resourceType
+                    + "&resources="
+                    + str(resourceId)
                     + "&periodTypes=&timetableType=MY_TIMETABLE&layout=START_TIME"
                 )
                 fetched = self._getRequest(path, mode)
@@ -370,6 +372,15 @@ class session:
             day += datetime.timedelta(days=1)
 
         return data
+
+    def getOwnTimetable(self, start=None, end=None, mode="normal"):
+        return self.getStudentTimetable(self.getOwnId(), start=start, end=end, mode=mode)
+
+    def getStudentTimetable(self, id, start=None, end=None, mode="normal"):
+        return self.getTimetable("STUDENT", id, start=start, end=end, mode=mode)
+
+    def getRoomTimetable(self, id, start=None, end=None, mode="normal"):
+        return self.getTimetable("ROOM", id, start=start, end=end, mode=mode)
 
     def createList(self, data, key, long, integrate=None):
         text = ""
