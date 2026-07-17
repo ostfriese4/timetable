@@ -57,6 +57,19 @@
   </screenshots>
 
   <releases>
+    <release version="4.0" date="2026-07-17">
+      <description translate="no">
+        <ul>
+          <li>rewrote api</li>
+          <li>added support for absences</li>
+          <li>added support for messages</li>
+          <li>mark past lessons</li>
+          <li>added info about room</li>
+          <li>close dialogs when clicking outside of them @Felitendo</li>
+          <li>display external pages</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.1" date="2026-06-08">
       <description translate="no">
         <p>Bugfixes</p>
