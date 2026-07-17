@@ -252,7 +252,7 @@ class Timetable(Gtk.Box):
         context.line_to(width, y)
         context.stroke()
 
-        if week:  # show the current time on the marker, on top of the time axis
+        if week and self.showAxis:  # show the current time on the marker, on top of the time axis
             text = now.strftime("%H:%M")
             context.select_font_face(
                 "sans", cairo.FontSlant.NORMAL, cairo.FontWeight.BOLD
@@ -271,8 +271,6 @@ class Timetable(Gtk.Box):
             context.show_text(text)
 
     def drawTimeAxis(self, area, context, width, height):
-        if self.start >= 1440:  # no lessons this week
-            return
         color = area.get_color()
         context.select_font_face(
             "sans", cairo.FontSlant.NORMAL, cairo.FontWeight.NORMAL
@@ -301,6 +299,8 @@ class Timetable(Gtk.Box):
     def displayData(self, table):
         if table is None:
             return
+        atLeastOneLesson = False
+
         self.header_button.set_label(self.startdate.strftime(_("Week %W")))
         if self.shared.session.getOffline():
             self.offline.set_revealed(revealed=True)
@@ -310,8 +310,13 @@ class Timetable(Gtk.Box):
         self.start = 1440  # One day in minutes (max possible value)
         for day in table:
             for lesson in day:
+                atLeastOneLesson = True
                 if lesson["start"] < self.start:
                     self.start = lesson["start"]
+
+        self.showAxis = atLeastOneLesson
+        if not atLeastOneLesson:
+            self.start = 0
 
         for lesson in self.lessons:
             lesson[0].remove(lesson[1])
@@ -326,18 +331,19 @@ class Timetable(Gtk.Box):
             overlay[0].remove_overlay(overlay[1])
         self.overlays.clear()
 
-        axisColumn = Gtk.Box()
-        axisColumn.set_orientation(Gtk.Orientation.VERTICAL)
-        axisHeader = Gtk.Label(label=" ")
-        axisHeader.add_css_class("day")
-        axisColumn.append(axisHeader)
-        axis = Gtk.DrawingArea()
-        axis.set_content_width(44)
-        axis.set_vexpand(True)
-        axis.set_draw_func(self.drawTimeAxis)
-        axisColumn.append(axis)
-        self.timetable.append(axisColumn)
-        self.columns.append(axisColumn)
+        if self.showAxis:
+            axisColumn = Gtk.Box()
+            axisColumn.set_orientation(Gtk.Orientation.VERTICAL)
+            axisHeader = Gtk.Label(label=" ")
+            axisHeader.add_css_class("day")
+            axisColumn.append(axisHeader)
+            axis = Gtk.DrawingArea()
+            axis.set_content_width(44)
+            axis.set_content_height(1440 - self.start)
+            axis.set_draw_func(self.drawTimeAxis)
+            axisColumn.append(axis)
+            self.timetable.append(axisColumn)
+            self.columns.append(axisColumn)
 
         date = self.startdate
         past = True
@@ -361,21 +367,22 @@ class Timetable(Gtk.Box):
             dateLabel.add_css_class("day")
             if date.date() == now.date():
                 dateLabel.add_css_class("today")
-                timeMarker = Gtk.DrawingArea()
-                timeMarker.set_hexpand(True)
-                timeMarker.set_vexpand(True)
-                timeMarker.set_draw_func(self.drawTimeMarker, dateLabel, False)
-                timeMarker.set_can_target(False)
-                column.add_overlay(timeMarker)
-                self.overlays.append((column, timeMarker))
+                if atLeastOneLesson or self.showAxis:
+                    timeMarker = Gtk.DrawingArea()
+                    timeMarker.set_hexpand(True)
+                    timeMarker.set_vexpand(True)
+                    timeMarker.set_draw_func(self.drawTimeMarker, dateLabel, False)
+                    timeMarker.set_can_target(False)
+                    column.add_overlay(timeMarker)
+                    self.overlays.append((column, timeMarker))
 
-                timeMarkerWeek = Gtk.DrawingArea()
-                timeMarkerWeek.set_hexpand(True)
-                timeMarkerWeek.set_vexpand(True)
-                timeMarkerWeek.set_draw_func(self.drawTimeMarker, dateLabel, True)
-                timeMarkerWeek.set_can_target(False)
-                self.overlays.append((self.overlay, timeMarkerWeek))
-                self.overlay.add_overlay(timeMarkerWeek)
+                    timeMarkerWeek = Gtk.DrawingArea()
+                    timeMarkerWeek.set_hexpand(True)
+                    timeMarkerWeek.set_vexpand(True)
+                    timeMarkerWeek.set_draw_func(self.drawTimeMarker, dateLabel, True)
+                    timeMarkerWeek.set_can_target(False)
+                    self.overlays.append((self.overlay, timeMarkerWeek))
+                    self.overlay.add_overlay(timeMarkerWeek)
 
             x = self.start
             if day == []:
