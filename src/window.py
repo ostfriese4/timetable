@@ -27,6 +27,7 @@ from .create_homework import HomeworkEditWindow
 from .credentials import getCredentials
 from .api import testCredentials
 from .profiles import ProfilesWindow
+from .external_page import ExternalPage
 from gi.repository import Adw
 from gi.repository import Gtk
 
@@ -49,6 +50,8 @@ class UntisWindow(Adw.ApplicationWindow):
     def __init__(self, shared, **kwargs):
         super().__init__(**kwargs)
 
+        self.pages = []
+
         self.shared = shared
         self.login_window = LoginWindow(self)
         self.homeworkEditWindow = HomeworkEditWindow(self)
@@ -59,6 +62,25 @@ class UntisWindow(Adw.ApplicationWindow):
         self.teachers.enable_bindings(self)
         self.messages.enable_bindings(self)
         self.absences.enable_bindings(self)
+
+        self.addExternalPages()
+
+    def addExternalPages(self):
+        for page in self.pages:
+            self.main_view_stack.remove(page)
+        self.pages.clear()
+
+        for pageData in self.shared.session.getMenu():
+            id = "external" + str(len(self.pages))
+            content = ExternalPage(pageData, id)
+
+            page = self.main_view_stack.add(content)
+            page.set_title(pageData["name"])
+            page.set_name(id)
+
+            content.enable_bindings(self)
+
+            self.pages.append(page)
 
     def reload(self):
         self.checkCredentials()

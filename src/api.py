@@ -652,6 +652,11 @@ class session:
         data = self._getRequest(path)
         return data
 
+    def getMenu(self):
+        path = "/WebUntis/api/rest/view/v1/app/platform-application/menus"
+        data = self._getRequest(path)
+        return data or []
+
     def getHomeworks(self, start=None, end=None):
         year = self.getCurrentSchoolYear()
         if start is None:
