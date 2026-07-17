@@ -13,7 +13,12 @@
                 {
                     "type": "file",
                     "url": "https://files.pythonhosted.org/packages/65/33/7b83bde70eddaaaaef487751a9c3a5cc0c0be54620ded0e120ebdc401ff9/pyotp-2.10.0-py3-none-any.whl",
-                    "sha256": "1df2f6a1bcc3bb0716172a5215ddc2f8c7c7fd26a13df9927d52e1746934836c"
+                    "sha256": "1df2f6a1bcc3bb0716172a5215ddc2f8c7c7fd26a13df9927d52e1746934836c",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "pyotp",
+                        "packagetype": "bdist_wheel"
+                    }
                 }
             ]
         },
@@ -27,27 +32,52 @@
                 {
                     "type": "file",
                     "url": "https://files.pythonhosted.org/packages/ef/2f/c5464532e965badff2f4c4c1a3a83f5697f0d7c407ed0cda44aaa99bb451/certifi-2026.6.17-py3-none-any.whl",
-                    "sha256": "2227dcbaafe0d2f59279d1762ddddc37783ed4354594f194ffc31d20f41fc3db"
+                    "sha256": "2227dcbaafe0d2f59279d1762ddddc37783ed4354594f194ffc31d20f41fc3db",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "certifi",
+                        "packagetype": "bdist_wheel"
+                    }
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/db/8f/61959034484a4a7c527811f4721e75d02d653a35afb0b6054474d8185d4c/charset_normalizer-3.4.7-py3-none-any.whl",
-                    "sha256": "3dce51d0f5e7951f8bb4900c257dad282f49190fdbebecd4ba99bcc41fef404d"
+                    "url": "https://files.pythonhosted.org/packages/98/2b/f97f1c193fb855c345d678f5077d6926034db0722df74c8f057020e05a25/charset_normalizer-3.4.9-py3-none-any.whl",
+                    "sha256": "68e5f26a1ad57ded6d1cfb85331d1c1a195314756471d97758c48498bb4dcdf5",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "charset-normalizer",
+                        "packagetype": "bdist_wheel"
+                    }
                 },
                 {
                     "type": "file",
                     "url": "https://files.pythonhosted.org/packages/1e/5e/d4e9f1a599fb8e573b7b87160658329fbf28d19eac2718f51fc3def3aa5a/idna-3.18-py3-none-any.whl",
-                    "sha256": "7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2"
+                    "sha256": "7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "idna",
+                        "packagetype": "bdist_wheel"
+                    }
                 },
                 {
                     "type": "file",
                     "url": "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl",
-                    "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0"
+                    "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "requests",
+                        "packagetype": "bdist_wheel"
+                    }
                 },
                 {
                     "type": "file",
                     "url": "https://files.pythonhosted.org/packages/7f/3e/5db95bcf282c52709639744ca2a8b149baccf648e39c8cc87553df9eae0c/urllib3-2.7.0-py3-none-any.whl",
-                    "sha256": "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897"
+                    "sha256": "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "urllib3",
+                        "packagetype": "bdist_wheel"
+                    }
                 }
             ]
         }
