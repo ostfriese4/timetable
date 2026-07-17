@@ -20,6 +20,7 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from .homework_row import HomeworkRow
+from .dialog import closeOnClickOutside
 
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/information.ui")
@@ -33,6 +34,7 @@ class InformationWindow(Adw.Dialog):
         self.window = window
         self.info_rows = []
         self.lesson = None
+        closeOnClickOutside(self)
 
     def setLesson(self, lesson):
         self.lesson = lesson
