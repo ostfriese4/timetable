@@ -88,6 +88,8 @@ class Timetable(Gtk.Box):
             1000 * 60 * 10, self.loadData
         )  # Update every ten minutes (will result in every hour because of caching)
 
+        self.show_sidebar_button.connect("notify::visible", self.loadData)
+
     def on_header_button(self, data=None):
         self.date_chooser.set_year(self.startdate.year)
         self.date_chooser.set_month(self.startdate.month - 1)
@@ -180,7 +182,7 @@ class Timetable(Gtk.Box):
             thread = threading.Thread(target=code, daemon=True)
             thread.start()
 
-    def loadData(self):
+    def loadData(self, data = None, data2 = None):
         self.loadingAnimation()
         s = self.startdate
 
@@ -314,7 +316,7 @@ class Timetable(Gtk.Box):
                 if lesson["start"] < self.start:
                     self.start = lesson["start"]
 
-        self.showAxis = atLeastOneLesson
+        self.showAxis = atLeastOneLesson and not self.show_sidebar_button.get_visible()
         if not atLeastOneLesson:
             self.start = 0
 
