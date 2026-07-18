@@ -26,6 +26,7 @@ from gi.repository import GObject
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import WebKit
+import os
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/external_page.ui')
 class ExternalPage(Gtk.Box):
@@ -33,6 +34,7 @@ class ExternalPage(Gtk.Box):
 
     show_sidebar_button = Gtk.Template.Child()
     open_button = Gtk.Template.Child()
+    back_button = Gtk.Template.Child()
     view = Gtk.Template.Child()
     title = Gtk.Template.Child()
 
@@ -45,10 +47,37 @@ class ExternalPage(Gtk.Box):
         self.open_button.connect("clicked", self.open)
         self.title.set_label(data["name"])
 
+        def back(data):
+            self.webview.go_back()
+        self.back_button.connect("clicked", back)
+
     def open(self, data):
         Gio.AppInfo.launch_default_for_uri(self.data["redirectUrl"], None)
 
+    def load(self):
+        profile = "profile-" + str(self.shared.profiles["default-profile"])
+        dataPath = os.environ.get("XDG_DATA_HOME", ".untis") + "/untis/webview/" + profile
+        cachePath = os.environ.get("XDG_CACHE_HOME", ".untis/cache") + "/untis/webview/" + profile
+        self.browserSession = WebKit.NetworkSession(
+            data_directory=dataPath,
+            cache_directory=cachePath
+        )
+
+        cookies = self.browserSession.get_cookie_manager()
+        cookies.set_persistent_storage(
+            dataPath + "/cookies.sqlite", WebKit.CookiePersistentStorage.SQLITE
+        )
+
+        self.webview = WebKit.WebView(network_session = self.browserSession)
+        self.view.append(self.webview)
+        self.webview.set_hexpand(True)
+        self.webview.set_vexpand(True)
+        self.loaded = True
+
+        self.webview.load_uri(self.data["redirectUrl"])
+
     def enable_bindings(self, parent):
+        self.shared = parent.shared
         parent.split_view.bind_property(
             "show-sidebar",
             self.show_sidebar_button,
@@ -60,9 +89,5 @@ class ExternalPage(Gtk.Box):
         def on_visible(page, pspec):
             if parent.main_view_stack.get_visible_child_name() == self.id:
                 if not self.loaded:
-                    self.webview = WebKit.WebView()
-                    self.view.append(self.webview)
-                    GLib.idle_add(self.webview.load_uri, self.data["redirectUrl"])
-                    self.loaded = True
+                    GLib.idle_add(self.load)
         parent.main_view_stack.connect("notify::visible-child-name", on_visible)
-        self.shared = parent.shared
