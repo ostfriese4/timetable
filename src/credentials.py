@@ -51,7 +51,7 @@ def storePassword(attributes, password):
 def setCredentials(server, school, user, password, credType, profile="1"):
     data = getCredentialsFile()
 
-    if not "default-profile" in data:
+    if data.get("default-profile") is None:
         data["default-profile"] = profile
     if not "credentials" in data:
         data["credentials"] = {}

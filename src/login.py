@@ -20,7 +20,7 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from .api import session, testCredentials, searchSchool
-from .credentials import getCredentials, setCredentials, setProfiles
+from .credentials import getCredentials, setCredentials, setProfiles, getProfiles
 from .dialog import closeOnClickOutside
 
 
@@ -135,6 +135,10 @@ class LoginWindow(Adw.Dialog):
             credType=credType,
             profile=self.profile,
         )
+
+        # re-read the profiles: on the first login the in-memory state still
+        # has no profiles and no default, but setCredentials just created them
+        self.window.shared.profiles = getProfiles()
 
         self.window.shared.profiles["profiles"][self.profile]["name"] = (
             self.profile_entry.get_text()
