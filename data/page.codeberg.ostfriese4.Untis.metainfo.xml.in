@@ -8,6 +8,15 @@
   <summary>View your WebUntis timetable</summary>
   <description>
     <p>Timetable is an unofficial client for WebUntis, which focusses on the features used by students.</p>
+    <p>Timetable supports</p>
+    <ul>
+      <li>Viewing your timetable</li>
+      <li>Viewing and editing your homework</li>
+      <li>Looking up your teachers</li>
+      <li>Viewing your messages</li>
+      <li>Viewing your absences</li>
+      <li>Multiple profiles</li>
+    </ul>
   </description>
 
   <developer id="page.codeberg.ostfriese4">
