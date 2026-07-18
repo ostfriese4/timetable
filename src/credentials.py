@@ -2,7 +2,7 @@ import gi
 
 gi.require_version("Secret", "1")
 
-from gi.repository import Secret
+from gi.repository import GLib, Secret
 import json
 import os
 
@@ -30,6 +30,24 @@ def getCredentialsFile():
             "default-profile": None
         }
 
+def storePassword(attributes, password):
+    # returns False if the keyring is unavailable, e.g. when running
+    # sandboxed and the host has no working Secret portal implementation
+    try:
+        Secret.password_store_sync(
+            SCHEMA,
+            attributes,
+            Secret.COLLECTION_DEFAULT,
+            "Untis Password",
+            password,
+            None,
+        )
+        return True
+    except GLib.GError as error:
+        print("storing password in the keyring failed:", error.message)
+        return False
+
+
 def setCredentials(server, school, user, password, credType, profile="1"):
     data = getCredentialsFile()
 
@@ -49,20 +67,22 @@ def setCredentials(server, school, user, password, credType, profile="1"):
         "type": credType,
     }
 
+    if not storePassword(data["credentials"][profile], password):
+        # fall back to the credentials file so logging in still works
+        data["credentials"][profile]["password"] = password
+
     with open(credentialsPath, "w") as file:
         json.dump(data, file, indent=4)
-    Secret.password_store_sync(
-        SCHEMA,
-        data["credentials"][profile],
-        Secret.COLLECTION_DEFAULT,
-        "Untis Password",
-        password,
-        None,
-    )
 
 
-def getPassword(user):
-    password = Secret.password_lookup_sync(SCHEMA, user, None)
+def getPassword(attributes):
+    # returns the password, "" if none is stored
+    # or None if the keyring is unavailable
+    try:
+        password = Secret.password_lookup_sync(SCHEMA, attributes, None)
+    except GLib.GError as error:
+        print("reading password from the keyring failed:", error.message)
+        return None
     if password == None:
         return ""
     return password
@@ -74,19 +94,22 @@ def getCredentials(profile="1"):
     if "password" in data:  # not yet migrated to secrets
         print("migrating password to secrets")
         setCredentials(
-            data["server"], data["school"], data["username"], data["password"]
+            data["server"], data["school"], data["username"], data["password"], "password"
         )
         return getCredentials()
 
     if not "default-profile" in data:  # not yet migrated to profiles
         print("migrating password to profiles")
+        password = getPassword(data)
+        if password is None:  # keyring unavailable, retry on the next run
+            raise FileNotFoundError("no password set")
         with open(credentialsPath, "w") as file:
             json.dump({}, file)
         setCredentials(
             data["server"],
             data["school"],
             data["user"],
-            getPassword(data),
+            password,
             "password",
             profile,
         )
@@ -96,7 +119,11 @@ def getCredentials(profile="1"):
         raise FileNotFoundError("no password set")
 
     data = data["credentials"][profile]
-    data["password"] = getPassword(data)
+    fallbackPassword = data.pop("password", "")
+    password = getPassword(data)
+    if not password:  # not in the keyring or keyring unavailable
+        password = fallbackPassword
+    data["password"] = password
     data["profile"] = profile
 
     if not data["server"].startswith("https://"):
@@ -111,8 +138,11 @@ def getProfiles():
             "profiles": data["profiles"],
             "default-profile": data["default-profile"],
         }
-    except:
-        getCredentials()  # not migrated
+    except KeyError:
+        try:
+            getCredentials()  # not migrated
+        except FileNotFoundError:
+            return {"profiles": {}, "default-profile": None}
         return getProfiles()
 
 

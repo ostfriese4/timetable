@@ -9,7 +9,7 @@ import binascii
 from pathlib import Path
 from hashlib import md5
 
-version = "3.1"
+version = "4.0"
 id = "page.codeberg.ostfriese4.Untis"
 useragent = id + " " + version
 
@@ -123,7 +123,7 @@ class session:
         self.name = credentials["school"] + credentials["user"] + credentials["server"] + credentials["profile"]
         self.name = md5(self.name.encode()).hexdigest()
         self.CACHEDIR = (
-            os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis/" + self.name + "/"
+            os.environ.get("XDG_CACHE_HOME", ".untis/cache") + "/untis/" + self.name + "/"
         )
         self.cache = {}
 
@@ -131,7 +131,7 @@ class session:
 
         try:
             with open(
-                os.environ.get("XDG_CACHE_HOME", ".untis") + "/untis-colors.json"
+                os.environ.get("XDG_CACHE_HOME", ".untis/cache") + "/untis-colors.json"
             ) as file:
                 self.colors = json.load(file)
         except:
@@ -221,12 +221,16 @@ class session:
         if mode == "online":
             try:
                 response = self.session.post(self.server + "/WebUntis/jsonrpc.do", json = payload)
-                data = response.json()["result"]
+                data = response.json()
                 offline = False
-                if "errorCode" in data:
+                if not "result" in data:  # e.g. "no right for getTeachers()"
+                    print("ERROR: RPC:", method, params, data.get("error"))
+                    mode = "cache"
+                elif "errorCode" in data["result"]:
                     print("ERROR: RPC:", method, params)
                     mode = "cache"
                 else:
+                    data = data["result"]
                     self._writeToCache(hashed, data)
                     return data
             except requests.exceptions.ConnectionError:
@@ -257,12 +261,13 @@ class session:
                 cache = False
         if not cache:
             data = self._RPCRequest(method = "getTeachers", params = {}, mode = mode, maxage = maxage)
-            out = {}
-            for teacher in data:
-                out[teacher["name"]] = teacher
-            self._writeToCache(name, out)
-            return out
-        return self._readFromCache(name)
+            if data is not None:
+                out = {}
+                for teacher in data:
+                    out[teacher["name"]] = teacher
+                self._writeToCache(name, out)
+                return out
+        return self._readFromCache(name) or {}  # no teacher data available
 
     def getTeacherById(self, id, mode = "normal"):
         for teacher in self.getAllTeachers(mode = mode):
@@ -320,7 +325,7 @@ class session:
         data = self._getRequest(path)["data"]["messagesOfDay"]
         return data
 
-    def getOwnTimetable(self, start=None, end=None, mode="normal"):
+    def getTimetable(self, resourceType, resourceId, start = None, end = None, mode = "normal"):
         year = self.getCurrentSchoolYear()
 
         s_start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")
@@ -335,7 +340,7 @@ class session:
         end = end.date()
         day = start
         while day <= end:
-            name = "days/" + day.strftime("%Y-%m-%d")
+            name = "days-" + resourceType + str(resourceId) + "/" + day.strftime("%Y-%m-%d")
             cache = mode == "cache"
             if mode == "normal":
                 cache = self._useCache(name)
@@ -354,8 +359,10 @@ class session:
                     + day.strftime("%Y-%m-%d")
                     + "&end="
                     + day.strftime("%Y-%m-%d")
-                    + "&format=2&resourceType=STUDENT&resources="
-                    + str(self.getOwnId())
+                    + "&format=2&resourceType="
+                    + resourceType
+                    + "&resources="
+                    + str(resourceId)
                     + "&periodTypes=&timetableType=MY_TIMETABLE&layout=START_TIME"
                 )
                 fetched = self._getRequest(path, mode)
@@ -365,6 +372,15 @@ class session:
             day += datetime.timedelta(days=1)
 
         return data
+
+    def getOwnTimetable(self, start=None, end=None, mode="normal"):
+        return self.getStudentTimetable(self.getOwnId(), start=start, end=end, mode=mode)
+
+    def getStudentTimetable(self, id, start=None, end=None, mode="normal"):
+        return self.getTimetable("STUDENT", id, start=start, end=end, mode=mode)
+
+    def getRoomTimetable(self, id, start=None, end=None, mode="normal"):
+        return self.getTimetable("ROOM", id, start=start, end=end, mode=mode)
 
     def createList(self, data, key, long, integrate=None):
         text = ""
@@ -636,6 +652,11 @@ class session:
         data = self._getRequest(path)
         return data
 
+    def getMenu(self):
+        path = "/WebUntis/api/rest/view/v1/app/platform-application/menus"
+        data = self._getRequest(path)
+        return data or []
+
     def getHomeworks(self, start=None, end=None):
         year = self.getCurrentSchoolYear()
         if start is None:
@@ -650,4 +671,7 @@ class session:
             + end.strftime("%Y%m%d")
         )
         data = self._getRequest(path)
+        if data is None or not "data" in data:  # e.g. no right for homeworks
+            print("ERROR: homeworks:", data)
+            return {"lessons": [], "homeworks": []}
         return data["data"]

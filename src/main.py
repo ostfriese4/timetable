@@ -29,6 +29,16 @@ from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow
 from .credentials import getCredentials, getProfiles
 import datetime
+import os
+
+paths = [
+    os.environ.get("XDG_CACHE_HOME", ".untis/cache") + "/untis/",
+    os.environ.get("XDG_DATA_HOME", ".untis/data")
+]
+
+for path in paths:
+    if not os.path.exists(path):
+        os.makedirs(path)
 
 
 developers = ["Ostfriese4"]

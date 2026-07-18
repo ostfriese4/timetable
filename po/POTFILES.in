@@ -9,6 +9,8 @@ src/api.py
 src/credentials.py
 src/create_homework.py
 src/create_homework.ui
+src/external_page.py
+src/external_page.ui
 src/homework.py
 src/homework.ui
 src/homework_row.py
