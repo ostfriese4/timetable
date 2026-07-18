@@ -17,6 +17,14 @@ headers = {"User-Agent": useragent, "Accept": "application/json"}
 
 offline = False
 
+fakeTime = datetime.datetime.strptime("26.06.16 10:31:03", "%y.%m.%d %H:%M:%S")
+
+def getDateTime():
+    #return fakeTime
+    return datetime.datetime.now()
+def getDate():
+    return getDateTime().date()
+
 
 def _login(credentials):
     global offline
@@ -341,7 +349,7 @@ class session:
 
     def getNewsOfDay(self, day=None):
         if day is None:
-            day = datetime.date.today()
+            day = getDate()
         path = "/WebUntis/api/public/news/newsWidgetData?date=" + day.strftime("%Y%m%d")
         data = self._getRequest(path)["data"]["messagesOfDay"]
         return data
@@ -577,7 +585,7 @@ class session:
         return {"start": day, "end": day, "name": _("No data")}
 
     def getCurrentSchoolYear(self):
-        now = datetime.datetime.now()
+        now = getDateTime()
         years = self.getSchoolYears()
         for year in years:
             start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")

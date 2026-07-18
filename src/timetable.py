@@ -27,6 +27,7 @@ from .information import InformationWindow
 from .lesson import Lesson
 from .holiday import Holiday
 from .dialog import closeOnClickOutside
+from .api import getDateTime
 import cairo
 import datetime
 import math
@@ -128,7 +129,7 @@ class Timetable(Gtk.Box):
         self.window = parent
 
         try:
-            self.jump_to(datetime.datetime.now())
+            self.jump_to(getDateTime())
             self.shared.session.getHomeworks()
         except:
             pass
@@ -240,10 +241,8 @@ class Timetable(Gtk.Box):
                 lesson.addHomework(homework)
 
     def drawTimeMarker(self, area, context, width, height, dateLabel, week):
-        now = datetime.datetime.now()
+        now = getDateTime()
         y = now.hour * 60 + now.minute - self.start + dateLabel.get_allocated_height()
-
-        # y = 200 # fake time for screenshots
 
         context.set_source_rgb(1, 0, 0)
         if week:
@@ -349,7 +348,7 @@ class Timetable(Gtk.Box):
 
         date = self.startdate
         past = True
-        now = datetime.datetime.now()
+        now = getDateTime()
         for day in table:
             column = Gtk.Overlay()
             self.timetable.append(column)
