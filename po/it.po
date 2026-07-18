@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 18:58+0200\n"
+"POT-Creation-Date: 2026-07-18 17:13+0200\n"
 "PO-Revision-Date: 2026-07-18 09:26+0200\n"
 "Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian\n"
@@ -38,19 +38,51 @@ msgstr ""
 "Timetable è un client non ufficiale per WebUntis focalizzato sulle "
 "funzionalità più utilizzate dagli studenti."
 
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:11
+#, fuzzy
+msgid "Timetable supports"
+msgstr "Timetable"
+
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:13
+#, fuzzy
+msgid "Viewing your timetable"
+msgstr "Visualizza il tuo orario WebUntis"
+
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:14
+#, fuzzy
+msgid "Viewing and editing your homework"
+msgstr "Revisionare un compito"
+
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:15
+msgid "Looking up your teachers"
+msgstr ""
+
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:16
+msgid "Viewing your messages"
+msgstr ""
+
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:17
+msgid "Viewing your absences"
+msgstr ""
+
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:18
+#, fuzzy
+msgid "Multiple profiles"
+msgstr "Elimina il profilo %s"
+
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:23
 msgid "Ostfriese4"
 msgstr "Ostfriese4"
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:47
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:56
 msgid "The timetable"
 msgstr "L'orario"
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:51
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:60
 msgid "Dialog showing information about a lesson"
 msgstr "Finestra di dialogo che mostra le informazioni su una lezione"
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:55
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:64
 msgid "Editing a homework"
 msgstr "Revisionare un compito"
 
@@ -78,19 +110,19 @@ msgstr "FIne"
 msgid "Absences"
 msgstr "Assenze"
 
-#: src/api.py:395
+#: src/api.py:424
 msgid "and"
 msgstr "e"
 
-#: src/api.py:400 src/api.py:468
+#: src/api.py:429 src/api.py:497
 msgid "Unknown"
 msgstr "Sconosciuto"
 
-#: src/api.py:556
+#: src/api.py:585
 msgid "No data"
 msgstr "Nessun dato"
 
-#: src/credentials.py:61 src/login.py:205
+#: src/credentials.py:61 src/login.py:209
 msgid "Profile"
 msgstr "Profilo"
 
@@ -246,7 +278,7 @@ msgstr "Errore"
 msgid "Token"
 msgstr "Token"
 
-#: src/login.py:152
+#: src/login.py:156
 msgid "Invalid credentials"
 msgstr "Credenziali non valide"
 
@@ -392,12 +424,12 @@ msgstr "Insegnanti"
 msgid "Search term"
 msgstr "Termine di ricerca"
 
-#: src/timetable.py:256
+#: src/timetable.py:305
 msgid "Week %W"
 msgstr "Settimana %W"
 
 #. Translators: date format in the timetable
-#: src/timetable.py:298
+#: src/timetable.py:366
 msgid "%m/%d/%y"
 msgstr "%d/%m/%y"
 
