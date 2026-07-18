@@ -140,11 +140,32 @@ class session:
     def getOffline(self):
         return offline
 
+    def scanFiles(self, root, rootName):
+        out = []
+        for name in os.listdir(root):
+            path = root + name
+            if os.path.isfile(path):
+                out.append(rootName + "/" + name)
+            else:
+                out += self.scanFiles(path + "/", rootName + "/" + name)
+        return out
+
+    def repairCacheIndex(self):
+        print("repairing cache index...")
+        self.cacheIndex = {"last-refresh": time.time()}
+        for file in self.scanFiles(self.CACHEDIR, ""):
+            self.cacheIndex[file] = time.time() - 3600
+            print("found", file)
+        self._saveCacheIndex()
+
     def _readCacheIndex(self):
         path = self.CACHEDIR + "index.json"
         if os.path.exists(path):
-            with open(path) as file:
-                self.cacheIndex = json.load(file)
+            try:
+                with open(path) as file:
+                    self.cacheIndex = json.load(file)
+            except json.decoder.JSONDecodeError:
+                self.repairCacheIndex()
         else:
             self.cacheIndex = {"last-refresh": time.time()}
 
