@@ -9,7 +9,7 @@ import binascii
 from pathlib import Path
 from hashlib import md5
 
-version = "4.0"
+version = "4.1"
 id = "page.codeberg.ostfriese4.Untis"
 useragent = id + " " + version
 

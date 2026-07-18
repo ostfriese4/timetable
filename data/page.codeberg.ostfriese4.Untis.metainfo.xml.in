@@ -66,6 +66,13 @@
   </screenshots>
 
   <releases>
+    <release version="4.1" date="2026-07-18">
+      <description translate="no">
+        <ul>
+          <li>added a time-axis @Felitendo</li>
+        </ul>
+      </description>
+    </release>
     <release version="4.0" date="2026-07-17">
       <description translate="no">
         <ul>
