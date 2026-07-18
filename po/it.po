@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-17 18:58+0200\n"
-"PO-Revision-Date: 2026-06-11 21:26+0200\n"
+"PO-Revision-Date: 2026-07-18 09:26+0200\n"
 "Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -56,28 +56,27 @@ msgstr "Revisionare un compito"
 
 #: src/absences.py:45
 msgid "Text"
-msgstr ""
+msgstr "Testo"
 
 #: src/absences.py:49
 msgid "Excused"
-msgstr ""
+msgstr "Scusato"
 
 #: src/absences.py:51
 msgid "Unexcused"
-msgstr ""
+msgstr "Ingiustificato"
 
 #: src/absences.py:55
 msgid "Start"
-msgstr ""
+msgstr "Inizio"
 
 #: src/absences.py:59
-#, fuzzy
 msgid "End"
-msgstr "e"
+msgstr "FIne"
 
 #: src/absences.ui:12 src/window.ui:92
 msgid "Absences"
-msgstr ""
+msgstr "Assenze"
 
 #: src/api.py:395
 msgid "and"
@@ -89,11 +88,11 @@ msgstr "Sconosciuto"
 
 #: src/api.py:556
 msgid "No data"
-msgstr ""
+msgstr "Nessun dato"
 
 #: src/credentials.py:61 src/login.py:205
 msgid "Profile"
-msgstr ""
+msgstr "Profilo"
 
 #: src/create_homework.py:53
 msgid "Create homework"
@@ -141,7 +140,7 @@ msgstr "Salva"
 
 #: src/external_page.ui:25
 msgid "Open this page in a web-browser"
-msgstr ""
+msgstr "Apri questa pagina in un browser web"
 
 #: src/homework.ui:19
 msgid "Create a new homework"
@@ -153,11 +152,11 @@ msgstr "Non completato"
 
 #: src/homework.ui:51
 msgid "Everything done"
-msgstr ""
+msgstr "Tutto fatto"
 
 #: src/homework.ui:52
 msgid "You have no unfinished homework"
-msgstr ""
+msgstr "Non hai compiti non fatti"
 
 #: src/homework_row.py:68
 msgid "Your teacher marked this as completed"
@@ -189,7 +188,7 @@ msgstr "Aula"
 
 #: src/information.py:50 src/information.py:96
 msgid "Room description"
-msgstr ""
+msgstr "Descrizione aula"
 
 #: src/information.py:51 src/information.py:97
 msgid "Teacher"
@@ -245,11 +244,11 @@ msgstr "Errore"
 
 #: src/login.py:125 src/login.ui:69
 msgid "Token"
-msgstr ""
+msgstr "Token"
 
 #: src/login.py:152
 msgid "Invalid credentials"
-msgstr ""
+msgstr "Credenziali non valide"
 
 #: src/login.ui:6
 msgid "Login"
@@ -257,7 +256,7 @@ msgstr "Accedi"
 
 #: src/login.ui:25
 msgid "Profile name"
-msgstr ""
+msgstr "Nome del profilo"
 
 #: src/login.ui:34
 msgid "I usually log in using a third-party service"
@@ -281,7 +280,7 @@ msgstr "Nome utente"
 
 #: src/login.ui:65
 msgid "Authentication method"
-msgstr ""
+msgstr "Metodo di autenticazione"
 
 #: src/login.ui:70
 msgid "Password"
@@ -311,48 +310,45 @@ msgstr "Albano Battistella"
 
 #: src/messages.py:62
 msgid "Sender"
-msgstr ""
+msgstr "Mittente"
 
 #: src/messages.ui:12 src/messages.ui:39 src/window.ui:82
 msgid "Messages"
-msgstr ""
+msgstr "Messaggi"
 
 #: src/messages.ui:34
 msgid "News of Day"
-msgstr ""
+msgstr "Notizie del giorno"
 
 #: src/profiles.py:38
-#, fuzzy
 msgid "Unnamed"
-msgstr "Nome utente"
+msgstr "Senza nome"
 
 #: src/profiles.py:45
 #, python-format
 msgid "Edit profile %s"
-msgstr ""
+msgstr "Modifica profilo %s"
 
 #: src/profiles.py:51
 #, python-format
 msgid "Delete profile %s"
-msgstr ""
+msgstr "Elimina il profilo %s"
 
 #: src/profiles.py:134
 msgid "Can not delete only profile"
-msgstr ""
+msgstr "Non è possibile eliminare solo il profilo"
 
 #: src/profiles.py:150
-#, fuzzy
 msgid "Do you really want to delete this profile?"
-msgstr "Vuoi davvero eliminare questo compito?"
+msgstr "Vuoi davvero eliminare questo profilo?"
 
 #: src/profiles.ui:6
 msgid "Manage profiles"
-msgstr ""
+msgstr "Gestisci i profili"
 
 #: src/profiles.ui:16
-#, fuzzy
 msgid "Create a new profile"
-msgstr "Crea un nuovo compito"
+msgstr "Crea un nuovo profilo"
 
 #: src/shortcuts-dialog.ui:6
 msgid "Shortcuts"
@@ -371,13 +367,12 @@ msgstr "Accedi"
 #: src/shortcuts-dialog.ui:21
 msgctxt "shortcut window"
 msgid "Manage profiles"
-msgstr ""
+msgstr "Gestisci i profili"
 
 #: src/shortcuts-dialog.ui:27
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Create homework"
-msgstr "Crea compiti percasa"
+msgstr "Crea compiti per casa"
 
 #: src/shortcuts-dialog.ui:33
 msgctxt "shortcut window"
@@ -436,7 +431,7 @@ msgstr "Il mio orario"
 
 #: src/window.ui:109
 msgid "Manage _profiles"
-msgstr ""
+msgstr "Gestisci _profili"
 
 #: src/window.ui:113
 msgid "_Keyboard Shortcuts"
