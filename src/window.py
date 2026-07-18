@@ -63,7 +63,10 @@ class UntisWindow(Adw.ApplicationWindow):
         self.messages.enable_bindings(self)
         self.absences.enable_bindings(self)
 
-        self.addExternalPages()
+        try:
+            self.addExternalPages()
+        except:
+            pass
 
     def addExternalPages(self):
         for page in self.pages:
@@ -87,6 +90,7 @@ class UntisWindow(Adw.ApplicationWindow):
         self.main_view_stack.set_visible_child_name("timetable")
         self.timetable.loadData()
         self.homework.displayAll()
+        self.addExternalPages()
 
     def checkCredentials(self):
         print("check credentials")
