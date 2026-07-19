@@ -1,6 +1,10 @@
 <div align="center">
   <img src='https://codeberg.org/ostfriese4/untis/raw/branch/main/data/icons/hicolor/scalable/apps/page.codeberg.ostfriese4.Untis.svg'></img>
   <br>
+  <a href="https://repology.org/project/timetable/versions">
+    <img src="https://repology.org/badge/latest-versions/timetable.svg" alt="latest packaged version(s)">
+  </a>
+  <br>
   <h1>Timetable</h1>
   <p>Timetable is an inofficial client for WebUntis.
     <br>
@@ -20,6 +24,7 @@ Besides Flathub, Timetable is also available in the [AUR](https://aur.archlinux.
 ```
 yay -S timetable-bin
 ```
+[![Packaging status](https://repology.org/badge/vertical-allrepos/timetable.svg)](https://repology.org/project/timetable/versions)
 
 # Build
 To build, clone this in GNOME-Builder and press play.
