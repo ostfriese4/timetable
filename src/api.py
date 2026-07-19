@@ -226,7 +226,7 @@ class session:
         return False
 
     def _post(self, path, data):
-        return self.session.post(path, json = data)
+        return self.session.post(self.server + path, json = data)
 
     def _RPCRequest(self, method, params, mode="normal", maxage=3600):
         global offline
@@ -252,7 +252,7 @@ class session:
 
         if mode == "online":
             try:
-                response = self._post(self.server + "/WebUntis/jsonrpc.do", payload)
+                response = self._post("/WebUntis/jsonrpc.do", payload)
                 data = response.json()
                 offline = False
                 if not "result" in data:  # e.g. "no right for getTeachers()"
