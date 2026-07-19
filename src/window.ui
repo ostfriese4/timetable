@@ -41,11 +41,18 @@
                       </object>
                     </child>
                     <child>
-                      <object class="AdwButtonRow" id="user_settings_button">
-                        <property name="start-icon-name">preferences-system-symbolic</property>
-                        <property name="title" translatable="yes">Prefences</property>
-                        <property name="halign">start</property>
+                      <object class="GtkButton" id="user_settings_button">
                         <property name="hexpand">true</property>
+                        <child>
+                          <object class="AdwButtonContent">
+                            <property name="icon-name">preferences-system-symbolic</property>
+                            <property name="label" translatable="yes">Prefences</property>
+                            <property name="halign">start</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="flat"/>
+                        </style>
                       </object>
                     </child>
                   </object>
