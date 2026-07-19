@@ -35,6 +35,8 @@ class ExternalPage(Gtk.Box):
     show_sidebar_button = Gtk.Template.Child()
     open_button = Gtk.Template.Child()
     back_button = Gtk.Template.Child()
+    next_button = Gtk.Template.Child()
+    home_button = Gtk.Template.Child()
     view = Gtk.Template.Child()
     title = Gtk.Template.Child()
 
@@ -50,9 +52,34 @@ class ExternalPage(Gtk.Box):
         def back(data):
             self.webview.go_back()
         self.back_button.connect("clicked", back)
+        def next(data):
+            self.webview.go_forward()
+        self.next_button.connect("clicked", next)
+        def home(data):
+            self.webview.load_uri(self.data["redirectUrl"])
+        self.home_button.connect("clicked", home)
 
     def open(self, data):
-        Gio.AppInfo.launch_default_for_uri(self.data["redirectUrl"], None)
+        Gio.AppInfo.launch_default_for_uri(self.webview.get_uri(), None)
+
+    def updateButtons(self, data=None, data2=None):
+        uri = self.webview.get_uri()
+        history = self.webview.get_back_forward_list()
+
+        if uri == self.data["redirectUrl"]:
+            self.home_button.set_sensitive(False)
+        else:
+            self.home_button.set_sensitive(True)
+
+        if history.get_back_item() is None:
+            self.back_button.set_sensitive(False)
+        else:
+            self.back_button.set_sensitive(True)
+
+        if history.get_forward_item() is None:
+            self.next_button.set_sensitive(False)
+        else:
+            self.next_button.set_sensitive(True)
 
     def load(self):
         profile = "profile-" + str(self.shared.profiles["default-profile"])
@@ -74,7 +101,10 @@ class ExternalPage(Gtk.Box):
         self.webview.set_vexpand(True)
         self.loaded = True
 
+        self.webview.connect("notify::uri", self.updateButtons)
+
         self.webview.load_uri(self.data["redirectUrl"])
+        self.updateButtons()
 
     def enable_bindings(self, parent):
         self.shared = parent.shared
