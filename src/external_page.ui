@@ -46,7 +46,18 @@
           </object>
         </child>
         <property name="content">
-          <object class="GtkBox" id="view"></object>
+          <object class="GtkOverlay" id="overlay">
+            <child>
+              <object class="GtkBox" id="view"/>
+            </child>
+            <child type="overlay">
+              <object class="GtkProgressBar" id="progress">
+                <property name="valign">start</property>
+                <property name="visible">False</property>
+                <property name="can-target">False</property>
+              </object>
+            </child>
+          </object>
         </property>
       </object>
     </child>

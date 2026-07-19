@@ -39,6 +39,7 @@ class ExternalPage(Gtk.Box):
     home_button = Gtk.Template.Child()
     view = Gtk.Template.Child()
     title = Gtk.Template.Child()
+    progress = Gtk.Template.Child()
 
     def __init__(self, data, id, **kwargs):
         super().__init__(**kwargs)
@@ -48,6 +49,7 @@ class ExternalPage(Gtk.Box):
 
         self.open_button.connect("clicked", self.open)
         self.title.set_label(data["name"])
+        self.progress.add_css_class("osd")
 
         def back(data):
             self.webview.go_back()
@@ -81,6 +83,17 @@ class ExternalPage(Gtk.Box):
         else:
             self.next_button.set_sensitive(True)
 
+    def toggleProgress(self, webview, loading):
+        loading = webview.is_loading()
+        self.progress.set_visible(loading)
+        self.progress.set_fraction(0)
+        if loading:
+            GLib.idle_add(self.animateLoad)
+
+    def animateLoad(self):
+        self.progress.set_fraction(self.webview.get_estimated_load_progress())
+        return self.webview.is_loading() # repeat if loading
+
     def load(self):
         profile = "profile-" + str(self.shared.profiles["default-profile"])
         dataPath = os.environ.get("XDG_DATA_HOME", ".untis") + "/untis/webview/" + profile
@@ -102,6 +115,7 @@ class ExternalPage(Gtk.Box):
         self.loaded = True
 
         self.webview.connect("notify::uri", self.updateButtons)
+        self.webview.connect("notify::is-loading", self.toggleProgress)
 
         self.webview.load_uri(self.data["redirectUrl"])
         self.updateButtons()
