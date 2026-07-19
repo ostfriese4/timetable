@@ -225,6 +225,9 @@ class session:
                 return self.cacheIndex[object] + maxage >= time.time()
         return False
 
+    def _post(self, path, data):
+        return self.session.post(path, json = data)
+
     def _RPCRequest(self, method, params, mode="normal", maxage=3600):
         global offline
         orig = mode
@@ -249,7 +252,7 @@ class session:
 
         if mode == "online":
             try:
-                response = self.session.post(self.server + "/WebUntis/jsonrpc.do", json = payload)
+                response = self._post(self.server + "/WebUntis/jsonrpc.do", payload)
                 data = response.json()
                 offline = False
                 if not "result" in data:  # e.g. "no right for getTeachers()"
@@ -685,6 +688,25 @@ class session:
         path = "/WebUntis/api/rest/view/v1/app/platform-application/menus"
         data = self._getRequest(path)
         return data or []
+
+    def getProfile(self):
+        path = "/WebUntis/api/profile/general"
+        data = self._getRequest(path)
+        return data["data"]["profile"]
+
+    def getProfileKey(self, key):
+        data = self.getProfile()
+        if key in data:
+            return data[key]
+
+    def setProfile(self, settings):
+        path = "/WebUntis/api/profile/general"
+        self._post(path, settings)
+
+    def setProfileKey(self, key, value):
+        self.setProfile({
+            key: value
+        })
 
     def getHomeworks(self, start=None, end=None):
         year = self.getCurrentSchoolYear()
