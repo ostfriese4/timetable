@@ -28,6 +28,7 @@ from .credentials import getCredentials
 from .api import testCredentials
 from .profiles import ProfilesWindow
 from .external_page import ExternalPage
+from .account_settings import AccountSettingsWindow
 from gi.repository import Adw
 from gi.repository import Gtk
 
@@ -46,6 +47,7 @@ class UntisWindow(Adw.ApplicationWindow):
     split_view = Gtk.Template.Child()
     teachers = Gtk.Template.Child()
     messages = Gtk.Template.Child()
+    user_settings_button = Gtk.Template.Child()
 
     def __init__(self, shared, **kwargs):
         super().__init__(**kwargs)
@@ -56,12 +58,15 @@ class UntisWindow(Adw.ApplicationWindow):
         self.login_window = LoginWindow(self)
         self.homeworkEditWindow = HomeworkEditWindow(self)
         self.profiles_window = ProfilesWindow(self)
+        self.account_settings_window = AccountSettingsWindow(self)
 
         self.timetable.enable_bindings(self)
         self.homework.enable_bindings(self)
         self.teachers.enable_bindings(self)
         self.messages.enable_bindings(self)
         self.absences.enable_bindings(self)
+
+        self.user_settings_button.connect("clicked", self.account_settings_window.open)
 
         try:
             self.addExternalPages()

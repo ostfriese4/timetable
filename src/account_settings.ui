@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="AccountSettingsWindow" parent="AdwDialog">
+    <property name="title" translatable="yes">Account-Settings</property>
+    <property name="content-width">400</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar"/>
+        </child>
+        <property name="content">
+          <object class="AdwPreferencesPage"></object>
+        </property>
+      </object>
+    </child>
+  </template>
+</interface>

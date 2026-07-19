@@ -5,6 +5,8 @@ data/page.codeberg.ostfriese4.Untis.metainfo.xml.in
 data/page.codeberg.ostfriese4.Untis.gschema.xml
 src/absences.py
 src/absences.ui
+src/account_settings.py
+src/account_settings.ui
 src/api.py
 src/credentials.py
 src/create_homework.py
