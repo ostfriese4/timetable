@@ -87,7 +87,7 @@ class ProfilesWindow(Adw.Dialog):
         self.window = window
         self.displayed = []
 
-    def manage(self):
+    def updateList(self):
         while self.displayed != []:
             item = self.displayed.pop()
             self.container.remove(item)
@@ -96,6 +96,9 @@ class ProfilesWindow(Adw.Dialog):
             row = ProfileRow(profile, profiles[profile], self)
             self.displayed.append(row)
             self.container.add(row)
+
+    def manage(self):
+        self.updateList()
         self.present(self.window)
 
     def createProfile(self, a=None):
@@ -140,7 +143,6 @@ class ProfilesWindow(Adw.Dialog):
             def confirm(warning, answer):
                 if answer == "delete":
                     del data["profiles"][id]
-                    del data["credentials"][id]
                     setProfiles(data)
                     if id == data["default-profile"]:
                         self.switchProfile(list(data["profiles"].keys())[0])

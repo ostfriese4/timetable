@@ -150,5 +150,11 @@ def setProfiles(new):
     data = getCredentialsFile()
     data["profiles"] = new["profiles"]
     data["default-profile"] = new["default-profile"]
+
+    for profile in data["credentials"].copy():
+        if profile not in data["profiles"]:
+            print("deleting credentials of profile", profile)
+            del data["credentials"][profile]
+
     with open(credentialsPath, "w") as file:
         json.dump(data, file, indent=4)
