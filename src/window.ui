@@ -32,8 +32,22 @@
                   </object>
                 </child>
                 <property name="content">
-                  <object class="AdwViewSwitcherSidebar">
-                    <property name="stack">main_view_stack</property>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="AdwViewSwitcherSidebar">
+                        <property name="vexpand">true</property>
+                        <property name="stack">main_view_stack</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwButtonRow" id="user_settings_button">
+                        <property name="start-icon-name">preferences-system-symbolic</property>
+                        <property name="title" translatable="yes">Prefences</property>
+                        <property name="halign">start</property>
+                        <property name="hexpand">true</property>
+                      </object>
+                    </child>
                   </object>
                 </property>
               </object>
