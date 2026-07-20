@@ -191,19 +191,24 @@ class Timetable(Gtk.Box):
 
         def load():
             try:
-                table = self.shared.session.getOwnTimetable(
+                data = self.shared.session.getOwnTimetable(
                     self.startdate, self.enddate, mode="cache"
                 )
+                table, grid = data
+                grid = self.shared.session.getTimeGrid(grid)
+                table = (table, grid)
             except:
                 table = None
             try:
                 if s == self.startdate:
                     GLib.idle_add(self.displayData, table)
-                    table = self.shared.session.getOwnTimetable(
+                    data = self.shared.session.getOwnTimetable(
                         self.startdate, self.enddate, mode="normal"
                     )
+                    table, grid = data
+                    grid = self.shared.session.getTimeGrid(grid)
                     if s == self.startdate:
-                        GLib.idle_add(self.displayData, table)
+                        GLib.idle_add(self.displayData, (table, grid))
                         homeworks = fetchHomeworks(self.startdate, self.enddate)
                         if s == self.startdate:
                             GLib.idle_add(self.displayHomeworks, homeworks)
@@ -270,6 +275,13 @@ class Timetable(Gtk.Box):
             context.move_to(2 + 6, y + extents.height / 2)
             context.show_text(text)
 
+    def timeToMinutes(self, time):
+        dt = datetime.datetime.strptime(time, "%H:%M")
+        return self.dateTimeToMinutes(dt)
+
+    def dateTimeToMinutes(self, dt):
+        return dt.minute + dt.hour * 60
+
     def drawTimeAxis(self, area, context, width, height):
         color = area.get_color()
         context.select_font_face(
@@ -289,16 +301,25 @@ class Timetable(Gtk.Box):
             context.rectangle(width - 7, y - 0.5, 7, 1)
             context.fill()
 
-        minutes = (self.start + 59) // 60 * 60  # first full hour on the grid
-        if minutes - self.start >= 20:
-            drawLabel(self.start)  # also label the start of the day
-        while minutes <= 1440:
-            drawLabel(minutes)
-            minutes += 60
+        slots = self.gridFormat["timeGridSlots"]
+        i=0
+        for slot in slots:
+            start = self.timeToMinutes(slot["duration"]["start"])
+            end = self.timeToMinutes(slot["duration"]["end"])
+            drawLabel(start)
+            i+=1
+            drawEnd = i==len(slots)
+            if not drawEnd:
+                nextStart = self.timeToMinutes(slots[i]["duration"]["start"])
+                drawEnd = nextStart != end
+            if drawEnd:
+                drawLabel(end)
 
-    def displayData(self, table):
-        if table is None:
+    def displayData(self, data):
+        if data is None:
             return
+        table, self.gridFormat = data
+
         atLeastOneLesson = False
 
         self.header_button.set_label(self.startdate.strftime(_("Week %W")))
@@ -307,12 +328,12 @@ class Timetable(Gtk.Box):
         else:
             self.offline.set_revealed(revealed=False)
 
-        self.start = 1440  # One day in minutes (max possible value)
+        self.start = self.timeToMinutes(self.gridFormat["duration"]["start"])
+        self.end = self.timeToMinutes(self.gridFormat["duration"]["end"])
+
         for day in table:
             for lesson in day:
                 atLeastOneLesson = True
-                if lesson["start"] < self.start:
-                    self.start = lesson["start"]
 
         self.showAxis = atLeastOneLesson and not self.show_sidebar_button.get_visible()
         if not atLeastOneLesson:
@@ -339,7 +360,7 @@ class Timetable(Gtk.Box):
             axisColumn.append(axisHeader)
             axis = Gtk.DrawingArea()
             axis.set_content_width(44)
-            axis.set_content_height(1440 - self.start)
+            axis.set_content_height(self.end - self.start)
             axis.set_draw_func(self.drawTimeAxis)
             axisColumn.append(axis)
             self.timetable.append(axisColumn)

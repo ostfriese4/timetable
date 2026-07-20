@@ -359,6 +359,7 @@ class session:
 
     def getTimetable(self, resourceType, resourceId, start = None, end = None, mode = "normal"):
         year = self.getCurrentSchoolYear()
+        gridFormat = None
 
         s_start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")
         s_end = datetime.datetime.strptime(year["dateRange"]["end"], "%Y-%m-%d")
@@ -398,12 +399,13 @@ class session:
                     + "&periodTypes=&timetableType=MY_TIMETABLE&layout=START_TIME"
                 )
                 fetched = self._getRequest(path, mode)
+                gridFormat = fetched["format"]
                 dayData = self.analyzeTimetable(fetched["days"], mode)[0]
                 self._writeToCache(name, dayData)
             data.append(dayData)
             day += datetime.timedelta(days=1)
 
-        return data
+        return data, gridFormat
 
     def getOwnTimetable(self, start=None, end=None, mode="normal"):
         return self.getStudentTimetable(self.getOwnId(), start=start, end=end, mode=mode)
@@ -715,3 +717,14 @@ class session:
             print("ERROR: homeworks:", data)
             return {"lessons": [], "homeworks": []}
         return data["data"]
+
+    def getTimeGrid(self, id=None, mode = "normal"):
+        path = "/WebUntis/api/rest/view/v1/timetable/grid?timetableType=MY_TIMETABLE"
+        data = self._getRequest(path, mode=mode)
+
+        if id is None:
+            return data["formatDefinitions"][0]
+        else:
+            for grid in data["formatDefinitions"]:
+                if grid["id"] == id:
+                    return grid
