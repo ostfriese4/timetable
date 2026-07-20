@@ -492,6 +492,8 @@ class session:
         lesson["start"] = start.hour * 60 + start.minute
         lesson["end"] = end.hour * 60 + end.minute
         lesson["duration"] = lesson["end"] - lesson["start"]
+        lesson["gridStatus"] = lesson.get("status")
+        lesson["gridType"] = lesson.get("type")
 
         for teacher in lesson["teachers"]:
             short = teacher["shortName"]
@@ -518,8 +520,8 @@ class session:
         )
         lesson["room-info"] = self.createList(rooms, "longName", True)
 
-        if lesson.get("serverColor"):  # color configured in WebUntis
-            lesson["color"] = "#" + lesson["serverColor"].lstrip("#")
+        if lesson.get("color"):
+            lesson["color"] = "#" + lesson["color"].lstrip("#")
         else:
             lesson["color"] = self.getColor(lesson["subject"]["shortName"])
 
@@ -542,10 +544,6 @@ class session:
                     mode,
                     lesson.get("status") == "CANCELLED",
                 )
-                if lesson.get("color"):
-                    details["serverColor"] = lesson["color"]
-                details["gridStatus"] = lesson.get("status")
-                details["gridType"] = lesson.get("type")
                 lessons.append(self.analyzeLesson(details))
         return timetable
 
