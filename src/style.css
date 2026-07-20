@@ -1,7 +1,8 @@
 .lesson {
   margin-top: 1px;
   margin-bottom: 1px;
-  background: color-mix(in oklab, var(--card-bg-color) 92%, var(--card-fg-color));
+  border-radius: 5px;
+  background: color-mix(in oklab, var(--card-bg-color) 80%, var(--card-fg-color));
   color: var(--card-fg-color);
 }
 
