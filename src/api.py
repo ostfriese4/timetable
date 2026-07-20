@@ -686,6 +686,14 @@ class session:
         data = self._getRequest(path)
         return data or []
 
+    def getPermissions(self):
+        views = self.getGeneralData()["user"]["permissions"]["views"]
+        general = self.getGeneralData()["permissions"]
+        return {
+            "views": views,
+            "general": general,
+        }
+
     def getHomeworks(self, start=None, end=None):
         year = self.getCurrentSchoolYear()
         if start is None:
