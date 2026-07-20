@@ -94,6 +94,11 @@ class UntisWindow(Adw.ApplicationWindow):
         else:
             self.showPage("messages")
 
+        if self.shouldViewHide("STUDENTABSENCES"):
+            self.hidePage("absences")
+        else:
+            self.showPage("absences")
+
     def addExternalPages(self):
         for page in self.pages:
             self.main_view_stack.remove(page)
