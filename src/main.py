@@ -23,7 +23,7 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-from .api import session, version, id, testCredentials
+from .api import session, version, id, testCredentials, releaseNotes
 from .homework_api import setShared
 from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow
@@ -115,6 +115,7 @@ class UntisApplication(Adw.Application):
         about.set_translator_credits(_("translator-credits"))
         about.set_license_type(Gtk.License.GPL_3_0)
         about.set_issue_url("https://codeberg.org/ostfriese4/untis/issues")
+        about.set_release_notes(releaseNotes)
         about.present(self.props.active_window)
 
     def on_login_action(self, widget, _):

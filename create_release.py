@@ -57,7 +57,7 @@ with open("src/api.py", "r") as file:
     pos = sh.find('"#""')
     sh = sh[pos:]
 
-    releaseNotes = description.replace("\n", "\\n").replace("\\", "\\\\")
+    releaseNotes = description.replace("\\", "\\\\").replace("\n", "\\n")
 
     content = fh + releaseNotes + sh
 with open("src/api.py", "w") as file:
