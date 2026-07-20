@@ -66,6 +66,19 @@
   </screenshots>
 
   <releases>
+    <release version="4.2.0" date="2026-07-20">      <description translate="no">
+        <ul>
+          <li>improved external pages</li>
+          <li>fixed deleting of profiles</li>
+          <li>hide unavailable features</li>
+          <li>fixed crash if WebUntis is down @Felitendo</li>
+          <li>redesigned timetable @Felitendo</li>
+          <li>show the substitution text of a lesson @Felitendo</li>
+          <li>show overlapping lessons next to each other @Felitendo</li>
+        </ul>
+
+      </description>
+    </release>
     <release version="4.1" date="2026-07-18">
       <description translate="no">
         <ul>
