@@ -41,7 +41,7 @@ for path in paths:
         os.makedirs(path)
 
 
-developers = ["Ostfriese4"]
+developers = ["Ostfriese4", "Felitendo"]
 
 
 class shared:
