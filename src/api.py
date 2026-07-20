@@ -89,6 +89,9 @@ def _login(credentials):
     except requests.exceptions.ConnectionError:
         offline = True
         return s  # don't fail login at startup
+    except requests.exceptions.JSONDecodeError:
+        offline = True
+        return s  # the server sent an error page, e.g. during maintenance
     except requests.exceptions.InvalidURL:
         return
     except binascii.Error:
