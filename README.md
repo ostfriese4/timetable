@@ -2,7 +2,7 @@
   <img src='https://codeberg.org/ostfriese4/untis/raw/branch/main/data/icons/hicolor/scalable/apps/page.codeberg.ostfriese4.Untis.svg'></img>
   <br>
   <a href="https://repology.org/project/timetable/versions">
-    <img src="https://repology.org/badge/latest-versions/timetable.svg" alt="latest packaged version(s)">
+    <img src="https://repology.org/badge/latest-versions/timetable.svg?header=latest%20version" alt="latest version">
   </a>
   <br>
   <h1>Timetable</h1>
