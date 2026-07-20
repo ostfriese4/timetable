@@ -107,7 +107,6 @@ class Lesson(Gtk.Overlay):
 
         self.set_size_request(-1, self.lesson["duration"])
         self.set_size_request(-1, self.lesson["duration"])
-        self.add_css_class("lesson")
         self.add_css_class(self.lesson["color"])
         if self.lesson["status"] == "CANCELLED":
             self.add_css_class("cancelled")

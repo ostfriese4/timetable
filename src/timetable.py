@@ -68,7 +68,6 @@ class Timetable(Gtk.Box):
         self.date_chooser.connect("day-selected", self.on_day_selected)
         closeOnClickOutside(self.date_chooser_dialog)
 
-        self.progress.add_css_class("osd")
         self.loading = False
 
         self.info_rows = []

@@ -49,7 +49,6 @@ class ExternalPage(Gtk.Box):
 
         self.open_button.connect("clicked", self.open)
         self.title.set_label(data["name"])
-        self.progress.add_css_class("osd")
 
         def back(data):
             self.webview.go_back()

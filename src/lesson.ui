@@ -5,6 +5,9 @@
     <property name="child">
       <object class="GtkBox" id="content_box"/>
     </property>
+    <style>
+      <class name="lesson"/>
+    </style>
     <child type="overlay">
       <object class="GtkImage" id="homework_indicator">
         <property name="valign">end</property>

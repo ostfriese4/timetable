@@ -77,6 +77,9 @@
                         <property name="visible">False</property>
                         <property name="can-target">False</property>
                         <property name="pulse-step">0.3</property>
+                        <style>
+                          <class name="osd"/>
+                        </style>
                       </object>
                     </child>
                   </object>
