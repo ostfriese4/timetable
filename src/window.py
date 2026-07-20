@@ -51,6 +51,7 @@ class UntisWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
 
         self.pages = []
+        self.hiddenPages = []
 
         self.shared = shared
         self.login_window = LoginWindow(self)
@@ -65,8 +66,43 @@ class UntisWindow(Adw.ApplicationWindow):
 
         try:
             self.addExternalPages()
+            self.showHideViews()
         except:
-            pass
+            raise
+
+    def hidePage(self, name):
+        if not name in self.hiddenPages:
+            page = self.main_view_stack.get_child_by_name(name)
+            self.main_view_stack.remove(page)
+            self.hiddenPages.append(name)
+            print("hide page",name)
+
+    def shouldViewHide(self, name):
+        show = name in self.shared.session.getPermissions()["views"]
+        return not show
+
+    def showPage(self, name):
+        if name in self.hiddenPages:
+            page = self.main_view_stack.get_child_by_name(name)
+            self.main_view_stack.append(page)
+            self.hiddenPages.remove(name)
+            print("show page",name)
+
+    def showHideViews(self):
+        if self.shouldViewHide("MESSAGE_CENTER"):
+            self.hidePage("messages")
+        else:
+            self.showPage("messages")
+
+        if self.shouldViewHide("STUDENTABSENCES"):
+            self.hidePage("absences")
+        else:
+            self.showPage("absences")
+
+        if self.teachers.shouldHide():
+            self.hidePage("teachers")
+        else:
+            self.showPage("teachers")
 
     def addExternalPages(self):
         for page in self.pages:
@@ -91,6 +127,7 @@ class UntisWindow(Adw.ApplicationWindow):
         self.timetable.loadData()
         self.homework.displayAll()
         self.addExternalPages()
+        self.showHideViews()
 
     def checkCredentials(self):
         print("check credentials")

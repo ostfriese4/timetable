@@ -57,6 +57,12 @@ class TeacherPage(Gtk.Box):
                 names.remove(name)
         self.display(names)
 
+    def shouldHide(self):
+        try:
+            return self.shared.session.getAllTeachers() == {}
+        except Exception:
+            return True
+
     def getAllNames(self):
         teachers = self.shared.session.getAllTeachers()
         names = []
