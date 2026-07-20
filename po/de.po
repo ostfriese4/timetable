@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-20 19:26+0200\n"
-"PO-Revision-Date: 2026-07-20 19:31+0200\n"
+"POT-Creation-Date: 2026-07-20 21:31+0200\n"
+"PO-Revision-Date: 2026-07-20 21:43+0200\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -20,8 +20,8 @@ msgstr ""
 "X-Generator: Gtranslator 50.0\n"
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:107
-#: src/window.ui:6 src/window.ui:19 src/window.ui:45
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:109
+#: src/preferences.ui:11 src/window.ui:6 src/window.ui:19 src/window.ui:45
 msgid "Timetable"
 msgstr "Stundenplan"
 
@@ -85,6 +85,10 @@ msgstr "Informationen zur Stunde werden in einem Dialog angezeigt"
 msgid "Editing a homework"
 msgstr "Bearbeiten einer Hausaufgabe"
 
+#: data/page.codeberg.ostfriese4.Untis.gschema.xml:6
+msgid "Show cancelled lessons next to the lesson taking place instead"
+msgstr ""
+
 #: src/absences.py:45
 msgid "Text"
 msgstr "Text"
@@ -113,15 +117,15 @@ msgstr "Abwesenheiten"
 msgid "and"
 msgstr "und"
 
-#: src/api.py:435 src/api.py:509
+#: src/api.py:435 src/api.py:511
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/api.py:504 src/api.py:507
+#: src/api.py:506 src/api.py:509
 msgid "Event"
 msgstr "Veranstaltung"
 
-#: src/api.py:604
+#: src/api.py:640
 msgid "No data"
 msgstr "Keine Daten"
 
@@ -355,7 +359,7 @@ msgstr ""
 "Drittanbieters und dem neu erstellten Passwort an."
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:115
+#: src/main.py:117
 msgid "translator-credits"
 msgstr "Ostfriese4"
 
@@ -370,6 +374,14 @@ msgstr "Nachrichten"
 #: src/messages.ui:34
 msgid "News of Day"
 msgstr "Nachrichten des Tages"
+
+#: src/preferences.ui:14
+msgid "Show cancelled lessons"
+msgstr ""
+
+#: src/preferences.ui:15
+msgid "Also show a cancelled lesson next to the lesson taking place instead"
+msgstr ""
 
 #: src/profiles.py:38
 msgid "Unnamed"
@@ -443,12 +455,12 @@ msgstr "Lehrkräfte"
 msgid "Search term"
 msgstr "Suchbegriff"
 
-#: src/timetable.py:325
+#: src/timetable.py:396
 msgid "Week %W"
 msgstr "%W. Woche"
 
 #. Translators: date format in the timetable
-#: src/timetable.py:386
+#: src/timetable.py:457
 msgid "%m/%d/%y"
 msgstr "%d.%m.%y"
 
@@ -485,10 +497,14 @@ msgid "Manage _profiles"
 msgstr "_Profile verwalten"
 
 #: src/window.ui:113
+msgid "_Preferences"
+msgstr "_Einstellungen"
+
+#: src/window.ui:117
 msgid "_Keyboard Shortcuts"
 msgstr "_Tastenkürzel"
 
-#: src/window.ui:117
+#: src/window.ui:121
 msgid "_About Timetable"
 msgstr "Über _Stundenplan"
 
