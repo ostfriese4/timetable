@@ -9,13 +9,24 @@
       <class name="lesson"/>
     </style>
     <child type="overlay">
-      <object class="GtkImage" id="homework_indicator">
+      <object class="GtkBox">
         <property name="valign">end</property>
         <property name="halign">end</property>
-        <property name="icon-name">user-home-symbolic</property>
-        <property name="visible">False</property>
         <property name="margin-end">2</property>
         <property name="margin-bottom">2</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkImage" id="homework_indicator">
+            <property name="icon-name">user-home-symbolic</property>
+            <property name="visible">False</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkImage" id="info_indicator">
+            <property name="icon-name">dialog-information-symbolic</property>
+            <property name="visible">False</property>
+          </object>
+        </child>
       </object>
     </child>
   </template>

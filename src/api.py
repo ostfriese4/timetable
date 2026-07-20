@@ -499,7 +499,13 @@ class session:
                 teacher["longName"] = long
 
         if lesson["subject"] == None:
-            lesson["subject"] = {"shortName": "???", "longName": _("Unknown")}
+            if lesson.get("gridType") == "EVENT" or lesson.get("type") == "EVENT":
+                name = lesson.get("lessonInfo") or _("Event")
+                if "lessonInfo" in lesson:
+                    lesson["lessonInfo"] = None
+                lesson["subject"] = {"shortName": _("Event"), "longName": name}
+            else:
+                lesson["subject"] = {"shortName": "???", "longName": _("Unknown")}
 
         lesson["teachers-short"] = self.createList(
             lesson["teachers"], "shortName", False
@@ -511,7 +517,10 @@ class session:
         )
         lesson["room-info"] = self.createList(rooms, "longName", True)
 
-        lesson["color"] = self.getColor(lesson["subject"]["shortName"])
+        if lesson.get("serverColor"):  # color configured in WebUntis
+            lesson["color"] = "#" + lesson["serverColor"].lstrip("#")
+        else:
+            lesson["color"] = self.getColor(lesson["subject"]["shortName"])
 
         if "original" in lesson:
             lesson["original"] = self.analyzeLesson(lesson["original"])
@@ -528,6 +537,10 @@ class session:
                 details = self.getLessonDetails(
                     own, lesson["duration"]["start"], lesson["duration"]["end"], mode
                 )
+                if lesson.get("color"):
+                    details["serverColor"] = lesson["color"]
+                details["gridStatus"] = lesson.get("status")
+                details["gridType"] = lesson.get("type")
                 analyzed = self.analyzeLesson(details)
 
                 merge = True

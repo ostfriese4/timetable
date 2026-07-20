@@ -30,6 +30,7 @@ untis_sources = [
   '__init__.py',
   'absences.py',
   'api.py',
+  'colors.py',
   'credentials.py',
   'create_homework.py',
   'dialog.py',

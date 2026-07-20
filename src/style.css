@@ -1,19 +1,26 @@
-:root {
-  --color-mix-combination: 50%;
-  --green: color-mix(in oklab, var(--accent-green), var(--window-bg-color) var(--color-mix-combination));
-  --red: color-mix(in oklab, var(--accent-red), var(--window-bg-color) var(--color-mix-combination));
-  --blue: color-mix(in oklab, var(--accent-blue), var(--window-bg-color) var(--color-mix-combination));
-  --orange: color-mix(in oklab, var(--accent-orange), var(--window-bg-color) var(--color-mix-combination));
-  --purple: color-mix(in oklab, var(--accent-purple), var(--window-bg-color) var(--color-mix-combination));
-  --pink: color-mix(in oklab, var(--accent-pink), var(--window-bg-color) var(--color-mix-combination));
-  --yellow: color-mix(in oklab, var(--accent-yellow), var(--window-bg-color) var(--color-mix-combination));
-  --teal: color-mix(in oklab, var(--accent-teal), var(--window-bg-color) var(--color-mix-combination));
-  --slate: color-mix(in oklab, var(--accent-slate), var(--window-bg-color) var(--color-mix-combination));
+.lesson {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  border-radius: 5px;
+  background: color-mix(in oklab, var(--card-bg-color) 92%, var(--card-fg-color));
+  color: var(--card-fg-color);
 }
 
-.lesson {
-  margin: 0px;
-  border-radius: 5px;
+.lesson .subject {
+  font-weight: bold;
+}
+
+.strike {
+  background: alpha(var(--card-fg-color), 0.55);
+  min-height: 2px;
+  border-radius: 1px;
+}
+
+.colorstripe {
+  border-radius: 3px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: 4px;
 }
 
 .past {
@@ -21,12 +28,20 @@
 }
 
 .cancelled {
-  border: 2px solid red;
-  opacity: 0.5;
+  background: repeating-linear-gradient(
+    45deg,
+    color-mix(in oklab, var(--accent-red), var(--card-bg-color) 75%),
+    color-mix(in oklab, var(--accent-red), var(--card-bg-color) 75%) 12px,
+    color-mix(in oklab, var(--accent-red), var(--card-bg-color) 55%) 12px,
+    color-mix(in oklab, var(--accent-red), var(--card-bg-color) 55%) 24px
+  );
+  border: 2px solid var(--accent-red);
+  opacity: 0.75;
 }
 
 .changed {
-  border: 2px solid color-mix(in oklab, red, rgb(from var(--window-bg-color) calc(255 - r) calc(255 - g) calc(255 - b)) 50%);
+  background: color-mix(in oklab, var(--accent-green), var(--card-bg-color) 70%);
+  border: 2px solid var(--accent-green);
 }
 
 .day {
@@ -70,35 +85,6 @@
 }
 .pink {
   background: var(--accent-pink);
-}
-
-
-.green.cancelled {
-  background: var(--green);
-}
-.red.cancelled {
-  background: var(--red);
-}
-.blue.cancelled {
-  background: var(--blue);
-}
-.orange.cancelled {
-  background: var(--orange);
-}
-.purple.cancelled {
-  background: var(--purple);
-}
-.teal.cancelled {
-  background: var(--teal);
-}
-.yellow.cancelled {
-  background: var(--yellow);
-}
-.slate.cancelled {
-  background: var(--slate);
-}
-.pink.cancelled {
-  background: var(--pink);
 }
 
 .changed-homework {
