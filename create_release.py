@@ -1,4 +1,5 @@
 import datetime
+import os
 
 version = input("version: ")
 
@@ -26,11 +27,19 @@ with open("data/page.codeberg.ostfriese4.Untis.metainfo.xml.in") as file:
 
 pos = meta.find("<releases>") + 10
 
-
-release = "\n    <release version=\"" + version + "\" date=\"" + datetime.date.today().strftime("%Y-%m-%d") + "\">\n      <description translate=\"no\">\n        <ul>"
+description = "        <ul>"
 for new in news:
-    release += "\n          <li>" + new + "</li>"
-release += "\n        </ul>\n      </description>\n    </release>"
+    description += "\n          <li>" + new + "</li>"
+description += "\n        </ul>\n"
+
+with open("rn","w") as file:
+    file.write(description)
+os.system("nano rn")
+with open("rn","r") as file:
+    description = file.read()
+os.system("rm rn")
+
+release = "\n    <release version=\"" + version + "\" date=\"" + datetime.date.today().strftime("%Y-%m-%d") + "\">      <description translate=\"no\">\n" + description + "\n      </description>\n    </release>"
 
 
 meta = meta[:pos] + release + meta[pos:]
