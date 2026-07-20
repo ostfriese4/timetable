@@ -26,10 +26,39 @@ from .dialog import closeOnClickOutside
 class AccountSettingsWindow(Adw.Dialog):
     __gtype_name__ = "AccountSettingsWindow"
 
+    email = Gtk.Template.Child()
+    mail_message = Gtk.Template.Child()
+    mail_notification = Gtk.Template.Child()
+
     def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
         self.window = window
         closeOnClickOutside(self)
+        self.editable = False
+
+        self.email.connect("apply", lambda data:self.apply("email"))
+        self.mail_message.connect("notify::active", lambda x,y:self.apply("forwardMessageToEmail"))
+        self.mail_notification.connect("notify::active", lambda x,y:self.apply("systemMailForwarding"))
+
+    def apply(self, key):
+        if self.editable:
+            match key:
+                case "email":
+                    value = self.email.get_text()
+                case "forwardMessageToEmail":
+                    value = self.mail_message.get_active()
+                case "systemMailForwarding":
+                    value = self.mail_notification.get_active()
+            print(self.window.shared.session.setProfileKey(key, value))
+            print("apply",key,value)
 
     def open(self, data=None):
+        self.editable = False
+
         self.present(self.window)
+
+        self.email.set_text(self.window.shared.session.getProfileKey("email"))
+        self.mail_message.set_active(self.window.shared.session.getProfileKey("forwardMessageToEmail"))
+        self.mail_notification.set_active(self.window.shared.session.getProfileKey("systemMailForwarding"))
+
+        self.editable = True

@@ -691,7 +691,7 @@ class session:
 
     def getProfile(self):
         path = "/WebUntis/api/profile/general"
-        data = self._getRequest(path)
+        data = self._getRequest(path, maxage = 1)
         return data["data"]["profile"]
 
     def getProfileKey(self, key):
@@ -701,10 +701,10 @@ class session:
 
     def setProfile(self, settings):
         path = "/WebUntis/api/profile/general"
-        self._post(path, settings)
+        return self._post(path, settings).text
 
     def setProfileKey(self, key, value):
-        self.setProfile({
+        return self.setProfile({
             key: value
         })
 
