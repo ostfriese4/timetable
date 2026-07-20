@@ -94,10 +94,6 @@ class MessagesPage(Gtk.Box):
         parent.main_view_stack.connect("notify::visible-child-name", on_visible)
         self.shared = parent.shared
 
-    def shouldHide(self):
-        show = "MESSAGE_CENTER" in self.shared.session.getPermissions()["views"]
-        return not show
-
     def display(self):
         messages = self.shared.session.getMessages()
 

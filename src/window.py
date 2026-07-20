@@ -77,6 +77,10 @@ class UntisWindow(Adw.ApplicationWindow):
             self.hiddenPages.append(name)
             print("hide page",name)
 
+    def shouldViewHide(self, name):
+        show = name in self.shared.session.getPermissions()["views"]
+        return not show
+
     def showPage(self, name):
         if name in self.hiddenPages:
             page = self.main_view_stack.get_child_by_name(name)
@@ -85,7 +89,7 @@ class UntisWindow(Adw.ApplicationWindow):
             print("show page",name)
 
     def showHideViews(self):
-        if self.messages.shouldHide():
+        if self.shouldViewHide("MESSAGE_CENTER"):
             self.hidePage("messages")
         else:
             self.showPage("messages")
