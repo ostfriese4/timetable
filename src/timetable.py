@@ -20,6 +20,7 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from gi.repository import Gdk
+from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 from .homework_api import fetchHomeworks
@@ -27,12 +28,58 @@ from .information import InformationWindow
 from .lesson import Lesson
 from .holiday import Holiday
 from .dialog import closeOnClickOutside
-from .api import getDateTime
+from .api import getDateTime, id as appId
 import cairo
 import datetime
 import math
 import time
 import threading
+
+
+class DayLayout(Gtk.Widget):
+    __gtype_name__ = "DayLayout"
+
+    # places the lessons of one day on a minute grid and puts
+    # overlapping lessons next to each other, like the mobile app
+
+    def __init__(self, start, end, **kwargs):
+        super().__init__(**kwargs)
+        self.set_hexpand(True)
+        self.start = start
+        self.end = end
+
+    def add(self, child):
+        child.set_parent(self)
+
+    def remove(self, child):
+        child.unparent()
+
+    def do_dispose(self):
+        for child in list(self):
+            child.unparent()
+
+    def do_measure(self, orientation, for_size):
+        if orientation == Gtk.Orientation.VERTICAL:
+            height = max(self.end - self.start, 0)
+            return height, height, -1, -1
+        minimum = 0
+        for child in self:
+            c_min, c_nat, _, _ = child.measure(orientation, -1)
+            minimum = max(minimum, c_min)
+        return minimum, minimum, -1, -1
+
+    def do_size_allocate(self, width, height, baseline):
+        for child in self:
+            layoutStart = child.lesson.get("layoutStart") or 0
+            layoutWidth = child.lesson.get("layoutWidth") or 1000
+            rect = Gdk.Rectangle()
+            rect.x = width * layoutStart // 1000
+            rect.width = width * layoutWidth // 1000
+            if layoutStart + layoutWidth < 1000:
+                rect.width -= 2  # a little gap between parallel lessons
+            rect.y = child.lesson["start"] - self.start
+            rect.height = child.lesson["end"] - child.lesson["start"]
+            child.size_allocate(rect, baseline)
 
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/timetable.ui")
@@ -82,6 +129,11 @@ class Timetable(Gtk.Box):
         swipe = Gtk.GestureSwipe()
         swipe.connect("swipe", onSwipe)
         self.timetable.add_controller(swipe)
+
+        self.settings = Gio.Settings(schema_id=appId)
+        self.settings.connect(
+            "changed::show-cancelled-lessons", lambda *args: self.loadData()
+        )
 
         GLib.timeout_add(1000 * 60, self.update_marker)  # update time-marker
         GLib.timeout_add(
@@ -320,6 +372,25 @@ class Timetable(Gtk.Box):
             return
         table, self.gridFormat = data
 
+        showCancelled = self.settings.get_boolean("show-cancelled-lessons")
+        for i, day in enumerate(table):
+            if not showCancelled:
+                # hide cancelled lessons that would sit next to a lesson
+                # taking place instead, their info stays in the popup
+                day = [
+                    lesson
+                    for lesson in day
+                    if lesson["status"] != "CANCELLED"
+                    or not any(
+                        other["status"] != "CANCELLED"
+                        and other["start"] < lesson["end"]
+                        and lesson["start"] < other["end"]
+                        for other in day
+                    )
+                ]
+                table[i] = day
+            self.shared.session.layoutDay(day)
+
         atLeastOneLesson = False
 
         self.header_button.set_label(self.startdate.strftime(_("Week %W")))
@@ -405,19 +476,16 @@ class Timetable(Gtk.Box):
                     self.overlays.append((self.overlay, timeMarkerWeek))
                     self.overlay.add_overlay(timeMarkerWeek)
 
-            x = self.start
             if day == []:
                 holiday = self.shared.session.getHoliday(date)
                 obj = Holiday(holiday["name"])
                 dayBox.append(obj)
-            for lesson in day:
-                if lesson["start"] - x != 0:
-                    gap = Gtk.Label()
-                    gap.set_size_request(-1, lesson["start"] - x)
-                    dayBox.append(gap)
-                block = Lesson(lesson, self, now)
-                x = lesson["end"]
-                dayBox.append(block)
-                self.lessons.append((dayBox, block, lesson))
+            else:
+                layout = DayLayout(self.start, self.end)
+                dayBox.append(layout)
+                for lesson in day:
+                    block = Lesson(lesson, self, now)
+                    layout.add(block)
+                    self.lessons.append((layout, block, lesson))
 
             date += datetime.timedelta(days=1)

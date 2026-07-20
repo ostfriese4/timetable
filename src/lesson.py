@@ -20,6 +20,7 @@
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Adw
+from gi.repository import Pango
 from .colors import serverColorClass
 import datetime
 
@@ -110,6 +111,9 @@ class Lesson(Gtk.Overlay):
         self.subject_label.add_css_class("subject")
         self.teacher_label = Gtk.Label(label=self.lesson["teachers-short"])
         self.room_label = Gtk.Label(label=self.lesson["room"])
+        for label in (self.subject_label, self.teacher_label, self.room_label):
+            # don't force a minimum width, parallel lessons can be narrow
+            label.set_ellipsize(Pango.EllipsizeMode.END)
 
         stripe = Gtk.Box()
         stripe.add_css_class("colorstripe")

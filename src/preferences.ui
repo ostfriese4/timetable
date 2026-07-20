@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="PreferencesDialog" parent="AdwPreferencesDialog">
+    <property name="content-width">560</property>
+    <property name="content-height">420</property>
+    <child>
+      <object class="AdwPreferencesPage">
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Timetable</property>
+            <child>
+              <object class="AdwSwitchRow" id="show_cancelled">
+                <property name="title" translatable="yes">Show cancelled lessons</property>
+                <property name="subtitle" translatable="yes">Also show a cancelled lesson next to the lesson taking place instead</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

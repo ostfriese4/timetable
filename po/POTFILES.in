@@ -24,6 +24,8 @@ src/login.ui
 src/main.py
 src/messages.py
 src/messages.ui
+src/preferences.py
+src/preferences.ui
 src/profiles.py
 src/profiles.ui
 src/shortcuts-dialog.ui

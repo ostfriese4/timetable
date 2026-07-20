@@ -27,6 +27,7 @@ from .api import session, version, id, testCredentials, releaseNotes
 from .homework_api import setShared
 from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow
+from .preferences import PreferencesDialog
 from .credentials import getCredentials, getProfiles
 import datetime
 import os
@@ -57,6 +58,7 @@ class UntisApplication(Adw.Application):
         )
         self.create_action("quit", lambda *_: self.quit(), ["<control>q"])
         self.create_action("about", self.on_about_action)
+        self.create_action("preferences", self.on_preferences_action, ["<control>comma"])
         self.create_action("login", self.on_login_action, ["<control>l"])
         self.create_action("profiles", self.on_profiles_action, ["<control>p"])
         self.create_action("refresh", self.on_refresh_action, ["<control>r"])
@@ -117,6 +119,9 @@ class UntisApplication(Adw.Application):
         about.set_issue_url("https://codeberg.org/ostfriese4/untis/issues")
         about.set_release_notes(releaseNotes)
         about.present(self.props.active_window)
+
+    def on_preferences_action(self, *args):
+        PreferencesDialog().present(self.props.active_window)
 
     def on_login_action(self, widget, _):
         self.props.active_window.login_window.requestLogin(

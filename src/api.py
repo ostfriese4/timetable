@@ -536,41 +536,79 @@ class session:
             lessons = timetable[-1]
             for lesson in day["gridEntries"]:
                 details = self.getLessonDetails(
-                    own, lesson["duration"]["start"], lesson["duration"]["end"], mode
+                    own,
+                    lesson["duration"]["start"],
+                    lesson["duration"]["end"],
+                    mode,
+                    lesson.get("status") == "CANCELLED",
                 )
                 if lesson.get("color"):
                     details["serverColor"] = lesson["color"]
                 details["gridStatus"] = lesson.get("status")
                 details["gridType"] = lesson.get("type")
-                analyzed = self.analyzeLesson(details)
-
-                merge = True
-                if lessons == []:
-                    merge = False
-                else:
-                    keys = [
-                        "rooms",
-                        "room",
-                        "room-info",
-                        "subject",
-                        "teachers-long",
-                        "teachers-short",
-                    ]
-                    for key in keys:
-                        if analyzed[key] != lessons[-1][key]:
-                            merge = False
-                            break
-                    if analyzed["start"] != lessons[-1]["end"]:  # break betewen
-                        if analyzed["start"] != lessons[-1]["start"]:
-                            merge = False
-
-                if merge:
-                    lessons[-1]["end"] = analyzed["end"]
-                    lessons[-1]["endDateTime"] = analyzed["endDateTime"]
-                    lessons[-1]["duration"] = lessons[-1]["end"] - lessons[-1]["start"]
-                else:
-                    lessons.append(analyzed)
+                lessons.append(self.analyzeLesson(details))
         return timetable
+
+    def mergeDay(self, lessons):
+        # combine consecutive parts of the same lesson into one block, other
+        # (e.g. cancelled) lessons can sit between their grid entries
+        keys = [
+            "rooms",
+            "room",
+            "room-info",
+            "status",
+            "subject",
+            "teachers-long",
+            "teachers-short",
+        ]
+
+        old = lessons.copy()
+        for lesson in old:
+            previous = None
+            i = lessons.index(lesson)
+
+            while i>=0:
+                item = lessons[i]
+                ok = item["end"] == lesson["start"]
+                for key in keys:
+                    if item[key] != lesson[key]:
+                        ok = False
+                if ok:
+                    item["end"] = lesson["end"]
+                    item["duration"] = item["end"] - item["start"]
+                    lessons.remove(lesson)
+                    break
+                i -= 1
+
+    def layoutDay(self, lessons):
+        # place overlapping lessons in columns next to each other, computed
+        # from the merged lessons so that double periods stay combined
+        cluster = []  # (lesson, column) of the current overlap group
+        ends = []  # end of the last lesson per column
+
+        lessons.sort(key=lambda l: (l["start"], l["end"]))
+        self.mergeDay(lessons)
+
+        def apply():
+            width = 1000 // max(len(ends), 1)
+            for lesson, column in cluster:
+                lesson["layoutStart"] = column * width
+                lesson["layoutWidth"] = width
+
+        for lesson in lessons:
+            if ends and all(end <= lesson["start"] for end in ends):
+                apply()
+                cluster = []
+                ends = []
+            for column, end in enumerate(ends):
+                if end <= lesson["start"]:
+                    ends[column] = lesson["end"]
+                    break
+            else:
+                column = len(ends)
+                ends.append(lesson["end"])
+            cluster.append((lesson, column))
+        apply()
 
     def getOwnId(self):
         return self.getGeneralData()["user"]["person"]["id"]
@@ -658,7 +696,7 @@ class session:
             return teacher["foreName"] + " " +  teacher["longName"]
         return short
 
-    def getLessonDetails(self, id, start, end, mode="normal"):
+    def getLessonDetails(self, id, start, end, mode="normal", isCancelled=False):
         path = (
             "/WebUntis/api/rest/view/v2/calendar-entry/detail?elementId="
             + str(id)
@@ -678,12 +716,24 @@ class session:
             else:
                 takingPlace.append(lesson)
 
-        if takingPlace != []:
-            lesson = takingPlace[0]
+        def bestMatch(pool):
+            # prefer the entry that covers exactly the requested slot, the
+            # window can also contain other, parallel lessons
+            for lesson in pool:
+                if lesson["startDateTime"] == start and lesson["endDateTime"] == end:
+                    return lesson
+            return pool[0]
+
+        if isCancelled and cancelled != []:
+            # the grid marks this slot as cancelled, don't resolve it to a
+            # parallel lesson that still takes place (e.g. an event)
+            lesson = bestMatch(cancelled)
+        elif takingPlace != []:
+            lesson = bestMatch(takingPlace)
             if cancelled != []:
                 lesson["original"] = cancelled[0]
         else:
-            lesson = cancelled[0]
+            lesson = bestMatch(cancelled)
 
         return lesson
 
