@@ -47,3 +47,18 @@ meta = meta[:pos] + release + meta[pos:]
 
 with open("data/page.codeberg.ostfriese4.Untis.metainfo.xml.in", "w") as file:
     file.write(meta)
+
+
+with open("src/api.py", "r") as file:
+    content = file.read()
+    pos = content.find('releaseNotes = "') + 16
+    fh = content[:pos]
+    sh = content[pos:]
+    pos = sh.find('"#""')
+    sh = sh[pos:]
+
+    releaseNotes = description.replace("\n", "\\n").replace("\\", "\\\\")
+
+    content = fh + releaseNotes + sh
+with open("src/api.py", "w") as file:
+    file.write(content)
