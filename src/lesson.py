@@ -84,7 +84,7 @@ class LessonContent(Gtk.Widget):
         rect.x, rect.width = 0, width
         for child in self:
             rect.y = child.start * height
-            rect.height = child.duration - 4
+            rect.height = child.duration - 6
             child.size_allocate(rect, baseline)
 
 
