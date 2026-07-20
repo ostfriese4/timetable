@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-18 17:13+0200\n"
+"POT-Creation-Date: 2026-07-20 19:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,15 +105,19 @@ msgstr ""
 msgid "Absences"
 msgstr ""
 
-#: src/api.py:424
+#: src/api.py:430
 msgid "and"
 msgstr ""
 
-#: src/api.py:429 src/api.py:497
+#: src/api.py:435 src/api.py:509
 msgid "Unknown"
 msgstr ""
 
-#: src/api.py:585
+#: src/api.py:504 src/api.py:507
+msgid "Event"
+msgstr ""
+
+#: src/api.py:604
 msgid "No data"
 msgstr ""
 
@@ -133,15 +137,15 @@ msgstr ""
 msgid "Do you really want to delete this homework?"
 msgstr ""
 
-#: src/create_homework.py:94 src/profiles.py:151
+#: src/create_homework.py:94 src/profiles.py:153
 msgid "Delete?"
 msgstr ""
 
-#: src/create_homework.py:95 src/profiles.py:136 src/profiles.py:152
+#: src/create_homework.py:95 src/profiles.py:139 src/profiles.py:154
 msgid "Cancel"
 msgstr ""
 
-#: src/create_homework.py:96 src/create_homework.ui:55 src/profiles.py:153
+#: src/create_homework.py:96 src/create_homework.ui:55 src/profiles.py:155
 msgid "Delete"
 msgstr ""
 
@@ -153,7 +157,7 @@ msgstr ""
 msgid "Task"
 msgstr ""
 
-#: src/create_homework.ui:41 src/information.py:48 src/information.py:94
+#: src/create_homework.ui:41 src/information.py:48 src/information.py:96
 msgid "Subject"
 msgstr ""
 
@@ -167,6 +171,18 @@ msgstr ""
 
 #: src/external_page.ui:25
 msgid "Open this page in a web-browser"
+msgstr ""
+
+#: src/external_page.ui:31
+msgid "Go back"
+msgstr ""
+
+#: src/external_page.ui:37
+msgid "Home"
+msgstr ""
+
+#: src/external_page.ui:43
+msgid "Go forward"
 msgstr ""
 
 #: src/homework.ui:19
@@ -209,43 +225,47 @@ msgstr ""
 msgid "You have changed this"
 msgstr ""
 
-#: src/information.py:49 src/information.py:95
+#: src/information.py:49 src/information.py:97
 msgid "Room"
 msgstr ""
 
-#: src/information.py:50 src/information.py:96
+#: src/information.py:50 src/information.py:98
 msgid "Room description"
 msgstr ""
 
-#: src/information.py:51 src/information.py:97
+#: src/information.py:51 src/information.py:99
 msgid "Teacher"
 msgstr ""
 
 #: src/information.py:53
-msgid "Information about this lesson"
+msgid "Substitution"
 msgstr ""
 
 #: src/information.py:55
-msgid "Teaching content"
+msgid "Information about this lesson"
 msgstr ""
 
 #: src/information.py:57
+msgid "Teaching content"
+msgstr ""
+
+#: src/information.py:59
 msgid "Cancelled"
 msgstr ""
 
-#: src/information.py:66
+#: src/information.py:68
 msgid "Duration"
 msgstr ""
 
-#: src/information.py:69
+#: src/information.py:71
 msgid "Minutes"
 msgstr ""
 
-#: src/information.py:88 src/information.py:104 src/window.ui:62
+#: src/information.py:90 src/information.py:106 src/window.ui:62
 msgid "Homework"
 msgstr ""
 
-#: src/information.py:92
+#: src/information.py:94
 msgid "Original lesson"
 msgstr ""
 
@@ -265,7 +285,7 @@ msgstr ""
 msgid "Offline"
 msgstr ""
 
-#: src/login.py:97 src/profiles.py:135
+#: src/login.py:97 src/profiles.py:138
 msgid "Error"
 msgstr ""
 
@@ -356,11 +376,11 @@ msgstr ""
 msgid "Delete profile %s"
 msgstr ""
 
-#: src/profiles.py:134
+#: src/profiles.py:137
 msgid "Can not delete only profile"
 msgstr ""
 
-#: src/profiles.py:150
+#: src/profiles.py:152
 msgid "Do you really want to delete this profile?"
 msgstr ""
 
@@ -414,12 +434,12 @@ msgstr ""
 msgid "Search term"
 msgstr ""
 
-#: src/timetable.py:305
+#: src/timetable.py:325
 msgid "Week %W"
 msgstr ""
 
 #. Translators: date format in the timetable
-#: src/timetable.py:366
+#: src/timetable.py:386
 msgid "%m/%d/%y"
 msgstr ""
 
@@ -427,7 +447,7 @@ msgstr ""
 msgid "Previous week"
 msgstr ""
 
-#: src/timetable.ui:21 src/timetable.ui:92
+#: src/timetable.ui:21 src/timetable.ui:95
 msgid "Jump to date"
 msgstr ""
 

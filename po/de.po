@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-18 17:13+0200\n"
-"PO-Revision-Date: 2026-07-18 17:25+0200\n"
+"POT-Creation-Date: 2026-07-20 19:26+0200\n"
+"PO-Revision-Date: 2026-07-20 19:31+0200\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -109,15 +109,19 @@ msgstr "Ende"
 msgid "Absences"
 msgstr "Abwesenheiten"
 
-#: src/api.py:424
+#: src/api.py:430
 msgid "and"
 msgstr "und"
 
-#: src/api.py:429 src/api.py:497
+#: src/api.py:435 src/api.py:509
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/api.py:585
+#: src/api.py:504 src/api.py:507
+msgid "Event"
+msgstr "Veranstaltung"
+
+#: src/api.py:604
 msgid "No data"
 msgstr "Keine Daten"
 
@@ -137,15 +141,15 @@ msgstr "Hausaufgabe bearbeiten"
 msgid "Do you really want to delete this homework?"
 msgstr "Wollen Sie diese Hausaufgabe wirklich löschen?"
 
-#: src/create_homework.py:94 src/profiles.py:151
+#: src/create_homework.py:94 src/profiles.py:153
 msgid "Delete?"
 msgstr "Löschen?"
 
-#: src/create_homework.py:95 src/profiles.py:136 src/profiles.py:152
+#: src/create_homework.py:95 src/profiles.py:139 src/profiles.py:154
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: src/create_homework.py:96 src/create_homework.ui:55 src/profiles.py:153
+#: src/create_homework.py:96 src/create_homework.ui:55 src/profiles.py:155
 msgid "Delete"
 msgstr "Löschen"
 
@@ -157,7 +161,7 @@ msgstr "Datum"
 msgid "Task"
 msgstr "Aufgabe"
 
-#: src/create_homework.ui:41 src/information.py:48 src/information.py:94
+#: src/create_homework.ui:41 src/information.py:48 src/information.py:96
 msgid "Subject"
 msgstr "Fach"
 
@@ -172,6 +176,18 @@ msgstr "Speichern"
 #: src/external_page.ui:25
 msgid "Open this page in a web-browser"
 msgstr "Diese seite im Webbrowser öffnen"
+
+#: src/external_page.ui:31
+msgid "Go back"
+msgstr "Zurück"
+
+#: src/external_page.ui:37
+msgid "Home"
+msgstr "Startseite"
+
+#: src/external_page.ui:43
+msgid "Go forward"
+msgstr "Vorwärts"
 
 #: src/homework.ui:19
 msgid "Create a new homework"
@@ -213,43 +229,47 @@ msgstr "Als erledigt markieren"
 msgid "You have changed this"
 msgstr "Sie haben dies geändert"
 
-#: src/information.py:49 src/information.py:95
+#: src/information.py:49 src/information.py:97
 msgid "Room"
 msgstr "Raum"
 
-#: src/information.py:50 src/information.py:96
+#: src/information.py:50 src/information.py:98
 msgid "Room description"
 msgstr "Raumbeschreibung"
 
-#: src/information.py:51 src/information.py:97
+#: src/information.py:51 src/information.py:99
 msgid "Teacher"
 msgstr "Lehrkraft"
 
 #: src/information.py:53
+msgid "Substitution"
+msgstr ""
+
+#: src/information.py:55
 msgid "Information about this lesson"
 msgstr "Informationen zur Stunde"
 
-#: src/information.py:55
+#: src/information.py:57
 msgid "Teaching content"
 msgstr "Lehrstoff"
 
-#: src/information.py:57
+#: src/information.py:59
 msgid "Cancelled"
 msgstr "Fällt aus"
 
-#: src/information.py:66
+#: src/information.py:68
 msgid "Duration"
 msgstr "Dauer"
 
-#: src/information.py:69
+#: src/information.py:71
 msgid "Minutes"
 msgstr "Minuten"
 
-#: src/information.py:88 src/information.py:104 src/window.ui:62
+#: src/information.py:90 src/information.py:106 src/window.ui:62
 msgid "Homework"
 msgstr "Hausaufgaben"
 
-#: src/information.py:92
+#: src/information.py:94
 msgid "Original lesson"
 msgstr "Ursprüngliche Stunde"
 
@@ -269,7 +289,7 @@ msgstr "Zu viele Ergebnisse"
 msgid "Offline"
 msgstr "Kein Internet"
 
-#: src/login.py:97 src/profiles.py:135
+#: src/login.py:97 src/profiles.py:138
 msgid "Error"
 msgstr "Fehler"
 
@@ -337,7 +357,7 @@ msgstr ""
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:115
 msgid "translator-credits"
-msgstr ""
+msgstr "Ostfriese4"
 
 #: src/messages.py:62
 msgid "Sender"
@@ -365,11 +385,11 @@ msgstr "Profil %s bearbeiten"
 msgid "Delete profile %s"
 msgstr "Profile %s löschen"
 
-#: src/profiles.py:134
+#: src/profiles.py:137
 msgid "Can not delete only profile"
 msgstr "Das einzige Profil kann nicht gelöscht werden"
 
-#: src/profiles.py:150
+#: src/profiles.py:152
 msgid "Do you really want to delete this profile?"
 msgstr "Wollen Sie dieses Profil wirklich löschen?"
 
@@ -423,12 +443,12 @@ msgstr "Lehrkräfte"
 msgid "Search term"
 msgstr "Suchbegriff"
 
-#: src/timetable.py:305
+#: src/timetable.py:325
 msgid "Week %W"
 msgstr "%W. Woche"
 
 #. Translators: date format in the timetable
-#: src/timetable.py:366
+#: src/timetable.py:386
 msgid "%m/%d/%y"
 msgstr "%d.%m.%y"
 
@@ -436,7 +456,7 @@ msgstr "%d.%m.%y"
 msgid "Previous week"
 msgstr "Vorherige Woche"
 
-#: src/timetable.ui:21 src/timetable.ui:92
+#: src/timetable.ui:21 src/timetable.ui:95
 msgid "Jump to date"
 msgstr "Zu Datum springen"
 
