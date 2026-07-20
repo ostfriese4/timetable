@@ -49,6 +49,8 @@ class InformationWindow(Adw.Dialog):
         data[_("Room")] = lesson["room"]
         data[_("Room description")] = lesson["room-info"]
         data[_("Teacher")] = lesson["teachers-long"]
+        if lesson.get("substText"):
+            data[_("Substitution")] = lesson["substText"]
         if lesson["lessonInfo"] is not None:
             data[_("Information about this lesson")] = lesson["lessonInfo"]
         if lesson["teachingContent"] is not None:
