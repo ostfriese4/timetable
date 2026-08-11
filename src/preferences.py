@@ -21,6 +21,7 @@ from gi.repository import Gtk
 from gi.repository import Adw
 from gi.repository import Gio
 from .api import id
+from .dialog import closeOnClickOutside
 
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/preferences.ui")
@@ -31,6 +32,9 @@ class PreferencesDialog(Adw.PreferencesDialog):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        closeOnClickOutside(self)
+
         self.settings = Gio.Settings(schema_id=id)
         self.settings.bind(
             "show-cancelled-lessons",
