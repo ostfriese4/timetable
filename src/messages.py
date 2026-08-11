@@ -20,6 +20,7 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from gi.repository import GObject
+from .offline_banner import OfflineBanner
 
 import datetime
 
@@ -70,6 +71,7 @@ class MessagesPage(Gtk.Box):
     __gtype_name__ = "MessagesPage"
 
     show_sidebar_button = Gtk.Template.Child()
+    offline = Gtk.Template.Child()
     container = Gtk.Template.Child()
     news_of_day = Gtk.Template.Child()
 

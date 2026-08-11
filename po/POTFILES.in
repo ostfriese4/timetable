@@ -24,6 +24,8 @@ src/login.ui
 src/main.py
 src/messages.py
 src/messages.ui
+src/offline_banner.py
+src/offline_banner.ui
 src/preferences.py
 src/preferences.ui
 src/profiles.py

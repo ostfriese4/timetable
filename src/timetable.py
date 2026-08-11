@@ -27,6 +27,7 @@ from .homework_api import fetchHomeworks
 from .information import InformationWindow
 from .lesson import Lesson
 from .holiday import Holiday
+from .offline_banner import OfflineBanner
 from .dialog import closeOnClickOutside
 from .api import getDateTime, id as appId
 import cairo
@@ -394,10 +395,7 @@ class Timetable(Gtk.Box):
         atLeastOneLesson = False
 
         self.header_button.set_label(self.startdate.strftime(_("Week %W")))
-        if self.shared.session.getOffline():
-            self.offline.set_revealed(revealed=True)
-        else:
-            self.offline.set_revealed(revealed=False)
+        self.window.updateOfflineBanners()
 
         self.start = self.timeToMinutes(self.gridFormat["duration"]["start"])
         self.end = self.timeToMinutes(self.gridFormat["duration"]["end"])

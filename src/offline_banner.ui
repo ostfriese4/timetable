@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="OfflineBanner" parent="AdwBin">
+    <child>
+      <object class="AdwBanner" id="banner">
+        <property name="title" translatable="yes">You are offline</property>
+        <property name="button-label" translatable="yes">Try again</property>
+        <property name="action-name">app.refresh</property>
+      </object>
+    </child>
+  </template>
+</interface>

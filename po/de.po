@@ -508,6 +508,14 @@ msgstr "_Tastenkürzel"
 msgid "_About Timetable"
 msgstr "Über _Stundenplan"
 
+#: src/window.py:78
+msgid "Try again"
+msgstr "Erneut versuchen"
+
+#: src/window.py:100
+msgid "You are offline, last connection at %H:%M"
+msgstr "Keine Internetverbindung, zuletzt verbunden um %H:%M"
+
 #~ msgid "_Login"
 #~ msgstr "An_melden"
 

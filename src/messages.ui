@@ -21,6 +21,9 @@
             </child>
           </object>
         </child>
+        <child type="top">
+          <object class="OfflineBanner" id="offline"/>
+        </child>
         <property name="content">
           <object class="GtkScrolledWindow" id="scrolled_window">
             <property name="hscrollbar-policy">never</property>

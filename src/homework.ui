@@ -27,6 +27,9 @@
             </child>
           </object>
         </child>
+        <child type="top">
+          <object class="OfflineBanner" id="offline"/>
+        </child>
         <property name="content">
           <object class="AdwViewStack" id="homework_stack">
             <property name="enable-transitions">True</property>

@@ -17,6 +17,7 @@ useragent = id + " " + version
 headers = {"User-Agent": useragent, "Accept": "application/json"}
 
 offline = False
+lastOnline = None
 
 fakeTime = datetime.datetime.strptime("26.06.16 10:31:03", "%y.%m.%d %H:%M:%S")
 
@@ -28,7 +29,7 @@ def getDate():
 
 
 def _login(credentials):
-    global offline
+    global offline, lastOnline
     s = requests.Session()
     s.headers.update(headers)
     s.headers.update({"Referer": credentials["server"] + "/"})
@@ -80,6 +81,7 @@ def _login(credentials):
 
 
         offline = False
+        lastOnline = getDateTime()
         if response.status_code == 200:
             if ok:
                 token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
@@ -151,6 +153,20 @@ class session:
 
     def getOffline(self):
         return offline
+
+    def getLastOnline(self):
+        global lastOnline
+        if lastOnline is None:
+            last = None
+            for item in self.cacheIndex:
+                if item != "last-refresh":
+                    if last is None:
+                        last = self.cacheIndex[item]
+                    elif self.cacheIndex[item] < last:
+                        last = self.cacheIndex[item]
+            if last is not None:
+                lastOnline = datetime.datetime.fromtimestamp(last)
+        return lastOnline
 
     def scanFiles(self, root, rootName):
         out = []
@@ -230,7 +246,7 @@ class session:
         return False
 
     def _RPCRequest(self, method, params, mode="normal", maxage=3600):
-        global offline
+        global offline, lastOnline
         orig = mode
 
         hashed = method + str(params)
@@ -256,6 +272,7 @@ class session:
                 response = self.session.post(self.server + "/WebUntis/jsonrpc.do", json = payload)
                 data = response.json()
                 offline = False
+                lastOnline = getDateTime()
                 if not "result" in data:  # e.g. "no right for getTeachers()"
                     print("ERROR: RPC:", method, params, data.get("error"))
                     mode = "cache"
@@ -308,7 +325,7 @@ class session:
                 return teacher
 
     def _getRequest(self, path, mode="normal", maxage=3600):
-        global offline
+        global offline, lastOnline
         orig = mode
         hashed = "requests/" + md5(path.encode()).hexdigest()
         if mode == "normal":
@@ -324,6 +341,7 @@ class session:
                 response = self.session.get(self.server + path)
                 data = response.json()
                 offline = False
+                lastOnline = getDateTime()
                 if "errorCode" in data or "errorMessage" in data:
                     print("ERROR: PATH:", self.server + path, data)
                     if "errorMessage" in data:

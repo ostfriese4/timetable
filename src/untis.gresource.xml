@@ -11,6 +11,7 @@
     <file preprocess="xml-stripblanks">lesson.ui</file>
     <file preprocess="xml-stripblanks">login.ui</file>
     <file preprocess="xml-stripblanks">messages.ui</file>
+    <file preprocess="xml-stripblanks">offline_banner.ui</file>
     <file preprocess="xml-stripblanks">preferences.ui</file>
     <file preprocess="xml-stripblanks">profiles.ui</file>
     <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>

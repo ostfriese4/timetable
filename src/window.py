@@ -64,11 +64,34 @@ class UntisWindow(Adw.ApplicationWindow):
         self.messages.enable_bindings(self)
         self.absences.enable_bindings(self)
 
+        self.offline_banners = [
+            self.timetable.offline,
+            self.homework.offline,
+            self.teachers.offline,
+            self.messages.offline,
+            self.absences.offline,
+        ]
+        # runs after the handlers of the pages, so their data is loaded
+        self.main_view_stack.connect(
+            "notify::visible-child-name", lambda *args: self.updateOfflineBanners()
+        )
+        self.updateOfflineBanners()
+
         try:
             self.addExternalPages()
             self.showHideViews()
         except:
             raise
+
+    def updateOfflineBanners(self):
+        try:
+            offline = self.shared.session.getOffline()
+            last = self.shared.session.getLastOnline()
+        except AttributeError:
+            return
+
+        for banner in self.offline_banners:
+            banner.update(offline, last)
 
     def hidePage(self, name):
         if not name in self.hiddenPages:

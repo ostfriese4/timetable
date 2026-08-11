@@ -48,9 +48,7 @@
           <object class="GtkBox">
             <property name="orientation">vertical</property>
             <child>
-              <object class="AdwBanner" id="offline">
-                <property name="title" translatable="yes">You are offline</property>
-              </object>
+              <object class="OfflineBanner" id="offline"/>
             </child>
             <child>
               <object class="GtkScrolledWindow">
