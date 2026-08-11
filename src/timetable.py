@@ -200,6 +200,12 @@ class Timetable(Gtk.Box):
         self.shared.session.refresh()
         self.loadData()
 
+    def refreshHomeworks(self):
+        for lesson in self.lessons:
+            lesson[1].clearHomeworks()
+        homeworks = fetchHomeworks(self.startdate, self.enddate)
+        self.displayHomeworks(homeworks)
+
     def prefetch(self):
         def code():
             while self.prefetching != []:

@@ -144,6 +144,12 @@ class UntisWindow(Adw.ApplicationWindow):
 
             self.pages.append(page)
 
+    def homeworksChanged(self):
+        # keep the homework page and the indicators in the timetable in
+        # sync when a homework is created, edited, checked off or deleted
+        self.homework.displayAll()
+        self.timetable.refreshHomeworks()
+
     def reload(self):
         self.checkCredentials()
         self.main_view_stack.set_visible_child_name("timetable")

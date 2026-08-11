@@ -182,6 +182,10 @@ class Lesson(Gtk.Overlay):
         if not self.markedAsHidden:
             self.window.information_window.setLesson(self.lesson)
 
+    def clearHomeworks(self):
+        self.lesson["homeworks"] = []
+        self.homework_indicator.set_visible(False)
+
     def addHomework(self, homework):
         if "homeworks" in self.lesson:
             homeworks = self.lesson["homeworks"]
