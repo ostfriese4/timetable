@@ -50,7 +50,7 @@
                   <object class="AdwViewStackPage">
                     <property name="name">timetable</property>
                     <property name="title" translatable="yes">My timetable</property>
-                    <property name="icon-name">starred-symbolic</property>
+                    <property name="icon-name">month-symbolic</property>
                     <property name="child">
                       <object class="Timetable" id="timetable"></object>
                     </property>
