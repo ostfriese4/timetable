@@ -50,7 +50,7 @@
                   <object class="GtkBox">
                     <child>
                       <object class="AdwStatusPage" id="empty_undone">
-                        <property name="icon-name">checkbox-checked-symbolic</property>
+                        <property name="icon-name">check-round-outline2-symbolic</property>
                         <property name="title" translatable="yes">Everything done</property>
                         <property name="description" translatable="yes">You have no unfinished homework</property>
                         <property name="vexpand">True</property>

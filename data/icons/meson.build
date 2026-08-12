@@ -28,7 +28,7 @@ install_data(
   install_dir: get_option('datadir') / 'icons' / scalable_dir / 'actions'
 )
 install_data(
-  scalable_dir / 'ui' / ('checkbox-checked-symbolic.svg'),
+  scalable_dir / 'status' / ('check-round-outline2-symbolic.svg'),
   install_dir: get_option('datadir') / 'icons' / scalable_dir / 'status'
 )
 install_data(
