@@ -39,3 +39,7 @@ install_data(
   scalable_dir / 'status' / ('month-symbolic.svg'),
   install_dir: get_option('datadir') / 'icons' / scalable_dir / 'status'
 )
+install_data(
+  scalable_dir / 'status' / ('agenda-symbolic.svg'),
+  install_dir: get_option('datadir') / 'icons' / scalable_dir / 'status'
+)
