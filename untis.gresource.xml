@@ -20,4 +20,16 @@
     <file preprocess="xml-stripblanks">window.ui</file>
     <file>style.css</file>
   </gresource>
+  <gresource prefix="/page/codeberg/ostfriese4/Untis/icons/scalable/actions/">
+    <file preprocess="xml-stripblanks">agenda-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">appointment-soon-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">check-round-outline2-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">dialog-information-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">document-edit-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">external-link-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">globe-alt-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">mail-unread-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">month-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">system-users-symbolic.svg</file>
+  </gresource>
 </gresources>
