@@ -35,3 +35,7 @@ install_data(
   scalable_dir / 'actions' / ('external-link-symbolic.svg'),
   install_dir: get_option('datadir') / 'icons' / scalable_dir / 'actions'
 )
+install_data(
+  scalable_dir / 'actions' / ('globe-alt-symbolic.svg'),
+  install_dir: get_option('datadir') / 'icons' / scalable_dir / 'actions'
+)

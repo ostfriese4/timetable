@@ -139,6 +139,7 @@ class UntisWindow(Adw.ApplicationWindow):
             page = self.main_view_stack.add(content)
             page.set_title(pageData["name"])
             page.set_name(id)
+            page.set_icon_name("globe-alt-symbolic")
 
             content.enable_bindings(self)
 
