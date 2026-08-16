@@ -9,8 +9,8 @@ import binascii
 from pathlib import Path
 from hashlib import md5
 
-version = "4.2.0"
-releaseNotes = "        <ul>\n          <li>improved external pages</li>\n          <li>fixed deleting of profiles</li>\n          <li>hide unavailable features</li>\n          <li>fixed crash if WebUntis is down @Felitendo</li>\n          <li>redesigned timetable @Felitendo</li>\n          <li>show the substitution text of a lesson @Felitendo</li>\n          <li>show overlapping lessons next to each other @Felitendo</li>\n        </ul>\n"#"""
+version = "4.2.1"
+releaseNotes = "        <ul>\n          <li>improved the offline banner @Felitendo</li>\n          <li>apply homework changes immediately without switching tabs @Felitendo</li>\n          <li>update the homework indicators in the timetable after changes @Felitendo</li>\n          <li>improved icons @ostfriese4</li>\n        </ul>\n"#"""
 id = "page.codeberg.ostfriese4.Untis"
 useragent = id + " " + version
 
