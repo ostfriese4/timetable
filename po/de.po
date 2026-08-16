@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-20 21:31+0200\n"
-"PO-Revision-Date: 2026-07-20 21:43+0200\n"
+"POT-Creation-Date: 2026-08-16 20:31+0200\n"
+"PO-Revision-Date: 2026-08-16 20:33+0200\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -21,7 +21,8 @@ msgstr ""
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:109
-#: src/preferences.ui:11 src/window.ui:6 src/window.ui:19 src/window.ui:45
+#: src/ui/preferences.ui:11 src/ui/window.ui:6 src/ui/window.ui:19
+#: src/ui/window.ui:45
 msgid "Timetable"
 msgstr "Stundenplan"
 
@@ -85,47 +86,47 @@ msgstr "Informationen zur Stunde werden in einem Dialog angezeigt"
 msgid "Editing a homework"
 msgstr "Bearbeiten einer Hausaufgabe"
 
-#: data/page.codeberg.ostfriese4.Untis.gschema.xml:6
-msgid "Show cancelled lessons next to the lesson taking place instead"
-msgstr ""
+#: data/page.codeberg.ostfriese4.Untis.gschema.xml:6 src/ui/preferences.ui:15
+msgid "Show cancelled lessons if, there is a replacement"
+msgstr "Abgesagte Stunden anzeigen, auch wenn Ersatz stattfindet"
 
-#: src/absences.py:45
+#: src/absences.py:46
 msgid "Text"
 msgstr "Text"
 
-#: src/absences.py:49
+#: src/absences.py:50
 msgid "Excused"
 msgstr "Entschuldigt"
 
-#: src/absences.py:51
+#: src/absences.py:52
 msgid "Unexcused"
 msgstr "Unentschuldigt"
 
-#: src/absences.py:55
+#: src/absences.py:56
 msgid "Start"
 msgstr "Beginn"
 
-#: src/absences.py:59
+#: src/absences.py:60
 msgid "End"
 msgstr "Ende"
 
-#: src/absences.ui:12 src/window.ui:92
+#: src/ui/absences.ui:12 src/ui/window.ui:92
 msgid "Absences"
 msgstr "Abwesenheiten"
 
-#: src/api.py:430
+#: src/api.py:448
 msgid "and"
 msgstr "und"
 
-#: src/api.py:435 src/api.py:511
+#: src/api.py:453 src/api.py:529
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/api.py:506 src/api.py:509
+#: src/api.py:524 src/api.py:527
 msgid "Event"
 msgstr "Veranstaltung"
 
-#: src/api.py:640
+#: src/api.py:658
 msgid "No data"
 msgstr "Keine Daten"
 
@@ -133,103 +134,103 @@ msgstr "Keine Daten"
 msgid "Profile"
 msgstr "Profil"
 
-#: src/create_homework.py:53
+#: src/create_homework.py:54
 msgid "Create homework"
 msgstr "Hausaufgabe erstellen"
 
-#: src/create_homework.py:71 src/homework_row.ui:30
+#: src/create_homework.py:72 src/ui/homework_row.ui:30
 msgid "Edit homework"
 msgstr "Hausaufgabe bearbeiten"
 
-#: src/create_homework.py:93
+#: src/create_homework.py:95
 msgid "Do you really want to delete this homework?"
 msgstr "Wollen Sie diese Hausaufgabe wirklich löschen?"
 
-#: src/create_homework.py:94 src/profiles.py:153
+#: src/create_homework.py:96 src/profiles.py:153
 msgid "Delete?"
 msgstr "Löschen?"
 
-#: src/create_homework.py:95 src/profiles.py:139 src/profiles.py:154
+#: src/create_homework.py:97 src/profiles.py:139 src/profiles.py:154
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: src/create_homework.py:96 src/create_homework.ui:55 src/profiles.py:155
+#: src/create_homework.py:98 src/ui/create_homework.ui:55 src/profiles.py:155
 msgid "Delete"
 msgstr "Löschen"
 
-#: src/create_homework.ui:23 src/messages.py:53
+#: src/ui/create_homework.ui:23 src/messages.py:54
 msgid "Date"
 msgstr "Datum"
 
-#: src/create_homework.ui:36
+#: src/ui/create_homework.ui:36
 msgid "Task"
 msgstr "Aufgabe"
 
-#: src/create_homework.ui:41 src/information.py:48 src/information.py:96
+#: src/ui/create_homework.ui:41 src/information.py:48 src/information.py:96
 msgid "Subject"
 msgstr "Fach"
 
-#: src/create_homework.ui:46 src/homework.ui:36
+#: src/ui/create_homework.ui:46 src/ui/homework.ui:39
 msgid "Completed"
 msgstr "Erledigt"
 
-#: src/create_homework.ui:64 src/login.ui:87
+#: src/ui/create_homework.ui:64 src/ui/login.ui:87
 msgid "Save"
 msgstr "Speichern"
 
-#: src/external_page.ui:25
+#: src/ui/external_page.ui:25
 msgid "Open this page in a web-browser"
 msgstr "Diese seite im Webbrowser öffnen"
 
-#: src/external_page.ui:31
+#: src/ui/external_page.ui:31
 msgid "Go back"
 msgstr "Zurück"
 
-#: src/external_page.ui:37
+#: src/ui/external_page.ui:37
 msgid "Home"
 msgstr "Startseite"
 
-#: src/external_page.ui:43
+#: src/ui/external_page.ui:43
 msgid "Go forward"
 msgstr "Vorwärts"
 
-#: src/homework.ui:19
+#: src/ui/homework.ui:19
 msgid "Create a new homework"
 msgstr "Eine neue Hausaufgabe erstellen"
 
-#: src/homework.ui:45
+#: src/ui/homework.ui:48
 msgid "Unfinished"
 msgstr "Unerledigt"
 
-#: src/homework.ui:51
+#: src/ui/homework.ui:54
 msgid "Everything done"
 msgstr "Alles erledigt"
 
-#: src/homework.ui:52
+#: src/ui/homework.ui:55
 msgid "You have no unfinished homework"
 msgstr "Du hast keine unerledigten Hausaufgaben"
 
-#: src/homework_row.py:68
+#: src/homework_row.py:71
 msgid "Your teacher marked this as completed"
 msgstr "Ihre Lehrkraft hat dies als erledigt markiert"
 
-#: src/homework_row.py:70
+#: src/homework_row.py:73
 msgid "Your teacher didn't mark this as completed"
 msgstr "Ihre Lehrkraft hat dies als nicht erledigt markiert"
 
-#: src/homework_row.py:72
+#: src/homework_row.py:75
 msgid "The original task was '%t'"
 msgstr "Die ursprüngliche Aufgabe war '%t'"
 
-#: src/homework_row.py:75
+#: src/homework_row.py:78
 msgid "This was originally due on %A %x"
 msgstr "Dies was ursprünglich am %A dem %x fällig."
 
-#: src/homework_row.ui:15
+#: src/ui/homework_row.ui:15
 msgid "Mark as completed"
 msgstr "Als erledigt markieren"
 
-#: src/homework_row.ui:37
+#: src/ui/homework_row.ui:37
 msgid "You have changed this"
 msgstr "Sie haben dies geändert"
 
@@ -247,7 +248,7 @@ msgstr "Lehrkraft"
 
 #: src/information.py:53
 msgid "Substitution"
-msgstr ""
+msgstr "Vertretung"
 
 #: src/information.py:55
 msgid "Information about this lesson"
@@ -269,7 +270,7 @@ msgstr "Dauer"
 msgid "Minutes"
 msgstr "Minuten"
 
-#: src/information.py:90 src/information.py:106 src/window.ui:62
+#: src/information.py:90 src/information.py:106 src/ui/window.ui:62
 msgid "Homework"
 msgstr "Hausaufgaben"
 
@@ -277,7 +278,7 @@ msgstr "Hausaufgaben"
 msgid "Original lesson"
 msgstr "Ursprüngliche Stunde"
 
-#: src/information.ui:6
+#: src/ui/information.ui:6
 msgid "Information"
 msgstr "Informationen"
 
@@ -297,7 +298,7 @@ msgstr "Kein Internet"
 msgid "Error"
 msgstr "Fehler"
 
-#: src/login.py:125 src/login.ui:69
+#: src/login.py:125 src/ui/login.ui:69
 msgid "Token"
 msgstr "Schlüssel"
 
@@ -305,47 +306,47 @@ msgstr "Schlüssel"
 msgid "Invalid credentials"
 msgstr "Ungültige Anmeldedaten"
 
-#: src/login.ui:6
+#: src/ui/login.ui:6
 msgid "Login"
 msgstr "Anmelden"
 
-#: src/login.ui:25
+#: src/ui/login.ui:25
 msgid "Profile name"
 msgstr "Profilname"
 
-#: src/login.ui:34
+#: src/ui/login.ui:34
 msgid "I usually log in using a third-party service"
 msgstr "I melde mich normalerweise über einen Drittanbieter an"
 
-#: src/login.ui:40 src/login.ui:102
+#: src/ui/login.ui:40 src/ui/login.ui:102
 msgid "Search school"
 msgstr "Schule suchen"
 
-#: src/login.ui:50
+#: src/ui/login.ui:50
 msgid "Server-URL"
 msgstr "Server-URL"
 
-#: src/login.ui:55 src/login.ui:114
+#: src/ui/login.ui:55 src/ui/login.ui:114
 msgid "School"
 msgstr "Schule"
 
-#: src/login.ui:60
+#: src/ui/login.ui:60
 msgid "Username"
 msgstr "Benutzername"
 
-#: src/login.ui:65
+#: src/ui/login.ui:65
 msgid "Authentication method"
 msgstr "Authentifizierungsmethode"
 
-#: src/login.ui:70
+#: src/ui/login.ui:70
 msgid "Password"
 msgstr "Passwort"
 
-#: src/login.ui:135
+#: src/ui/login.ui:135
 msgid "Help"
 msgstr "Hilfe"
 
-#: src/login.ui:151
+#: src/ui/login.ui:151
 msgid ""
 "If you are logging usually logging into WebUntis using a third party sso "
 "(e.g. IServ), you'll' have to open WebUntis in your browser, go to your "
@@ -363,25 +364,33 @@ msgstr ""
 msgid "translator-credits"
 msgstr "Ostfriese4"
 
-#: src/messages.py:62
+#: src/messages.py:63
 msgid "Sender"
 msgstr "Absender*in"
 
-#: src/messages.ui:12 src/messages.ui:39 src/window.ui:82
+#: src/ui/messages.ui:12 src/ui/messages.ui:42 src/ui/window.ui:82
 msgid "Messages"
 msgstr "Nachrichten"
 
-#: src/messages.ui:34
+#: src/ui/messages.ui:37
 msgid "News of Day"
 msgstr "Nachrichten des Tages"
 
-#: src/preferences.ui:14
-msgid "Show cancelled lessons"
-msgstr ""
+#: src/offline_banner.py:31 src/ui/offline_banner.ui:8
+msgid "You are offline"
+msgstr "Keine Internetverbindung"
 
-#: src/preferences.ui:15
-msgid "Also show a cancelled lesson next to the lesson taking place instead"
-msgstr ""
+#: src/offline_banner.py:33
+msgid "You are offline, last connection at %H:%M"
+msgstr "Keine Internetverbindung, zuletzt verbunden um %H:%M"
+
+#: src/ui/offline_banner.ui:9
+msgid "Try again"
+msgstr "Erneut versuchen"
+
+#: src/ui/preferences.ui:14
+msgid "Show all cancelled lessons"
+msgstr "Alle abgesagten Stunden anzeigen"
 
 #: src/profiles.py:38
 msgid "Unnamed"
@@ -405,116 +414,110 @@ msgstr "Das einzige Profil kann nicht gelöscht werden"
 msgid "Do you really want to delete this profile?"
 msgstr "Wollen Sie dieses Profil wirklich löschen?"
 
-#: src/profiles.ui:6
+#: src/ui/profiles.ui:6
 msgid "Manage profiles"
 msgstr "Profile verwalten"
 
-#: src/profiles.ui:16
+#: src/ui/profiles.ui:16
 msgid "Create a new profile"
 msgstr "Eine neues Profil erstellen"
 
-#: src/shortcuts-dialog.ui:6
+#: src/ui/shortcuts-dialog.ui:6
 msgid "Shortcuts"
 msgstr "Tastenkürzel"
 
-#: src/shortcuts-dialog.ui:9
+#: src/ui/shortcuts-dialog.ui:9
 msgctxt "shortcut window"
 msgid "Refresh"
 msgstr "Aktualisieren"
 
-#: src/shortcuts-dialog.ui:15
+#: src/ui/shortcuts-dialog.ui:15
 msgctxt "shortcut window"
 msgid "Login"
 msgstr "Anmelden"
 
-#: src/shortcuts-dialog.ui:21
+#: src/ui/shortcuts-dialog.ui:21
 msgctxt "shortcut window"
 msgid "Manage profiles"
 msgstr "Profile verwalten"
 
-#: src/shortcuts-dialog.ui:27
+#: src/ui/shortcuts-dialog.ui:27
 msgctxt "shortcut window"
 msgid "Create homework"
 msgstr "Hausaufgabe erstellen"
 
-#: src/shortcuts-dialog.ui:33
+#: src/ui/shortcuts-dialog.ui:33
+#, fuzzy
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "_Einstellungen"
+
+#: src/ui/shortcuts-dialog.ui:39
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
 msgstr "Tastenkürzel anzeigen"
 
-#: src/shortcuts-dialog.ui:39
+#: src/ui/shortcuts-dialog.ui:45
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Beenden"
 
-#: src/teachers.ui:12 src/window.ui:72
+#: src/ui/teachers.ui:12 src/ui/window.ui:72
 msgid "Teachers"
 msgstr "Lehrkräfte"
 
-#: src/teachers.ui:34
+#: src/ui/teachers.ui:37
 msgid "Search term"
 msgstr "Suchbegriff"
 
-#: src/timetable.py:396
+#: src/timetable.py:403
 msgid "Week %W"
 msgstr "%W. Woche"
 
 #. Translators: date format in the timetable
-#: src/timetable.py:457
+#: src/timetable.py:461
 msgid "%m/%d/%y"
 msgstr "%d.%m.%y"
 
-#: src/timetable.ui:16
+#: src/ui/timetable.ui:16
 msgid "Previous week"
 msgstr "Vorherige Woche"
 
-#: src/timetable.ui:21 src/timetable.ui:95
+#: src/ui/timetable.ui:21 src/ui/timetable.ui:93
 msgid "Jump to date"
 msgstr "Zu Datum springen"
 
-#: src/timetable.ui:27
+#: src/ui/timetable.ui:27
 msgid "Next week"
 msgstr "Nächste Woche"
 
-#: src/timetable.ui:41
+#: src/ui/timetable.ui:41
 msgid "Refresh"
 msgstr "Aktualisieren"
 
-#: src/timetable.ui:52
-msgid "You are offline"
-msgstr "Keine Internetverbindung"
-
-#: src/window.ui:28
+#: src/ui/window.ui:28
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
-#: src/window.ui:52
+#: src/ui/window.ui:52
 msgid "My timetable"
 msgstr "Mein Stundenplan"
 
-#: src/window.ui:109
+#: src/ui/window.ui:109
 msgid "Manage _profiles"
 msgstr "_Profile verwalten"
 
-#: src/window.ui:113
+#: src/ui/window.ui:113
 msgid "_Preferences"
 msgstr "_Einstellungen"
 
-#: src/window.ui:117
+#: src/ui/window.ui:117
 msgid "_Keyboard Shortcuts"
 msgstr "_Tastenkürzel"
 
-#: src/window.ui:121
+#: src/ui/window.ui:121
 msgid "_About Timetable"
 msgstr "Über _Stundenplan"
-
-#: src/window.py:78
-msgid "Try again"
-msgstr "Erneut versuchen"
-
-#: src/window.py:100
-msgid "You are offline, last connection at %H:%M"
-msgstr "Keine Internetverbindung, zuletzt verbunden um %H:%M"
 
 #~ msgid "_Login"
 #~ msgstr "An_melden"

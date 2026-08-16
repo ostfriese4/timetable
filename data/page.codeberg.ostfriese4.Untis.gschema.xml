@@ -2,8 +2,8 @@
 <schemalist gettext-domain="untis">
 	<schema id="page.codeberg.ostfriese4.Untis" path="/page/codeberg/ostfriese4/Untis/">
 		<key name="show-cancelled-lessons" type="b">
-			<default>false</default>
-			<summary>Show cancelled lessons next to the lesson taking place instead</summary>
+			<default>true</default>
+			<summary>Show cancelled lessons if, there is a replacement</summary>
 		</key>
 	</schema>
 </schemalist>
