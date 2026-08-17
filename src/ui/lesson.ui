@@ -23,7 +23,7 @@
         </child>
         <child>
           <object class="GtkImage" id="info_indicator">
-            <property name="icon-name">dialog-information-symbolic</property>
+            <property name="icon-name">info-outline-symbolic</property>
             <property name="visible">False</property>
           </object>
         </child>
