@@ -135,6 +135,9 @@ class Timetable(Gtk.Box):
         self.settings.connect(
             "changed::show-cancelled-lessons", lambda *args: self.loadData()
         )
+        self.settings.connect(
+            "changed::show-time-axis", lambda *args: self.loadData()
+        )
 
         GLib.timeout_add(1000 * 60, self.update_marker)  # update time-marker
         GLib.timeout_add(
@@ -410,9 +413,10 @@ class Timetable(Gtk.Box):
             for lesson in day:
                 atLeastOneLesson = True
 
-        self.showAxis = atLeastOneLesson and not self.show_sidebar_button.get_visible()
+        self.showAxis = self.settings.get_boolean("show-time-axis")
         if not atLeastOneLesson:
             self.start = 0
+            self.showAxis = False
 
         for lesson in self.lessons:
             lesson[0].remove(lesson[1])

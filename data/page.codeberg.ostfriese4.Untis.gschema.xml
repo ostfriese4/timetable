@@ -5,5 +5,9 @@
 			<default>true</default>
 			<summary>Show cancelled lessons if, there is a replacement</summary>
 		</key>
+		<key name="show-time-axis" type="b">
+			<default>true</default>
+			<summary>Show the time axis</summary>
+		</key>
 	</schema>
 </schemalist>

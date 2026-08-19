@@ -15,6 +15,11 @@
                 <property name="subtitle" translatable="yes">Show cancelled lessons if, there is a replacement</property>
               </object>
             </child>
+            <child>
+              <object class="AdwSwitchRow" id="show_time_axis">
+                <property name="title" translatable="yes">Show the time axis</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>

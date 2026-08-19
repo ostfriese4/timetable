@@ -29,6 +29,7 @@ class PreferencesDialog(Adw.PreferencesDialog):
     __gtype_name__ = "PreferencesDialog"
 
     show_cancelled = Gtk.Template.Child()
+    show_time_axis = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -39,6 +40,12 @@ class PreferencesDialog(Adw.PreferencesDialog):
         self.settings.bind(
             "show-cancelled-lessons",
             self.show_cancelled,
+            "active",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
+        self.settings.bind(
+            "show-time-axis",
+            self.show_time_axis,
             "active",
             Gio.SettingsBindFlags.DEFAULT,
         )
