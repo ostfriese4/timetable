@@ -144,8 +144,6 @@ class Timetable(Gtk.Box):
             1000 * 60 * 10, self.loadData
         )  # Update every ten minutes (will result in every hour because of caching)
 
-        self.show_sidebar_button.connect("notify::visible", self.loadData)
-
     def on_header_button(self, data=None):
         self.date_chooser.set_year(self.startdate.year)
         self.date_chooser.set_month(self.startdate.month - 1)
