@@ -57,6 +57,16 @@
                   </object>
                 </child>
                 <child>
+                  <object class="AdwViewStackPage">
+                    <property name="name">additional_timetables</property>
+                    <property name="title" translatable="yes">All timetables</property>
+                    <property name="icon-name">month-symbolic</property>
+                    <property name="child">
+                      <object class="AdditionalTimetablesPage" id="additional_timetables"></object>
+                    </property>
+                  </object>
+                </child>
+                <child>
                   <object class="AdwViewStackPage" id="homework_page">
                     <property name="name">homework</property>
                     <property name="title" translatable="yes">Homework</property>

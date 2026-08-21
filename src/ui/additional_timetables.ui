@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="AdditionalTimetablesPage" parent="GtkBox">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="OfflineBanner" id="offline"/>
+    </child>
+    <child>
+      <object class="AdwNavigationView" id="view">
+        <child>
+          <object class="AdwNavigationPage">
+            <child>
+              <object class="AdwToolbarView">
+                <child type="top">
+                  <object class="AdwHeaderBar">
+                    <property name="title-widget">
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">All timetables</property>
+                        <property name="halign">GTK_ALIGN_CENTER</property>
+                      </object>
+                    </property>
+                    <child type="start">
+                      <object class="GtkToggleButton" id="show_sidebar_button">
+                        <property name="icon-name">adw-sidebar-symbolic</property>
+                        <property name="visible">False</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <property name="content">
+                  <object class="AdwPreferencesPage" id="container"/>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwNavigationPage" id="timetable_page"/>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

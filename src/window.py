@@ -19,6 +19,7 @@
 
 from .login import LoginWindow
 from .timetable import Timetable
+from .additional_timetables import AdditionalTimetablesPage
 from .homework import HomeworkList
 from .teachers import TeacherPage
 from .messages import MessagesPage
@@ -39,6 +40,7 @@ class UntisWindow(Adw.ApplicationWindow):
     timetable = Gtk.Template.Child()
     absences = Gtk.Template.Child()
     absences_page = Gtk.Template.Child()
+    additional_timetables = Gtk.Template.Child()
     homework = Gtk.Template.Child()
     homework_page = Gtk.Template.Child()
     main_view_stack = Gtk.Template.Child()
@@ -63,6 +65,7 @@ class UntisWindow(Adw.ApplicationWindow):
         self.teachers.enable_bindings(self)
         self.messages.enable_bindings(self)
         self.absences.enable_bindings(self)
+        self.additional_timetables.enable_bindings(self)
 
         self.offline_banners = [
             self.timetable.offline,
@@ -126,6 +129,11 @@ class UntisWindow(Adw.ApplicationWindow):
             self.hidePage("teachers")
         else:
             self.showPage("teachers")
+
+        if self.additional_timetables.shouldHide():
+            self.hidePage("additional_timetables")
+        else:
+            self.showPage("additional_timetables")
 
     def addExternalPages(self):
         for page in self.pages:

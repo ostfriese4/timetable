@@ -100,13 +100,16 @@ class Timetable(Gtk.Box):
     date_chooser = Gtk.Template.Child()
     date_chooser_dialog = Gtk.Template.Child()
 
-    def __init__(self, **kwargs):
+    def __init__(self, resourceType = None, resourceId = None, **kwargs):
         super().__init__(**kwargs)
 
         self.columns = []
         self.lessons = []
         self.overlays = []
         self.prefetching = []
+
+        self.resourceType = resourceType
+        self.resourceId = resourceId
 
         self.information_window = InformationWindow(self)
 
@@ -207,11 +210,17 @@ class Timetable(Gtk.Box):
         homeworks = fetchHomeworks(self.startdate, self.enddate)
         self.displayHomeworks(homeworks)
 
+    def getTimetable(self, start, end, mode="normal"):
+        if self.resourceType:
+            return self.shared.session.getTimetable(self.resourceType, self.resourceId, start, end, mode=mode)
+        else:
+            return self.shared.session.getOwnTimetable(start, end, mode=mode)
+
     def prefetch(self):
         def code():
             while self.prefetching != []:
                 day = self.prefetching[0]
-                data = self.shared.session.getOwnTimetable(day, day)
+                data = self.getTimetable(day, day)
                 self.prefetching.remove(day)
             return False
 
@@ -251,7 +260,7 @@ class Timetable(Gtk.Box):
 
         def load():
             try:
-                data = self.shared.session.getOwnTimetable(
+                data = self.getTimetable(
                     self.startdate, self.enddate, mode="cache"
                 )
                 table, grid = data
@@ -262,7 +271,7 @@ class Timetable(Gtk.Box):
             try:
                 if s == self.startdate:
                     GLib.idle_add(self.displayData, table)
-                    data = self.shared.session.getOwnTimetable(
+                    data = self.getTimetable(
                         self.startdate, self.enddate, mode="normal"
                     )
                     table, grid = data

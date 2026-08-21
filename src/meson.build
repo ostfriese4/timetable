@@ -22,6 +22,7 @@ configure_file(
 untis_sources = [
   '__init__.py',
   'absences.py',
+  'additional_timetables.py',
   'api.py',
   'colors.py',
   'credentials.py',

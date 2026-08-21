@@ -324,7 +324,7 @@ class session:
             if teacher["id"] == id:
                 return teacher
 
-    def _getRequest(self, path, mode="normal", maxage=3600):
+    def _getRequest(self, path, mode="normal", maxage=3600, referer = None):
         global offline, lastOnline
         orig = mode
         hashed = "requests/" + md5(path.encode()).hexdigest()
@@ -377,6 +377,7 @@ class session:
         return data
 
     def getTimetable(self, resourceType, resourceId, start = None, end = None, mode = "normal"):
+        print("fetching", resourceType, resourceId)
         year = self.getCurrentSchoolYear()
         gridFormat = None
 
@@ -419,21 +420,74 @@ class session:
                 )
                 fetched = self._getRequest(path, mode)
                 gridFormat = fetched["format"]
-                dayData = self.analyzeTimetable(fetched["days"], mode)[0]
+                dayData = self.analyzeTimetable(fetched["days"], resourceType, resourceId, mode)[0]
                 self._writeToCache(name, dayData)
             data.append(dayData)
             day += datetime.timedelta(days=1)
 
         return data, gridFormat
 
-    def getOwnTimetable(self, start=None, end=None, mode="normal"):
-        return self.getStudentTimetable(self.getOwnId(), start=start, end=end, mode=mode)
+    def getOwnTimetable(self, start, end, mode="normal"):
+        for role in self.getOwnRoles():
+            if role in ["TEACHER", "STUDENT"]:
+                t = role
+                break
+        id = self.getOwnId()
+        return self.getTimetable(t, id, start, end, mode)
 
-    def getStudentTimetable(self, id, start=None, end=None, mode="normal"):
-        return self.getTimetable("STUDENT", id, start=start, end=end, mode=mode)
+    def getAvailableTimetables(self):
+        result = []
 
-    def getRoomTimetable(self, id, start=None, end=None, mode="normal"):
-        return self.getTimetable("ROOM", id, start=start, end=end, mode=mode)
+        students = self.getAvailableTiemtablesOfType("STUDENT")
+        if students:
+            for student in students["students"]:
+                result.append({
+                    "id": student["student"]["id"],
+                    "type": "STUDENT",
+                    "name": student["student"]["displayName"]
+                })
+
+        rooms = self.getAvailableTiemtablesOfType("ROOM")
+        if rooms:
+            for room in rooms["rooms"]:
+                result.append({
+                    "id": room["room"]["id"],
+                    "type": "ROOM",
+                    "name": room["room"]["displayName"]
+                })
+
+        classes = self.getAvailableTiemtablesOfType("CLASS")
+        if classes:
+            for cls in classes["classes"]:
+                name = cls["class"]["displayName"]
+                if cls["classTeacher1"]:
+                    name += " (" + cls["classTeacher1"]["displayName"] + ")"
+
+                result.append({
+                    "id": cls["class"]["id"],
+                    "type": "CLASS",
+                    "name": name
+                })
+
+        return result
+
+    def getAvailableTiemtablesOfType(self, t):
+        year = self.getCurrentSchoolYear()
+        start = year["dateRange"]["start"]
+        end = year["dateRange"]["end"]
+
+        path = (
+            "/WebUntis/api/rest/view/v1/timetable/filter?resourceType="
+            + t
+            + "&timetableType=STANDARD&start="
+            + start
+            + "&end="
+            + end
+        )
+
+        data = self._getRequest(path)
+
+        return data
 
     def createList(self, data, key, long, integrate=None):
         text = ""
@@ -548,20 +602,26 @@ class session:
 
         return lesson
 
-    def analyzeTimetable(self, data, mode="normal"):
-        own = self.getOwnId()
+    def analyzeTimetable(self, data, resourceType, resourceId, mode="normal"):
         timetable = []
         for day in data:
             timetable.append([])
             lessons = timetable[-1]
             for lesson in day["gridEntries"]:
+
                 details = self.getLessonDetails(
-                    own,
                     lesson["duration"]["start"],
                     lesson["duration"]["end"],
+                    resourceType,
+                    resourceId,
                     mode,
                     lesson.get("status") == "CANCELLED",
                 )
+
+                if details is None:
+                    print("empty lesson")
+                    continue
+
                 lessons.append(self.analyzeLesson(details))
         return timetable
 
@@ -712,17 +772,24 @@ class session:
             return teacher["foreName"] + " " +  teacher["longName"]
         return short
 
-    def getLessonDetails(self, id, start, end, mode="normal", isCancelled=False):
+    def getLessonDetails(self, start, end, resourceType, resourceId, mode="normal", isCancelled=False):
+        resourceTypes = ["CLASS", "TEACHER", "SUBJECT", "ROOM", "STUDENT"]
+        resourceType = str(resourceTypes.index(resourceType) + 1)
         path = (
             "/WebUntis/api/rest/view/v2/calendar-entry/detail?elementId="
-            + str(id)
-            + "&elementType=5&endDateTime="
+            + str(resourceId)
+            + "&elementType="
+            + resourceType
+            + "&endDateTime="
             + end
             + "&homeworkOption=DUE&startDateTime="
             + start
         )
         data = self._getRequest(path, mode)
         data = data["calendarEntries"]
+
+        if data == []:
+            return
 
         takingPlace = []
         cancelled = []
@@ -770,6 +837,12 @@ class session:
         path = "/WebUntis/api/rest/view/v1/app/platform-application/menus"
         data = self._getRequest(path)
         return data or []
+
+    def getOwnUser(self):
+        return self.getGeneralData()["user"]
+
+    def getOwnRoles(self):
+        return self.getOwnUser()["roles"]
 
     def getPermissions(self):
         views = self.getGeneralData()["user"]["permissions"]["views"]
