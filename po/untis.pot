@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-16 20:31+0200\n"
+"POT-Creation-Date: 2026-08-21 15:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,6 +86,10 @@ msgstr ""
 msgid "Show cancelled lessons if, there is a replacement"
 msgstr ""
 
+#: data/page.codeberg.ostfriese4.Untis.gschema.xml:10 src/ui/preferences.ui:20
+msgid "Show the time axis"
+msgstr ""
+
 #: src/absences.py:46
 msgid "Text"
 msgstr ""
@@ -106,23 +110,35 @@ msgstr ""
 msgid "End"
 msgstr ""
 
-#: src/ui/absences.ui:12 src/ui/window.ui:92
-msgid "Absences"
+#: src/additional_timetables.py:86
+msgid "Students"
 msgstr ""
 
-#: src/api.py:448
+#: src/additional_timetables.py:88 src/ui/teachers.ui:12 src/ui/window.ui:82
+msgid "Teachers"
+msgstr ""
+
+#: src/additional_timetables.py:90
+msgid "Classes"
+msgstr ""
+
+#: src/additional_timetables.py:92
+msgid "Rooms"
+msgstr ""
+
+#: src/api.py:502
 msgid "and"
 msgstr ""
 
-#: src/api.py:453 src/api.py:529
+#: src/api.py:507 src/api.py:583
 msgid "Unknown"
 msgstr ""
 
-#: src/api.py:524 src/api.py:527
+#: src/api.py:578 src/api.py:581
 msgid "Event"
 msgstr ""
 
-#: src/api.py:658
+#: src/api.py:718
 msgid "No data"
 msgstr ""
 
@@ -150,20 +166,160 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/create_homework.py:98 src/ui/create_homework.ui:55 src/profiles.py:155
+#: src/create_homework.py:98 src/profiles.py:155 src/ui/create_homework.ui:55
 msgid "Delete"
 msgstr ""
 
-#: src/ui/create_homework.ui:23 src/messages.py:54
+#: src/homework_row.py:71
+msgid "Your teacher marked this as completed"
+msgstr ""
+
+#: src/homework_row.py:73
+msgid "Your teacher didn't mark this as completed"
+msgstr ""
+
+#: src/homework_row.py:75
+msgid "The original task was '%t'"
+msgstr ""
+
+#: src/homework_row.py:78
+msgid "This was originally due on %A %x"
+msgstr ""
+
+#: src/information.py:48 src/information.py:96 src/ui/create_homework.ui:41
+msgid "Subject"
+msgstr ""
+
+#: src/information.py:49 src/information.py:97
+msgid "Room"
+msgstr ""
+
+#: src/information.py:50 src/information.py:98
+msgid "Room description"
+msgstr ""
+
+#: src/information.py:51 src/information.py:99
+msgid "Teacher"
+msgstr ""
+
+#: src/information.py:53
+msgid "Substitution"
+msgstr ""
+
+#: src/information.py:55
+msgid "Information about this lesson"
+msgstr ""
+
+#: src/information.py:57
+msgid "Teaching content"
+msgstr ""
+
+#: src/information.py:59
+msgid "Cancelled"
+msgstr ""
+
+#: src/information.py:68
+msgid "Duration"
+msgstr ""
+
+#: src/information.py:71
+msgid "Minutes"
+msgstr ""
+
+#: src/information.py:90 src/information.py:106 src/ui/window.ui:72
+msgid "Homework"
+msgstr ""
+
+#: src/information.py:94
+msgid "Original lesson"
+msgstr ""
+
+#: src/login.py:89
+msgid "No results"
+msgstr ""
+
+#: src/login.py:93
+msgid "Too many results"
+msgstr ""
+
+#: src/login.py:95
+msgid "Offline"
+msgstr ""
+
+#: src/login.py:97 src/profiles.py:138
+msgid "Error"
+msgstr ""
+
+#: src/login.py:125 src/ui/login.ui:69
+msgid "Token"
+msgstr ""
+
+#: src/login.py:156
+msgid "Invalid credentials"
+msgstr ""
+
+#. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
+#: src/main.py:117
+msgid "translator-credits"
+msgstr ""
+
+#: src/messages.py:54 src/ui/create_homework.ui:23
 msgid "Date"
+msgstr ""
+
+#: src/messages.py:63
+msgid "Sender"
+msgstr ""
+
+#: src/offline_banner.py:31 src/ui/offline_banner.ui:8
+msgid "You are offline"
+msgstr ""
+
+#: src/offline_banner.py:33
+msgid "You are offline, last connection at %H:%M"
+msgstr ""
+
+#: src/profiles.py:38
+msgid "Unnamed"
+msgstr ""
+
+#: src/profiles.py:45
+#, python-format
+msgid "Edit profile %s"
+msgstr ""
+
+#: src/profiles.py:51
+#, python-format
+msgid "Delete profile %s"
+msgstr ""
+
+#: src/profiles.py:137
+msgid "Can not delete only profile"
+msgstr ""
+
+#: src/profiles.py:152
+msgid "Do you really want to delete this profile?"
+msgstr ""
+
+#: src/timetable.py:413
+msgid "Week %W"
+msgstr ""
+
+#. Translators: date format in the timetable
+#: src/timetable.py:472
+msgid "%m/%d/%y"
+msgstr ""
+
+#: src/ui/absences.ui:12 src/ui/window.ui:102
+msgid "Absences"
+msgstr ""
+
+#: src/ui/additional_timetables.ui:19 src/ui/window.ui:62
+msgid "All timetables"
 msgstr ""
 
 #: src/ui/create_homework.ui:36
 msgid "Task"
-msgstr ""
-
-#: src/ui/create_homework.ui:41 src/information.py:48 src/information.py:96
-msgid "Subject"
 msgstr ""
 
 #: src/ui/create_homework.ui:46 src/ui/homework.ui:39
@@ -206,22 +362,6 @@ msgstr ""
 msgid "You have no unfinished homework"
 msgstr ""
 
-#: src/homework_row.py:71
-msgid "Your teacher marked this as completed"
-msgstr ""
-
-#: src/homework_row.py:73
-msgid "Your teacher didn't mark this as completed"
-msgstr ""
-
-#: src/homework_row.py:75
-msgid "The original task was '%t'"
-msgstr ""
-
-#: src/homework_row.py:78
-msgid "This was originally due on %A %x"
-msgstr ""
-
 #: src/ui/homework_row.ui:15
 msgid "Mark as completed"
 msgstr ""
@@ -230,76 +370,8 @@ msgstr ""
 msgid "You have changed this"
 msgstr ""
 
-#: src/information.py:49 src/information.py:97
-msgid "Room"
-msgstr ""
-
-#: src/information.py:50 src/information.py:98
-msgid "Room description"
-msgstr ""
-
-#: src/information.py:51 src/information.py:99
-msgid "Teacher"
-msgstr ""
-
-#: src/information.py:53
-msgid "Substitution"
-msgstr ""
-
-#: src/information.py:55
-msgid "Information about this lesson"
-msgstr ""
-
-#: src/information.py:57
-msgid "Teaching content"
-msgstr ""
-
-#: src/information.py:59
-msgid "Cancelled"
-msgstr ""
-
-#: src/information.py:68
-msgid "Duration"
-msgstr ""
-
-#: src/information.py:71
-msgid "Minutes"
-msgstr ""
-
-#: src/information.py:90 src/information.py:106 src/ui/window.ui:62
-msgid "Homework"
-msgstr ""
-
-#: src/information.py:94
-msgid "Original lesson"
-msgstr ""
-
 #: src/ui/information.ui:6
 msgid "Information"
-msgstr ""
-
-#: src/login.py:89
-msgid "No results"
-msgstr ""
-
-#: src/login.py:93
-msgid "Too many results"
-msgstr ""
-
-#: src/login.py:95
-msgid "Offline"
-msgstr ""
-
-#: src/login.py:97 src/profiles.py:138
-msgid "Error"
-msgstr ""
-
-#: src/login.py:125 src/ui/login.ui:69
-msgid "Token"
-msgstr ""
-
-#: src/login.py:156
-msgid "Invalid credentials"
 msgstr ""
 
 #: src/ui/login.ui:6
@@ -350,29 +422,12 @@ msgid ""
 "newly created password and presumably the same username as in your sso."
 msgstr ""
 
-#. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:117
-msgid "translator-credits"
-msgstr ""
-
-#: src/messages.py:63
-msgid "Sender"
-msgstr ""
-
-#: src/ui/messages.ui:12 src/ui/messages.ui:42 src/ui/window.ui:82
+#: src/ui/messages.ui:12 src/ui/messages.ui:42 src/ui/window.ui:92
 msgid "Messages"
 msgstr ""
 
 #: src/ui/messages.ui:37
 msgid "News of Day"
-msgstr ""
-
-#: src/offline_banner.py:31 src/ui/offline_banner.ui:8
-msgid "You are offline"
-msgstr ""
-
-#: src/offline_banner.py:33
-msgid "You are offline, last connection at %H:%M"
 msgstr ""
 
 #: src/ui/offline_banner.ui:9
@@ -381,28 +436,6 @@ msgstr ""
 
 #: src/ui/preferences.ui:14
 msgid "Show all cancelled lessons"
-msgstr ""
-
-#: src/profiles.py:38
-msgid "Unnamed"
-msgstr ""
-
-#: src/profiles.py:45
-#, python-format
-msgid "Edit profile %s"
-msgstr ""
-
-#: src/profiles.py:51
-#, python-format
-msgid "Delete profile %s"
-msgstr ""
-
-#: src/profiles.py:137
-msgid "Can not delete only profile"
-msgstr ""
-
-#: src/profiles.py:152
-msgid "Do you really want to delete this profile?"
 msgstr ""
 
 #: src/ui/profiles.ui:6
@@ -452,21 +485,8 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr ""
 
-#: src/ui/teachers.ui:12 src/ui/window.ui:72
-msgid "Teachers"
-msgstr ""
-
 #: src/ui/teachers.ui:37
 msgid "Search term"
-msgstr ""
-
-#: src/timetable.py:403
-msgid "Week %W"
-msgstr ""
-
-#. Translators: date format in the timetable
-#: src/timetable.py:461
-msgid "%m/%d/%y"
 msgstr ""
 
 #: src/ui/timetable.ui:16
@@ -493,18 +513,18 @@ msgstr ""
 msgid "My timetable"
 msgstr ""
 
-#: src/ui/window.ui:109
+#: src/ui/window.ui:119
 msgid "Manage _profiles"
 msgstr ""
 
-#: src/ui/window.ui:113
+#: src/ui/window.ui:123
 msgid "_Preferences"
 msgstr ""
 
-#: src/ui/window.ui:117
+#: src/ui/window.ui:127
 msgid "_Keyboard Shortcuts"
 msgstr ""
 
-#: src/ui/window.ui:121
+#: src/ui/window.ui:131
 msgid "_About Timetable"
 msgstr ""

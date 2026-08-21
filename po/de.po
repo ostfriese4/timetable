@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-16 20:31+0200\n"
-"PO-Revision-Date: 2026-08-16 20:33+0200\n"
+"POT-Creation-Date: 2026-08-21 15:05+0200\n"
+"PO-Revision-Date: 2026-08-21 15:09+0200\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: de_DE\n"
 "Language: de\n"
@@ -90,6 +90,10 @@ msgstr "Bearbeiten einer Hausaufgabe"
 msgid "Show cancelled lessons if, there is a replacement"
 msgstr "Abgesagte Stunden anzeigen, auch wenn Ersatz stattfindet"
 
+#: data/page.codeberg.ostfriese4.Untis.gschema.xml:10 src/ui/preferences.ui:20
+msgid "Show the time axis"
+msgstr "Zeitachse anzeigen"
+
 #: src/absences.py:46
 msgid "Text"
 msgstr "Text"
@@ -110,23 +114,35 @@ msgstr "Beginn"
 msgid "End"
 msgstr "Ende"
 
-#: src/ui/absences.ui:12 src/ui/window.ui:92
-msgid "Absences"
-msgstr "Abwesenheiten"
+#: src/additional_timetables.py:86
+msgid "Students"
+msgstr "Schüler*innen"
 
-#: src/api.py:448
+#: src/additional_timetables.py:88 src/ui/teachers.ui:12 src/ui/window.ui:82
+msgid "Teachers"
+msgstr "Lehrkräfte"
+
+#: src/additional_timetables.py:90
+msgid "Classes"
+msgstr "Klassen"
+
+#: src/additional_timetables.py:92
+msgid "Rooms"
+msgstr "Räume"
+
+#: src/api.py:502
 msgid "and"
 msgstr "und"
 
-#: src/api.py:453 src/api.py:529
+#: src/api.py:507 src/api.py:583
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: src/api.py:524 src/api.py:527
+#: src/api.py:578 src/api.py:581
 msgid "Event"
 msgstr "Veranstaltung"
 
-#: src/api.py:658
+#: src/api.py:718
 msgid "No data"
 msgstr "Keine Daten"
 
@@ -154,21 +170,161 @@ msgstr "Löschen?"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: src/create_homework.py:98 src/ui/create_homework.ui:55 src/profiles.py:155
+#: src/create_homework.py:98 src/profiles.py:155 src/ui/create_homework.ui:55
 msgid "Delete"
 msgstr "Löschen"
 
-#: src/ui/create_homework.ui:23 src/messages.py:54
+#: src/homework_row.py:71
+msgid "Your teacher marked this as completed"
+msgstr "Ihre Lehrkraft hat dies als erledigt markiert"
+
+#: src/homework_row.py:73
+msgid "Your teacher didn't mark this as completed"
+msgstr "Ihre Lehrkraft hat dies als nicht erledigt markiert"
+
+#: src/homework_row.py:75
+msgid "The original task was '%t'"
+msgstr "Die ursprüngliche Aufgabe war '%t'"
+
+#: src/homework_row.py:78
+msgid "This was originally due on %A %x"
+msgstr "Dies was ursprünglich am %A dem %x fällig."
+
+#: src/information.py:48 src/information.py:96 src/ui/create_homework.ui:41
+msgid "Subject"
+msgstr "Fach"
+
+#: src/information.py:49 src/information.py:97
+msgid "Room"
+msgstr "Raum"
+
+#: src/information.py:50 src/information.py:98
+msgid "Room description"
+msgstr "Raumbeschreibung"
+
+#: src/information.py:51 src/information.py:99
+msgid "Teacher"
+msgstr "Lehrkraft"
+
+#: src/information.py:53
+msgid "Substitution"
+msgstr "Vertretung"
+
+#: src/information.py:55
+msgid "Information about this lesson"
+msgstr "Informationen zur Stunde"
+
+#: src/information.py:57
+msgid "Teaching content"
+msgstr "Lehrstoff"
+
+#: src/information.py:59
+msgid "Cancelled"
+msgstr "Fällt aus"
+
+#: src/information.py:68
+msgid "Duration"
+msgstr "Dauer"
+
+#: src/information.py:71
+msgid "Minutes"
+msgstr "Minuten"
+
+#: src/information.py:90 src/information.py:106 src/ui/window.ui:72
+msgid "Homework"
+msgstr "Hausaufgaben"
+
+#: src/information.py:94
+msgid "Original lesson"
+msgstr "Ursprüngliche Stunde"
+
+#: src/login.py:89
+msgid "No results"
+msgstr "Keine Ergebnisse"
+
+#: src/login.py:93
+msgid "Too many results"
+msgstr "Zu viele Ergebnisse"
+
+#: src/login.py:95
+msgid "Offline"
+msgstr "Kein Internet"
+
+#: src/login.py:97 src/profiles.py:138
+msgid "Error"
+msgstr "Fehler"
+
+#: src/login.py:125 src/ui/login.ui:69
+msgid "Token"
+msgstr "Schlüssel"
+
+#: src/login.py:156
+msgid "Invalid credentials"
+msgstr "Ungültige Anmeldedaten"
+
+#. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
+#: src/main.py:117
+msgid "translator-credits"
+msgstr "Ostfriese4"
+
+#: src/messages.py:54 src/ui/create_homework.ui:23
 msgid "Date"
 msgstr "Datum"
+
+#: src/messages.py:63
+msgid "Sender"
+msgstr "Absender*in"
+
+#: src/offline_banner.py:31 src/ui/offline_banner.ui:8
+msgid "You are offline"
+msgstr "Keine Internetverbindung"
+
+#: src/offline_banner.py:33
+msgid "You are offline, last connection at %H:%M"
+msgstr "Keine Internetverbindung, zuletzt verbunden um %H:%M"
+
+#: src/profiles.py:38
+msgid "Unnamed"
+msgstr "Unbenannt"
+
+#: src/profiles.py:45
+#, python-format
+msgid "Edit profile %s"
+msgstr "Profil %s bearbeiten"
+
+#: src/profiles.py:51
+#, python-format
+msgid "Delete profile %s"
+msgstr "Profile %s löschen"
+
+#: src/profiles.py:137
+msgid "Can not delete only profile"
+msgstr "Das einzige Profil kann nicht gelöscht werden"
+
+#: src/profiles.py:152
+msgid "Do you really want to delete this profile?"
+msgstr "Wollen Sie dieses Profil wirklich löschen?"
+
+#: src/timetable.py:413
+msgid "Week %W"
+msgstr "%W. Woche"
+
+#. Translators: date format in the timetable
+#: src/timetable.py:472
+msgid "%m/%d/%y"
+msgstr "%d.%m.%y"
+
+#: src/ui/absences.ui:12 src/ui/window.ui:102
+msgid "Absences"
+msgstr "Abwesenheiten"
+
+#: src/ui/additional_timetables.ui:19 src/ui/window.ui:62
+msgid "All timetables"
+msgstr "Alle Stundenpläne"
 
 #: src/ui/create_homework.ui:36
 msgid "Task"
 msgstr "Aufgabe"
-
-#: src/ui/create_homework.ui:41 src/information.py:48 src/information.py:96
-msgid "Subject"
-msgstr "Fach"
 
 #: src/ui/create_homework.ui:46 src/ui/homework.ui:39
 msgid "Completed"
@@ -210,22 +366,6 @@ msgstr "Alles erledigt"
 msgid "You have no unfinished homework"
 msgstr "Du hast keine unerledigten Hausaufgaben"
 
-#: src/homework_row.py:71
-msgid "Your teacher marked this as completed"
-msgstr "Ihre Lehrkraft hat dies als erledigt markiert"
-
-#: src/homework_row.py:73
-msgid "Your teacher didn't mark this as completed"
-msgstr "Ihre Lehrkraft hat dies als nicht erledigt markiert"
-
-#: src/homework_row.py:75
-msgid "The original task was '%t'"
-msgstr "Die ursprüngliche Aufgabe war '%t'"
-
-#: src/homework_row.py:78
-msgid "This was originally due on %A %x"
-msgstr "Dies was ursprünglich am %A dem %x fällig."
-
 #: src/ui/homework_row.ui:15
 msgid "Mark as completed"
 msgstr "Als erledigt markieren"
@@ -234,77 +374,9 @@ msgstr "Als erledigt markieren"
 msgid "You have changed this"
 msgstr "Sie haben dies geändert"
 
-#: src/information.py:49 src/information.py:97
-msgid "Room"
-msgstr "Raum"
-
-#: src/information.py:50 src/information.py:98
-msgid "Room description"
-msgstr "Raumbeschreibung"
-
-#: src/information.py:51 src/information.py:99
-msgid "Teacher"
-msgstr "Lehrkraft"
-
-#: src/information.py:53
-msgid "Substitution"
-msgstr "Vertretung"
-
-#: src/information.py:55
-msgid "Information about this lesson"
-msgstr "Informationen zur Stunde"
-
-#: src/information.py:57
-msgid "Teaching content"
-msgstr "Lehrstoff"
-
-#: src/information.py:59
-msgid "Cancelled"
-msgstr "Fällt aus"
-
-#: src/information.py:68
-msgid "Duration"
-msgstr "Dauer"
-
-#: src/information.py:71
-msgid "Minutes"
-msgstr "Minuten"
-
-#: src/information.py:90 src/information.py:106 src/ui/window.ui:62
-msgid "Homework"
-msgstr "Hausaufgaben"
-
-#: src/information.py:94
-msgid "Original lesson"
-msgstr "Ursprüngliche Stunde"
-
 #: src/ui/information.ui:6
 msgid "Information"
 msgstr "Informationen"
-
-#: src/login.py:89
-msgid "No results"
-msgstr "Keine Ergebnisse"
-
-#: src/login.py:93
-msgid "Too many results"
-msgstr "Zu viele Ergebnisse"
-
-#: src/login.py:95
-msgid "Offline"
-msgstr "Kein Internet"
-
-#: src/login.py:97 src/profiles.py:138
-msgid "Error"
-msgstr "Fehler"
-
-#: src/login.py:125 src/ui/login.ui:69
-msgid "Token"
-msgstr "Schlüssel"
-
-#: src/login.py:156
-msgid "Invalid credentials"
-msgstr "Ungültige Anmeldedaten"
 
 #: src/ui/login.ui:6
 msgid "Login"
@@ -359,30 +431,13 @@ msgstr ""
 "ändern. Dann melden Sie sich in dieser App mit dem Benutzernamen Ihres "
 "Drittanbieters und dem neu erstellten Passwort an."
 
-#. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:117
-msgid "translator-credits"
-msgstr "Ostfriese4"
-
-#: src/messages.py:63
-msgid "Sender"
-msgstr "Absender*in"
-
-#: src/ui/messages.ui:12 src/ui/messages.ui:42 src/ui/window.ui:82
+#: src/ui/messages.ui:12 src/ui/messages.ui:42 src/ui/window.ui:92
 msgid "Messages"
 msgstr "Nachrichten"
 
 #: src/ui/messages.ui:37
 msgid "News of Day"
 msgstr "Nachrichten des Tages"
-
-#: src/offline_banner.py:31 src/ui/offline_banner.ui:8
-msgid "You are offline"
-msgstr "Keine Internetverbindung"
-
-#: src/offline_banner.py:33
-msgid "You are offline, last connection at %H:%M"
-msgstr "Keine Internetverbindung, zuletzt verbunden um %H:%M"
 
 #: src/ui/offline_banner.ui:9
 msgid "Try again"
@@ -391,28 +446,6 @@ msgstr "Erneut versuchen"
 #: src/ui/preferences.ui:14
 msgid "Show all cancelled lessons"
 msgstr "Alle abgesagten Stunden anzeigen"
-
-#: src/profiles.py:38
-msgid "Unnamed"
-msgstr "Unbenannt"
-
-#: src/profiles.py:45
-#, python-format
-msgid "Edit profile %s"
-msgstr "Profil %s bearbeiten"
-
-#: src/profiles.py:51
-#, python-format
-msgid "Delete profile %s"
-msgstr "Profile %s löschen"
-
-#: src/profiles.py:137
-msgid "Can not delete only profile"
-msgstr "Das einzige Profil kann nicht gelöscht werden"
-
-#: src/profiles.py:152
-msgid "Do you really want to delete this profile?"
-msgstr "Wollen Sie dieses Profil wirklich löschen?"
 
 #: src/ui/profiles.ui:6
 msgid "Manage profiles"
@@ -447,10 +480,9 @@ msgid "Create homework"
 msgstr "Hausaufgabe erstellen"
 
 #: src/ui/shortcuts-dialog.ui:33
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Preferences"
-msgstr "_Einstellungen"
+msgstr "Einstellungen"
 
 #: src/ui/shortcuts-dialog.ui:39
 msgctxt "shortcut window"
@@ -462,22 +494,9 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Beenden"
 
-#: src/ui/teachers.ui:12 src/ui/window.ui:72
-msgid "Teachers"
-msgstr "Lehrkräfte"
-
 #: src/ui/teachers.ui:37
 msgid "Search term"
 msgstr "Suchbegriff"
-
-#: src/timetable.py:403
-msgid "Week %W"
-msgstr "%W. Woche"
-
-#. Translators: date format in the timetable
-#: src/timetable.py:461
-msgid "%m/%d/%y"
-msgstr "%d.%m.%y"
 
 #: src/ui/timetable.ui:16
 msgid "Previous week"
@@ -503,19 +522,19 @@ msgstr "Hauptmenü"
 msgid "My timetable"
 msgstr "Mein Stundenplan"
 
-#: src/ui/window.ui:109
+#: src/ui/window.ui:119
 msgid "Manage _profiles"
 msgstr "_Profile verwalten"
 
-#: src/ui/window.ui:113
+#: src/ui/window.ui:123
 msgid "_Preferences"
 msgstr "_Einstellungen"
 
-#: src/ui/window.ui:117
+#: src/ui/window.ui:127
 msgid "_Keyboard Shortcuts"
 msgstr "_Tastenkürzel"
 
-#: src/ui/window.ui:121
+#: src/ui/window.ui:131
 msgid "_About Timetable"
 msgstr "Über _Stundenplan"
 
