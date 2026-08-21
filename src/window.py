@@ -31,6 +31,7 @@ from .profiles import ProfilesWindow
 from .external_page import ExternalPage
 from gi.repository import Adw
 from gi.repository import Gtk
+from gi.repository import GLib
 
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/window.ui")
@@ -80,11 +81,8 @@ class UntisWindow(Adw.ApplicationWindow):
         )
         self.updateOfflineBanners()
 
-        try:
-            self.addExternalPages()
-            self.showHideViews()
-        except:
-            raise
+        GLib.idle_add(self.addExternalPages)
+        GLib.idle_add(self.showHideViews)
 
     def updateOfflineBanners(self):
         try:
