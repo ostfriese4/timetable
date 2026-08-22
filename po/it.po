@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-08-21 15:05+0200\n"
-"PO-Revision-Date: 2026-07-18 09:26+0200\n"
+"PO-Revision-Date: 2026-08-21 22:36+0200\n"
 "Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -45,31 +45,28 @@ msgid "Timetable supports"
 msgstr "Timetable"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:13
-#, fuzzy
 msgid "Viewing your timetable"
-msgstr "Visualizza il tuo orario WebUntis"
+msgstr "Visualizza il tuo orario"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:14
-#, fuzzy
 msgid "Viewing and editing your homework"
-msgstr "Revisionare un compito"
+msgstr "Visualizzazione e modifica dei compiti"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:15
 msgid "Looking up your teachers"
-msgstr ""
+msgstr "Cercare i propri insegnanti"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:16
 msgid "Viewing your messages"
-msgstr ""
+msgstr "Visualizzazione dei tuoi messaggi"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:17
 msgid "Viewing your absences"
-msgstr ""
+msgstr "Visualizzazione delle assenze"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:18
-#, fuzzy
 msgid "Multiple profiles"
-msgstr "Elimina il profilo %s"
+msgstr "Profili multipli"
 
 #: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:23
 msgid "Ostfriese4"
@@ -89,11 +86,11 @@ msgstr "Revisionare un compito"
 
 #: data/page.codeberg.ostfriese4.Untis.gschema.xml:6 src/ui/preferences.ui:15
 msgid "Show cancelled lessons if, there is a replacement"
-msgstr ""
+msgstr "Mostra lezioni annullate in caso di sostituzione"
 
 #: data/page.codeberg.ostfriese4.Untis.gschema.xml:10 src/ui/preferences.ui:20
 msgid "Show the time axis"
-msgstr ""
+msgstr "Mostra l'asse temporale"
 
 #: src/absences.py:46
 msgid "Text"
@@ -117,7 +114,7 @@ msgstr "FIne"
 
 #: src/additional_timetables.py:86
 msgid "Students"
-msgstr ""
+msgstr "Studenti"
 
 #: src/additional_timetables.py:88 src/ui/teachers.ui:12 src/ui/window.ui:82
 msgid "Teachers"
@@ -125,12 +122,11 @@ msgstr "Insegnanti"
 
 #: src/additional_timetables.py:90
 msgid "Classes"
-msgstr ""
+msgstr "Classi"
 
 #: src/additional_timetables.py:92
-#, fuzzy
 msgid "Rooms"
-msgstr "Aula"
+msgstr "Aule"
 
 #: src/api.py:502
 msgid "and"
@@ -142,7 +138,7 @@ msgstr "Sconosciuto"
 
 #: src/api.py:578 src/api.py:581
 msgid "Event"
-msgstr ""
+msgstr "Evento"
 
 #: src/api.py:718
 msgid "No data"
@@ -210,7 +206,7 @@ msgstr "Insegnante"
 
 #: src/information.py:53
 msgid "Substitution"
-msgstr ""
+msgstr "Sostituzione"
 
 #: src/information.py:55
 msgid "Information about this lesson"
@@ -218,7 +214,7 @@ msgstr "Informazioni su questa lezione"
 
 #: src/information.py:57
 msgid "Teaching content"
-msgstr ""
+msgstr "Contenuti didattici"
 
 #: src/information.py:59
 msgid "Cancelled"
@@ -283,7 +279,7 @@ msgstr "Sei offline"
 
 #: src/offline_banner.py:33
 msgid "You are offline, last connection at %H:%M"
-msgstr ""
+msgstr "Sei offline, ultimo collegamento alle %H:%M"
 
 #: src/profiles.py:38
 msgid "Unnamed"
@@ -321,9 +317,8 @@ msgid "Absences"
 msgstr "Assenze"
 
 #: src/ui/additional_timetables.ui:19 src/ui/window.ui:62
-#, fuzzy
 msgid "All timetables"
-msgstr "Il mio orario"
+msgstr "Tutti i quadri orari"
 
 #: src/ui/create_homework.ui:36
 msgid "Task"
@@ -343,16 +338,15 @@ msgstr "Apri questa pagina in un browser web"
 
 #: src/ui/external_page.ui:31
 msgid "Go back"
-msgstr ""
+msgstr "Torna indietro"
 
 #: src/ui/external_page.ui:37
-#, fuzzy
 msgid "Home"
-msgstr "Compiti per casa"
+msgstr "Home"
 
 #: src/ui/external_page.ui:43
 msgid "Go forward"
-msgstr ""
+msgstr "Vai avanti"
 
 #: src/ui/homework.ui:19
 msgid "Create a new homework"
@@ -445,11 +439,11 @@ msgstr "Notizie del giorno"
 
 #: src/ui/offline_banner.ui:9
 msgid "Try again"
-msgstr ""
+msgstr "Prova ancora"
 
 #: src/ui/preferences.ui:14
 msgid "Show all cancelled lessons"
-msgstr ""
+msgstr "Mostra tutte le lezioni cancellate"
 
 #: src/ui/profiles.ui:6
 msgid "Manage profiles"
@@ -486,7 +480,7 @@ msgstr "Crea compiti per casa"
 #: src/ui/shortcuts-dialog.ui:33
 msgctxt "shortcut window"
 msgid "Preferences"
-msgstr ""
+msgstr "Preferenze"
 
 #: src/ui/shortcuts-dialog.ui:39
 msgctxt "shortcut window"
@@ -532,7 +526,7 @@ msgstr "Gestisci _profili"
 
 #: src/ui/window.ui:123
 msgid "_Preferences"
-msgstr ""
+msgstr "_Preferenze"
 
 #: src/ui/window.ui:127
 msgid "_Keyboard Shortcuts"
