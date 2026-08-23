@@ -427,7 +427,7 @@ class session:
 
         return data, gridFormat
 
-    def getOwnTimetableData(self):
+    def getOwnTimetableId(self):
         roles = self.getOwnRoles()
         id = self.getOwnId()
         for timetable in self.getAvailableTimetables():
@@ -436,53 +436,56 @@ class session:
         print("could not get own timetable")
 
     def getOwnTimetable(self, start, end, mode="normal"):
-        timetable = self.getOwnTimetableData()
+        timetable = self.getOwnTimetableId()
         return self.getTimetable(timetable["type"], timetable["id"], start, end, mode)
 
     def getAvailableTimetables(self):
-        result = []
+        if not self._useCache("availableTimetables"):
+            result = []
 
-        students = self.getAvailableTiemtablesOfType("STUDENT")
-        if students:
-            for student in students["students"]:
-                result.append({
-                    "id": student["student"]["id"],
-                    "type": "STUDENT",
-                    "name": student["student"]["displayName"]
-                })
+            students = self.getAvailableTiemtablesOfType("STUDENT")
+            if students:
+                for student in students["students"]:
+                    result.append({
+                        "id": student["student"]["id"],
+                        "type": "STUDENT",
+                        "name": student["student"]["displayName"]
+                    })
 
-        teachers = self.getAvailableTiemtablesOfType("TEACHER")
-        if teachers:
-            for teacher in teachers["teachers"]:
-                result.append({
-                    "id": teacher["teacher"]["id"],
-                    "type": "TEACHER",
-                    "name": teacher["teacher"]["displayName"]
-                })
+            teachers = self.getAvailableTiemtablesOfType("TEACHER")
+            if teachers:
+                for teacher in teachers["teachers"]:
+                    result.append({
+                        "id": teacher["teacher"]["id"],
+                        "type": "TEACHER",
+                        "name": teacher["teacher"]["displayName"]
+                    })
 
-        rooms = self.getAvailableTiemtablesOfType("ROOM")
-        if rooms:
-            for room in rooms["rooms"]:
-                result.append({
-                    "id": room["room"]["id"],
-                    "type": "ROOM",
-                    "name": room["room"]["displayName"]
-                })
+            rooms = self.getAvailableTiemtablesOfType("ROOM")
+            if rooms:
+                for room in rooms["rooms"]:
+                    result.append({
+                        "id": room["room"]["id"],
+                        "type": "ROOM",
+                        "name": room["room"]["displayName"]
+                    })
 
-        classes = self.getAvailableTiemtablesOfType("CLASS")
-        if classes:
-            for cls in classes["classes"]:
-                name = cls["class"]["displayName"]
-                if cls["classTeacher1"]:
-                    name += " (" + cls["classTeacher1"]["displayName"] + ")"
+            classes = self.getAvailableTiemtablesOfType("CLASS")
+            if classes:
+                for cls in classes["classes"]:
+                    name = cls["class"]["displayName"]
+                    if cls["classTeacher1"]:
+                        name += " (" + cls["classTeacher1"]["displayName"] + ")"
 
-                result.append({
-                    "id": cls["class"]["id"],
-                    "type": "CLASS",
-                    "name": name
-                })
+                    result.append({
+                        "id": cls["class"]["id"],
+                        "type": "CLASS",
+                        "name": name
+                    })
 
-        return result
+            self._writeToCache("availableTimetables", result)
+            return result
+        return self._readFromCache("availableTimetables")
 
     def getAvailableTiemtablesOfType(self, t):
         year = self.getCurrentSchoolYear()
