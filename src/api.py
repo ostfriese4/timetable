@@ -427,13 +427,17 @@ class session:
 
         return data, gridFormat
 
-    def getOwnTimetable(self, start, end, mode="normal"):
-        for role in self.getOwnRoles():
-            if role in ["TEACHER", "STUDENT"]:
-                t = role
-                break
+    def getOwnTimetableData(self):
+        roles = self.getOwnRoles()
         id = self.getOwnId()
-        return self.getTimetable(t, id, start, end, mode)
+        for timetable in self.getAvailableTimetables():
+            if timetable["id"] == id and timetable["type"] in roles:
+                return timetable
+        print("could not get own timetable")
+
+    def getOwnTimetable(self, start, end, mode="normal"):
+        timetable = self.getOwnTimetableData()
+        return self.getTimetable(timetable["type"], timetable["id"], start, end, mode)
 
     def getAvailableTimetables(self):
         result = []
@@ -445,6 +449,15 @@ class session:
                     "id": student["student"]["id"],
                     "type": "STUDENT",
                     "name": student["student"]["displayName"]
+                })
+
+        teachers = self.getAvailableTiemtablesOfType("TEACHER")
+        if teachers:
+            for teacher in teachers["teachers"]:
+                result.append({
+                    "id": teacher["teacher"]["id"],
+                    "type": "TEACHER",
+                    "name": teacher["teacher"]["displayName"]
                 })
 
         rooms = self.getAvailableTiemtablesOfType("ROOM")
@@ -785,6 +798,7 @@ class session:
             + "&homeworkOption=DUE&startDateTime="
             + start
         )
+
         data = self._getRequest(path, mode)
         data = data["calendarEntries"]
 
