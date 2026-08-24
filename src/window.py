@@ -118,7 +118,7 @@ class UntisWindow(Adw.ApplicationWindow):
         else:
             self.showPage("messages")
 
-        if self.shouldViewHide("STUDENTABSENCES"):
+        if self.absences.shouldHide():
             self.hidePage("absences")
         else:
             self.showPage("absences")
