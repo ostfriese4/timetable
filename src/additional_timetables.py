@@ -57,10 +57,10 @@ class AdditionalTimetablesPage(Gtk.Box):
 
     def openTimetable(self, row, timetable):
         widget = Timetable(timetable["type"], timetable["id"])
+        widget.initTimetable(self.parent)
         self.timetable_page.set_child(widget)
         self.currentTimetable = widget
         self.view.push(self.timetable_page)
-        widget.enable_bindings(self.parent)
 
     def shouldHide(self):
         return len(self.shared.session.getAvailableTimetables()) <= 1 # hide if no or only one (probably the one of the user) timetable exists

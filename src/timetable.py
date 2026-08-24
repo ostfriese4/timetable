@@ -180,15 +180,17 @@ class Timetable(Gtk.Box):
             GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL,
         )
         parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
+
+        self.initTimetable(parent)
+
+    def initTimetable(self, parent):
         self.shared = parent.shared
 
         self.window = parent
-
         try:
             self.jump_to(getDateTime())
-            self.shared.session.getHomeworks()
         except:
-            pass
+            raise
 
     def next(self, data=None):
         self.startdate += datetime.timedelta(days=7)

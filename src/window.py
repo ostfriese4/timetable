@@ -161,6 +161,10 @@ class UntisWindow(Adw.ApplicationWindow):
         self.checkCredentials()
         self.main_view_stack.set_visible_child_name("timetable")
         self.timetable.loadData()
+        try:
+            self.shared.session.getHomeworks()
+        except:
+            pass
         self.homework.displayAll()
         self.addExternalPages()
         self.showHideViews()
