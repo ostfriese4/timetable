@@ -113,7 +113,7 @@ class UntisWindow(Adw.ApplicationWindow):
             print("show page",name)
 
     def showHideViews(self):
-        if self.shouldViewHide("MESSAGE_CENTER"):
+        if self.messages.shouldHide():
             self.hidePage("messages")
         else:
             self.showPage("messages")

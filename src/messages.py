@@ -96,6 +96,17 @@ class MessagesPage(Gtk.Box):
         parent.main_view_stack.connect("notify::visible-child-name", on_visible)
         self.shared = parent.shared
 
+    def shouldHide(self):
+        messages = self.shared.session.getMessages()
+        if messages is not None and messages != []:
+            return False
+
+        news = self.shared.session.getNewsOfDay()
+        if news is not None and news != []:
+            return False
+
+        return True
+
     def display(self):
         messages = self.shared.session.getMessages()
 
