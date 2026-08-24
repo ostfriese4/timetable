@@ -120,9 +120,15 @@
         <attribute name="action">app.profiles</attribute>
       </item>
       <item>
+        <attribute name="label" translatable="yes">_Open in Browser</attribute>
+        <attribute name="action">app.browser</attribute>
+      </item>
+      <item>
         <attribute name="label" translatable="yes">_Preferences</attribute>
         <attribute name="action">app.preferences</attribute>
       </item>
+    </section>
+    <section>
       <item>
         <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
         <attribute name="action">app.shortcuts</attribute>

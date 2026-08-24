@@ -29,6 +29,7 @@ from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow
 from .preferences import PreferencesDialog
 from .credentials import getCredentials, getProfiles
+from .external_page import ExternalPage
 import datetime
 import os
 
@@ -62,6 +63,7 @@ class UntisApplication(Adw.Application):
         self.create_action("login", self.on_login_action, ["<control>l"])
         self.create_action("profiles", self.on_profiles_action, ["<control>p"])
         self.create_action("refresh", self.on_refresh_action, ["<control>r"])
+        self.create_action("browser", self.on_browser_action, ["<control>o"])
         self.create_action(
             "create_homework", self.on_create_homework_action, ["<control>n"]
         )
@@ -122,6 +124,29 @@ class UntisApplication(Adw.Application):
 
     def on_preferences_action(self, *args):
         PreferencesDialog().present(self.props.active_window)
+
+    def on_browser_action(self, *args):
+        window = Adw.ApplicationWindow(title=_("WebUntis"))
+
+        cookies = {
+            "JSESSIONID": self.shared.session.session.cookies.get("JSESSIONID")
+        }
+        headers = {
+            "Authorization": self.shared.session.session.headers.get("Authorization")
+        }
+
+        content = ExternalPage(
+            {
+                "redirectUrl": self.shared.session.server,
+                "name": "WebUntis"
+            },
+            "WebUntis"
+        )
+        window.set_content(content)
+        window.present()
+
+        content.shared = self.shared
+        content.load(cookies=cookies, headers=headers)
 
     def on_login_action(self, widget, _):
         self.props.active_window.login_window.requestLogin(

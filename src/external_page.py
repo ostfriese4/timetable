@@ -26,6 +26,7 @@ from gi.repository import GObject
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import WebKit
+from gi.repository import Soup
 import os
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/external_page.ui')
@@ -93,7 +94,9 @@ class ExternalPage(Gtk.Box):
         self.progress.set_fraction(self.webview.get_estimated_load_progress())
         return self.webview.is_loading() # repeat if loading
 
-    def load(self):
+    def load(self, cookies = {}, headers = {}):
+        print(cookies, headers)
+
         profile = "profile-" + str(self.shared.profiles["default-profile"])
         dataPath = os.environ.get("XDG_DATA_HOME", ".untis") + "/untis/webview/" + profile
         cachePath = os.environ.get("XDG_CACHE_HOME", ".untis/cache") + "/untis/webview/" + profile
@@ -102,12 +105,26 @@ class ExternalPage(Gtk.Box):
             cache_directory=cachePath
         )
 
-        cookies = self.browserSession.get_cookie_manager()
-        cookies.set_persistent_storage(
+        self.cookies = self.browserSession.get_cookie_manager()
+        self.cookies.set_persistent_storage(
             dataPath + "/cookies.sqlite", WebKit.CookiePersistentStorage.SQLITE
         )
+        for name in cookies:
+            cookie = Soup.Cookie(
+                name,
+                cookies[name],
+                self.shared.session.server,
+                "/",
+                -1
+            )
+            self.cookies.add_cookie(cookie)
+
+        def onRequest(view, resource, request):
+            for header in headers:
+                request.get_http_headers().append(header, headers[header])
 
         self.webview = WebKit.WebView(network_session = self.browserSession)
+        self.webview.connect("resource-load-started", onRequest)
         self.view.append(self.webview)
         self.webview.set_hexpand(True)
         self.webview.set_vexpand(True)
