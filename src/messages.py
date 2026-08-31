@@ -107,6 +107,9 @@ class MessagesPage(Gtk.Box):
 
         return True
 
+    def refresh(self):
+        self.display()
+
     def display(self):
         messages = self.shared.session.getMessages()
 
