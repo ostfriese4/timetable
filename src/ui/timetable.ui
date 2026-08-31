@@ -35,13 +35,6 @@
                 <property name="visible">False</property>
               </object>
             </child>
-            <child type="end">
-              <object class="GtkButton">
-                <property name="icon-name">view-refresh-symbolic</property>
-                <property name="tooltip-text" translatable="yes">Refresh</property>
-                <property name="action-name">app.refresh</property>
-              </object>
-            </child>
           </object>
         </child>
         <property name="content">
