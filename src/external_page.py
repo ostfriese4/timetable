@@ -60,6 +60,9 @@ class ExternalPage(Gtk.Box):
             self.webview.load_uri(self.data["redirectUrl"])
         self.home_button.connect("clicked", home)
 
+    def refresh(self):
+        self.webview.reload()
+
     def open(self, data):
         Gio.AppInfo.launch_default_for_uri(self.webview.get_uri(), None)
 
