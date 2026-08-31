@@ -132,7 +132,7 @@ class UntisApplication(Adw.Application):
         self.props.active_window.profiles_window.manage()
 
     def on_refresh_action(self, widget, _):
-        self.props.active_window.timetable.refresh()
+        self.props.active_window.refresh()
 
     def on_create_homework_action(self, widget, _):
         self.props.active_window.homeworkEditWindow.new_homework()

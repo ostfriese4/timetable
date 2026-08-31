@@ -157,6 +157,11 @@ class UntisWindow(Adw.ApplicationWindow):
         self.homework.displayAll()
         self.timetable.refreshHomeworks()
 
+    def refresh(self):
+        self.shared.session.refresh()
+        page = self.main_view_stack.get_visible_child()
+        page.refresh()
+
     def reload(self):
         self.checkCredentials()
         self.main_view_stack.set_visible_child_name("timetable")

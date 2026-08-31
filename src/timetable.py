@@ -203,7 +203,6 @@ class Timetable(Gtk.Box):
         self.loadData()
 
     def refresh(self):
-        self.shared.session.refresh()
         self.loadData()
 
     def refreshHomeworks(self):

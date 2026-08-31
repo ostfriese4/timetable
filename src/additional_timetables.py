@@ -65,6 +65,11 @@ class AdditionalTimetablesPage(Gtk.Box):
     def shouldHide(self):
         return len(self.shared.session.getAvailableTimetables()) <= 1 # hide if no or only one (probably the one of the user) timetable exists
 
+    def refresh(self):
+        if self.currentTimetable is not None:
+            self.currentTimetable.refresh()
+        self.display()
+
     def display(self):
         timetables = self.shared.session.getAvailableTimetables()
 
