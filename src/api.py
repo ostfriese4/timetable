@@ -623,7 +623,11 @@ class session:
         for day in data:
             timetable.append([])
             lessons = timetable[-1]
+            times = []
             for lesson in day["gridEntries"]:
+                if lesson["duration"] in times:
+                    continue
+                times.append(lesson["duration"])
 
                 details = self.getLessonDetails(
                     lesson["duration"]["start"],
@@ -638,7 +642,8 @@ class session:
                     print("empty lesson")
                     continue
 
-                lessons.append(self.analyzeLesson(details))
+                for lesson in details:
+                    lessons.append(self.analyzeLesson(lesson))
         return timetable
 
     def mergeDay(self, lessons):
@@ -816,26 +821,11 @@ class session:
             else:
                 takingPlace.append(lesson)
 
-        def bestMatch(pool):
-            # prefer the entry that covers exactly the requested slot, the
-            # window can also contain other, parallel lessons
-            for lesson in pool:
-                if lesson["startDateTime"] == start and lesson["endDateTime"] == end:
-                    return lesson
-            return pool[0]
+        if len(takingPlace) == 1 and len(cancelled) == 1:
+            lesson = takingPlace[0]
+            lesson["original"] = cancelled[0]
 
-        if isCancelled and cancelled != []:
-            # the grid marks this slot as cancelled, don't resolve it to a
-            # parallel lesson that still takes place (e.g. an event)
-            lesson = bestMatch(cancelled)
-        elif takingPlace != []:
-            lesson = bestMatch(takingPlace)
-            if cancelled != []:
-                lesson["original"] = cancelled[0]
-        else:
-            lesson = bestMatch(cancelled)
-
-        return lesson
+        return takingPlace + cancelled
 
     def getAllRooms(self):
         year = self.getCurrentSchoolYear()
