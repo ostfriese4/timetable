@@ -67,6 +67,16 @@
   </screenshots>
 
   <releases>
+    <release version="4.3.1" date="2026-09-01">
+      <description translate="no">
+        <p>This is a bugfix release containing minor fixes</p>
+        <ul>
+          <li>fixed refreshing of additional timetables</li>
+          <li>highlight exams</li>
+        </ul>
+        <p>Additionally, exams are highlighted now</p>
+      </description>
+    </release>
     <release version="4.3.0" date="2026-08-21">
       <description translate="no">
         <ul>

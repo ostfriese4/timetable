@@ -9,8 +9,8 @@ import binascii
 from pathlib import Path
 from hashlib import md5
 
-version = "4.3.0"
-releaseNotes = "        <ul>\n          <li>display additional timetables @ostfriese4</li>\n          <li>added an option to turn the time-axis off @ostfriese4</li>\n          <li>fixed crash at startup @ostfriese4</li>\n        </ul>\n"#"""
+version = "4.3.1"
+releaseNotes = "        <p>This is a bugfix release containing minor fixes</p>\n        <ul>\n          <li>fixed refreshing of additional timetables</li>\n          <li>highlight exams</li>\n        </ul>\n        <p>Additionally, exams are highlighted now</p>\n"#"""
 id = "page.codeberg.ostfriese4.Untis"
 useragent = id + " " + version
 
