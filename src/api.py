@@ -19,7 +19,7 @@ headers = {"User-Agent": useragent, "Accept": "application/json"}
 offline = False
 lastOnline = None
 
-fakeTime = datetime.datetime.strptime("26.06.16 10:31:03", "%y.%m.%d %H:%M:%S")
+fakeTime = datetime.datetime.strptime("26.09.01 10:31:03", "%y.%m.%d %H:%M:%S")
 
 def getDateTime():
     #return fakeTime
