@@ -39,7 +39,7 @@ with open("rn","r") as file:
     description = file.read()
 os.system("rm rn")
 
-release = "\n    <release version=\"" + version + "\" date=\"" + datetime.date.today().strftime("%Y-%m-%d") + "\">      <description translate=\"no\">\n" + description + "\n      </description>\n    </release>"
+release = "\n    <release version=\"" + version + "\" date=\"" + datetime.date.today().strftime("%Y-%m-%d") + "\">\n      <description translate=\"no\">\n" + description + "      </description>\n    </release>"
 
 
 meta = meta[:pos] + release + meta[pos:]
