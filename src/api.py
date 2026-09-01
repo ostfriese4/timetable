@@ -86,19 +86,20 @@ def _login(credentials):
             if ok:
                 token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
                 s.headers.update({"Authorization": "Bearer " + token})
+                print("logged in successfully")
                 return s
         else:
             print(response)
     except requests.exceptions.ConnectionError:
         offline = True
-        return s  # don't fail login at startup
+        print("offline, could not log in")
     except requests.exceptions.JSONDecodeError:
         offline = True
-        return s  # the server sent an error page, e.g. during maintenance
+        print("invalid answer, could not log in")
     except requests.exceptions.InvalidURL:
-        return
+        print("invalid url, could not log in")
     except binascii.Error:
-        return
+        print("invalid token, could not log in")
 
 
 # from https://github.com/l-koehler/untis-py (api.py)
@@ -150,6 +151,11 @@ class session:
                 self.colors = json.load(file)
         except:
             self.colors = {}
+
+    def ensureLogin(self):
+        if self.session is None:
+            print("not logged in yet")
+            self.session = _login(self.credentials)
 
     def getOffline(self):
         return offline
@@ -259,13 +265,15 @@ class session:
             "jsonrpc": "2.0"
         }
 
+        if self.session is None:
+            self.ensureLogin()
+            if self.session is None:
+                mode = "cache"
         if mode == "normal":
             if self._useCache(hashed, maxage=maxage):
                 mode = "cache"
             else:
                 mode = "online"
-        if self.session is None:
-            mode = "cache"
 
         if mode == "online":
             try:
@@ -328,13 +336,15 @@ class session:
         global offline, lastOnline
         orig = mode
         hashed = "requests/" + md5(path.encode()).hexdigest()
+        if self.session is None:
+            self.ensureLogin()
+            if self.session is None:
+                mode = "cache"
         if mode == "normal":
             if self._useCache(hashed, maxage=maxage):
                 mode = "cache"
             else:
                 mode = "online"
-        if self.session is None:
-            mode = "cache"
 
         if mode == "online":
             try:
@@ -373,7 +383,11 @@ class session:
         if day is None:
             day = getDate()
         path = "/WebUntis/api/public/news/newsWidgetData?date=" + day.strftime("%Y%m%d")
-        data = self._getRequest(path)["data"]["messagesOfDay"]
+        data = self._getRequest(path)
+        try:
+            data = data["data"]["messagesOfDay"]
+        except TypeError:
+            data = []
         return data
 
     def getTimetable(self, resourceType, resourceId, start = None, end = None, mode = "normal"):

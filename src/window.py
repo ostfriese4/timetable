@@ -89,8 +89,10 @@ class UntisWindow(Adw.ApplicationWindow):
             offline = self.shared.session.getOffline()
             last = self.shared.session.getLastOnline()
         except AttributeError:
+            print("could not get last online information")
             return
 
+        print("setting visibility of offline-banners to ", offline)
         for banner in self.offline_banners:
             banner.update(offline, last)
 
@@ -162,8 +164,10 @@ class UntisWindow(Adw.ApplicationWindow):
         try:
             page = self.main_view_stack.get_visible_child()
             page.refresh()
-        finally:
-            self.updateOfflineBanners()
+        except Exception:
+            print("refresh not implemented by page", self.main_view_stack.get_visible_child_name())
+            self.shared.session.getOwnId() # request to update online status
+        self.updateOfflineBanners()
 
     def reload(self):
         self.checkCredentials()
