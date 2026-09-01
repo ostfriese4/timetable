@@ -106,3 +106,8 @@
 .unexcused {
   background: color-mix(in oklab, var(--accent-red), var(--window-bg-color) 70%);
 }
+
+.exam {
+  background: color-mix(in oklab, var(--accent-orange), var(--card-bg-color) 70%);
+  border: 2px solid var(--accent-orange);
+}
