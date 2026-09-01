@@ -191,5 +191,8 @@ class UntisWindow(Adw.ApplicationWindow):
 
         if login:
             self.login_window.requestLogin(self.shared.profiles["default-profile"])
-        if not self.shared.session.getOffline():
-            self.shared.checked = True
+        try:
+            if not self.shared.session.getOffline():
+                self.shared.checked = True
+        except AttributeError:
+            pass # don't crash at first start
