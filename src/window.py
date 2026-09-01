@@ -159,8 +159,11 @@ class UntisWindow(Adw.ApplicationWindow):
 
     def refresh(self):
         self.shared.session.refresh()
-        page = self.main_view_stack.get_visible_child()
-        page.refresh()
+        try:
+            page = self.main_view_stack.get_visible_child()
+            page.refresh()
+        finally:
+            self.updateOfflineBanners()
 
     def reload(self):
         self.checkCredentials()

@@ -20,6 +20,7 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 
+import datetime
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/offline_banner.ui")
 class OfflineBanner(Adw.Bin):
@@ -28,8 +29,11 @@ class OfflineBanner(Adw.Bin):
     banner = Gtk.Template.Child()
 
     def update(self, offline, last):
+        now = datetime.datetime.now()
         title = _("You are offline")
         if offline and last is not None:
             title = last.strftime(_("You are offline, last connection at %H:%M"))
+            if now.day != last.day:
+                title = last.strftime(_("You are offline, last connection on %B %d, %Y %H:%M"))
         self.banner.set_title(title)
         self.banner.set_revealed(offline)

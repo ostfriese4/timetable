@@ -159,10 +159,10 @@ class session:
         if lastOnline is None:
             last = None
             for item in self.cacheIndex:
-                if item != "last-refresh":
+                if "request" in item:
                     if last is None:
                         last = self.cacheIndex[item]
-                    elif self.cacheIndex[item] < last:
+                    elif self.cacheIndex[item] > last:
                         last = self.cacheIndex[item]
             if last is not None:
                 lastOnline = datetime.datetime.fromtimestamp(last)
