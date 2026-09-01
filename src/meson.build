@@ -41,6 +41,7 @@ untis_sources = [
   'offline_banner.py',
   'preferences.py',
   'profiles.py',
+  'qr.py',
   'teachers.py',
   'timetable.py',
   'window.py',

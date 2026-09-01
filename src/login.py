@@ -19,9 +19,11 @@
 
 from gi.repository import Gtk
 from gi.repository import Adw
+from gi.repository import GLib
 from .api import session, testCredentials, searchSchool
 from .credentials import getCredentials, setCredentials, setProfiles, getProfiles
 from .dialog import closeOnClickOutside
+from .qr import QrScanner
 
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/login.ui")
@@ -45,6 +47,11 @@ class LoginWindow(Adw.Dialog):
     sso_info_button = Gtk.Template.Child()
     sso_info_window = Gtk.Template.Child()
 
+    scan_qr_button = Gtk.Template.Child()
+    scan_qr_window = Gtk.Template.Child()
+    qr_scanner = Gtk.Template.Child()
+    qr_toast_overlay = Gtk.Template.Child()
+
     def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
 
@@ -61,13 +68,22 @@ class LoginWindow(Adw.Dialog):
         closeOnClickOutside(self)
         closeOnClickOutside(self.search_window)
         closeOnClickOutside(self.sso_info_window)
+        closeOnClickOutside(self.scan_qr_window)
 
         self.sso_info_button.connect("activated", self.openSSOInfoWindow)
+        self.scan_qr_button.connect("clicked", self.scanQRCode)
         self.method.connect("notify::selected-item", self.on_method_changed)
         self.on_method_changed()
 
+        self.invalid_qr_toast = Adw.Toast()
+        self.invalid_qr_toast.set_title(_("Invalid QR-Code"))
+
     def openSSOInfoWindow(self, a=None):
         self.sso_info_window.present(self)
+
+    def scanQRCode(self, a=None):
+        self.scan_qr_window.present(self)
+        self.qr_scanner.enable(self.fillDataFromUri)
 
     def openSearchSchoolWindow(self, data=None):
         self.searchSchool()
@@ -161,6 +177,7 @@ class LoginWindow(Adw.Dialog):
         login = "untis://setschool?"
 
         if uri.startswith(login):
+            self.scan_qr_window.close()
             uri = uri[len(login):]
             data = {}
             parts = uri.split("&")
@@ -176,6 +193,8 @@ class LoginWindow(Adw.Dialog):
                         self.pswd_entry.set_text(value)
                     case "user":
                         self.usr_entry.set_text(value)
+        else:
+            self.qr_toast_overlay.add_toast(self.invalid_qr_toast)
 
     def requestLogin(self, profile):
         if profile is None:
