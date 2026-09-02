@@ -49,6 +49,7 @@ class UntisWindow(Adw.ApplicationWindow):
     split_view = Gtk.Template.Child()
     teachers = Gtk.Template.Child()
     messages = Gtk.Template.Child()
+    messages_page = Gtk.Template.Child()
 
     def __init__(self, shared, **kwargs):
         super().__init__(**kwargs)

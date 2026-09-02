@@ -873,6 +873,10 @@ class session:
             "general": general,
         }
 
+    def getUnreadMessagesCount(self):
+        path = "/WebUntis/api/rest/view/v1/messages/status"
+        return self._getRequest(path)["unreadMessagesCount"]
+
     def getHomeworks(self, start=None, end=None):
         year = self.getCurrentSchoolYear()
         if start is None:

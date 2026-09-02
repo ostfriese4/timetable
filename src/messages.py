@@ -96,6 +96,9 @@ class MessagesPage(Gtk.Box):
         parent.main_view_stack.connect("notify::visible-child-name", on_visible)
         self.shared = parent.shared
 
+        self.page = parent.messages_page
+        self.countUnread()
+
     def shouldHide(self):
         messages = self.shared.session.getMessages()
         if messages is not None and messages != []:
@@ -109,6 +112,15 @@ class MessagesPage(Gtk.Box):
 
     def refresh(self):
         self.display()
+
+    def countUnread(self):
+        try:
+            count = self.shared.session.getUnreadMessagesCount()
+            print(count, "unread messages")
+        except:
+            count = 0
+            print("could not count unread messages")
+        self.page.set_badge_number(count)
 
     def display(self):
         messages = self.shared.session.getMessages()
@@ -139,3 +151,5 @@ class MessagesPage(Gtk.Box):
             self.displayedNews.append(row)
         if news == []:
             self.news_of_day.set_visible(False)
+
+        self.countUnread()

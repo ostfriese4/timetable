@@ -87,7 +87,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="AdwViewStackPage">
+                  <object class="AdwViewStackPage" id="messages_page">
                     <property name="name">messages</property>
                     <property name="title" translatable="yes">Messages</property>
                     <property name="icon-name">mail-unread-symbolic</property>
