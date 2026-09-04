@@ -141,6 +141,9 @@ class Timetable(Gtk.Box):
         self.settings.connect(
             "changed::show-time-axis", lambda *args: self.loadData()
         )
+        self.settings.connect(
+            "changed::ignore-exam-breaks", lambda *args: self.loadData()
+        )
 
         GLib.timeout_add(1000 * 60, self.update_marker)  # update time-marker
         GLib.timeout_add(
@@ -180,15 +183,17 @@ class Timetable(Gtk.Box):
             GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL,
         )
         parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
+
+        self.initTimetable(parent)
+
+    def initTimetable(self, parent):
         self.shared = parent.shared
 
         self.window = parent
-
         try:
             self.jump_to(getDateTime())
-            self.shared.session.getHomeworks()
         except:
-            pass
+            raise
 
     def next(self, data=None):
         self.startdate += datetime.timedelta(days=7)
@@ -201,7 +206,6 @@ class Timetable(Gtk.Box):
         self.loadData()
 
     def refresh(self):
-        self.shared.session.refresh()
         self.loadData()
 
     def refreshHomeworks(self):
@@ -406,7 +410,7 @@ class Timetable(Gtk.Box):
                     )
                 ]
                 table[i] = day
-            self.shared.session.layoutDay(day)
+            self.shared.session.layoutDay(day, ignore_exam_breaks = self.settings.get_boolean("show-time-axis"))
 
         atLeastOneLesson = False
 

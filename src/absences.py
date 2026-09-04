@@ -105,6 +105,10 @@ class AbsencesPage(Gtk.Box):
         self.page.set_badge_number(count)
         print(count, "absences")
 
+    def shouldHide(self):
+        absences = self.shared.session.getAbsences()
+        return absences is None or absences == []
+
     def display(self):
         absences = self.shared.session.getAbsences()
         self.count(absences)

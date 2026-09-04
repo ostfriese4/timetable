@@ -87,7 +87,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="AdwViewStackPage">
+                  <object class="AdwViewStackPage" id="messages_page">
                     <property name="name">messages</property>
                     <property name="title" translatable="yes">Messages</property>
                     <property name="icon-name">mail-unread-symbolic</property>
@@ -115,6 +115,10 @@
   </template>
   <menu id="primary_menu">
     <section>
+      <item>
+        <attribute name="label" translatable="yes">_Refresh</attribute>
+        <attribute name="action">app.refresh</attribute>
+      </item>
       <item>
         <attribute name="label" translatable="yes">Manage _profiles</attribute>
         <attribute name="action">app.profiles</attribute>

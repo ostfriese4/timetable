@@ -49,6 +49,7 @@ class UntisWindow(Adw.ApplicationWindow):
     split_view = Gtk.Template.Child()
     teachers = Gtk.Template.Child()
     messages = Gtk.Template.Child()
+    messages_page = Gtk.Template.Child()
 
     def __init__(self, shared, **kwargs):
         super().__init__(**kwargs)
@@ -89,6 +90,7 @@ class UntisWindow(Adw.ApplicationWindow):
             offline = self.shared.session.getOffline()
             last = self.shared.session.getLastOnline()
         except AttributeError:
+            print("could not get last online information")
             return
 
         for banner in self.offline_banners:
@@ -113,12 +115,12 @@ class UntisWindow(Adw.ApplicationWindow):
             print("show page",name)
 
     def showHideViews(self):
-        if self.shouldViewHide("MESSAGE_CENTER"):
+        if self.messages.shouldHide():
             self.hidePage("messages")
         else:
             self.showPage("messages")
 
-        if self.shouldViewHide("STUDENTABSENCES"):
+        if self.absences.shouldHide():
             self.hidePage("absences")
         else:
             self.showPage("absences")
@@ -157,10 +159,24 @@ class UntisWindow(Adw.ApplicationWindow):
         self.homework.displayAll()
         self.timetable.refreshHomeworks()
 
+    def refresh(self):
+        self.shared.session.refresh()
+        try:
+            page = self.main_view_stack.get_visible_child()
+            page.refresh()
+        except Exception:
+            print("refresh not implemented by page", self.main_view_stack.get_visible_child_name())
+            self.shared.session.getOwnId() # request to update online status
+        self.updateOfflineBanners()
+
     def reload(self):
         self.checkCredentials()
         self.main_view_stack.set_visible_child_name("timetable")
         self.timetable.loadData()
+        try:
+            self.shared.session.getHomeworks()
+        except:
+            pass
         self.homework.displayAll()
         self.addExternalPages()
         self.showHideViews()
@@ -175,5 +191,8 @@ class UntisWindow(Adw.ApplicationWindow):
 
         if login:
             self.login_window.requestLogin(self.shared.profiles["default-profile"])
-        if not self.shared.session.getOffline():
-            self.shared.checked = True
+        try:
+            if not self.shared.session.getOffline():
+                self.shared.checked = True
+        except AttributeError:
+            pass # don't crash at first start

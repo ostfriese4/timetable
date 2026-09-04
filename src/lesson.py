@@ -142,6 +142,8 @@ class Lesson(Gtk.Overlay):
         self.set_size_request(-1, self.lesson["duration"])
         if self.lesson["status"] == "CANCELLED":
             self.add_css_class("cancelled")
+        elif self.lesson["gridType"] == "EXAM":
+            self.add_css_class("exam")
         elif (
             "original" in self.lesson
             or self.lesson.get("gridStatus") == "CHANGED"

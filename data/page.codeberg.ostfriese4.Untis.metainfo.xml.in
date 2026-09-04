@@ -17,7 +17,7 @@
       <li>Viewing your absences</li>
       <li>Multiple profiles</li>
     </ul>
-    <p>Some features might be not available at your server</p>
+    <p>Some features might not be available at your school</p>
   </description>
 
   <developer id="page.codeberg.ostfriese4">
@@ -67,26 +67,42 @@
   </screenshots>
 
   <releases>
-    <release version="4.3.0" date="2026-08-21">      <description translate="no">
+    <release version="4.3.2" date="2026-09-01">
+      <description translate="no">
+        <p>Hotfix fixing a crash on first launch</p>
+      </description>
+    </release>
+    <release version="4.3.1" date="2026-09-01">
+      <description translate="no">
+        <p>This is a bugfix release containing minor fixes</p>
+        <ul>
+          <li>fixed refreshing of additional timetables</li>
+          <li>highlight exams</li>
+        </ul>
+        <p>Additionally, exams are highlighted now</p>
+      </description>
+    </release>
+    <release version="4.3.0" date="2026-08-21">
+      <description translate="no">
         <ul>
           <li>display additional timetables @ostfriese4</li>
           <li>added an option to turn the time-axis off @ostfriese4</li>
           <li>fixed crash at startup @ostfriese4</li>
         </ul>
-
       </description>
     </release>
-    <release version="4.2.1" date="2026-08-16">      <description translate="no">
+    <release version="4.2.1" date="2026-08-16">
+      <description translate="no">
         <ul>
           <li>improved the offline banner @Felitendo</li>
           <li>apply homework changes immediately without switching tabs @Felitendo</li>
           <li>update the homework indicators in the timetable after changes @Felitendo</li>
           <li>improved icons @ostfriese4</li>
         </ul>
-
       </description>
     </release>
-    <release version="4.2.0" date="2026-07-20">      <description translate="no">
+    <release version="4.2.0" date="2026-07-20">
+      <description translate="no">
         <ul>
           <li>improved external pages</li>
           <li>fixed deleting of profiles</li>
@@ -96,7 +112,6 @@
           <li>show the substitution text of a lesson @Felitendo</li>
           <li>show overlapping lessons next to each other @Felitendo</li>
         </ul>
-
       </description>
     </release>
     <release version="4.1" date="2026-07-18">

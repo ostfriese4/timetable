@@ -14,8 +14,34 @@
     "cleanup-commands" : [
         "python3 -m compileall --invalidation-mode=unchecked-hash /app"
     ],
+    "cleanup": [
+    	"/include",
+    	"/lib/python3.13/site-packages/scikit_build_core",
+    	"/lib/python3.13/site-packages/pybind11",
+    	"/lib/python3.13/site-packages/*.dist-info/RECORD",
+    	"/lib/python3.13/site-packages/*.dist-info/METADATA",
+    	"/lib/python3.13/site-packages/*.dist-info/WHEEL",
+    	"/lib/python3.13/site-packages/*.dist-info/INSTALLER",
+    	"/lib/python3.13/site-packages/*.dist-info/REQUESTED"
+    ],
     "modules" : [
         "pypi.json",
+        {
+            "name" : "libportal",
+            "buildsystem" : "meson",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://github.com/flatpak/libportal.git",
+                    "tag" : "0.10.0",
+                    "commit": "c23024018c8eb076549a1517fcb2d7f80d3e2ed5",
+                    "x-checker-data": {
+                        "type": "git",
+                        "tag-pattern": "^([\\d.]+)$"
+                    }
+                }
+            ]
+        },
         {
             "name" : "untis",
             "builddir" : true,

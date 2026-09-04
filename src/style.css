@@ -2,7 +2,7 @@
   margin-top: 1px;
   margin-bottom: 1px;
   border-radius: 5px;
-  background: color-mix(in oklab, var(--card-bg-color) 80%, var(--card-fg-color));
+  background: color-mix(in oklab, var(--card-bg-color) 70%, var(--card-fg-color));
   color: var(--card-fg-color);
 }
 
@@ -36,11 +36,10 @@
     color-mix(in oklab, var(--accent-red), var(--card-bg-color) 55%) 24px
   );
   border: 2px solid var(--accent-red);
-  opacity: 0.75;
 }
 
 .changed {
-  background: color-mix(in oklab, var(--accent-green), var(--card-bg-color) 70%);
+  background: color-mix(in oklab, var(--accent-green), var(--card-bg-color) 40%);
   border: 2px solid var(--accent-green);
 }
 
@@ -88,7 +87,7 @@
 }
 
 .changed-homework {
-  background: color-mix(in oklab, var(--accent-red), var(--window-bg-color) 70%);
+  background: color-mix(in oklab, var(--accent-red), var(--window-bg-color) 40%);
   border-radius: 10px;
   padding: 4px;
   margin-top: 4px;
@@ -104,5 +103,10 @@
 }
 
 .unexcused {
-  background: color-mix(in oklab, var(--accent-red), var(--window-bg-color) 70%);
+  background: color-mix(in oklab, var(--accent-red), var(--window-bg-color) 40%);
+}
+
+.exam {
+  background: color-mix(in oklab, var(--accent-orange), var(--card-bg-color) 40%);
+  border: 2px solid var(--accent-orange);
 }

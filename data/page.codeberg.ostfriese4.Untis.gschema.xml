@@ -9,5 +9,9 @@
 			<default>true</default>
 			<summary>Show the time axis</summary>
 		</key>
+		<key name="ignore-exam-breaks" type="b">
+			<default>false</default>
+			<summary>Ignore breaks between exams</summary>
+		</key>
 	</schema>
 </schemalist>

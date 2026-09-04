@@ -9,8 +9,8 @@ import binascii
 from pathlib import Path
 from hashlib import md5
 
-version = "4.3.0"
-releaseNotes = "        <ul>\n          <li>display additional timetables @ostfriese4</li>\n          <li>added an option to turn the time-axis off @ostfriese4</li>\n          <li>fixed crash at startup @ostfriese4</li>\n        </ul>\n"#"""
+version = "4.3.1"
+releaseNotes = "        <p>This is a bugfix release containing minor fixes</p>\n        <ul>\n          <li>fixed refreshing of additional timetables</li>\n          <li>highlight exams</li>\n        </ul>\n        <p>Additionally, exams are highlighted now</p>\n"#"""
 id = "page.codeberg.ostfriese4.Untis"
 useragent = id + " " + version
 
@@ -19,7 +19,7 @@ headers = {"User-Agent": useragent, "Accept": "application/json"}
 offline = False
 lastOnline = None
 
-fakeTime = datetime.datetime.strptime("26.06.16 10:31:03", "%y.%m.%d %H:%M:%S")
+fakeTime = datetime.datetime.strptime("26.09.01 10:31:03", "%y.%m.%d %H:%M:%S")
 
 def getDateTime():
     #return fakeTime
@@ -86,19 +86,20 @@ def _login(credentials):
             if ok:
                 token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
                 s.headers.update({"Authorization": "Bearer " + token})
+                print("logged in successfully")
                 return s
         else:
             print(response)
     except requests.exceptions.ConnectionError:
         offline = True
-        return s  # don't fail login at startup
+        print("offline, could not log in")
     except requests.exceptions.JSONDecodeError:
         offline = True
-        return s  # the server sent an error page, e.g. during maintenance
+        print("invalid answer, could not log in")
     except requests.exceptions.InvalidURL:
-        return
+        print("invalid url, could not log in")
     except binascii.Error:
-        return
+        print("invalid token, could not log in")
 
 
 # from https://github.com/l-koehler/untis-py (api.py)
@@ -151,6 +152,11 @@ class session:
         except:
             self.colors = {}
 
+    def ensureLogin(self):
+        if self.session is None:
+            print("not logged in yet")
+            self.session = _login(self.credentials)
+
     def getOffline(self):
         return offline
 
@@ -159,10 +165,10 @@ class session:
         if lastOnline is None:
             last = None
             for item in self.cacheIndex:
-                if item != "last-refresh":
+                if "request" in item:
                     if last is None:
                         last = self.cacheIndex[item]
-                    elif self.cacheIndex[item] < last:
+                    elif self.cacheIndex[item] > last:
                         last = self.cacheIndex[item]
             if last is not None:
                 lastOnline = datetime.datetime.fromtimestamp(last)
@@ -259,13 +265,15 @@ class session:
             "jsonrpc": "2.0"
         }
 
+        if self.session is None:
+            self.ensureLogin()
+            if self.session is None:
+                mode = "cache"
         if mode == "normal":
             if self._useCache(hashed, maxage=maxage):
                 mode = "cache"
             else:
                 mode = "online"
-        if self.session is None:
-            mode = "cache"
 
         if mode == "online":
             try:
@@ -328,13 +336,15 @@ class session:
         global offline, lastOnline
         orig = mode
         hashed = "requests/" + md5(path.encode()).hexdigest()
+        if self.session is None:
+            self.ensureLogin()
+            if self.session is None:
+                mode = "cache"
         if mode == "normal":
             if self._useCache(hashed, maxage=maxage):
                 mode = "cache"
             else:
                 mode = "online"
-        if self.session is None:
-            mode = "cache"
 
         if mode == "online":
             try:
@@ -373,11 +383,14 @@ class session:
         if day is None:
             day = getDate()
         path = "/WebUntis/api/public/news/newsWidgetData?date=" + day.strftime("%Y%m%d")
-        data = self._getRequest(path)["data"]["messagesOfDay"]
+        data = self._getRequest(path)
+        try:
+            data = data["data"]["messagesOfDay"]
+        except TypeError:
+            data = []
         return data
 
     def getTimetable(self, resourceType, resourceId, start = None, end = None, mode = "normal"):
-        print("fetching", resourceType, resourceId)
         year = self.getCurrentSchoolYear()
         gridFormat = None
 
@@ -623,7 +636,11 @@ class session:
         for day in data:
             timetable.append([])
             lessons = timetable[-1]
+            times = []
             for lesson in day["gridEntries"]:
+                if lesson["duration"] in times:
+                    continue
+                times.append(lesson["duration"])
 
                 details = self.getLessonDetails(
                     lesson["duration"]["start"],
@@ -638,10 +655,11 @@ class session:
                     print("empty lesson")
                     continue
 
-                lessons.append(self.analyzeLesson(details))
+                for lesson in details:
+                    lessons.append(self.analyzeLesson(lesson))
         return timetable
 
-    def mergeDay(self, lessons):
+    def mergeDay(self, lessons, ignore_exam_breaks = False):
         # combine consecutive parts of the same lesson into one block, other
         # (e.g. cancelled) lessons can sit between their grid entries
         keys = [
@@ -662,6 +680,9 @@ class session:
             while i>=0:
                 item = lessons[i]
                 ok = item["end"] == lesson["start"]
+                if ignore_exam_breaks:
+                    if item["gridType"] == "EXAM" and lesson["gridType"] == "EXAM":
+                        ok = item["end"] <= lesson["start"]
                 for key in keys:
                     if item[key] != lesson[key]:
                         ok = False
@@ -672,14 +693,14 @@ class session:
                     break
                 i -= 1
 
-    def layoutDay(self, lessons):
+    def layoutDay(self, lessons, ignore_exam_breaks = False):
         # place overlapping lessons in columns next to each other, computed
         # from the merged lessons so that double periods stay combined
         cluster = []  # (lesson, column) of the current overlap group
         ends = []  # end of the last lesson per column
 
         lessons.sort(key=lambda l: (l["start"], l["end"]))
-        self.mergeDay(lessons)
+        self.mergeDay(lessons, ignore_exam_breaks = ignore_exam_breaks)
 
         def apply():
             width = 1000 // max(len(ends), 1)
@@ -816,26 +837,11 @@ class session:
             else:
                 takingPlace.append(lesson)
 
-        def bestMatch(pool):
-            # prefer the entry that covers exactly the requested slot, the
-            # window can also contain other, parallel lessons
-            for lesson in pool:
-                if lesson["startDateTime"] == start and lesson["endDateTime"] == end:
-                    return lesson
-            return pool[0]
+        if len(takingPlace) == 1 and len(cancelled) == 1:
+            lesson = takingPlace[0]
+            lesson["original"] = cancelled[0]
 
-        if isCancelled and cancelled != []:
-            # the grid marks this slot as cancelled, don't resolve it to a
-            # parallel lesson that still takes place (e.g. an event)
-            lesson = bestMatch(cancelled)
-        elif takingPlace != []:
-            lesson = bestMatch(takingPlace)
-            if cancelled != []:
-                lesson["original"] = cancelled[0]
-        else:
-            lesson = bestMatch(cancelled)
-
-        return lesson
+        return takingPlace + cancelled
 
     def getAllRooms(self):
         year = self.getCurrentSchoolYear()
@@ -868,6 +874,10 @@ class session:
             "views": views,
             "general": general,
         }
+
+    def getUnreadMessagesCount(self):
+        path = "/WebUntis/api/rest/view/v1/messages/status"
+        return self._getRequest(path)["unreadMessagesCount"]
 
     def getHomeworks(self, start=None, end=None):
         year = self.getCurrentSchoolYear()
