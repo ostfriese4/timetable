@@ -67,6 +67,11 @@
   </screenshots>
 
   <releases>
+    <release version="4.3.2" date="2026-09-01">
+      <description translate="no">
+        <p>Hotfix fixing a crash on first launch</p>
+      </description>
+    </release>
     <release version="4.3.1" date="2026-09-01">
       <description translate="no">
         <p>This is a bugfix release containing minor fixes</p>
@@ -84,11 +89,6 @@
           <li>added an option to turn the time-axis off @ostfriese4</li>
           <li>fixed crash at startup @ostfriese4</li>
         </ul>
-      </description>
-    </release>
-    <release version="4.2.2" date="2026-08-16">
-      <description translate="no">
-        <p>Hotfix fixing a crash on first launch</p>
       </description>
     </release>
     <release version="4.2.1" date="2026-08-16">
