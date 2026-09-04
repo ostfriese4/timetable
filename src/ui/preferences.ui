@@ -20,6 +20,11 @@
                 <property name="title" translatable="yes">Show the time axis</property>
               </object>
             </child>
+            <child>
+              <object class="AdwSwitchRow" id="ignore_exam_breaks">
+                <property name="title" translatable="yes">Ignore breaks between exams</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>

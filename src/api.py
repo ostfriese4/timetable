@@ -391,7 +391,6 @@ class session:
         return data
 
     def getTimetable(self, resourceType, resourceId, start = None, end = None, mode = "normal"):
-        print("fetching", resourceType, resourceId)
         year = self.getCurrentSchoolYear()
         gridFormat = None
 
@@ -660,7 +659,7 @@ class session:
                     lessons.append(self.analyzeLesson(lesson))
         return timetable
 
-    def mergeDay(self, lessons):
+    def mergeDay(self, lessons, ignore_exam_breaks = False):
         # combine consecutive parts of the same lesson into one block, other
         # (e.g. cancelled) lessons can sit between their grid entries
         keys = [
@@ -681,6 +680,9 @@ class session:
             while i>=0:
                 item = lessons[i]
                 ok = item["end"] == lesson["start"]
+                if ignore_exam_breaks:
+                    if item["gridType"] == "EXAM" and lesson["gridType"] == "EXAM":
+                        ok = item["end"] <= lesson["start"]
                 for key in keys:
                     if item[key] != lesson[key]:
                         ok = False
@@ -691,14 +693,14 @@ class session:
                     break
                 i -= 1
 
-    def layoutDay(self, lessons):
+    def layoutDay(self, lessons, ignore_exam_breaks = False):
         # place overlapping lessons in columns next to each other, computed
         # from the merged lessons so that double periods stay combined
         cluster = []  # (lesson, column) of the current overlap group
         ends = []  # end of the last lesson per column
 
         lessons.sort(key=lambda l: (l["start"], l["end"]))
-        self.mergeDay(lessons)
+        self.mergeDay(lessons, ignore_exam_breaks = ignore_exam_breaks)
 
         def apply():
             width = 1000 // max(len(ends), 1)

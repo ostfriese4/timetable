@@ -30,6 +30,7 @@ class PreferencesDialog(Adw.PreferencesDialog):
 
     show_cancelled = Gtk.Template.Child()
     show_time_axis = Gtk.Template.Child()
+    ignore_exam_breaks = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -46,6 +47,12 @@ class PreferencesDialog(Adw.PreferencesDialog):
         self.settings.bind(
             "show-time-axis",
             self.show_time_axis,
+            "active",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
+        self.settings.bind(
+            "ignore-exam-breaks",
+            self.ignore_exam_breaks,
             "active",
             Gio.SettingsBindFlags.DEFAULT,
         )

@@ -141,6 +141,9 @@ class Timetable(Gtk.Box):
         self.settings.connect(
             "changed::show-time-axis", lambda *args: self.loadData()
         )
+        self.settings.connect(
+            "changed::ignore-exam-breaks", lambda *args: self.loadData()
+        )
 
         GLib.timeout_add(1000 * 60, self.update_marker)  # update time-marker
         GLib.timeout_add(
@@ -407,7 +410,7 @@ class Timetable(Gtk.Box):
                     )
                 ]
                 table[i] = day
-            self.shared.session.layoutDay(day)
+            self.shared.session.layoutDay(day, ignore_exam_breaks = self.settings.get_boolean("show-time-axis"))
 
         atLeastOneLesson = False
 

@@ -93,7 +93,6 @@ class UntisWindow(Adw.ApplicationWindow):
             print("could not get last online information")
             return
 
-        print("setting visibility of offline-banners to ", offline)
         for banner in self.offline_banners:
             banner.update(offline, last)
 
