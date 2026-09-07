@@ -69,15 +69,6 @@ class UntisWindow(Adw.ApplicationWindow):
         self.absences.enable_bindings(self)
         self.additional_timetables.enable_bindings(self)
 
-        self.offline_banners = [
-            self.timetable.offline,
-            self.homework.offline,
-            self.teachers.offline,
-            self.messages.offline,
-            self.absences.offline,
-            self.additional_timetables.offline,
-            self.additional_timetables.nested_offline,
-        ]
         # runs after the handlers of the pages, so their data is loaded
         self.main_view_stack.connect(
             "notify::visible-child-name", lambda *args: self.updateOfflineBanners()
@@ -95,7 +86,17 @@ class UntisWindow(Adw.ApplicationWindow):
             print("could not get last online information")
             return
 
-        for banner in self.offline_banners:
+        offline_banners = [
+            self.timetable.offline,
+            self.homework.offline,
+            self.teachers.offline,
+            self.messages.offline,
+            self.absences.offline,
+            self.additional_timetables.offline,
+            self.additional_timetables.nested_offline,
+        ]
+
+        for banner in offline_banners:
             banner.update(offline, last)
 
     def hidePage(self, name):
