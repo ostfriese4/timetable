@@ -28,7 +28,14 @@ class OfflineBanner(Adw.Bin):
 
     banner = Gtk.Template.Child()
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.offline = False
+        self.last = None
+
     def update(self, offline, last):
+        self.offline = offline
+        self.last = last
         now = datetime.datetime.now()
         title = _("You are offline")
         if offline and last is not None:

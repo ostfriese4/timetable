@@ -4,9 +4,6 @@
   <template class="AdditionalTimetablesPage" parent="GtkBox">
     <property name="orientation">vertical</property>
     <child>
-      <object class="OfflineBanner" id="offline"/>
-    </child>
-    <child>
       <object class="AdwNavigationView" id="view">
         <child>
           <object class="AdwNavigationPage">
@@ -29,7 +26,15 @@
                   </object>
                 </child>
                 <property name="content">
-                  <object class="AdwPreferencesPage" id="container"/>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="OfflineBanner" id="offline"/>
+                    </child>
+                    <child>
+                      <object class="AdwPreferencesPage" id="container"/>
+                    </child>
+                  </object>
                 </property>
               </object>
             </child>

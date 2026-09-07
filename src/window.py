@@ -75,15 +75,17 @@ class UntisWindow(Adw.ApplicationWindow):
             self.teachers.offline,
             self.messages.offline,
             self.absences.offline,
+            self.additional_timetables.offline,
+            self.additional_timetables.nested_offline,
         ]
         # runs after the handlers of the pages, so their data is loaded
         self.main_view_stack.connect(
             "notify::visible-child-name", lambda *args: self.updateOfflineBanners()
         )
-        self.updateOfflineBanners()
 
         GLib.idle_add(self.addExternalPages)
         GLib.idle_add(self.showHideViews)
+        GLib.idle_add(self.updateOfflineBanners)
 
     def updateOfflineBanners(self):
         try:

@@ -37,6 +37,7 @@ class AdditionalTimetablesPage(Gtk.Box):
         super().__init__(**kwargs)
         self.displayed = {}
         self.currentTimetable = None
+        self.nested_offline = self.offline
 
     def enable_bindings(self, parent):
         parent.split_view.bind_property(
@@ -60,6 +61,8 @@ class AdditionalTimetablesPage(Gtk.Box):
         widget.initTimetable(self.parent)
         self.timetable_page.set_child(widget)
         self.currentTimetable = widget
+        widget.offline.update(self.nested_offline.offline, self.nested_offline.last)
+        self.nested_offline = widget.offline
         self.view.push(self.timetable_page)
 
     def shouldHide(self):
