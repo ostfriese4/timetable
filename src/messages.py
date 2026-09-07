@@ -21,6 +21,7 @@ from gi.repository import Gtk
 from gi.repository import Adw
 from gi.repository import GObject
 from .offline_banner import OfflineBanner
+from .attachment import Attachment
 
 import datetime
 
@@ -39,6 +40,10 @@ class Message(Adw.ExpanderRow):
         self.loaded = False
         self.session = session
 
+        if message["hasAttachments"]:
+            attachmentIcon = Gtk.Image(icon_name="xsi-mail-attachment-symbolic")
+            self.add_suffix(attachmentIcon)
+
         self.connect("notify::expanded", self.load)
 
     def load(self, a, b):
@@ -49,6 +54,11 @@ class Message(Adw.ExpanderRow):
             content = Adw.ActionRow(title=message["content"].replace("<br>", "\n"))
             self.add_row(content)
             content.add_css_class("property")
+
+            attachments = self.session.getAttachments(message)
+            for attachment in attachments:
+                attachment_row = Attachment(attachment, self.session)
+                self.add_row(attachment_row)
 
             date = Adw.ActionRow(
                 title=_("Date"),

@@ -842,6 +842,17 @@ class session:
 
         return takingPlace + cancelled
 
+    def getTenant(self):
+        return self.getGeneralData()["tenant"]
+
+    def getAttachmentStorageUrl(self, id):
+        path = (
+            "/WebUntis/api/rest/view/v1/messages/"
+            + id
+            + "/attachmentstorageurl"
+        )
+        return self._getRequest(path, maxage = 5)
+
     def getAllRooms(self):
         year = self.getCurrentSchoolYear()
         start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")
@@ -877,6 +888,16 @@ class session:
     def getUnreadMessagesCount(self):
         path = "/WebUntis/api/rest/view/v1/messages/status"
         return self._getRequest(path)["unreadMessagesCount"]
+
+    def getAttachments(self, item):
+        out = []
+        for attachment in item["storageAttachments"]:
+            out.append({
+                "name": attachment["name"],
+                "id": attachment["id"],
+                "type": "storageAttachment"
+            })
+        return out
 
     def getHomeworks(self, start=None, end=None):
         year = self.getCurrentSchoolYear()

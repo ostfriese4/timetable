@@ -6,6 +6,7 @@ data/page.codeberg.ostfriese4.Untis.gschema.xml
 src/absences.py
 src/additional_timetables.py
 src/api.py
+src/attachment.py
 src/credentials.py
 src/create_homework.py
 src/external_page.py
@@ -25,6 +26,7 @@ src/window.py
 
 src/ui/absences.ui
 src/ui/additional_timetables.ui
+src/ui/attachment.ui
 src/ui/create_homework.ui
 src/ui/external_page.ui
 src/ui/homework.ui

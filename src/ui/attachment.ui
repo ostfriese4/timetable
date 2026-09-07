@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="Attachment" parent="AdwActionRow">
+    <child type="suffix">
+      <object class="GtkButton" id="save_button">
+        <property name="icon-name">document-save-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Save attachment</property>
+      </object>
+    </child>
+    <child type="suffix">
+      <object class="GtkButton" id="open_button">
+        <property name="icon-name">document-open-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Open attachment</property>
+      </object>
+    </child>
+  </template>
+</interface>

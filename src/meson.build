@@ -24,6 +24,7 @@ untis_sources = [
   'absences.py',
   'additional_timetables.py',
   'api.py',
+  'attachment.py',
   'colors.py',
   'credentials.py',
   'create_homework.py',
