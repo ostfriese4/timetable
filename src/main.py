@@ -66,7 +66,8 @@ class UntisApplication(Adw.Application):
             "create_homework", self.on_create_homework_action, ["<control>n"]
         )
 
-        self.shared = shared
+        self.shared = shared()
+        self.shared.shared = shared
         self.shared.profiles = getProfiles()
         self.shared.checked = False
         self.loginIfPossible = False

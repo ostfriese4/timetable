@@ -82,12 +82,11 @@ def _login(credentials):
 
         offline = False
         lastOnline = getDateTime()
-        if response.status_code == 200:
-            if ok:
-                token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
-                s.headers.update({"Authorization": "Bearer " + token})
-                print("logged in successfully")
-                return s
+        if response.status_code == 200 and ok:
+            token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
+            s.headers.update({"Authorization": "Bearer " + token})
+            print("logged in successfully")
+            return s
         else:
             print(response)
     except requests.exceptions.ConnectionError:
