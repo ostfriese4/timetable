@@ -39,6 +39,7 @@ untis_sources = [
   'main.py',
   'messages.py',
   'offline_banner.py',
+  'overview.py',
   'preferences.py',
   'profiles.py',
   'qr.py',

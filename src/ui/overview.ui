@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="OverviewPage" parent="GtkBox">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="title-widget">
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Overview</property>
+                <property name="halign">GTK_ALIGN_CENTER</property>
+              </object>
+            </property>
+            <child type="start">
+              <object class="GtkToggleButton" id="show_sidebar_button">
+                <property name="icon-name">adw-sidebar-symbolic</property>
+                <property name="visible">False</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child type="top">
+          <object class="OfflineBanner" id="offline"/>
+        </child>
+        <property name="content">
+          <object class="AdwPreferencesPage">
+          </object>
+        </property>
+      </object>
+    </child>
+  </template>
+</interface>

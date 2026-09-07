@@ -48,6 +48,16 @@
                 <property name="enable-transitions">True</property>
                 <child>
                   <object class="AdwViewStackPage">
+                    <property name="name">overview</property>
+                    <property name="title" translatable="yes">Overview</property>
+                    <property name="icon-name">grid-symbolic</property>
+                    <property name="child">
+                      <object class="OverviewPage" id="overview"></object>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwViewStackPage">
                     <property name="name">timetable</property>
                     <property name="title" translatable="yes">My timetable</property>
                     <property name="icon-name">month-symbolic</property>

@@ -29,6 +29,7 @@ from .credentials import getCredentials
 from .api import testCredentials
 from .profiles import ProfilesWindow
 from .external_page import ExternalPage
+from .overview import OverviewPage
 from gi.repository import Adw
 from gi.repository import Gtk
 from gi.repository import GLib
@@ -50,6 +51,7 @@ class UntisWindow(Adw.ApplicationWindow):
     teachers = Gtk.Template.Child()
     messages = Gtk.Template.Child()
     messages_page = Gtk.Template.Child()
+    overview = Gtk.Template.Child()
 
     def __init__(self, shared, **kwargs):
         super().__init__(**kwargs)
@@ -68,6 +70,7 @@ class UntisWindow(Adw.ApplicationWindow):
         self.messages.enable_bindings(self)
         self.absences.enable_bindings(self)
         self.additional_timetables.enable_bindings(self)
+        self.overview.enable_bindings(self)
 
         self.offline_banners = [
             self.timetable.offline,
@@ -75,6 +78,7 @@ class UntisWindow(Adw.ApplicationWindow):
             self.teachers.offline,
             self.messages.offline,
             self.absences.offline,
+            self.overview.offline,
         ]
         # runs after the handlers of the pages, so their data is loaded
         self.main_view_stack.connect(
