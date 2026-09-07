@@ -19,10 +19,10 @@
 
 
 # Install
-Besides Flathub, Timetable is also available in the [AUR](https://aur.archlinux.org/packages/timetable-bin) for Arch Linux users:
+Besides Flathub, Timetable is also available in the [AUR](https://aur.archlinux.org/packages/timetable) for Arch Linux users:
 
 ```
-yay -S timetable-bin
+yay -S timetable
 ```
 [![Packaging status](https://repology.org/badge/vertical-allrepos/timetable.svg)](https://repology.org/project/timetable/versions)
 
