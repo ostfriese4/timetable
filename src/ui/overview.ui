@@ -26,6 +26,16 @@
         </child>
         <property name="content">
           <object class="AdwPreferencesPage">
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title" translatable="yes">Next lessons</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title" translatable="yes">Next homeworks</property>
+              </object>
+            </child>
           </object>
         </property>
       </object>
