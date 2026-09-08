@@ -410,7 +410,7 @@ class Timetable(Gtk.Box):
                     )
                 ]
                 table[i] = day
-            self.shared.session.layoutDay(day, ignore_exam_breaks = self.settings.get_boolean("show-time-axis"))
+            self.shared.session.layoutDay(day, ignore_exam_breaks = self.settings.get_boolean("ignore-exam-breaks"))
 
         atLeastOneLesson = False
 
