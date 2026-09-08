@@ -658,11 +658,8 @@ class session:
                     lessons.append(self.analyzeLesson(lesson))
         return timetable
 
-    def mergeDay(self, lessons, ignore_exam_breaks = False):
-        # combine consecutive parts of the same lesson into one block, other
-        # (e.g. cancelled) lessons can sit between their grid entries
+    def lessonsAreEqual(self, l1, l2):
         keys = [
-            "rooms",
             "room",
             "room-info",
             "status",
@@ -670,6 +667,14 @@ class session:
             "teachers-long",
             "teachers-short",
         ]
+        for key in keys:
+            if l1[key] != l2[key]:
+                return False
+        return True
+
+    def mergeDay(self, lessons, ignore_exam_breaks = False):
+        # combine consecutive parts of the same lesson into one block, other
+        # (e.g. cancelled) lessons can sit between their grid entries
 
         old = lessons.copy()
         for lesson in old:
@@ -682,9 +687,8 @@ class session:
                 if ignore_exam_breaks:
                     if item["gridType"] == "EXAM" and lesson["gridType"] == "EXAM":
                         ok = item["end"] <= lesson["start"]
-                for key in keys:
-                    if item[key] != lesson[key]:
-                        ok = False
+                if ok:
+                    ok = self.lessonsAreEqual(lesson, item)
                 if ok:
                     item["end"] = lesson["end"]
                     item["duration"] = item["end"] - item["start"]
