@@ -633,29 +633,25 @@ class session:
     def analyzeTimetable(self, data, resourceType, resourceId, mode="normal"):
         timetable = []
         for day in data:
-            timetable.append([])
-            lessons = timetable[-1]
-            times = []
-            for lesson in day["gridEntries"]:
-                if lesson["duration"] in times:
-                    continue
-                times.append(lesson["duration"])
+            lessons = []
+            timetable.append(lessons)
+            start = day["gridEntries"][0]["duration"]["start"]
+            end = day["gridEntries"][-1]["duration"]["end"]
 
-                details = self.getLessonDetails(
-                    lesson["duration"]["start"],
-                    lesson["duration"]["end"],
-                    resourceType,
-                    resourceId,
-                    mode,
-                    lesson.get("status") == "CANCELLED",
-                )
+            details = self.getLessonDetails(
+                start,
+                end,
+                resourceType,
+                resourceId,
+                mode,
+            )
 
-                if details is None:
-                    print("empty lesson")
-                    continue
+            if details is None:
+                print("empty lesson")
+                continue
 
-                for lesson in details:
-                    lessons.append(self.analyzeLesson(lesson))
+            for lesson in details:
+                lessons.append(self.analyzeLesson(lesson))
         return timetable
 
     def lessonsAreEqual(self, l1, l2):
@@ -812,7 +808,7 @@ class session:
             return teacher["foreName"] + " " +  teacher["longName"]
         return short
 
-    def getLessonDetails(self, start, end, resourceType, resourceId, mode="normal", isCancelled=False):
+    def getLessonDetails(self, start, end, resourceType, resourceId, mode="normal"):
         resourceTypes = ["CLASS", "TEACHER", "SUBJECT", "ROOM", "STUDENT"]
         resourceType = str(resourceTypes.index(resourceType) + 1)
         path = (
