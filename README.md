@@ -37,8 +37,8 @@ yay -S timetable
 - python3-pillow
 - python3-pyotp
 - python3-requests
+- python3-zxing-cpp
 - webkitgtk-6.0
-- zxing-cpp
 
 # Build
 To build, clone this in GNOME-Builder and press play.
