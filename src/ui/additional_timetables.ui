@@ -23,6 +23,12 @@
                         <property name="visible">False</property>
                       </object>
                     </child>
+                    <child type="end">
+                      <object class="GtkButton" id="create_timetable_button">
+                        <property name="icon-name">list-add-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Create custom timetable</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
                 <property name="content">
@@ -46,4 +52,24 @@
       </object>
     </child>
   </template>
+  <object class="AdwDialog" id="edit_timetable_dialog">
+    <property name="title" translatable="yes">Edit timetable</property>
+    <property name="content-width">350</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar"/>
+        </child>
+        <property name="content">
+          <object class="AdwPreferencesPage">
+            <child>
+              <object class="AdwPreferencesGroup">
+
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </child>
+  </object>
 </interface>

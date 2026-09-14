@@ -52,6 +52,24 @@ def getCustomTimetable(id):
         "recipe": [],
     }
 
+def setCustomTimetable(id, data):
+    all = listCustomTimetables()
+    for i in range (len(all)):
+        if all[i][id] == id:
+            all[i] = data
+
+def createCustomTimetable():
+    all = listCustomTimetables()
+    id = 0
+    ok = False
+    while not ok:
+        id += 1
+        ok = True
+        for item in all:
+            if item["id"] == id:
+                ok = False
+    return id
+
 def getKey(data, key):
     if type(key) == list:
         for i in key:

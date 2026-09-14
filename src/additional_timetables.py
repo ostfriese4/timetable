@@ -22,7 +22,7 @@ from gi.repository import Adw
 from gi.repository import GObject
 from .offline_banner import OfflineBanner
 from .timetable import Timetable
-from .custom_timetables import listCustomTimetables
+from .custom_timetables import listCustomTimetables, getCustomTimetable, createCustomTimetable, setCustomTimetable
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/additional_timetables.ui")
 class AdditionalTimetablesPage(Gtk.Box):
@@ -33,12 +33,15 @@ class AdditionalTimetablesPage(Gtk.Box):
     container = Gtk.Template.Child()
     timetable_page = Gtk.Template.Child()
     view = Gtk.Template.Child()
+    create_timetable_button = Gtk.Template.Child()
+    edit_timetable_dialog = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.displayed = {}
         self.currentTimetable = None
         self.nested_offline = self.offline
+        self.create_timetable_button.connect("clicked", self.createTimetable)
 
     def enable_bindings(self, parent):
         parent.split_view.bind_property(
@@ -71,6 +74,14 @@ class AdditionalTimetablesPage(Gtk.Box):
             self.currentTimetable.refresh()
         self.display()
 
+    def editTimetable(self, row, id):
+        self.edit_timetable_dialog.present(self.parent)
+        data = getCustomTimetable(id)
+
+    def createTimetable(self, *args):
+        id = createCustomTimetable()
+        self.editTimetable(None, id)
+
     def display(self):
         timetables = listCustomTimetables()
         timetables += self.shared.session.getAvailableTimetables()
@@ -90,6 +101,7 @@ class AdditionalTimetablesPage(Gtk.Box):
                 editButton = Gtk.Button()
                 editButton.set_icon_name("document-edit-symbolic")
                 editButton.set_tooltip_text(_("Edit timetable"))
+                editButton.connect("clicked", self.editTimetable, timetable["id"])
                 row.add_suffix(editButton)
 
             if not timetable["type"] in self.displayed:
@@ -109,12 +121,6 @@ class AdditionalTimetablesPage(Gtk.Box):
                 section = Adw.PreferencesGroup(title = title)
                 self.container.add(section)
                 self.displayed[timetable["type"]] = section
-
-                if timetable["type"] == "CUSTOM":
-                    addButton = Gtk.Button()
-                    addButton.set_icon_name("list-add-symbolic")
-                    addButton.set_tooltip_text(_("Create timetable"))
-                    section.set_header_suffix(addButton)
             else:
                 section = self.displayed[timetable["type"]]
 
