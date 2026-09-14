@@ -19,6 +19,7 @@
 
 import json
 import os
+import datetime
 
 shared = None
 def setCustomTimetablesShared(new):
@@ -39,3 +40,58 @@ def saveCustomTimetables(data):
 
 def getPath():
     return os.environ.get("XDG_DATA_HOME", ".untis/data") + f"/untis-custom-timetables-{shared.profiles['default-profile']}.json"
+
+def getCustomTimetable(id):
+    for timetable in listCustomTimetables():
+        if timetable["id"] == id:
+            return timetable
+    return {
+        "id": id,
+        "type": "CUSTOM",
+        "name": _("Unnamed"),
+        "recipe": [],
+    }
+
+def getKey(data, key):
+    if type(key) == list:
+        for i in key:
+            data = data[i]
+        return data
+    return data[key]
+
+def lessonMatchesFilter(lesson, filter):
+    match filter["type"]:
+        case "isOneOf":
+            value = getKey(lesson, filter["key"])
+            for item in filter["values"]:
+                if item == value:
+                    return True
+    return False
+
+def followStep(step, date, mode="normal"):
+    data = []
+    match step["type"]:
+        case "fromRealTimetable":
+            timetable, grid = shared.session.getTimetable(step["timetable"]["type"], step["timetable"]["id"], date, date, mode=mode)
+            for lesson in timetable[0]:
+                for filter in step["filters"]:
+                    if (lessonMatchesFilter(lesson, filter)):
+                        data.append(lesson)
+                        break
+    return data
+
+def sortDay(day):
+    pass
+
+def buildCustomTimetable(id, start, end, mode = "normal"):
+    recipe = getCustomTimetable(id)["recipe"]
+    data = []
+    dayCount = (end - start).days + 1
+    for day in range(dayCount):
+        dayData = []
+        dayDate = start + datetime.timedelta(days = day)
+        data.append(dayData)
+        for step in recipe:
+            dayData += followStep(step, dayDate, mode=mode)
+        sortDay(dayData)
+    return data, None

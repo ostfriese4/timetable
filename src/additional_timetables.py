@@ -86,7 +86,7 @@ class AdditionalTimetablesPage(Gtk.Box):
             row.set_activatable(True)
             row.connect("activated", self.openTimetable, timetable)
 
-            if not timetable["name"] in self.displayed:
+            if not timetable["type"] in self.displayed:
                 title = ""
                 match timetable["type"]:
                     case "STUDENT":
@@ -102,8 +102,8 @@ class AdditionalTimetablesPage(Gtk.Box):
 
                 section = Adw.PreferencesGroup(title = title)
                 self.container.add(section)
-                self.displayed[timetable["name"]] = section
+                self.displayed[timetable["type"]] = section
             else:
-                section = self.displayed[timetable["name"]]
+                section = self.displayed[timetable["type"]]
 
             section.add(row)

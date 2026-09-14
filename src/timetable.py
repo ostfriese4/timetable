@@ -30,6 +30,7 @@ from .holiday import Holiday
 from .offline_banner import OfflineBanner
 from .dialog import closeOnClickOutside
 from .api import getDateTime, id as appId
+from .custom_timetables import buildCustomTimetable
 import cairo
 import datetime
 import math
@@ -215,7 +216,9 @@ class Timetable(Gtk.Box):
         self.displayHomeworks(homeworks)
 
     def getTimetable(self, start, end, mode="normal"):
-        if self.resourceType:
+        if self.resourceType == "CUSTOM":
+            return buildCustomTimetable(self.resourceId, start, end, mode=mode)
+        elif self.resourceType:
             return self.shared.session.getTimetable(self.resourceType, self.resourceId, start, end, mode=mode)
         else:
             return self.shared.session.getOwnTimetable(start, end, mode=mode)
