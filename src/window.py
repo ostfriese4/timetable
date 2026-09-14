@@ -133,11 +133,6 @@ class UntisWindow(Adw.ApplicationWindow):
         else:
             self.showPage("teachers")
 
-        if self.additional_timetables.shouldHide():
-            self.hidePage("additional_timetables")
-        else:
-            self.showPage("additional_timetables")
-
     def addExternalPages(self):
         for page in self.pages:
             self.main_view_stack.remove(page)

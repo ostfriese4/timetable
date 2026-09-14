@@ -22,6 +22,7 @@ from gi.repository import Adw
 from gi.repository import GObject
 from .offline_banner import OfflineBanner
 from .timetable import Timetable
+from .custom_timetables import listCustomTimetables
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/additional_timetables.ui")
 class AdditionalTimetablesPage(Gtk.Box):
@@ -65,16 +66,14 @@ class AdditionalTimetablesPage(Gtk.Box):
         self.nested_offline = widget.offline
         self.view.push(self.timetable_page)
 
-    def shouldHide(self):
-        return len(self.shared.session.getAvailableTimetables()) <= 1 # hide if no or only one (probably the one of the user) timetable exists
-
     def refresh(self):
         if self.currentTimetable is not None:
             self.currentTimetable.refresh()
         self.display()
 
     def display(self):
-        timetables = self.shared.session.getAvailableTimetables()
+        timetables = listCustomTimetables()
+        timetables += self.shared.session.getAvailableTimetables()
 
         for section in self.displayed:
             section = self.displayed[section]
