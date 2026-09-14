@@ -86,6 +86,12 @@ class AdditionalTimetablesPage(Gtk.Box):
             row.set_activatable(True)
             row.connect("activated", self.openTimetable, timetable)
 
+            if timetable["type"] == "CUSTOM":
+                editButton = Gtk.Button()
+                editButton.set_icon_name("document-edit-symbolic")
+                editButton.set_tooltip_text(_("Edit timetable"))
+                row.add_suffix(editButton)
+
             if not timetable["type"] in self.displayed:
                 title = ""
                 match timetable["type"]:
@@ -103,6 +109,12 @@ class AdditionalTimetablesPage(Gtk.Box):
                 section = Adw.PreferencesGroup(title = title)
                 self.container.add(section)
                 self.displayed[timetable["type"]] = section
+
+                if timetable["type"] == "CUSTOM":
+                    addButton = Gtk.Button()
+                    addButton.set_icon_name("list-add-symbolic")
+                    addButton.set_tooltip_text(_("Create timetable"))
+                    section.set_header_suffix(addButton)
             else:
                 section = self.displayed[timetable["type"]]
 
