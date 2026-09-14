@@ -97,6 +97,8 @@ class AdditionalTimetablesPage(Gtk.Box):
                         title = _("Classes")
                     case "ROOM":
                         title = _("Rooms")
+                    case "CUSTOM":
+                        title = _("Custom timetables")
 
                 section = Adw.PreferencesGroup(title = title)
                 self.container.add(section)

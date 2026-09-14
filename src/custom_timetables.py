@@ -21,9 +21,21 @@ import json
 import os
 
 shared = None
-def setShared(new):
+def setCustomTimetablesShared(new):
     global shared
-    shared= new
+    shared = new
 
 def listCustomTimetables():
-    return []
+    try:
+        with open(getPath()) as file:
+            return json.load(file)
+    except FileNotFoundError:
+        saveCustomTimetables([])
+        return []
+
+def saveCustomTimetables(data):
+    with open(getPath(), "w") as file:
+        json.dump(data, file, indent = 4)
+
+def getPath():
+    return os.environ.get("XDG_DATA_HOME", ".untis/data") + f"/untis-custom-timetables-{shared.profiles['default-profile']}.json"
