@@ -26,6 +26,20 @@ yay -S timetable
 ```
 [![Packaging status](https://repology.org/badge/vertical-allrepos/timetable.svg)](https://repology.org/project/timetable/versions)
 
+# Dependencies
+- gstreamer 
+- gtk4
+- libadwaita
+- libportal
+- libsecret
+- python3
+- python3-gobject
+- python3-pillow
+- python3-pyotp
+- python3-requests
+- python3-zxing-cpp
+- webkitgtk-6.0
+
 # Build
 To build, clone this in GNOME-Builder and press play.
 

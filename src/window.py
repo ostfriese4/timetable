@@ -138,6 +138,7 @@ class UntisWindow(Adw.ApplicationWindow):
             self.main_view_stack.remove(page)
         self.pages.clear()
 
+        first = True
         for pageData in self.shared.session.getMenu():
             id = "external" + str(len(self.pages))
             content = ExternalPage(pageData, id)
@@ -147,9 +148,14 @@ class UntisWindow(Adw.ApplicationWindow):
             page.set_name(id)
             page.set_icon_name("globe-alt-symbolic")
 
+            if first:
+                first = False
+                page.set_starts_section(True)
+                page.set_section_title(_("External services"))
+
             content.enable_bindings(self)
 
-            self.pages.append(page)
+            self.pages.append(content)
 
     def homeworksChanged(self):
         # keep the homework page and the indicators in the timetable in
