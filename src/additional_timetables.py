@@ -23,6 +23,7 @@ from gi.repository import GObject
 from .offline_banner import OfflineBanner
 from .timetable import Timetable
 from .custom_timetables import listCustomTimetables, getCustomTimetable, createCustomTimetable, setCustomTimetable
+from .dialog import closeOnClickOutside
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/additional_timetables.ui")
 class AdditionalTimetablesPage(Gtk.Box):
@@ -45,6 +46,7 @@ class AdditionalTimetablesPage(Gtk.Box):
         self.currentTimetable = None
         self.nested_offline = self.offline
         self.create_timetable_button.connect("clicked", self.createTimetable)
+        closeOnClickOutside(self.edit_timetable_dialog)
 
     def enable_bindings(self, parent):
         parent.split_view.bind_property(

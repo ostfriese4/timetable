@@ -9,6 +9,7 @@ src/api.py
 src/attachment.py
 src/credentials.py
 src/create_homework.py
+src/custom_timetable_builder.py
 src/custom_timetables.py
 src/external_page.py
 src/homework.py
