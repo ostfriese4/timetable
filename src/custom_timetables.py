@@ -84,6 +84,8 @@ def lessonMatchesFilter(lesson, filter):
             for item in filter["values"]:
                 if item == value:
                     return True
+        case "true":
+            return True
     return False
 
 def followStep(step, date, mode="normal"):
@@ -99,7 +101,16 @@ def followStep(step, date, mode="normal"):
     return data
 
 def sortDay(day):
-    pass
+    out = []
+    for lesson in day:
+        i = 0
+        for item in out:
+            if item["start"] < lesson["start"]:
+                i+=1
+            else:
+                break
+        out.insert(i, lesson)
+    return out
 
 def buildCustomTimetable(id, start, end, mode = "normal"):
     recipe = getCustomTimetable(id)["recipe"]
@@ -111,5 +122,5 @@ def buildCustomTimetable(id, start, end, mode = "normal"):
         data.append(dayData)
         for step in recipe:
             dayData += followStep(step, dayDate, mode=mode)
-        sortDay(dayData)
+        dayData = sortDay(dayData)
     return data, None

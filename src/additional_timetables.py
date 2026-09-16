@@ -35,6 +35,9 @@ class AdditionalTimetablesPage(Gtk.Box):
     view = Gtk.Template.Child()
     create_timetable_button = Gtk.Template.Child()
     edit_timetable_dialog = Gtk.Template.Child()
+    recipe_name = Gtk.Template.Child()
+    recipe_steps = Gtk.Template.Child()
+    recipe_save = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -77,6 +80,7 @@ class AdditionalTimetablesPage(Gtk.Box):
     def editTimetable(self, row, id):
         self.edit_timetable_dialog.present(self.parent)
         data = getCustomTimetable(id)
+        self.recipe_name.set_text(data["name"])
 
     def createTimetable(self, *args):
         id = createCustomTimetable()
