@@ -33,9 +33,22 @@ class CustomTimetableFilter(Adw.ActionRow):
         match self.data["type"]:
             case "isOneOf":
                 self.set_title(_("Property has value"))
+                self.addEditButton()
 
             case "true":
                 self.set_title(_("Take all"))
+
+        self.delete_button = Gtk.Button()
+        self.delete_button.set_icon_name("user-trash-symbolic")
+        self.delete_button.set_tooltip_text(_("Delete component"))
+        self.delete_button.add_css_class("destructive-action")
+        self.add_suffix(self.delete_button)
+
+    def addEditButton(self):
+        self.edit_button = Gtk.Button()
+        self.edit_button.set_icon_name("document-edit-symbolic")
+        self.edit_button.set_tooltip_text(_("Edit filter"))
+        self.add_suffix(self.edit_button)
 
 class CustomTimetableStep(Adw.ExpanderRow):
     def __init__(self, step, parent):
