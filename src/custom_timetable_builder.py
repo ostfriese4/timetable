@@ -19,18 +19,44 @@
 
 from gi.repository import Gtk
 from gi.repository import Adw
+from gi.repository import GLib
+from gi.repository import Gio
 
 
-class CustomTimetableStep(Gtk.ListBoxItem):
-    pass
+class CustomTimetableStep(Adw.ExpanderRow):
+    def __init__(self, step, parent):
+        super().__init__()
+        self.data = step
+        self.parent = parent
+
+
+        match step["type"]:
+            case "fromRealTimetable":
+                self.set_title(_("Take lessons from existing timetable"))
+
+                self.src_row = Adw.ComboRow()
+                self.src_row.set_title(_("Timetable"))
+                self.src_row.set_enable_search(True)
+                self.src_row.set_search_match_mode(Gtk.StringFilterMatchMode.SUBSTRING)
+                model = Gtk.StringList()
+                for timetable in self.parent.parent.shared.session.getAvailableTimetables():
+                    model.append(timetable["name"])
+                self.src_row.set_model(model)
+                self.add_row(self.src_row)
+
+                self.add_button = Gtk.Button()
+                self.add_button.set_icon_name("list-add-symbolic")
+                self.add_button.set_tooltip_text(_("Add filter"))
+                self.add_suffix(self.add_button)
 
 class CustomTimetableBuilder:
-    def __init__(self, recipe, parent):
-        self.widget = parent
-        self.recipe = recipe
+    def __init__(self, widget, parent):
+        self.widget = widget
+        self.parent = parent
         self.steps = []
 
+    def loadRecipe(self, recipe):
         for step in recipe:
             stepWidget = CustomTimetableStep(step, self)
-            self.steps.append(step)
-            self.widget.add(step)
+            self.steps.append(stepWidget)
+            self.widget.add(stepWidget)
