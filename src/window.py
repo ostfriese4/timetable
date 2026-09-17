@@ -156,7 +156,7 @@ class UntisWindow(Adw.ApplicationWindow):
             if first:
                 first = False
                 page.set_starts_section(True)
-                page.set_section_title(_("External services"))
+                #page.set_section_title(_("External services"))
 
             content.enable_bindings(self)
 
