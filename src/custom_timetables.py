@@ -98,7 +98,37 @@ def followStep(step, date, mode="normal"):
                     if (lessonMatchesFilter(lesson, filter)):
                         data.append(lesson)
                         break
+        case "regularLesson":
+            lesson = createRegularLesson(step, date)
+            if lesson is not None:
+                data.append(lesson)
     return data
+
+def createRegularLesson(step, date):
+    for time in step["times"]:
+        for prop in time["dayProps"]:
+            ok = False
+            match prop:
+                case "dayInWeek":
+                    ok = time["dayProps"]["dayInWeek"] == date.weekday()
+
+            if ok:
+                lesson = step["lesson"]
+                lesson["start"] = time["start"]
+                lesson["end"] = time["end"]
+                lesson["startDateTime"] = toDateTime(date, time["start"])
+                lesson["endDateTime"] = toDateTime(date, time["end"])
+                lesson["duration"] = time["end"] - time["start"]
+                return lesson
+
+def toDateTime(date, time):
+    year = date.year
+    month = date.month
+    day = date.day
+    hour = int(time / 60)
+    minute = time % 60
+    return datetime.datetime(year, month, day, hour, minute, 0, 0).strftime("%Y-%m-%dT%H:%M:%S")
+
 
 def sortDay(day):
     out = []
