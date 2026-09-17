@@ -115,3 +115,9 @@ class CustomTimetableBuilder:
         self.clear()
         for step in recipe:
             self.addStep(step)
+
+    def save(self):
+        out = []
+        for step in steps:
+            out.append(step.save())
+        return out
