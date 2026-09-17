@@ -23,12 +23,31 @@ from gi.repository import GLib
 from gi.repository import Gio
 
 
+class CustomTimetableFilter(Adw.ActionRow):
+    def __init__(self, filter, step):
+        super().__init__()
+
+        self.step = step
+        self.data = filter
+
+        match self.data["type"]:
+            case "isOneOf":
+                self.set_title(_("Property has value"))
+
+            case "true":
+                self.set_title(_("Take all"))
+
 class CustomTimetableStep(Adw.ExpanderRow):
     def __init__(self, step, parent):
         super().__init__()
         self.data = step
         self.parent = parent
 
+        self.delete_button = Gtk.Button()
+        self.delete_button.set_icon_name("user-trash-symbolic")
+        self.delete_button.set_tooltip_text(_("Delete component"))
+        self.delete_button.add_css_class("destructive-action")
+        self.add_suffix(self.delete_button)
 
         match step["type"]:
             case "fromRealTimetable":
@@ -44,10 +63,21 @@ class CustomTimetableStep(Adw.ExpanderRow):
                 self.src_row.set_model(model)
                 self.add_row(self.src_row)
 
-                self.add_button = Gtk.Button()
-                self.add_button.set_icon_name("list-add-symbolic")
-                self.add_button.set_tooltip_text(_("Add filter"))
-                self.add_suffix(self.add_button)
+                self.filter_row = Adw.ExpanderRow()
+                self.filter_row.set_title(_("Filters"))
+                self.filter_row.set_expanded(True)
+                self.add_row(self.filter_row)
+
+                self.add_filter_button = Gtk.Button()
+                self.add_filter_button.set_icon_name("list-add-symbolic")
+                self.add_filter_button.set_tooltip_text(_("Add filter"))
+                self.filter_row.add_suffix(self.add_filter_button)
+
+                self.filters = []
+                for filter in self.data["filters"]:
+                    filterWidget = CustomTimetableFilter(filter, self)
+                    self.filters.append(filterWidget)
+                    self.filter_row.add_row(filterWidget)
 
 class CustomTimetableBuilder:
     def __init__(self, widget, parent):
@@ -55,8 +85,20 @@ class CustomTimetableBuilder:
         self.parent = parent
         self.steps = []
 
+    def clear(self):
+        for step in self.steps.copy():
+            self.removeStep(step)
+
+    def removeStep(self, step):
+        self.widget.remove(step)
+        self.steps.remove(step)
+
+    def addStep(self, step):
+        stepWidget = CustomTimetableStep(step, self)
+        self.steps.append(stepWidget)
+        self.widget.add(stepWidget)
+
     def loadRecipe(self, recipe):
+        self.clear()
         for step in recipe:
-            stepWidget = CustomTimetableStep(step, self)
-            self.steps.append(stepWidget)
-            self.widget.add(stepWidget)
+            self.addStep(step)
