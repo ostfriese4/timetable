@@ -99,6 +99,8 @@ def _login(credentials):
         print("invalid url, could not log in")
     except binascii.Error:
         print("invalid token, could not log in")
+    except Exception:
+        print("could not log in because of an unknown error")
 
 
 # from https://github.com/l-koehler/untis-py (api.py)

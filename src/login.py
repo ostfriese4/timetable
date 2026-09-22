@@ -197,32 +197,22 @@ class LoginWindow(Adw.Dialog):
             self.qr_toast_overlay.add_toast(self.invalid_qr_toast)
 
     def requestLogin(self, profile):
-        if profile is None:
-            profile = "1"
         self.present(self.window)
         self.profile = profile
         print("login", profile)
-        try:
-            credentials = getCredentials(profile)
-            self.usr_entry.set_text(credentials["user"])
-            self.pswd_entry.set_text(credentials["password"])
-            self.school_entry.set_text(credentials["school"])
-            self.server_entry.set_text(credentials["server"])
-            match credentials["type"]:
-                case "token":
-                    position = 0
-                case "password":
-                    position = 1
-            self.method.set_selected(position)
-        except FileNotFoundError:
-            pass  # first run
 
-        try:
-            profile = self.window.shared.profiles["profiles"][self.profile]["name"]
-            self.profile_entry.set_text(profile)
-        except:
-            pass  # first run
+        credentials = getCredentials(profile)
+        self.usr_entry.set_text(credentials["user"])
+        self.pswd_entry.set_text(credentials["password"])
+        self.school_entry.set_text(credentials["school"])
+        self.server_entry.set_text(credentials["server"])
+        match credentials["type"]:
+            case "token":
+                position = 0
+            case "password":
+                position = 1
+        self.method.set_selected(position)
 
-        profileName = self.profile_entry.get_text()
-        if profileName == "":
-            self.profile_entry.set_text(_("Profile") + " " + profile)
+        self.window.shared.profiles = getProfiles()
+        profile = self.window.shared.profiles["profiles"][profile]["name"]
+        self.profile_entry.set_text(profile)

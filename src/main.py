@@ -73,16 +73,9 @@ class UntisApplication(Adw.Application):
         self.loginIfPossible = False
 
         profile = self.shared.profiles["default-profile"]
-
-        credentials = None
-        if profile is not None:
-            try:
-                credentials = getCredentials(profile)
-            except:
-                pass
-        if credentials is not None:
-            self.shared.session = session(credentials)
-        else:
+        credentials = getCredentials(profile)
+        self.shared.session = session(credentials)
+        if not testCredentials(credentials):
             self.loginIfPossible = True
 
         setShared(self.shared)

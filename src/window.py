@@ -193,15 +193,10 @@ class UntisWindow(Adw.ApplicationWindow):
     def checkCredentials(self):
         print("check credentials")
 
-        try:
-            login = not testCredentials(getCredentials(self.shared.profiles["default-profile"]))
-        except:
-            login = True
+        login = not testCredentials(getCredentials(self.shared.profiles["default-profile"]))
 
         if login:
             self.login_window.requestLogin(self.shared.profiles["default-profile"])
-        try:
-            if not self.shared.session.getOffline():
-                self.shared.checked = True
-        except AttributeError:
-            pass # don't crash at first start
+
+        if not self.shared.session.getOffline():
+            self.shared.checked = True
