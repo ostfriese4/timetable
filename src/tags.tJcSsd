@@ -1,0 +1,193 @@
+Absence	absences.py	/^class Absence(Adw.ExpanderRow):$/;"	c
+__gtype_name__	absences.py	/^    __gtype_name__ = "Absence"$/;"	v	class:Absence	file:
+__init__	absences.py	/^    def __init__(self, absence, **kwargs):$/;"	m	class:Absence
+AbsencesPage	absences.py	/^class AbsencesPage(Gtk.Box):$/;"	c
+__gtype_name__	absences.py	/^    __gtype_name__ = "AbsencesPage"$/;"	v	class:AbsencesPage	file:
+show_sidebar_button	absences.py	/^    show_sidebar_button = Gtk.Template.Child()$/;"	v	class:AbsencesPage
+offline	absences.py	/^    offline = Gtk.Template.Child()$/;"	v	class:AbsencesPage
+container	absences.py	/^    container = Gtk.Template.Child()$/;"	v	class:AbsencesPage
+__init__	absences.py	/^    def __init__(self, **kwargs):$/;"	m	class:AbsencesPage
+enable_bindings	absences.py	/^    def enable_bindings(self, parent):$/;"	m	class:AbsencesPage
+on_visible	absences.py	/^        def on_visible(page, pspec):$/;"	f	member:AbsencesPage.enable_bindings	file:
+count	absences.py	/^    def count(self, absences):$/;"	m	class:AbsencesPage
+shouldHide	absences.py	/^    def shouldHide(self):$/;"	m	class:AbsencesPage
+display	absences.py	/^    def display(self):$/;"	m	class:AbsencesPage
+_provider	colors.py	/^_provider = Gtk.CssProvider()$/;"	v
+_registered	colors.py	/^_registered = False$/;"	v
+_classes	colors.py	/^_classes = {}$/;"	v
+serverColorClass	colors.py	/^def serverColorClass(color):$/;"	f
+HomeworkEditWindow	create_homework.py	/^class HomeworkEditWindow(Adw.Dialog):$/;"	c
+__gtype_name__	create_homework.py	/^    __gtype_name__ = "HomeworkEditWindow"$/;"	v	class:HomeworkEditWindow	file:
+completed	create_homework.py	/^    completed = Gtk.Template.Child()$/;"	v	class:HomeworkEditWindow
+date	create_homework.py	/^    date = Gtk.Template.Child()$/;"	v	class:HomeworkEditWindow
+task	create_homework.py	/^    task = Gtk.Template.Child()$/;"	v	class:HomeworkEditWindow
+save	create_homework.py	/^    save = Gtk.Template.Child()$/;"	v	class:HomeworkEditWindow
+subject	create_homework.py	/^    subject = Gtk.Template.Child()$/;"	v	class:HomeworkEditWindow
+delete_button	create_homework.py	/^    delete_button = Gtk.Template.Child()$/;"	v	class:HomeworkEditWindow
+delete_row	create_homework.py	/^    delete_row = Gtk.Template.Child()$/;"	v	class:HomeworkEditWindow
+__init__	create_homework.py	/^    def __init__(self, window, **kwargs):$/;"	m	class:HomeworkEditWindow
+new_homework	create_homework.py	/^    def new_homework(self):$/;"	m	class:HomeworkEditWindow
+edit	create_homework.py	/^    def edit(self, id, row=None):$/;"	m	class:HomeworkEditWindow
+on_save	create_homework.py	/^    def on_save(self, data=None):$/;"	m	class:HomeworkEditWindow
+delete	create_homework.py	/^    def delete(self, data=None):$/;"	m	class:HomeworkEditWindow
+on_answer	create_homework.py	/^        def on_answer(warning, answer):$/;"	f	member:HomeworkEditWindow.delete	file:
+deleteData	create_homework.py	/^    def deleteData(self):$/;"	m	class:HomeworkEditWindow
+credentialsPath	credentials.py	/^credentialsPath = os.environ.get("XDG_DATA_HOME", ".untis\/data") + "\/credentials.json"$/;"	v
+SCHEMA	credentials.py	/^SCHEMA = Secret.Schema.new($/;"	v
+getCredentialsFile	credentials.py	/^def getCredentialsFile():$/;"	f
+storePassword	credentials.py	/^def storePassword(attributes, password):$/;"	f
+setCredentials	credentials.py	/^def setCredentials(server, school, user, password, credType, profile="1"):$/;"	f
+getPassword	credentials.py	/^def getPassword(attributes):$/;"	f
+getCredentials	credentials.py	/^def getCredentials(profile="1"):$/;"	f
+getProfiles	credentials.py	/^def getProfiles():$/;"	f
+setProfiles	credentials.py	/^def setProfiles(new):$/;"	f
+closeOnClickOutside	dialog.py	/^def closeOnClickOutside(dialog):$/;"	f
+pressed	dialog.py	/^    def pressed(gesture, clicks, x, y):$/;"	f	function:closeOnClickOutside	file:
+ExternalPage	external_page.py	/^class ExternalPage(Gtk.Box):$/;"	c
+__gtype_name__	external_page.py	/^    __gtype_name__ = 'ExternalPage'$/;"	v	class:ExternalPage	file:
+show_sidebar_button	external_page.py	/^    show_sidebar_button = Gtk.Template.Child()$/;"	v	class:ExternalPage
+open_button	external_page.py	/^    open_button = Gtk.Template.Child()$/;"	v	class:ExternalPage
+back_button	external_page.py	/^    back_button = Gtk.Template.Child()$/;"	v	class:ExternalPage
+next_button	external_page.py	/^    next_button = Gtk.Template.Child()$/;"	v	class:ExternalPage
+home_button	external_page.py	/^    home_button = Gtk.Template.Child()$/;"	v	class:ExternalPage
+view	external_page.py	/^    view = Gtk.Template.Child()$/;"	v	class:ExternalPage
+title	external_page.py	/^    title = Gtk.Template.Child()$/;"	v	class:ExternalPage
+progress	external_page.py	/^    progress = Gtk.Template.Child()$/;"	v	class:ExternalPage
+__init__	external_page.py	/^    def __init__(self, data, id, **kwargs):$/;"	m	class:ExternalPage
+back	external_page.py	/^        def back(data):$/;"	f	member:ExternalPage.__init__	file:
+next	external_page.py	/^        def next(data):$/;"	f	member:ExternalPage.__init__	file:
+home	external_page.py	/^        def home(data):$/;"	f	member:ExternalPage.__init__	file:
+refresh	external_page.py	/^    def refresh(self):$/;"	m	class:ExternalPage
+open	external_page.py	/^    def open(self, data):$/;"	m	class:ExternalPage
+updateButtons	external_page.py	/^    def updateButtons(self, data=None, data2=None):$/;"	m	class:ExternalPage
+toggleProgress	external_page.py	/^    def toggleProgress(self, webview, loading):$/;"	m	class:ExternalPage
+animateLoad	external_page.py	/^    def animateLoad(self):$/;"	m	class:ExternalPage
+load	external_page.py	/^    def load(self):$/;"	m	class:ExternalPage
+enable_bindings	external_page.py	/^    def enable_bindings(self, parent):$/;"	m	class:ExternalPage
+on_visible	external_page.py	/^        def on_visible(page, pspec):$/;"	f	member:ExternalPage.enable_bindings	file:
+Holiday	holiday.py	/^class Holiday(Gtk.DrawingArea):$/;"	c
+__gtype_name__	holiday.py	/^    __gtype_name__ = "Holiday"$/;"	v	class:Holiday	file:
+__init__	holiday.py	/^    def __init__(self, name, **kwargs):$/;"	m	class:Holiday
+drawVerticalLabel	holiday.py	/^    def drawVerticalLabel(self, area, context, width, height):$/;"	m	class:Holiday
+HomeworkList	homework.py	/^class HomeworkList(Gtk.Box):$/;"	c
+__gtype_name__	homework.py	/^    __gtype_name__ = "HomeworkList"$/;"	v	class:HomeworkList	file:
+show_sidebar_button	homework.py	/^    show_sidebar_button = Gtk.Template.Child()$/;"	v	class:HomeworkList
+offline	homework.py	/^    offline = Gtk.Template.Child()$/;"	v	class:HomeworkList
+container_done	homework.py	/^    container_done = Gtk.Template.Child()$/;"	v	class:HomeworkList
+container_undone	homework.py	/^    container_undone = Gtk.Template.Child()$/;"	v	class:HomeworkList
+undone_page	homework.py	/^    undone_page = Gtk.Template.Child()$/;"	v	class:HomeworkList
+empty_undone	homework.py	/^    empty_undone = Gtk.Template.Child()$/;"	v	class:HomeworkList
+__init__	homework.py	/^    def __init__(self, **kwargs):$/;"	m	class:HomeworkList
+enable_bindings	homework.py	/^    def enable_bindings(self, parent):$/;"	m	class:HomeworkList
+on_visible	homework.py	/^        def on_visible(page, pspec):$/;"	f	member:HomeworkList.enable_bindings	file:
+set_number	homework.py	/^    def set_number(self, unfinished):$/;"	m	class:HomeworkList
+get_number	homework.py	/^    def get_number(self):$/;"	m	class:HomeworkList
+displayAll	homework.py	/^    def displayAll(self):$/;"	m	class:HomeworkList
+sortData	homework.py	/^    def sortData(self, data):$/;"	m	class:HomeworkList
+display	homework.py	/^    def display(self, data):$/;"	m	class:HomeworkList
+DATAPATH	homework_api.py	/^DATAPATH = os.environ.get("XDG_DATA_HOME", ".untis")$/;"	v
+shared	homework_api.py	/^shared = None$/;"	v
+profile	homework_api.py	/^profile = None$/;"	v
+setShared	homework_api.py	/^def setShared(new):$/;"	f
+loadOwnData	homework_api.py	/^def loadOwnData(profile):$/;"	f
+ownData	homework_api.py	/^ownData = {}$/;"	v
+getOwnData	homework_api.py	/^def getOwnData():$/;"	f
+writeOwnData	homework_api.py	/^def writeOwnData(data):$/;"	f
+fetchHomeworks	homework_api.py	/^def fetchHomeworks(start=None, end=None, mode="normal", orig=False):$/;"	f
+applyChanges	homework_api.py	/^def applyChanges(item):$/;"	f
+getAll	homework_api.py	/^def getAll(orig=False):$/;"	f
+setValue	homework_api.py	/^def setValue(id, key, value):$/;"	f
+getById	homework_api.py	/^def getById(id, orig=False):$/;"	f
+delete	homework_api.py	/^def delete(id):$/;"	f
+getNewId	homework_api.py	/^def getNewId():$/;"	f
+getChanges	homework_api.py	/^def getChanges(id):$/;"	f
+HomeworkRow	homework_row.py	/^class HomeworkRow(Gtk.ListBoxRow):$/;"	c
+__gtype_name__	homework_row.py	/^    __gtype_name__ = "HomeworkRow"$/;"	v	class:HomeworkRow	file:
+box	homework_row.py	/^    box = Gtk.Template.Child()$/;"	v	class:HomeworkRow
+check_button	homework_row.py	/^    check_button = Gtk.Template.Child()$/;"	v	class:HomeworkRow
+edit_button	homework_row.py	/^    edit_button = Gtk.Template.Child()$/;"	v	class:HomeworkRow
+label	homework_row.py	/^    label = Gtk.Template.Child()$/;"	v	class:HomeworkRow
+expander	homework_row.py	/^    expander = Gtk.Template.Child()$/;"	v	class:HomeworkRow
+__init__	homework_row.py	/^    def __init__(self, homework, **kwargs):$/;"	m	class:HomeworkRow
+update	homework_row.py	/^    def update(self):$/;"	m	class:HomeworkRow
+updateExpander	homework_row.py	/^    def updateExpander(self):$/;"	m	class:HomeworkRow
+save	homework_row.py	/^    def save(self, data=None):$/;"	m	class:HomeworkRow
+edit	homework_row.py	/^    def edit(self, data=None):$/;"	m	class:HomeworkRow
+delete	homework_row.py	/^    def delete(self):$/;"	m	class:HomeworkRow
+strikeOut	lesson.py	/^def strikeOut(label):$/;"	f
+ConstrainedScrolledWindow	lesson.py	/^class ConstrainedScrolledWindow(Gtk.ScrolledWindow):$/;"	c
+__gtype_name__	lesson.py	/^    __gtype_name__ = "ConstrainedScrolledWindow"$/;"	v	class:ConstrainedScrolledWindow	file:
+__init__	lesson.py	/^    def __init__(self, start, duration, labels, **kwargs):$/;"	m	class:ConstrainedScrolledWindow
+LessonContent	lesson.py	/^class LessonContent(Gtk.Widget):$/;"	c
+__gtype_name__	lesson.py	/^    __gtype_name__ = "LessonContent"$/;"	v	class:LessonContent	file:
+__init__	lesson.py	/^    def __init__(self, **kwargs):$/;"	m	class:LessonContent
+add_label	lesson.py	/^    def add_label(self, lesson):$/;"	m	class:LessonContent
+do_dispose	lesson.py	/^    def do_dispose(self):$/;"	m	class:LessonContent
+do_measure	lesson.py	/^    def do_measure(self, orientation, for_size):$/;"	m	class:LessonContent
+do_size_allocate	lesson.py	/^    def do_size_allocate(self, width, height, baseline):$/;"	m	class:LessonContent
+Lesson	lesson.py	/^class Lesson(Gtk.Overlay):$/;"	c
+__gtype_name__	lesson.py	/^    __gtype_name__ = "Lesson"$/;"	v	class:Lesson	file:
+homework_indicator	lesson.py	/^    homework_indicator = Gtk.Template.Child()$/;"	v	class:Lesson
+info_indicator	lesson.py	/^    info_indicator = Gtk.Template.Child()$/;"	v	class:Lesson
+content_box	lesson.py	/^    content_box = Gtk.Template.Child()$/;"	v	class:Lesson
+__init__	lesson.py	/^    def __init__(self, lesson, window, now, **kwargs):$/;"	m	class:Lesson
+markAsHidden	lesson.py	/^    def markAsHidden(self):$/;"	m	class:Lesson
+on_click	lesson.py	/^    def on_click(self, gesture, data, x, y):$/;"	m	class:Lesson
+clearHomeworks	lesson.py	/^    def clearHomeworks(self):$/;"	m	class:Lesson
+addHomework	lesson.py	/^    def addHomework(self, homework):$/;"	m	class:Lesson
+LoginWindow	login.py	/^class LoginWindow(Adw.Dialog):$/;"	c
+__gtype_name__	login.py	/^    __gtype_name__ = "LoginWindow"$/;"	v	class:LoginWindow	file:
+login_button	login.py	/^    login_button = Gtk.Template.Child()$/;"	v	class:LoginWindow
+pswd_entry	login.py	/^    pswd_entry = Gtk.Template.Child()$/;"	v	class:LoginWindow
+usr_entry	login.py	/^    usr_entry = Gtk.Template.Child()$/;"	v	class:LoginWindow
+school_entry	login.py	/^    school_entry = Gtk.Template.Child()$/;"	v	class:LoginWindow
+server_entry	login.py	/^    server_entry = Gtk.Template.Child()$/;"	v	class:LoginWindow
+method	login.py	/^    method = Gtk.Template.Child()$/;"	v	class:LoginWindow
+profile_entry	login.py	/^    profile_entry = Gtk.Template.Child()$/;"	v	class:LoginWindow
+search_button	login.py	/^    search_button = Gtk.Template.Child()$/;"	v	class:LoginWindow
+search_window	login.py	/^    search_window = Gtk.Template.Child()$/;"	v	class:LoginWindow
+search_entry	login.py	/^    search_entry = Gtk.Template.Child()$/;"	v	class:LoginWindow
+result_list	login.py	/^    result_list = Gtk.Template.Child()$/;"	v	class:LoginWindow
+toast_overlay	login.py	/^    toast_overlay = Gtk.Template.Child()$/;"	v	class:LoginWindow
+sso_info_button	login.py	/^    sso_info_button = Gtk.Template.Child()$/;"	v	class:LoginWindow
+sso_info_window	login.py	/^    sso_info_window = Gtk.Template.Child()$/;"	v	class:LoginWindow
+scan_qr_button	login.py	/^    scan_qr_button = Gtk.Template.Child()$/;"	v	class:LoginWindow
+scan_qr_window	login.py	/^    scan_qr_window = Gtk.Template.Child()$/;"	v	class:LoginWindow
+qr_scanner	login.py	/^    qr_scanner = Gtk.Template.Child()$/;"	v	class:LoginWindow
+qr_toast_overlay	login.py	/^    qr_toast_overlay = Gtk.Template.Child()$/;"	v	class:LoginWindow
+__init__	login.py	/^    def __init__(self, window, **kwargs):$/;"	m	class:LoginWindow
+openSSOInfoWindow	login.py	/^    def openSSOInfoWindow(self, a=None):$/;"	m	class:LoginWindow
+scanQRCode	login.py	/^    def scanQRCode(self, a=None):$/;"	m	class:LoginWindow
+openSearchSchoolWindow	login.py	/^    def openSearchSchoolWindow(self, data=None):$/;"	m	class:LoginWindow
+on_method_changed	login.py	/^    def on_method_changed(self, a=None, b=None):$/;"	m	class:LoginWindow
+searchSchool	login.py	/^    def searchSchool(self, data=None):$/;"	m	class:LoginWindow
+onClick	login.py	/^            def onClick(click, name=name, server=server):$/;"	f	member:LoginWindow.searchSchool	file:
+login	login.py	/^    def login(self, data=None):$/;"	m	class:LoginWindow
+fillDataFromUri	login.py	/^    def fillDataFromUri(self, uri):$/;"	m	class:LoginWindow
+requestLogin	login.py	/^    def requestLogin(self, profile):$/;"	m	class:LoginWindow
+OfflineBanner	offline_banner.py	/^class OfflineBanner(Adw.Bin):$/;"	c
+__gtype_name__	offline_banner.py	/^    __gtype_name__ = "OfflineBanner"$/;"	v	class:OfflineBanner	file:
+banner	offline_banner.py	/^    banner = Gtk.Template.Child()$/;"	v	class:OfflineBanner
+__init__	offline_banner.py	/^    def __init__(self, **kwargs):$/;"	m	class:OfflineBanner
+update	offline_banner.py	/^    def update(self, offline, last):$/;"	m	class:OfflineBanner
+PreferencesDialog	preferences.py	/^class PreferencesDialog(Adw.PreferencesDialog):$/;"	c
+__gtype_name__	preferences.py	/^    __gtype_name__ = "PreferencesDialog"$/;"	v	class:PreferencesDialog	file:
+show_cancelled	preferences.py	/^    show_cancelled = Gtk.Template.Child()$/;"	v	class:PreferencesDialog
+show_time_axis	preferences.py	/^    show_time_axis = Gtk.Template.Child()$/;"	v	class:PreferencesDialog
+ignore_exam_breaks	preferences.py	/^    ignore_exam_breaks = Gtk.Template.Child()$/;"	v	class:PreferencesDialog
+__init__	preferences.py	/^    def __init__(self, **kwargs):$/;"	m	class:PreferencesDialog
+ProfileRow	profiles.py	/^class ProfileRow(Adw.ActionRow):$/;"	c
+__gttype_name__	profiles.py	/^    __gttype_name__ = "ProfileRow"$/;"	v	class:ProfileRow	file:
+__init__	profiles.py	/^    def __init__(self, id, data, window):$/;"	m	class:ProfileRow
+on_delete	profiles.py	/^        def on_delete(a):$/;"	f	member:ProfileRow.__init__	file:
+on_edit	profiles.py	/^        def on_edit(a):$/;"	f	member:ProfileRow.__init__	file:
+on_enable	profiles.py	/^        def on_enable(a):$/;"	f	member:ProfileRow.__init__	file:
+ProfilesWindow	profiles.py	/^class ProfilesWindow(Adw.Dialog):$/;"	c
+__gtype_name__	profiles.py	/^    __gtype_name__ = "ProfilesWindow"$/;"	v	class:ProfilesWindow	file:
+container	profiles.py	/^    container = Gtk.Template.Child()$/;"	v	class:ProfilesWindow
+add_button	profiles.py	/^    add_button = Gtk.Template.Child()$/;"	v	class:ProfilesWindow
+__init__	profiles.py	/^    def __init__(self, window, **kwargs):$/;"	m	class:ProfilesWindow
+updateList	profiles.py	/^    def updateList(self):$/;"	m	class:ProfilesWindow
+manage	profiles.py	/^    def manage(self):$/;"	m	class:ProfilesWindow
+createProfile	profiles.py	/^    def createProfile(self, a=None):$/;"	m	class:ProfilesWindow
+createProfileFromUri	profiles.py	/^    def createProfileFromUri(self, uri):$/;"	m	class:ProfilesWindo
