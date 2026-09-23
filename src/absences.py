@@ -20,6 +20,7 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from gi.repository import GObject
+from .offline_banner import OfflineBanner
 
 import datetime
 
@@ -66,6 +67,7 @@ class AbsencesPage(Gtk.Box):
     __gtype_name__ = "AbsencesPage"
 
     show_sidebar_button = Gtk.Template.Child()
+    offline = Gtk.Template.Child()
     container = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
@@ -102,6 +104,10 @@ class AbsencesPage(Gtk.Box):
                 count += 1
         self.page.set_badge_number(count)
         print(count, "absences")
+
+    def shouldHide(self):
+        absences = self.shared.session.getAbsences()
+        return absences is None or absences == []
 
     def display(self):
         absences = self.shared.session.getAbsences()

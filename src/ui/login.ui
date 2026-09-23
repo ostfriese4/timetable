@@ -10,8 +10,12 @@
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
-            <property name="show-start-title-buttons">true</property>
-            <property name="show-end-title-buttons">true</property>
+            <child type="end">
+              <object class="GtkButton" id="scan_qr_button">
+                <property name="tooltip-text" translatable="yes">Login using a QR-Code</property>
+                <property name="icon-name">qr-code-scanner-symbolic</property>
+              </object>
+          </child>
           </object>
         </child>
         <property name="content">
@@ -105,8 +109,6 @@
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
-            <property name="show-start-title-buttons">true</property>
-            <property name="show-end-title-buttons">true</property>
             <property name="title-widget">
               <object class="AdwPreferencesGroup">
                 <child>
@@ -137,10 +139,7 @@
     <child>
       <object class="AdwToolbarView">
         <child type="top">
-          <object class="AdwHeaderBar">
-            <property name="show-start-title-buttons">true</property>
-            <property name="show-end-title-buttons">true</property>
-          </object>
+          <object class="AdwHeaderBar"/>
         </child>
         <property name="content">
           <object class="AdwPreferencesPage">
@@ -148,10 +147,29 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwActionRow">
-                    <property name="title" translatable="yes">If you are logging usually logging into WebUntis using a third party sso (e.g. IServ), you'll' have to open WebUntis in your browser, go to your account-settings and change your password. Then log into this app using your newly created password and presumably the same username as in your sso.</property>
+                    <property name="title" translatable="yes">If you are logging usually logging into WebUntis using a third party sso (e.g. IServ), follow the same steps as for the official app at https://help.untis.at/hc/en-150/articles/16515466619548-How-do-I-log-into-Untis-Mobile-if-my-school-has-set-up-SSO</property>
                   </object>
                 </child>
               </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </child>
+  </object>
+
+  <object class="AdwDialog" id="scan_qr_window">
+    <property name="title" translatable="yes">Scan QR-Code</property>
+    <property name="content-width">350</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar"/>
+        </child>
+        <property name="content">
+          <object class="AdwToastOverlay" id="qr_toast_overlay">
+            <child>
+              <object class="QrScanner" id="qr_scanner"/>
             </child>
           </object>
         </property>

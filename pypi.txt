@@ -1,2 +1,7 @@
+scikit-build-core
+nanobind
+pybind11
+pillow
 pyotp
 requests
+zxing-cpp

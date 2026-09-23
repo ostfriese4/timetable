@@ -22,6 +22,7 @@ from gi.repository import Adw
 from gi.repository import GLib
 from gi.repository import GObject
 from .homework_api import getAll
+from .offline_banner import OfflineBanner
 from .homework_row import HomeworkRow
 import datetime
 
@@ -31,6 +32,7 @@ class HomeworkList(Gtk.Box):
     __gtype_name__ = "HomeworkList"
 
     show_sidebar_button = Gtk.Template.Child()
+    offline = Gtk.Template.Child()
     container_done = Gtk.Template.Child()
     container_undone = Gtk.Template.Child()
     undone_page = Gtk.Template.Child()

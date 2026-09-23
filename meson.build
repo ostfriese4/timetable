@@ -14,6 +14,14 @@ subdir('data')
 subdir('src')
 subdir('po')
 
+gnome.compile_resources('untis',
+  'untis.gresource.xml',
+  gresource_bundle: true,
+  install: true,
+  source_dir: ['data/resources/icons', 'src/ui', 'src'],
+  install_dir: pkgdatadir,
+)
+
 gnome.post_install(
      glib_compile_schemas: true,
     gtk_update_icon_cache: true,

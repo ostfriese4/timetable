@@ -47,6 +47,7 @@ class HomeworkEditWindow(Adw.Dialog):
 
     def new_homework(self):
         self.window.main_view_stack.set_visible_child_name("homework")
+        self.row = None
         self.current_id = getNewId()
         self.task.set_text("")
         self.delete_row.set_visible(False)
@@ -85,8 +86,9 @@ class HomeworkEditWindow(Adw.Dialog):
             ),
         )
         self.close()
-        self.row.update()
-        self.window.homework.displayAll()
+        if self.row is not None:
+            self.row.update()
+        self.window.homeworksChanged()
 
     def delete(self, data=None):
         warning = Adw.AlertDialog()
@@ -108,7 +110,9 @@ class HomeworkEditWindow(Adw.Dialog):
     def deleteData(self):
         delete(self.current_id)
         self.close()
-        self.row.update()
-        if getById(self.current_id) is None:
-            self.row.delete()
-        self.window.homework.displayAll()
+        if self.row is not None:
+            if getById(self.current_id) is None:
+                self.row.delete()
+            else:
+                self.row.update()
+        self.window.homeworksChanged()

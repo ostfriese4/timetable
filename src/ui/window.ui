@@ -71,9 +71,19 @@
                   <object class="AdwViewStackPage">
                     <property name="name">timetable</property>
                     <property name="title" translatable="yes">My timetable</property>
-                    <property name="icon-name">starred-symbolic</property>
+                    <property name="icon-name">month-symbolic</property>
                     <property name="child">
                       <object class="Timetable" id="timetable"></object>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwViewStackPage">
+                    <property name="name">additional_timetables</property>
+                    <property name="title" translatable="yes">All timetables</property>
+                    <property name="icon-name">month-symbolic</property>
+                    <property name="child">
+                      <object class="AdditionalTimetablesPage" id="additional_timetables"></object>
                     </property>
                   </object>
                 </child>
@@ -81,7 +91,7 @@
                   <object class="AdwViewStackPage" id="homework_page">
                     <property name="name">homework</property>
                     <property name="title" translatable="yes">Homework</property>
-                    <property name="icon-name">user-home-symbolic</property>
+                    <property name="icon-name">agenda-symbolic</property>
                     <property name="child">
                       <object class="HomeworkList" id="homework"></object>
                     </property>
@@ -98,7 +108,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="AdwViewStackPage">
+                  <object class="AdwViewStackPage" id="messages_page">
                     <property name="name">messages</property>
                     <property name="title" translatable="yes">Messages</property>
                     <property name="icon-name">mail-unread-symbolic</property>
@@ -127,9 +137,19 @@
   <menu id="primary_menu">
     <section>
       <item>
+        <attribute name="label" translatable="yes">_Refresh</attribute>
+        <attribute name="action">app.refresh</attribute>
+      </item>
+      <item>
         <attribute name="label" translatable="yes">Manage _profiles</attribute>
         <attribute name="action">app.profiles</attribute>
       </item>
+      <item>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+        <attribute name="action">app.preferences</attribute>
+      </item>
+    </section>
+    <section>
       <item>
         <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
         <attribute name="action">app.shortcuts</attribute>

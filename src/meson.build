@@ -2,13 +2,6 @@ pkgdatadir = get_option('prefix') / get_option('datadir') / meson.project_name()
 moduledir = pkgdatadir / 'untis'
 gnome = import('gnome')
 
-gnome.compile_resources('untis',
-  'untis.gresource.xml',
-  gresource_bundle: true,
-  install: true,
-  install_dir: pkgdatadir,
-)
-
 python = import('python')
 
 conf = configuration_data()
@@ -30,7 +23,10 @@ untis_sources = [
   '__init__.py',
   'absences.py',
   'account_settings.py',
+  'additional_timetables.py',
   'api.py',
+  'attachment.py',
+  'colors.py',
   'credentials.py',
   'create_homework.py',
   'dialog.py',
@@ -44,7 +40,10 @@ untis_sources = [
   'login.py',
   'main.py',
   'messages.py',
+  'offline_banner.py',
+  'preferences.py',
   'profiles.py',
+  'qr.py',
   'teachers.py',
   'timetable.py',
   'window.py',

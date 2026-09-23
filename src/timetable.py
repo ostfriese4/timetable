@@ -20,19 +20,67 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from gi.repository import Gdk
+from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 from .homework_api import fetchHomeworks
 from .information import InformationWindow
 from .lesson import Lesson
 from .holiday import Holiday
+from .offline_banner import OfflineBanner
 from .dialog import closeOnClickOutside
-from .api import getDateTime
+from .api import getDateTime, id as appId
 import cairo
 import datetime
 import math
 import time
 import threading
+
+
+class DayLayout(Gtk.Widget):
+    __gtype_name__ = "DayLayout"
+
+    # places the lessons of one day on a minute grid and puts
+    # overlapping lessons next to each other, like the mobile app
+
+    def __init__(self, start, end, **kwargs):
+        super().__init__(**kwargs)
+        self.set_hexpand(True)
+        self.start = start
+        self.end = end
+
+    def add(self, child):
+        child.set_parent(self)
+
+    def remove(self, child):
+        child.unparent()
+
+    def do_dispose(self):
+        for child in list(self):
+            child.unparent()
+
+    def do_measure(self, orientation, for_size):
+        if orientation == Gtk.Orientation.VERTICAL:
+            height = max(self.end - self.start, 0)
+            return height, height, -1, -1
+        minimum = 0
+        for child in self:
+            c_min, c_nat, _, _ = child.measure(orientation, -1)
+            minimum = max(minimum, c_min)
+        return minimum, minimum, -1, -1
+
+    def do_size_allocate(self, width, height, baseline):
+        for child in self:
+            layoutStart = child.lesson.get("layoutStart") or 0
+            layoutWidth = child.lesson.get("layoutWidth") or 1000
+            rect = Gdk.Rectangle()
+            rect.x = width * layoutStart // 1000
+            rect.width = width * layoutWidth // 1000
+            if layoutStart + layoutWidth < 1000:
+                rect.width -= 2  # a little gap between parallel lessons
+            rect.y = child.lesson["start"] - self.start
+            rect.height = child.lesson["end"] - child.lesson["start"]
+            child.size_allocate(rect, baseline)
 
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/timetable.ui")
@@ -52,13 +100,16 @@ class Timetable(Gtk.Box):
     date_chooser = Gtk.Template.Child()
     date_chooser_dialog = Gtk.Template.Child()
 
-    def __init__(self, **kwargs):
+    def __init__(self, resourceType = None, resourceId = None, **kwargs):
         super().__init__(**kwargs)
 
         self.columns = []
         self.lessons = []
         self.overlays = []
         self.prefetching = []
+
+        self.resourceType = resourceType
+        self.resourceId = resourceId
 
         self.information_window = InformationWindow(self)
 
@@ -68,7 +119,6 @@ class Timetable(Gtk.Box):
         self.date_chooser.connect("day-selected", self.on_day_selected)
         closeOnClickOutside(self.date_chooser_dialog)
 
-        self.progress.add_css_class("osd")
         self.loading = False
 
         self.info_rows = []
@@ -84,12 +134,21 @@ class Timetable(Gtk.Box):
         swipe.connect("swipe", onSwipe)
         self.timetable.add_controller(swipe)
 
+        self.settings = Gio.Settings(schema_id=appId)
+        self.settings.connect(
+            "changed::show-cancelled-lessons", lambda *args: self.loadData()
+        )
+        self.settings.connect(
+            "changed::show-time-axis", lambda *args: self.loadData()
+        )
+        self.settings.connect(
+            "changed::ignore-exam-breaks", lambda *args: self.loadData()
+        )
+
         GLib.timeout_add(1000 * 60, self.update_marker)  # update time-marker
         GLib.timeout_add(
             1000 * 60 * 10, self.loadData
         )  # Update every ten minutes (will result in every hour because of caching)
-
-        self.show_sidebar_button.connect("notify::visible", self.loadData)
 
     def on_header_button(self, data=None):
         self.date_chooser.set_year(self.startdate.year)
@@ -124,15 +183,17 @@ class Timetable(Gtk.Box):
             GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.BIDIRECTIONAL,
         )
         parent.sidebar_breakpoint.add_setter(self.show_sidebar_button, "visible", True)
+
+        self.initTimetable(parent)
+
+    def initTimetable(self, parent):
         self.shared = parent.shared
 
         self.window = parent
-
         try:
             self.jump_to(getDateTime())
-            self.shared.session.getHomeworks()
         except:
-            pass
+            raise
 
     def next(self, data=None):
         self.startdate += datetime.timedelta(days=7)
@@ -145,14 +206,25 @@ class Timetable(Gtk.Box):
         self.loadData()
 
     def refresh(self):
-        self.shared.session.refresh()
         self.loadData()
+
+    def refreshHomeworks(self):
+        for lesson in self.lessons:
+            lesson[1].clearHomeworks()
+        homeworks = fetchHomeworks(self.startdate, self.enddate)
+        self.displayHomeworks(homeworks)
+
+    def getTimetable(self, start, end, mode="normal"):
+        if self.resourceType:
+            return self.shared.session.getTimetable(self.resourceType, self.resourceId, start, end, mode=mode)
+        else:
+            return self.shared.session.getOwnTimetable(start, end, mode=mode)
 
     def prefetch(self):
         def code():
             while self.prefetching != []:
                 day = self.prefetching[0]
-                data = self.shared.session.getOwnTimetable(day, day)
+                data = self.getTimetable(day, day)
                 self.prefetching.remove(day)
             return False
 
@@ -192,19 +264,24 @@ class Timetable(Gtk.Box):
 
         def load():
             try:
-                table = self.shared.session.getOwnTimetable(
+                data = self.getTimetable(
                     self.startdate, self.enddate, mode="cache"
                 )
+                table, grid = data
+                grid = self.shared.session.getTimeGrid(grid)
+                table = (table, grid)
             except:
                 table = None
             try:
                 if s == self.startdate:
                     GLib.idle_add(self.displayData, table)
-                    table = self.shared.session.getOwnTimetable(
+                    data = self.getTimetable(
                         self.startdate, self.enddate, mode="normal"
                     )
+                    table, grid = data
+                    grid = self.shared.session.getTimeGrid(grid)
                     if s == self.startdate:
-                        GLib.idle_add(self.displayData, table)
+                        GLib.idle_add(self.displayData, (table, grid))
                         homeworks = fetchHomeworks(self.startdate, self.enddate)
                         if s == self.startdate:
                             GLib.idle_add(self.displayHomeworks, homeworks)
@@ -271,6 +348,13 @@ class Timetable(Gtk.Box):
             context.move_to(2 + 6, y + extents.height / 2)
             context.show_text(text)
 
+    def timeToMinutes(self, time):
+        dt = datetime.datetime.strptime(time, "%H:%M")
+        return self.dateTimeToMinutes(dt)
+
+    def dateTimeToMinutes(self, dt):
+        return dt.minute + dt.hour * 60
+
     def drawTimeAxis(self, area, context, width, height):
         color = area.get_color()
         context.select_font_face(
@@ -290,34 +374,60 @@ class Timetable(Gtk.Box):
             context.rectangle(width - 7, y - 0.5, 7, 1)
             context.fill()
 
-        minutes = (self.start + 59) // 60 * 60  # first full hour on the grid
-        if minutes - self.start >= 20:
-            drawLabel(self.start)  # also label the start of the day
-        while minutes <= 1440:
-            drawLabel(minutes)
-            minutes += 60
+        slots = self.gridFormat["timeGridSlots"]
+        i=0
+        for slot in slots:
+            start = self.timeToMinutes(slot["duration"]["start"])
+            end = self.timeToMinutes(slot["duration"]["end"])
+            drawLabel(start)
+            i+=1
+            drawEnd = i==len(slots)
+            if not drawEnd:
+                nextStart = self.timeToMinutes(slots[i]["duration"]["start"])
+                drawEnd = nextStart != end
+            if drawEnd:
+                drawLabel(end)
 
-    def displayData(self, table):
-        if table is None:
+    def displayData(self, data):
+        if data is None:
             return
+        table, self.gridFormat = data
+
+        showCancelled = self.settings.get_boolean("show-cancelled-lessons")
+        for i, day in enumerate(table):
+            if not showCancelled:
+                # hide cancelled lessons that would sit next to a lesson
+                # taking place instead, their info stays in the popup
+                day = [
+                    lesson
+                    for lesson in day
+                    if lesson["status"] != "CANCELLED"
+                    or not any(
+                        other["status"] != "CANCELLED"
+                        and other["start"] < lesson["end"]
+                        and lesson["start"] < other["end"]
+                        for other in day
+                    )
+                ]
+                table[i] = day
+            self.shared.session.layoutDay(day, ignore_exam_breaks = self.settings.get_boolean("ignore-exam-breaks"))
+
         atLeastOneLesson = False
 
         self.header_button.set_label(self.startdate.strftime(_("Week %W")))
-        if self.shared.session.getOffline():
-            self.offline.set_revealed(revealed=True)
-        else:
-            self.offline.set_revealed(revealed=False)
+        self.window.updateOfflineBanners()
 
-        self.start = 1440  # One day in minutes (max possible value)
+        self.start = self.timeToMinutes(self.gridFormat["duration"]["start"])
+        self.end = self.timeToMinutes(self.gridFormat["duration"]["end"])
+
         for day in table:
             for lesson in day:
                 atLeastOneLesson = True
-                if lesson["start"] < self.start:
-                    self.start = lesson["start"]
 
-        self.showAxis = atLeastOneLesson and not self.show_sidebar_button.get_visible()
+        self.showAxis = self.settings.get_boolean("show-time-axis")
         if not atLeastOneLesson:
             self.start = 0
+            self.showAxis = False
 
         for lesson in self.lessons:
             lesson[0].remove(lesson[1])
@@ -340,7 +450,7 @@ class Timetable(Gtk.Box):
             axisColumn.append(axisHeader)
             axis = Gtk.DrawingArea()
             axis.set_content_width(44)
-            axis.set_content_height(1440 - self.start)
+            axis.set_content_height(self.end - self.start)
             axis.set_draw_func(self.drawTimeAxis)
             axisColumn.append(axis)
             self.timetable.append(axisColumn)
@@ -385,19 +495,16 @@ class Timetable(Gtk.Box):
                     self.overlays.append((self.overlay, timeMarkerWeek))
                     self.overlay.add_overlay(timeMarkerWeek)
 
-            x = self.start
             if day == []:
                 holiday = self.shared.session.getHoliday(date)
                 obj = Holiday(holiday["name"])
                 dayBox.append(obj)
-            for lesson in day:
-                if lesson["start"] - x != 0:
-                    gap = Gtk.Label()
-                    gap.set_size_request(-1, lesson["start"] - x)
-                    dayBox.append(gap)
-                block = Lesson(lesson, self, now)
-                x = lesson["end"]
-                dayBox.append(block)
-                self.lessons.append((dayBox, block, lesson))
+            else:
+                layout = DayLayout(self.start, self.end)
+                dayBox.append(layout)
+                for lesson in day:
+                    block = Lesson(lesson, self, now)
+                    layout.add(block)
+                    self.lessons.append((layout, block, lesson))
 
             date += datetime.timedelta(days=1)

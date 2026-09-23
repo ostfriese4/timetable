@@ -20,12 +20,14 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from gi.repository import GObject
+from .offline_banner import OfflineBanner
 
 @Gtk.Template(resource_path='/page/codeberg/ostfriese4/Untis/teachers.ui')
 class TeacherPage(Gtk.Box):
     __gtype_name__ = 'TeacherPage'
 
     show_sidebar_button = Gtk.Template.Child()
+    offline = Gtk.Template.Child()
     container = Gtk.Template.Child()
     search = Gtk.Template.Child()
 

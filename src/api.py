@@ -9,15 +9,17 @@ import binascii
 from pathlib import Path
 from hashlib import md5
 
-version = "4.1"
+version = "4.3.1"
+releaseNotes = "        <p>This is a bugfix release containing minor fixes</p>\n        <ul>\n          <li>fixed refreshing of additional timetables</li>\n          <li>highlight exams</li>\n        </ul>\n        <p>Additionally, exams are highlighted now</p>\n"#"""
 id = "page.codeberg.ostfriese4.Untis"
 useragent = id + " " + version
 
 headers = {"User-Agent": useragent, "Accept": "application/json"}
 
 offline = False
+lastOnline = None
 
-fakeTime = datetime.datetime.strptime("26.06.16 10:31:03", "%y.%m.%d %H:%M:%S")
+fakeTime = datetime.datetime.strptime("26.09.01 10:31:03", "%y.%m.%d %H:%M:%S")
 
 def getDateTime():
     #return fakeTime
@@ -27,7 +29,7 @@ def getDate():
 
 
 def _login(credentials):
-    global offline
+    global offline, lastOnline
     s = requests.Session()
     s.headers.update(headers)
     s.headers.update({"Referer": credentials["server"] + "/"})
@@ -79,20 +81,26 @@ def _login(credentials):
 
 
         offline = False
-        if response.status_code == 200:
-            if ok:
-                token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
-                s.headers.update({"Authorization": "Bearer " + token})
-                return s
+        lastOnline = getDateTime()
+        if response.status_code == 200 and ok:
+            token = s.get(credentials["server"] + "/WebUntis/api/token/new").text
+            s.headers.update({"Authorization": "Bearer " + token})
+            print("logged in successfully")
+            return s
         else:
             print(response)
     except requests.exceptions.ConnectionError:
         offline = True
-        return s  # don't fail login at startup
+        print("offline, could not log in")
+    except requests.exceptions.JSONDecodeError:
+        offline = True
+        print("invalid answer, could not log in")
     except requests.exceptions.InvalidURL:
-        return
+        print("invalid url, could not log in")
     except binascii.Error:
-        return
+        print("invalid token, could not log in")
+    except Exception:
+        print("could not log in because of an unknown error")
 
 
 # from https://github.com/l-koehler/untis-py (api.py)
@@ -145,8 +153,27 @@ class session:
         except:
             self.colors = {}
 
+    def ensureLogin(self):
+        if self.session is None:
+            print("not logged in yet")
+            self.session = _login(self.credentials)
+
     def getOffline(self):
         return offline
+
+    def getLastOnline(self):
+        global lastOnline
+        if lastOnline is None:
+            last = None
+            for item in self.cacheIndex:
+                if "request" in item:
+                    if last is None:
+                        last = self.cacheIndex[item]
+                    elif self.cacheIndex[item] > last:
+                        last = self.cacheIndex[item]
+            if last is not None:
+                lastOnline = datetime.datetime.fromtimestamp(last)
+        return lastOnline
 
     def scanFiles(self, root, rootName):
         out = []
@@ -229,7 +256,7 @@ class session:
         return self.session.post(self.server + path, json = data)
 
     def _RPCRequest(self, method, params, mode="normal", maxage=3600):
-        global offline
+        global offline, lastOnline
         orig = mode
 
         hashed = method + str(params)
@@ -242,19 +269,22 @@ class session:
             "jsonrpc": "2.0"
         }
 
+        if self.session is None:
+            self.ensureLogin()
+            if self.session is None:
+                mode = "cache"
         if mode == "normal":
             if self._useCache(hashed, maxage=maxage):
                 mode = "cache"
             else:
                 mode = "online"
-        if self.session is None:
-            mode = "cache"
 
         if mode == "online":
             try:
                 response = self._post("/WebUntis/jsonrpc.do", payload)
                 data = response.json()
                 offline = False
+                lastOnline = getDateTime()
                 if not "result" in data:  # e.g. "no right for getTeachers()"
                     print("ERROR: RPC:", method, params, data.get("error"))
                     mode = "cache"
@@ -306,23 +336,26 @@ class session:
             if teacher["id"] == id:
                 return teacher
 
-    def _getRequest(self, path, mode="normal", maxage=3600):
-        global offline
+    def _getRequest(self, path, mode="normal", maxage=3600, referer = None):
+        global offline, lastOnline
         orig = mode
         hashed = "requests/" + md5(path.encode()).hexdigest()
+        if self.session is None:
+            self.ensureLogin()
+            if self.session is None:
+                mode = "cache"
         if mode == "normal":
             if self._useCache(hashed, maxage=maxage):
                 mode = "cache"
             else:
                 mode = "online"
-        if self.session is None:
-            mode = "cache"
 
         if mode == "online":
             try:
                 response = self.session.get(self.server + path)
                 data = response.json()
                 offline = False
+                lastOnline = getDateTime()
                 if "errorCode" in data or "errorMessage" in data:
                     print("ERROR: PATH:", self.server + path, data)
                     if "errorMessage" in data:
@@ -354,11 +387,16 @@ class session:
         if day is None:
             day = getDate()
         path = "/WebUntis/api/public/news/newsWidgetData?date=" + day.strftime("%Y%m%d")
-        data = self._getRequest(path)["data"]["messagesOfDay"]
+        data = self._getRequest(path)
+        try:
+            data = data["data"]["messagesOfDay"]
+        except TypeError:
+            data = []
         return data
 
     def getTimetable(self, resourceType, resourceId, start = None, end = None, mode = "normal"):
         year = self.getCurrentSchoolYear()
+        gridFormat = None
 
         s_start = datetime.datetime.strptime(year["dateRange"]["start"], "%Y-%m-%d")
         s_end = datetime.datetime.strptime(year["dateRange"]["end"], "%Y-%m-%d")
@@ -398,21 +436,91 @@ class session:
                     + "&periodTypes=&timetableType=MY_TIMETABLE&layout=START_TIME"
                 )
                 fetched = self._getRequest(path, mode)
-                dayData = self.analyzeTimetable(fetched["days"], mode)[0]
+                gridFormat = fetched["format"]
+                dayData = self.analyzeTimetable(fetched["days"], resourceType, resourceId, mode)[0]
                 self._writeToCache(name, dayData)
             data.append(dayData)
             day += datetime.timedelta(days=1)
 
+        return data, gridFormat
+
+    def getOwnTimetableId(self):
+        roles = self.getOwnRoles()
+        id = self.getOwnId()
+        for timetable in self.getAvailableTimetables():
+            if timetable["id"] == id and timetable["type"] in roles:
+                return timetable
+        print("could not get own timetable")
+
+    def getOwnTimetable(self, start, end, mode="normal"):
+        timetable = self.getOwnTimetableId()
+        return self.getTimetable(timetable["type"], timetable["id"], start, end, mode)
+
+    def getAvailableTimetables(self):
+        if not self._useCache("availableTimetables"):
+            result = []
+
+            students = self.getAvailableTiemtablesOfType("STUDENT")
+            if students:
+                for student in students["students"]:
+                    result.append({
+                        "id": student["student"]["id"],
+                        "type": "STUDENT",
+                        "name": student["student"]["displayName"]
+                    })
+
+            teachers = self.getAvailableTiemtablesOfType("TEACHER")
+            if teachers:
+                for teacher in teachers["teachers"]:
+                    result.append({
+                        "id": teacher["teacher"]["id"],
+                        "type": "TEACHER",
+                        "name": teacher["teacher"]["displayName"]
+                    })
+
+            rooms = self.getAvailableTiemtablesOfType("ROOM")
+            if rooms:
+                for room in rooms["rooms"]:
+                    result.append({
+                        "id": room["room"]["id"],
+                        "type": "ROOM",
+                        "name": room["room"]["displayName"]
+                    })
+
+            classes = self.getAvailableTiemtablesOfType("CLASS")
+            if classes:
+                for cls in classes["classes"]:
+                    name = cls["class"]["displayName"]
+                    if cls["classTeacher1"]:
+                        name += " (" + cls["classTeacher1"]["displayName"] + ")"
+
+                    result.append({
+                        "id": cls["class"]["id"],
+                        "type": "CLASS",
+                        "name": name
+                    })
+
+            self._writeToCache("availableTimetables", result)
+            return result
+        return self._readFromCache("availableTimetables")
+
+    def getAvailableTiemtablesOfType(self, t):
+        year = self.getCurrentSchoolYear()
+        start = year["dateRange"]["start"]
+        end = year["dateRange"]["end"]
+
+        path = (
+            "/WebUntis/api/rest/view/v1/timetable/filter?resourceType="
+            + t
+            + "&timetableType=STANDARD&start="
+            + start
+            + "&end="
+            + end
+        )
+
+        data = self._getRequest(path)
+
         return data
-
-    def getOwnTimetable(self, start=None, end=None, mode="normal"):
-        return self.getStudentTimetable(self.getOwnId(), start=start, end=end, mode=mode)
-
-    def getStudentTimetable(self, id, start=None, end=None, mode="normal"):
-        return self.getTimetable("STUDENT", id, start=start, end=end, mode=mode)
-
-    def getRoomTimetable(self, id, start=None, end=None, mode="normal"):
-        return self.getTimetable("ROOM", id, start=start, end=end, mode=mode)
 
     def createList(self, data, key, long, integrate=None):
         text = ""
@@ -489,6 +597,8 @@ class session:
         lesson["start"] = start.hour * 60 + start.minute
         lesson["end"] = end.hour * 60 + end.minute
         lesson["duration"] = lesson["end"] - lesson["start"]
+        lesson["gridStatus"] = lesson.get("status")
+        lesson["gridType"] = lesson.get("type")
 
         for teacher in lesson["teachers"]:
             short = teacher["shortName"]
@@ -497,7 +607,13 @@ class session:
                 teacher["longName"] = long
 
         if lesson["subject"] == None:
-            lesson["subject"] = {"shortName": "???", "longName": _("Unknown")}
+            if lesson.get("gridType") == "EVENT" or lesson.get("type") == "EVENT":
+                name = lesson.get("lessonInfo") or _("Event")
+                if "lessonInfo" in lesson:
+                    lesson["lessonInfo"] = None
+                lesson["subject"] = {"shortName": _("Event"), "longName": name}
+            else:
+                lesson["subject"] = {"shortName": "???", "longName": _("Unknown")}
 
         lesson["teachers-short"] = self.createList(
             lesson["teachers"], "shortName", False
@@ -509,52 +625,107 @@ class session:
         )
         lesson["room-info"] = self.createList(rooms, "longName", True)
 
-        lesson["color"] = self.getColor(lesson["subject"]["shortName"])
+        if lesson.get("color"):
+            lesson["color"] = "#" + lesson["color"].lstrip("#")
+        else:
+            lesson["color"] = self.getColor(lesson["subject"]["shortName"])
 
         if "original" in lesson:
             lesson["original"] = self.analyzeLesson(lesson["original"])
 
         return lesson
 
-    def analyzeTimetable(self, data, mode="normal"):
-        own = self.getOwnId()
+    def analyzeTimetable(self, data, resourceType, resourceId, mode="normal"):
         timetable = []
         for day in data:
-            timetable.append([])
-            lessons = timetable[-1]
-            for lesson in day["gridEntries"]:
-                details = self.getLessonDetails(
-                    own, lesson["duration"]["start"], lesson["duration"]["end"], mode
-                )
-                analyzed = self.analyzeLesson(details)
+            lessons = []
+            timetable.append(lessons)
+            start = day["gridEntries"][0]["duration"]["start"]
+            end = day["gridEntries"][-1]["duration"]["end"]
 
-                merge = True
-                if lessons == []:
-                    merge = False
-                else:
-                    keys = [
-                        "rooms",
-                        "room",
-                        "room-info",
-                        "subject",
-                        "teachers-long",
-                        "teachers-short",
-                    ]
-                    for key in keys:
-                        if analyzed[key] != lessons[-1][key]:
-                            merge = False
-                            break
-                    if analyzed["start"] != lessons[-1]["end"]:  # break betewen
-                        if analyzed["start"] != lessons[-1]["start"]:
-                            merge = False
+            details = self.getLessonDetails(
+                start,
+                end,
+                resourceType,
+                resourceId,
+                mode,
+            )
 
-                if merge:
-                    lessons[-1]["end"] = analyzed["end"]
-                    lessons[-1]["endDateTime"] = analyzed["endDateTime"]
-                    lessons[-1]["duration"] = lessons[-1]["end"] - lessons[-1]["start"]
-                else:
-                    lessons.append(analyzed)
+            if details is None:
+                print("empty lesson")
+                continue
+
+            for lesson in details:
+                lessons.append(self.analyzeLesson(lesson))
         return timetable
+
+    def lessonsAreEqual(self, l1, l2):
+        keys = [
+            "room",
+            "room-info",
+            "status",
+            "subject",
+            "teachers-long",
+            "teachers-short",
+        ]
+        for key in keys:
+            if l1[key] != l2[key]:
+                return False
+        return True
+
+    def mergeDay(self, lessons, ignore_exam_breaks = False):
+        # combine consecutive parts of the same lesson into one block, other
+        # (e.g. cancelled) lessons can sit between their grid entries
+
+        old = lessons.copy()
+        for lesson in old:
+            previous = None
+            i = lessons.index(lesson)
+
+            while i>=0:
+                item = lessons[i]
+                ok = item["end"] == lesson["start"]
+                if ignore_exam_breaks:
+                    if item["gridType"] == "EXAM" and lesson["gridType"] == "EXAM":
+                        ok = item["end"] <= lesson["start"]
+                if ok:
+                    ok = self.lessonsAreEqual(lesson, item)
+                if ok:
+                    item["end"] = lesson["end"]
+                    item["duration"] = item["end"] - item["start"]
+                    lessons.remove(lesson)
+                    break
+                i -= 1
+
+    def layoutDay(self, lessons, ignore_exam_breaks = False):
+        # place overlapping lessons in columns next to each other, computed
+        # from the merged lessons so that double periods stay combined
+        cluster = []  # (lesson, column) of the current overlap group
+        ends = []  # end of the last lesson per column
+
+        lessons.sort(key=lambda l: (l["start"], l["end"]))
+        self.mergeDay(lessons, ignore_exam_breaks = ignore_exam_breaks)
+
+        def apply():
+            width = 1000 // max(len(ends), 1)
+            for lesson, column in cluster:
+                lesson["layoutStart"] = column * width
+                lesson["layoutWidth"] = width
+
+        for lesson in lessons:
+            if ends and all(end <= lesson["start"] for end in ends):
+                apply()
+                cluster = []
+                ends = []
+            for column, end in enumerate(ends):
+                if end <= lesson["start"]:
+                    ends[column] = lesson["end"]
+                    break
+            else:
+                column = len(ends)
+                ends.append(lesson["end"])
+            cluster.append((lesson, column))
+        apply()
 
     def getOwnId(self):
         return self.getGeneralData()["user"]["person"]["id"]
@@ -642,17 +813,25 @@ class session:
             return teacher["foreName"] + " " +  teacher["longName"]
         return short
 
-    def getLessonDetails(self, id, start, end, mode="normal"):
+    def getLessonDetails(self, start, end, resourceType, resourceId, mode="normal"):
+        resourceTypes = ["CLASS", "TEACHER", "SUBJECT", "ROOM", "STUDENT"]
+        resourceType = str(resourceTypes.index(resourceType) + 1)
         path = (
             "/WebUntis/api/rest/view/v2/calendar-entry/detail?elementId="
-            + str(id)
-            + "&elementType=5&endDateTime="
+            + str(resourceId)
+            + "&elementType="
+            + resourceType
+            + "&endDateTime="
             + end
             + "&homeworkOption=DUE&startDateTime="
             + start
         )
+
         data = self._getRequest(path, mode)
         data = data["calendarEntries"]
+
+        if data == []:
+            return
 
         takingPlace = []
         cancelled = []
@@ -662,14 +841,22 @@ class session:
             else:
                 takingPlace.append(lesson)
 
-        if takingPlace != []:
+        if len(takingPlace) == 1 and len(cancelled) == 1:
             lesson = takingPlace[0]
-            if cancelled != []:
-                lesson["original"] = cancelled[0]
-        else:
-            lesson = cancelled[0]
+            lesson["original"] = cancelled[0]
 
-        return lesson
+        return takingPlace + cancelled
+
+    def getTenant(self):
+        return self.getGeneralData()["tenant"]
+
+    def getAttachmentStorageUrl(self, id):
+        path = (
+            "/WebUntis/api/rest/view/v1/messages/"
+            + id
+            + "/attachmentstorageurl"
+        )
+        return self._getRequest(path, maxage = 5)
 
     def getAllRooms(self):
         year = self.getCurrentSchoolYear()
@@ -708,6 +895,12 @@ class session:
             key: value
         })
 
+    def getOwnUser(self):
+        return self.getGeneralData()["user"]
+
+    def getOwnRoles(self):
+        return self.getOwnUser()["roles"]
+
     def getPermissions(self):
         views = self.getGeneralData()["user"]["permissions"]["views"]
         general = self.getGeneralData()["permissions"]
@@ -715,6 +908,20 @@ class session:
             "views": views,
             "general": general,
         }
+
+    def getUnreadMessagesCount(self):
+        path = "/WebUntis/api/rest/view/v1/messages/status"
+        return self._getRequest(path)["unreadMessagesCount"]
+
+    def getAttachments(self, item):
+        out = []
+        for attachment in item["storageAttachments"]:
+            out.append({
+                "name": attachment["name"],
+                "id": attachment["id"],
+                "type": "storageAttachment"
+            })
+        return out
 
     def getHomeworks(self, start=None, end=None):
         year = self.getCurrentSchoolYear()
@@ -734,3 +941,14 @@ class session:
             print("ERROR: homeworks:", data)
             return {"lessons": [], "homeworks": []}
         return data["data"]
+
+    def getTimeGrid(self, id=None, mode = "normal"):
+        path = "/WebUntis/api/rest/view/v1/timetable/grid?timetableType=MY_TIMETABLE"
+        data = self._getRequest(path, mode=mode)
+
+        if id is None:
+            return data["formatDefinitions"][0]
+        else:
+            for grid in data["formatDefinitions"]:
+                if grid["id"] == id:
+                    return grid

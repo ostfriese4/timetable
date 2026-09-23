@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="PreferencesDialog" parent="AdwPreferencesDialog">
+    <property name="content-width">560</property>
+    <property name="content-height">420</property>
+    <child>
+      <object class="AdwPreferencesPage">
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Timetable</property>
+            <child>
+              <object class="AdwSwitchRow" id="show_cancelled">
+                <property name="title" translatable="yes">Show all cancelled lessons</property>
+                <property name="subtitle" translatable="yes">Show cancelled lessons if, there is a replacement</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSwitchRow" id="show_time_axis">
+                <property name="title" translatable="yes">Show the time axis</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSwitchRow" id="ignore_exam_breaks">
+                <property name="title" translatable="yes">Ignore breaks between exams</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

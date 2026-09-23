@@ -55,6 +55,9 @@
                 <property name="valign">start</property>
                 <property name="visible">False</property>
                 <property name="can-target">False</property>
+                <style>
+                  <class name="osd"/>
+                </style>
               </object>
             </child>
           </object>

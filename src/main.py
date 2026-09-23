@@ -23,10 +23,11 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-from .api import session, version, id, testCredentials
+from .api import session, version, id, testCredentials, releaseNotes
 from .homework_api import setShared
 from gi.repository import Gtk, Gio, Adw
 from .window import UntisWindow
+from .preferences import PreferencesDialog
 from .credentials import getCredentials, getProfiles
 import datetime
 import os
@@ -41,7 +42,7 @@ for path in paths:
         os.makedirs(path)
 
 
-developers = ["Ostfriese4"]
+developers = ["Ostfriese4", "Felitendo"]
 
 
 class shared:
@@ -57,6 +58,7 @@ class UntisApplication(Adw.Application):
         )
         self.create_action("quit", lambda *_: self.quit(), ["<control>q"])
         self.create_action("about", self.on_about_action)
+        self.create_action("preferences", self.on_preferences_action, ["<control>comma"])
         self.create_action("login", self.on_login_action, ["<control>l"])
         self.create_action("profiles", self.on_profiles_action, ["<control>p"])
         self.create_action("refresh", self.on_refresh_action, ["<control>r"])
@@ -64,22 +66,16 @@ class UntisApplication(Adw.Application):
             "create_homework", self.on_create_homework_action, ["<control>n"]
         )
 
-        self.shared = shared
+        self.shared = shared()
+        self.shared.shared = shared
         self.shared.profiles = getProfiles()
         self.shared.checked = False
         self.loginIfPossible = False
 
         profile = self.shared.profiles["default-profile"]
-
-        credentials = None
-        if profile is not None:
-            try:
-                credentials = getCredentials(profile)
-            except:
-                pass
-        if credentials is not None:
-            self.shared.session = session(credentials)
-        else:
+        credentials = getCredentials(profile)
+        self.shared.session = session(credentials)
+        if not testCredentials(credentials):
             self.loginIfPossible = True
 
         setShared(self.shared)
@@ -115,7 +111,11 @@ class UntisApplication(Adw.Application):
         about.set_translator_credits(_("translator-credits"))
         about.set_license_type(Gtk.License.GPL_3_0)
         about.set_issue_url("https://codeberg.org/ostfriese4/untis/issues")
+        about.set_release_notes(releaseNotes)
         about.present(self.props.active_window)
+
+    def on_preferences_action(self, *args):
+        PreferencesDialog().present(self.props.active_window)
 
     def on_login_action(self, widget, _):
         self.props.active_window.login_window.requestLogin(
@@ -126,7 +126,7 @@ class UntisApplication(Adw.Application):
         self.props.active_window.profiles_window.manage()
 
     def on_refresh_action(self, widget, _):
-        self.props.active_window.timetable.refresh()
+        self.props.active_window.refresh()
 
     def on_create_homework_action(self, widget, _):
         self.props.active_window.homeworkEditWindow.new_homework()

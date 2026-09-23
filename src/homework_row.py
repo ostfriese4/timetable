@@ -44,7 +44,10 @@ class HomeworkRow(Gtk.ListBoxRow):
         self.update()
 
     def update(self):
-        self.homework = getById(self.homework["id"])
+        homework = getById(self.homework["id"])
+        if homework is None:  # e.g. the homework was deleted
+            return
+        self.homework = homework
         self.label.set_label(self.homework["text"])
         self.check_button.set_active(self.homework["completed"])
         self.updateExpander()
@@ -82,14 +85,7 @@ class HomeworkRow(Gtk.ListBoxRow):
         state = self.check_button.get_active()
         if state != self.homework["completed"]:
             setValue(self.homework["id"], "completed", state)
-            page = self.get_ancestor(Adw.ApplicationWindow).homework_page.get_child()
-            if self.is_ancestor(page):
-                page.displayAll()
-            else:
-                diff = 1
-                if state == True:
-                    diff = -1
-                page.set_number(page.get_number() + diff)
+            self.get_ancestor(Adw.ApplicationWindow).homeworksChanged()
         self.update()
 
     def edit(self, data=None):

@@ -20,7 +20,21 @@
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Adw
+from gi.repository import Pango
+from .colors import serverColorClass
 import datetime
+
+
+def strikeOut(label):
+    # pango's strikethrough is hair-thin, draw a thick line instead
+    overlay = Gtk.Overlay()
+    overlay.set_child(label)
+    line = Gtk.Box()
+    line.add_css_class("strike")
+    line.set_valign(Gtk.Align.CENTER)
+    line.set_can_target(False)
+    overlay.add_overlay(line)
+    return overlay
 
 
 class ConstrainedScrolledWindow(Gtk.ScrolledWindow):
@@ -34,7 +48,8 @@ class ConstrainedScrolledWindow(Gtk.ScrolledWindow):
         self.box = Gtk.Box(orientation="vertical")
         self.box.set_hexpand(True)
         for label in labels:
-            label.set_halign(Gtk.Align.CENTER)
+            label.set_halign(Gtk.Align.START)
+            label.set_margin_start(8)
             self.box.append(label)
         self.set_child(self.box)
 
@@ -70,7 +85,7 @@ class LessonContent(Gtk.Widget):
         rect.x, rect.width = 0, width
         for child in self:
             rect.y = child.start * height
-            rect.height = child.duration - 4
+            rect.height = child.duration - 6
             child.size_allocate(rect, baseline)
 
 
@@ -79,6 +94,7 @@ class Lesson(Gtk.Overlay):
     __gtype_name__ = "Lesson"
 
     homework_indicator = Gtk.Template.Child()
+    info_indicator = Gtk.Template.Child()
     content_box = Gtk.Template.Child()
 
     def __init__(self, lesson, window, now, **kwargs):
@@ -92,25 +108,50 @@ class Lesson(Gtk.Overlay):
         self.window = window
 
         self.subject_label = Gtk.Label(label=self.lesson["subject"]["shortName"])
+        self.subject_label.add_css_class("subject")
         self.teacher_label = Gtk.Label(label=self.lesson["teachers-short"])
         self.room_label = Gtk.Label(label=self.lesson["room"])
+        for label in (self.subject_label, self.teacher_label, self.room_label):
+            # don't force a minimum width, parallel lessons can be narrow
+            label.set_ellipsize(Pango.EllipsizeMode.END)
+
+        stripe = Gtk.Box()
+        stripe.add_css_class("colorstripe")
+        stripe.set_size_request(10, -1)
+        if self.lesson["color"].startswith("#"):  # color from WebUntis
+            stripe.add_css_class(serverColorClass(self.lesson["color"]))
+        else:
+            stripe.add_css_class(self.lesson["color"])
+        self.content_box.append(stripe)
+
+        labels = [self.subject_label, self.teacher_label, self.room_label]
+        if self.lesson["status"] == "CANCELLED":
+            labels = [strikeOut(label) for label in labels]
 
         self.content = LessonContent()
         self.content.add_label(
             ConstrainedScrolledWindow(
                 0,
                 self.lesson["duration"],
-                [self.subject_label, self.teacher_label, self.room_label],
+                labels,
             )
         )
         self.content_box.append(self.content)
 
         self.set_size_request(-1, self.lesson["duration"])
         self.set_size_request(-1, self.lesson["duration"])
-        self.add_css_class("lesson")
-        self.add_css_class(self.lesson["color"])
         if self.lesson["status"] == "CANCELLED":
             self.add_css_class("cancelled")
+        elif self.lesson["gridType"] == "EXAM":
+            self.add_css_class("exam")
+        elif (
+            "original" in self.lesson
+            or self.lesson.get("gridStatus") == "CHANGED"
+            or self.lesson.get("gridType") == "EVENT"
+        ):
+            self.add_css_class("changed")
+        if self.lesson.get("lessonInfo") or self.lesson.get("teachingContent"):
+            self.info_indicator.set_visible(True)
         if datetime.datetime.strptime(self.lesson["endDateTime"], "%Y-%m-%dT%H:%M:%S") < now:
             self.add_css_class("past")
         if "original" in self.lesson:
@@ -142,6 +183,10 @@ class Lesson(Gtk.Overlay):
     def on_click(self, gesture, data, x, y):
         if not self.markedAsHidden:
             self.window.information_window.setLesson(self.lesson)
+
+    def clearHomeworks(self):
+        self.lesson["homeworks"] = []
+        self.homework_indicator.set_visible(False)
 
     def addHomework(self, homework):
         if "homeworks" in self.lesson:

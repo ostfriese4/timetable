@@ -20,6 +20,9 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from gi.repository import GObject
+from .offline_banner import OfflineBanner
+from .attachment import Attachment
+from .api import getDate
 
 import datetime
 
@@ -38,6 +41,10 @@ class Message(Adw.ExpanderRow):
         self.loaded = False
         self.session = session
 
+        if message["hasAttachments"]:
+            attachmentIcon = Gtk.Image(icon_name="xsi-mail-attachment-symbolic")
+            self.add_suffix(attachmentIcon)
+
         self.connect("notify::expanded", self.load)
 
     def load(self, a, b):
@@ -48,6 +55,11 @@ class Message(Adw.ExpanderRow):
             content = Adw.ActionRow(title=message["content"].replace("<br>", "\n"))
             self.add_row(content)
             content.add_css_class("property")
+
+            attachments = self.session.getAttachments(message)
+            for attachment in attachments:
+                attachment_row = Attachment(attachment, self.session)
+                self.add_row(attachment_row)
 
             date = Adw.ActionRow(
                 title=_("Date"),
@@ -70,13 +82,19 @@ class MessagesPage(Gtk.Box):
     __gtype_name__ = "MessagesPage"
 
     show_sidebar_button = Gtk.Template.Child()
+    offline = Gtk.Template.Child()
     container = Gtk.Template.Child()
     news_of_day = Gtk.Template.Child()
+    prev_day = Gtk.Template.Child()
+    next_day = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.displayed = []
         self.displayedNews = []
+        self.date = getDate()
+        self.prev_day.connect("clicked", self.prev)
+        self.next_day.connect("clicked", self.next)
 
     def enable_bindings(self, parent):
         parent.split_view.bind_property(
@@ -94,7 +112,43 @@ class MessagesPage(Gtk.Box):
         parent.main_view_stack.connect("notify::visible-child-name", on_visible)
         self.shared = parent.shared
 
+        self.page = parent.messages_page
+        self.countUnread()
+
+    def shouldHide(self):
+        messages = self.shared.session.getMessages()
+        if messages is not None and messages != []:
+            return False
+
+        news = self.shared.session.getNewsOfDay()
+        if news is not None and news != []:
+            return False
+
+        return True
+
+    def refresh(self):
+        self.display()
+
+    def countUnread(self):
+        try:
+            count = self.shared.session.getUnreadMessagesCount()
+            print(count, "unread messages")
+        except:
+            count = 0
+            print("could not count unread messages")
+        self.page.set_badge_number(count)
+
+    def next(self, *args):
+        self.date += datetime.timedelta(days=1)
+        self.display()
+
+    def prev(self, *args):
+        self.date -= datetime.timedelta(days=1)
+        self.display()
+
     def display(self):
+        self.news_of_day.set_title(self.date.strftime(_("News of %m/%d/%Y")))
+
         messages = self.shared.session.getMessages()
 
         while self.displayed != []:
@@ -112,8 +166,15 @@ class MessagesPage(Gtk.Box):
         if messages == []:
             self.container.set_visible(False)
 
-        news = self.shared.session.getNewsOfDay()
+        news = self.shared.session.getNewsOfDay(self.date)
         self.news_of_day.set_visible(True)
+        if news == []:
+            news = [
+                {
+                    "text": "",
+                    "subject": _("No News for this day"),
+                }
+            ]
         for item in news:
             text = item["text"]
             text = text.replace("<br>", "\n")
@@ -121,5 +182,5 @@ class MessagesPage(Gtk.Box):
             row = Adw.ActionRow(title=item["subject"], subtitle=text)
             self.news_of_day.add(row)
             self.displayedNews.append(row)
-        if news == []:
-            self.news_of_day.set_visible(False)
+
+        self.countUnread()

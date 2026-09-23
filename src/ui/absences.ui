@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <template class="MessagesPage" parent="GtkBox">
+  <template class="AbsencesPage" parent="GtkBox">
     <property name="orientation">vertical</property>
     <child>
       <object class="AdwToolbarView">
@@ -9,7 +9,7 @@
           <object class="AdwHeaderBar">
             <property name="title-widget">
               <object class="GtkLabel">
-                <property name="label" translatable="yes">Messages</property>
+                <property name="label" translatable="yes">Absences</property>
                 <property name="halign">GTK_ALIGN_CENTER</property>
               </object>
             </property>
@@ -21,6 +21,9 @@
             </child>
           </object>
         </child>
+        <child type="top">
+          <object class="OfflineBanner" id="offline"/>
+        </child>
         <property name="content">
           <object class="GtkScrolledWindow" id="scrolled_window">
             <property name="hscrollbar-policy">never</property>
@@ -30,13 +33,7 @@
             <child>
               <object class="AdwPreferencesPage">
                 <child>
-                  <object class="AdwPreferencesGroup" id="news_of_day">
-                    <property name="title" translatable="yes">News of Day</property>
-                  </object>
-                </child>
-                <child>
                   <object class="AdwPreferencesGroup" id="container">
-                    <property name="title" translatable="yes">Messages</property>
                   </object>
                 </child>
               </object>

@@ -1,7 +1,7 @@
 {
     "id" : "page.codeberg.ostfriese4.Untis",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "50",
+    "runtime-version" : "51",
     "sdk" : "org.gnome.Sdk",
     "command" : "untis",
     "finish-args" : [
@@ -14,8 +14,34 @@
     "cleanup-commands" : [
         "python3 -m compileall --invalidation-mode=unchecked-hash /app"
     ],
+    "cleanup": [
+    	"/include",
+    	"/lib/python3.13/site-packages/scikit_build_core",
+    	"/lib/python3.13/site-packages/pybind11",
+    	"/lib/python3.13/site-packages/*.dist-info/RECORD",
+    	"/lib/python3.13/site-packages/*.dist-info/METADATA",
+    	"/lib/python3.13/site-packages/*.dist-info/WHEEL",
+    	"/lib/python3.13/site-packages/*.dist-info/INSTALLER",
+    	"/lib/python3.13/site-packages/*.dist-info/REQUESTED"
+    ],
     "modules" : [
         "pypi.json",
+        {
+            "name" : "libportal",
+            "buildsystem" : "meson",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://github.com/flatpak/libportal.git",
+                    "tag" : "0.11.0",
+                    "commit": "fc4d62cfe131e8494c82f597f92b2234d584c367",
+                    "x-checker-data": {
+                        "type": "git",
+                        "tag-pattern": "^([\\d.]+)$"
+                    }
+                }
+            ]
+        },
         {
             "name" : "untis",
             "builddir" : true,

@@ -35,22 +35,13 @@
                 <property name="visible">False</property>
               </object>
             </child>
-            <child type="end">
-              <object class="GtkButton">
-                <property name="icon-name">view-refresh-symbolic</property>
-                <property name="tooltip-text" translatable="yes">Refresh</property>
-                <property name="action-name">app.refresh</property>
-              </object>
-            </child>
           </object>
         </child>
         <property name="content">
           <object class="GtkBox">
             <property name="orientation">vertical</property>
             <child>
-              <object class="AdwBanner" id="offline">
-                <property name="title" translatable="yes">You are offline</property>
-              </object>
+              <object class="OfflineBanner" id="offline"/>
             </child>
             <child>
               <object class="GtkScrolledWindow">
@@ -77,6 +68,9 @@
                         <property name="visible">False</property>
                         <property name="can-target">False</property>
                         <property name="pulse-step">0.3</property>
+                        <style>
+                          <class name="osd"/>
+                        </style>
                       </object>
                     </child>
                   </object>

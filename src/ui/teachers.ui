@@ -21,6 +21,9 @@
             </child>
           </object>
         </child>
+        <child type="top">
+          <object class="OfflineBanner" id="offline"/>
+        </child>
         <property name="content">
           <object class="GtkBox">
             <property name="hexpand">True</property>

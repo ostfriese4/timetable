@@ -19,6 +19,7 @@
 
 from .login import LoginWindow
 from .timetable import Timetable
+from .additional_timetables import AdditionalTimetablesPage
 from .homework import HomeworkList
 from .teachers import TeacherPage
 from .messages import MessagesPage
@@ -31,6 +32,7 @@ from .external_page import ExternalPage
 from .account_settings import AccountSettingsWindow
 from gi.repository import Adw
 from gi.repository import Gtk
+from gi.repository import GLib
 
 
 @Gtk.Template(resource_path="/page/codeberg/ostfriese4/Untis/window.ui")
@@ -40,6 +42,7 @@ class UntisWindow(Adw.ApplicationWindow):
     timetable = Gtk.Template.Child()
     absences = Gtk.Template.Child()
     absences_page = Gtk.Template.Child()
+    additional_timetables = Gtk.Template.Child()
     homework = Gtk.Template.Child()
     homework_page = Gtk.Template.Child()
     main_view_stack = Gtk.Template.Child()
@@ -48,6 +51,7 @@ class UntisWindow(Adw.ApplicationWindow):
     teachers = Gtk.Template.Child()
     messages = Gtk.Template.Child()
     user_settings_button = Gtk.Template.Child()
+    messages_page = Gtk.Template.Child()
 
     def __init__(self, shared, **kwargs):
         super().__init__(**kwargs)
@@ -66,14 +70,39 @@ class UntisWindow(Adw.ApplicationWindow):
         self.teachers.enable_bindings(self)
         self.messages.enable_bindings(self)
         self.absences.enable_bindings(self)
+        self.additional_timetables.enable_bindings(self)
 
         self.user_settings_button.connect("clicked", self.account_settings_window.open)
 
+        # runs after the handlers of the pages, so their data is loaded
+        self.main_view_stack.connect(
+            "notify::visible-child-name", lambda *args: self.updateOfflineBanners()
+        )
+
+        GLib.idle_add(self.addExternalPages)
+        GLib.idle_add(self.showHideViews)
+        GLib.idle_add(self.updateOfflineBanners)
+
+    def updateOfflineBanners(self):
         try:
-            self.addExternalPages()
-            self.showHideViews()
-        except:
-            raise
+            offline = self.shared.session.getOffline()
+            last = self.shared.session.getLastOnline()
+        except AttributeError:
+            print("could not get last online information")
+            return
+
+        offline_banners = [
+            self.timetable.offline,
+            self.homework.offline,
+            self.teachers.offline,
+            self.messages.offline,
+            self.absences.offline,
+            self.additional_timetables.offline,
+            self.additional_timetables.nested_offline,
+        ]
+
+        for banner in offline_banners:
+            banner.update(offline, last)
 
     def hidePage(self, name):
         if not name in self.hiddenPages:
@@ -94,12 +123,12 @@ class UntisWindow(Adw.ApplicationWindow):
             print("show page",name)
 
     def showHideViews(self):
-        if self.shouldViewHide("MESSAGE_CENTER"):
+        if self.messages.shouldHide():
             self.hidePage("messages")
         else:
             self.showPage("messages")
 
-        if self.shouldViewHide("STUDENTABSENCES"):
+        if self.absences.shouldHide():
             self.hidePage("absences")
         else:
             self.showPage("absences")
@@ -109,11 +138,17 @@ class UntisWindow(Adw.ApplicationWindow):
         else:
             self.showPage("teachers")
 
+        if self.additional_timetables.shouldHide():
+            self.hidePage("additional_timetables")
+        else:
+            self.showPage("additional_timetables")
+
     def addExternalPages(self):
         for page in self.pages:
             self.main_view_stack.remove(page)
         self.pages.clear()
 
+        first = True
         for pageData in self.shared.session.getMenu():
             id = "external" + str(len(self.pages))
             content = ExternalPage(pageData, id)
@@ -121,15 +156,41 @@ class UntisWindow(Adw.ApplicationWindow):
             page = self.main_view_stack.add(content)
             page.set_title(pageData["name"])
             page.set_name(id)
+            page.set_icon_name("globe-alt-symbolic")
+
+            if first:
+                first = False
+                page.set_starts_section(True)
+                #page.set_section_title(_("External services"))
 
             content.enable_bindings(self)
 
-            self.pages.append(page)
+            self.pages.append(content)
+
+    def homeworksChanged(self):
+        # keep the homework page and the indicators in the timetable in
+        # sync when a homework is created, edited, checked off or deleted
+        self.homework.displayAll()
+        self.timetable.refreshHomeworks()
+
+    def refresh(self):
+        self.shared.session.refresh()
+        try:
+            page = self.main_view_stack.get_visible_child()
+            page.refresh()
+        except Exception:
+            print("refresh not implemented by page", self.main_view_stack.get_visible_child_name())
+            self.shared.session.getOwnId() # request to update online status
+        self.updateOfflineBanners()
 
     def reload(self):
         self.checkCredentials()
         self.main_view_stack.set_visible_child_name("timetable")
         self.timetable.loadData()
+        try:
+            self.shared.session.getHomeworks()
+        except:
+            pass
         self.homework.displayAll()
         self.addExternalPages()
         self.showHideViews()
@@ -137,12 +198,10 @@ class UntisWindow(Adw.ApplicationWindow):
     def checkCredentials(self):
         print("check credentials")
 
-        try:
-            login = not testCredentials(getCredentials(self.shared.profiles["default-profile"]))
-        except:
-            login = True
+        login = not testCredentials(getCredentials(self.shared.profiles["default-profile"]))
 
         if login:
             self.login_window.requestLogin(self.shared.profiles["default-profile"])
+
         if not self.shared.session.getOffline():
             self.shared.checked = True
