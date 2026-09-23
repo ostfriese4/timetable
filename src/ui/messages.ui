@@ -34,7 +34,24 @@
               <object class="AdwPreferencesPage">
                 <child>
                   <object class="AdwPreferencesGroup" id="news_of_day">
-                    <property name="title" translatable="yes">News of Day</property>
+                    <property name="header-suffix">
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">5</property>
+                        <child>
+                          <object class="GtkButton" id="prev_day">
+                            <property name="icon-name">go-previous-symbolic</property>
+                            <property name="tooltip-text" translatable="true">Previous day</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="next_day">
+                            <property name="icon-name">go-next-symbolic</property>
+                            <property name="tooltip-text" translatable="true">Next day</property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
                   </object>
                 </child>
                 <child>

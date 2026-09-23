@@ -22,6 +22,7 @@ from gi.repository import Adw
 from gi.repository import GObject
 from .offline_banner import OfflineBanner
 from .attachment import Attachment
+from .api import getDate
 
 import datetime
 
@@ -84,11 +85,16 @@ class MessagesPage(Gtk.Box):
     offline = Gtk.Template.Child()
     container = Gtk.Template.Child()
     news_of_day = Gtk.Template.Child()
+    prev_day = Gtk.Template.Child()
+    next_day = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.displayed = []
         self.displayedNews = []
+        self.date = getDate()
+        self.prev_day.connect("clicked", self.prev)
+        self.next_day.connect("clicked", self.next)
 
     def enable_bindings(self, parent):
         parent.split_view.bind_property(
@@ -132,7 +138,17 @@ class MessagesPage(Gtk.Box):
             print("could not count unread messages")
         self.page.set_badge_number(count)
 
+    def next(self, *args):
+        self.date += datetime.timedelta(days=1)
+        self.display()
+
+    def prev(self, *args):
+        self.date -= datetime.timedelta(days=1)
+        self.display()
+
     def display(self):
+        self.news_of_day.set_title(self.date.strftime(_("News of %m/%d/%Y")))
+
         messages = self.shared.session.getMessages()
 
         while self.displayed != []:
@@ -150,8 +166,15 @@ class MessagesPage(Gtk.Box):
         if messages == []:
             self.container.set_visible(False)
 
-        news = self.shared.session.getNewsOfDay()
+        news = self.shared.session.getNewsOfDay(self.date)
         self.news_of_day.set_visible(True)
+        if news == []:
+            news = [
+                {
+                    "text": "",
+                    "subject": _("No News for this day"),
+                }
+            ]
         for item in news:
             text = item["text"]
             text = text.replace("<br>", "\n")
@@ -159,7 +182,5 @@ class MessagesPage(Gtk.Box):
             row = Adw.ActionRow(title=item["subject"], subtitle=text)
             self.news_of_day.add(row)
             self.displayedNews.append(row)
-        if news == []:
-            self.news_of_day.set_visible(False)
 
         self.countUnread()
