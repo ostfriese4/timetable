@@ -193,6 +193,7 @@ class LoginWindow(Adw.Dialog):
                         self.pswd_entry.set_text(value)
                     case "user":
                         self.usr_entry.set_text(value)
+                self.login()
         else:
             self.qr_toast_overlay.add_toast(self.invalid_qr_toast)
 
