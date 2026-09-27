@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: untis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-21 15:05+0200\n"
+"POT-Creation-Date: 2026-09-27 16:23+0200\n"
 "PO-Revision-Date: 2026-08-21 22:36+0200\n"
 "Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/page.codeberg.ostfriese4.Untis.desktop.in:2
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:109
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:7 src/main.py:103
 #: src/ui/preferences.ui:11 src/ui/window.ui:6 src/ui/window.ui:19
 #: src/ui/window.ui:45
 msgid "Timetable"
@@ -68,19 +68,23 @@ msgstr "Visualizzazione delle assenze"
 msgid "Multiple profiles"
 msgstr "Profili multipli"
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:23
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:20
+msgid "Some features might not be available at your school"
+msgstr ""
+
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:24
 msgid "Ostfriese4"
 msgstr "Ostfriese4"
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:56
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:57
 msgid "The timetable"
 msgstr "L'orario"
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:60
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:61
 msgid "Dialog showing information about a lesson"
 msgstr "Finestra di dialogo che mostra le informazioni su una lezione"
 
-#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:64
+#: data/page.codeberg.ostfriese4.Untis.metainfo.xml.in:65
 msgid "Editing a homework"
 msgstr "Revisionare un compito"
 
@@ -91,6 +95,10 @@ msgstr "Mostra lezioni annullate in caso di sostituzione"
 #: data/page.codeberg.ostfriese4.Untis.gschema.xml:10 src/ui/preferences.ui:20
 msgid "Show the time axis"
 msgstr "Mostra l'asse temporale"
+
+#: data/page.codeberg.ostfriese4.Untis.gschema.xml:14 src/ui/preferences.ui:25
+msgid "Ignore breaks between exams"
+msgstr ""
 
 #: src/absences.py:46
 msgid "Text"
@@ -112,39 +120,40 @@ msgstr "Inizio"
 msgid "End"
 msgstr "FIne"
 
-#: src/additional_timetables.py:86
+#: src/additional_timetables.py:94
 msgid "Students"
 msgstr "Studenti"
 
-#: src/additional_timetables.py:88 src/ui/teachers.ui:12 src/ui/window.ui:82
+#: src/additional_timetables.py:96 src/ui/window.ui:82
+#: src/ui/pages/teachers.ui:12
 msgid "Teachers"
 msgstr "Insegnanti"
 
-#: src/additional_timetables.py:90
+#: src/additional_timetables.py:98
 msgid "Classes"
 msgstr "Classi"
 
-#: src/additional_timetables.py:92
+#: src/additional_timetables.py:100
 msgid "Rooms"
 msgstr "Aule"
 
-#: src/api.py:502
+#: src/api.py:532
 msgid "and"
 msgstr "e"
 
-#: src/api.py:507 src/api.py:583
+#: src/api.py:537 src/api.py:613
 msgid "Unknown"
 msgstr "Sconosciuto"
 
-#: src/api.py:578 src/api.py:581
+#: src/api.py:608 src/api.py:611
 msgid "Event"
 msgstr "Evento"
 
-#: src/api.py:718
+#: src/api.py:756
 msgid "No data"
 msgstr "Nessun dato"
 
-#: src/credentials.py:61 src/login.py:209
+#: src/credentials.py:67 src/credentials.py:100
 msgid "Profile"
 msgstr "Profilo"
 
@@ -188,97 +197,119 @@ msgstr "Il compito originale era '%t'"
 msgid "This was originally due on %A %x"
 msgstr "La scadenza originale era %A %x"
 
-#: src/information.py:48 src/information.py:96 src/ui/create_homework.ui:41
+#: src/information.py:48 src/information.py:97 src/ui/create_homework.ui:41
 msgid "Subject"
 msgstr "Materia"
 
-#: src/information.py:49 src/information.py:97
+#: src/information.py:49 src/information.py:98
 msgid "Room"
 msgstr "Aula"
 
-#: src/information.py:50 src/information.py:98
+#: src/information.py:50 src/information.py:99
 msgid "Room description"
 msgstr "Descrizione aula"
 
-#: src/information.py:51 src/information.py:99
+#: src/information.py:51 src/information.py:100
 msgid "Teacher"
 msgstr "Insegnante"
 
 #: src/information.py:53
+#, fuzzy
+msgid "Class"
+msgstr "Classi"
+
+#: src/information.py:55
 msgid "Substitution"
 msgstr "Sostituzione"
 
-#: src/information.py:55
+#: src/information.py:57
 msgid "Information about this lesson"
 msgstr "Informazioni su questa lezione"
 
-#: src/information.py:57
+#: src/information.py:59
 msgid "Teaching content"
 msgstr "Contenuti didattici"
 
-#: src/information.py:59
+#: src/information.py:61
 msgid "Cancelled"
 msgstr "Annullata"
 
-#: src/information.py:68
+#: src/information.py:69
 msgid "Duration"
 msgstr "Durata"
 
-#: src/information.py:71
+#: src/information.py:72
 msgid "Minutes"
 msgstr "Minuti"
 
-#: src/information.py:90 src/information.py:106 src/ui/window.ui:72
+#: src/information.py:91 src/information.py:107 src/ui/window.ui:72
 msgid "Homework"
 msgstr "Compiti per casa"
 
-#: src/information.py:94
+#: src/information.py:95
 msgid "Original lesson"
 msgstr "Lezione originale"
 
-#: src/login.py:89
+#: src/login.py:79
+msgid "Invalid QR-Code"
+msgstr ""
+
+#: src/login.py:105
 msgid "No results"
 msgstr "Nessun risultato"
 
-#: src/login.py:93
+#: src/login.py:109
 msgid "Too many results"
 msgstr "Troppi risultati"
 
-#: src/login.py:95
+#: src/login.py:111
 msgid "Offline"
 msgstr "Offline"
 
-#: src/login.py:97 src/profiles.py:138
+#: src/login.py:113 src/profiles.py:138
 msgid "Error"
 msgstr "Errore"
 
-#: src/login.py:125 src/ui/login.ui:69
+#: src/login.py:141 src/ui/login.ui:73
 msgid "Token"
 msgstr "Token"
 
-#: src/login.py:156
+#: src/login.py:172
 msgid "Invalid credentials"
 msgstr "Credenziali non valide"
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:117
+#: src/main.py:111
 msgid "translator-credits"
 msgstr "Albano Battistella"
 
-#: src/messages.py:54 src/ui/create_homework.ui:23
+#: src/messages.py:65 src/ui/create_homework.ui:23
 msgid "Date"
 msgstr "Data"
 
-#: src/messages.py:63
+#: src/messages.py:74
 msgid "Sender"
 msgstr "Mittente"
 
-#: src/offline_banner.py:31 src/ui/offline_banner.ui:8
+#: src/messages.py:150
+msgid "News of %m/%d/%Y"
+msgstr ""
+
+#: src/messages.py:175
+msgid "No News for this day"
+msgstr ""
+
+#: src/offline_banner.py:40 src/ui/offline_banner.ui:8
 msgid "You are offline"
 msgstr "Sei offline"
 
-#: src/offline_banner.py:33
+#: src/offline_banner.py:42
 msgid "You are offline, last connection at %H:%M"
+msgstr "Sei offline, ultimo collegamento alle %H:%M"
+
+#: src/offline_banner.py:44
+#, fuzzy
+msgid "You are offline, last connection on %B %d, %Y %H:%M"
 msgstr "Sei offline, ultimo collegamento alle %H:%M"
 
 #: src/profiles.py:38
@@ -303,66 +334,34 @@ msgstr "Non è possibile eliminare solo il profilo"
 msgid "Do you really want to delete this profile?"
 msgstr "Vuoi davvero eliminare questo profilo?"
 
-#: src/timetable.py:413
+#: src/timetable.py:417
 msgid "Week %W"
 msgstr "Settimana %W"
 
 #. Translators: date format in the timetable
-#: src/timetable.py:472
+#: src/timetable.py:476
 msgid "%m/%d/%y"
 msgstr "%d/%m/%y"
 
-#: src/ui/absences.ui:12 src/ui/window.ui:102
-msgid "Absences"
-msgstr "Assenze"
+#: src/ui/attachment.ui:8
+msgid "Save attachment"
+msgstr ""
 
-#: src/ui/additional_timetables.ui:19 src/ui/window.ui:62
-msgid "All timetables"
-msgstr "Tutti i quadri orari"
+#: src/ui/attachment.ui:14
+msgid "Open attachment"
+msgstr ""
 
 #: src/ui/create_homework.ui:36
 msgid "Task"
 msgstr "Compito"
 
-#: src/ui/create_homework.ui:46 src/ui/homework.ui:39
+#: src/ui/create_homework.ui:46 src/ui/pages/homework.ui:39
 msgid "Completed"
 msgstr "Completato"
 
-#: src/ui/create_homework.ui:64 src/ui/login.ui:87
+#: src/ui/create_homework.ui:64 src/ui/login.ui:91
 msgid "Save"
 msgstr "Salva"
-
-#: src/ui/external_page.ui:25
-msgid "Open this page in a web-browser"
-msgstr "Apri questa pagina in un browser web"
-
-#: src/ui/external_page.ui:31
-msgid "Go back"
-msgstr "Torna indietro"
-
-#: src/ui/external_page.ui:37
-msgid "Home"
-msgstr "Home"
-
-#: src/ui/external_page.ui:43
-msgid "Go forward"
-msgstr "Vai avanti"
-
-#: src/ui/homework.ui:19
-msgid "Create a new homework"
-msgstr "Crea un nuovo compito"
-
-#: src/ui/homework.ui:48
-msgid "Unfinished"
-msgstr "Non completato"
-
-#: src/ui/homework.ui:54
-msgid "Everything done"
-msgstr "Tutto fatto"
-
-#: src/ui/homework.ui:55
-msgid "You have no unfinished homework"
-msgstr "Non hai compiti non fatti"
 
 #: src/ui/homework_row.ui:15
 msgid "Mark as completed"
@@ -380,62 +379,57 @@ msgstr "Informazioni"
 msgid "Login"
 msgstr "Accedi"
 
-#: src/ui/login.ui:25
+#: src/ui/login.ui:15
+msgid "Login using a QR-Code"
+msgstr ""
+
+#: src/ui/login.ui:29
 msgid "Profile name"
 msgstr "Nome del profilo"
 
-#: src/ui/login.ui:34
+#: src/ui/login.ui:38
 msgid "I usually log in using a third-party service"
 msgstr "Di solito accedo tramite un servizio di terze parti"
 
-#: src/ui/login.ui:40 src/ui/login.ui:102
+#: src/ui/login.ui:44 src/ui/login.ui:106
 msgid "Search school"
 msgstr "Cerca scuola"
 
-#: src/ui/login.ui:50
+#: src/ui/login.ui:54
 msgid "Server-URL"
 msgstr "URL del server"
 
-#: src/ui/login.ui:55 src/ui/login.ui:114
+#: src/ui/login.ui:59 src/ui/login.ui:116
 msgid "School"
 msgstr "Scuola"
 
-#: src/ui/login.ui:60
+#: src/ui/login.ui:64
 msgid "Username"
 msgstr "Nome utente"
 
-#: src/ui/login.ui:65
+#: src/ui/login.ui:69
 msgid "Authentication method"
 msgstr "Metodo di autenticazione"
 
-#: src/ui/login.ui:70
+#: src/ui/login.ui:74
 msgid "Password"
 msgstr "Password"
 
-#: src/ui/login.ui:135
+#: src/ui/login.ui:137
 msgid "Help"
 msgstr "Aiuto"
 
-#: src/ui/login.ui:151
+#: src/ui/login.ui:150
 msgid ""
 "If you are logging usually logging into WebUntis using a third party sso "
-"(e.g. IServ), you'll' have to open WebUntis in your browser, go to your "
-"account-settings and change your password. Then log into this app using your "
-"newly created password and presumably the same username as in your sso."
+"(e.g. IServ), follow the same steps as for the official app at https://"
+"help.untis.at/hc/en-150/articles/16515466619548-How-do-I-log-into-Untis-"
+"Mobile-if-my-school-has-set-up-SSO"
 msgstr ""
-"Se di solito accedi a WebUntis utilizzando un servizio di SSO di terze parti "
-"(es. IServ), dovrai aprire WebUntis nel browser, andare nelle impostazioni "
-"del tuo account e modificare la password. Successivamente, accedi a questa "
-"app utilizzando la password appena creata e, presumibilmente, lo stesso nome "
-"utente del tuo SSO."
 
-#: src/ui/messages.ui:12 src/ui/messages.ui:42 src/ui/window.ui:92
-msgid "Messages"
-msgstr "Messaggi"
-
-#: src/ui/messages.ui:37
-msgid "News of Day"
-msgstr "Notizie del giorno"
+#: src/ui/login.ui:162
+msgid "Scan QR-Code"
+msgstr ""
 
 #: src/ui/offline_banner.ui:9
 msgid "Try again"
@@ -492,26 +486,6 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Esci"
 
-#: src/ui/teachers.ui:37
-msgid "Search term"
-msgstr "Termine di ricerca"
-
-#: src/ui/timetable.ui:16
-msgid "Previous week"
-msgstr "Settimana precedente"
-
-#: src/ui/timetable.ui:21 src/ui/timetable.ui:93
-msgid "Jump to date"
-msgstr "Vai alla data"
-
-#: src/ui/timetable.ui:27
-msgid "Next week"
-msgstr "Settimana successiva"
-
-#: src/ui/timetable.ui:41
-msgid "Refresh"
-msgstr "Aggiorna"
-
 #: src/ui/window.ui:28
 msgid "Main Menu"
 msgstr "Menu principale"
@@ -520,21 +494,113 @@ msgstr "Menu principale"
 msgid "My timetable"
 msgstr "Il mio orario"
 
+#: src/ui/window.ui:62 src/ui/pages/additional_timetables.ui:16
+msgid "All timetables"
+msgstr "Tutti i quadri orari"
+
+#: src/ui/window.ui:92 src/ui/pages/messages.ui:12 src/ui/pages/messages.ui:59
+msgid "Messages"
+msgstr "Messaggi"
+
+#: src/ui/window.ui:102 src/ui/pages/absences.ui:12
+msgid "Absences"
+msgstr "Assenze"
+
 #: src/ui/window.ui:119
+msgid "_Refresh"
+msgstr "_Aggiorna"
+
+#: src/ui/window.ui:123
 msgid "Manage _profiles"
 msgstr "Gestisci _profili"
 
-#: src/ui/window.ui:123
+#: src/ui/window.ui:127
 msgid "_Preferences"
 msgstr "_Preferenze"
 
-#: src/ui/window.ui:127
+#: src/ui/window.ui:133
 msgid "_Keyboard Shortcuts"
 msgstr "Scorciatoie da _tastiera"
 
-#: src/ui/window.ui:131
+#: src/ui/window.ui:137
 msgid "_About Timetable"
 msgstr "_Informazioni su Timetable"
+
+#: src/ui/pages/external_page.ui:25
+msgid "Open this page in a web-browser"
+msgstr "Apri questa pagina in un browser web"
+
+#: src/ui/pages/external_page.ui:31
+msgid "Go back"
+msgstr "Torna indietro"
+
+#: src/ui/pages/external_page.ui:37
+msgid "Home"
+msgstr "Home"
+
+#: src/ui/pages/external_page.ui:43
+msgid "Go forward"
+msgstr "Vai avanti"
+
+#: src/ui/pages/homework.ui:19
+msgid "Create a new homework"
+msgstr "Crea un nuovo compito"
+
+#: src/ui/pages/homework.ui:48
+msgid "Unfinished"
+msgstr "Non completato"
+
+#: src/ui/pages/homework.ui:54
+msgid "Everything done"
+msgstr "Tutto fatto"
+
+#: src/ui/pages/homework.ui:55
+msgid "You have no unfinished homework"
+msgstr "Non hai compiti non fatti"
+
+#: src/ui/pages/messages.ui:44
+#, fuzzy
+msgid "Previous day"
+msgstr "Settimana precedente"
+
+#: src/ui/pages/messages.ui:50
+msgid "Next day"
+msgstr ""
+
+#: src/ui/pages/teachers.ui:37
+msgid "Search term"
+msgstr "Termine di ricerca"
+
+#: src/ui/pages/timetable.ui:16
+msgid "Previous week"
+msgstr "Settimana precedente"
+
+#: src/ui/pages/timetable.ui:21 src/ui/pages/timetable.ui:86
+msgid "Jump to date"
+msgstr "Vai alla data"
+
+#: src/ui/pages/timetable.ui:27
+msgid "Next week"
+msgstr "Settimana successiva"
+
+#~ msgid ""
+#~ "If you are logging usually logging into WebUntis using a third party sso "
+#~ "(e.g. IServ), you'll' have to open WebUntis in your browser, go to your "
+#~ "account-settings and change your password. Then log into this app using "
+#~ "your newly created password and presumably the same username as in your "
+#~ "sso."
+#~ msgstr ""
+#~ "Se di solito accedi a WebUntis utilizzando un servizio di SSO di terze "
+#~ "parti (es. IServ), dovrai aprire WebUntis nel browser, andare nelle "
+#~ "impostazioni del tuo account e modificare la password. Successivamente, "
+#~ "accedi a questa app utilizzando la password appena creata e, "
+#~ "presumibilmente, lo stesso nome utente del tuo SSO."
+
+#~ msgid "News of Day"
+#~ msgstr "Notizie del giorno"
+
+#~ msgid "Refresh"
+#~ msgstr "Aggiorna"
 
 #~ msgid "_Login"
 #~ msgstr "_Accedi"
@@ -545,6 +611,3 @@ msgstr "_Informazioni su Timetable"
 
 #~ msgid "No data available"
 #~ msgstr "Nessun dato disponibile"
-
-#~ msgid "_Refresh"
-#~ msgstr "_Aggiorna"
