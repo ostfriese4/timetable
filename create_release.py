@@ -11,21 +11,6 @@ with open("NEWS", "r") as file:
 with open("NEWS", "w") as file:
     file.write("")
 
-with open("src/api.py", "r") as file:
-    content = file.read()
-    pos = content.find('version = "') + 11
-    fh = content[:pos]
-    sh = content[pos:]
-    pos = sh.find('"')
-    sh = sh[pos:]
-    content = fh + version + sh
-with open("src/api.py", "w") as file:
-    file.write(content)
-
-with open("data/page.codeberg.ostfriese4.Untis.metainfo.xml.in") as file:
-    meta = file.read()
-
-pos = meta.find("<releases>") + 10
 
 description = "        <ul>"
 for new in news:
@@ -42,23 +27,22 @@ os.system("rm rn")
 release = "\n    <release version=\"" + version + "\" date=\"" + datetime.date.today().strftime("%Y-%m-%d") + "\">\n      <description translate=\"no\">\n" + description + "      </description>\n    </release>"
 
 
-meta = meta[:pos] + release + meta[pos:]
+def insertIntoFile(path, before, after, text):
+    with open(path, "r") as file:
+        content = file.read()
+        pos = content.find(before) + len(before)
+        fh = content[:pos]
+        sh = content[pos:]
+        pos = sh.find(after)
+        sh = sh[pos:]
 
+        content = fh + text + sh
+    with open(path, "w") as file:
+        file.write(content)
 
-with open("data/page.codeberg.ostfriese4.Untis.metainfo.xml.in", "w") as file:
-    file.write(meta)
+insertIntoFile("data/page.codeberg.ostfriese4.Untis.metainfo.xml.in", "<releases>", "\n", release)
+insertIntoFile("src/api.py", 'version = "', '"', version)
+insertIntoFile("src/api.py", 'releaseNotes = "', '"\n', description.replace("\\", "\\\\").replace("\n", "\\n"))
+insertIntoFile("README.md", "latest release: ", '">', version)
+insertIntoFile("meson.build", "version: '", "',", version)
 
-
-with open("src/api.py", "r") as file:
-    content = file.read()
-    pos = content.find('releaseNotes = "') + 16
-    fh = content[:pos]
-    sh = content[pos:]
-    pos = sh.find('"#""')
-    sh = sh[pos:]
-
-    releaseNotes = description.replace("\\", "\\\\").replace("\n", "\\n")
-
-    content = fh + releaseNotes + sh
-with open("src/api.py", "w") as file:
-    file.write(content)
