@@ -52,13 +52,18 @@ class AccountSettingsWindow(Adw.Dialog):
             print(self.window.shared.session.setProfileKey(key, value))
             print("apply",key,value)
 
-    def open(self, data=None):
+    def load(self):
         self.editable = False
-
-        self.present(self.window)
-
-        self.email.set_text(self.window.shared.session.getProfileKey("email"))
-        self.mail_message.set_active(self.window.shared.session.getProfileKey("forwardMessageToEmail"))
-        self.mail_notification.set_active(self.window.shared.session.getProfileKey("systemMailForwarding"))
-
+        data = self.window.shared.session.getProfile()
+        if "email" in data:
+            self.email.set_text(data["email"])
+        if "forwardMessageToEmail" in data:
+            self.mail_message.set_active(data["forwardMessageToEmail"])
+        if "systemMailForwarding" in data:
+            self.mail_notification.set_active(data["systemMailForwarding"])
         self.editable = True
+
+    def open(self, data=None):
+        self.present(self.window)
+        self.load()
+
