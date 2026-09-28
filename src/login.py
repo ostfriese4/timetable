@@ -97,7 +97,10 @@ class LoginWindow(Adw.Dialog):
         self.login_pages.push(self.search_page)
 
     def on_method_changed(self, a=None, b=None):
+        self.pswd_entry.set_visible(True)
         self.pswd_entry.set_title(self.method.get_selected_item().get_string())
+        if self.method.get_selected() == 2:
+            self.pswd_entry.set_visible(False)
 
     def searchSchool(self, data=None):
         for result in self.results:
@@ -146,10 +149,14 @@ class LoginWindow(Adw.Dialog):
 
     def login(self, data=None):
         print("login")
-        if self.method.get_selected_item().get_string() == _("Token"):
-            credType = "token"
-        else:
-            credType = "password"
+        match self.method.get_selected():
+            case 0:
+                credType = "token"
+            case 1:
+                credType = "password"
+            case 2:
+                credType = "no"
+                self.pswd_entry.set_text("")
 
         setCredentials(
             user=self.usr_entry.get_text(),
@@ -221,6 +228,8 @@ class LoginWindow(Adw.Dialog):
                 position = 0
             case "password":
                 position = 1
+            case "no":
+                position = 2
         self.method.set_selected(position)
 
         self.window.shared.profiles = getProfiles()

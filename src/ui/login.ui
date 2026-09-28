@@ -109,6 +109,7 @@
                                     <items>
                                       <item translatable="yes">Token</item>
                                       <item translatable="yes">Password</item>
+                                      <item translatable="yes">No login</item>
                                     </items>
                                   </object>
                                 </property>

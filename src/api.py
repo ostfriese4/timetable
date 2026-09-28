@@ -79,6 +79,9 @@ def _login(credentials):
 
                 ok = not "error" in json
 
+            case "no":
+                return s
+
 
         offline = False
         lastOnline = getDateTime()
