@@ -107,7 +107,8 @@ class Lesson(Gtk.Overlay):
         self.lesson = lesson
         self.window = window
 
-        self.subject_label = Gtk.Label(label=self.lesson["subject"]["shortName"])
+        subject = self.lesson["subject"]
+        self.subject_label = Gtk.Label(label=subject.get("displayName") or subject["shortName"])
         self.subject_label.add_css_class("subject")
         self.teacher_label = Gtk.Label(label=self.lesson["teachers-short"])
         self.room_label = Gtk.Label(label=self.lesson["room"])

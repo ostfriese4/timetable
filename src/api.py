@@ -574,7 +574,21 @@ class session:
 
         return color
 
-    def analyzeLesson(self, lesson):
+    def getDisplayNames(self, gridEntries):
+        # the grid entries carry the subject names configured in WebUntis (e.g.
+        # an alternate name), search all positions as their layout can change
+        names = {}
+        for entry in gridEntries:
+            for key, labels in entry.items():
+                if not key.startswith("position") or not labels:
+                    continue
+                for label in labels:
+                    for state in (label.get("current"), label.get("removed")):
+                        if state and state.get("type") == "SUBJECT":
+                            names[state.get("shortName")] = state.get("displayName")
+        return names
+
+    def analyzeLesson(self, lesson, displayNames=None):
         rooms = lesson["rooms"]
         old = rooms.copy()
         change = False
@@ -612,6 +626,11 @@ class session:
             else:
                 lesson["subject"] = {"shortName": "???", "longName": _("Unknown")}
 
+        # shown on the lesson block like the mobile app does, the short name
+        # stays untouched as homeworks are matched by it
+        subject = lesson["subject"]
+        subject["displayName"] = (displayNames or {}).get(subject["shortName"]) or subject["shortName"]
+
         lesson["teachers-short"] = self.createList(
             lesson["teachers"], "shortName", False
         )
@@ -628,7 +647,7 @@ class session:
             lesson["color"] = self.getColor(lesson["subject"]["shortName"])
 
         if "original" in lesson:
-            lesson["original"] = self.analyzeLesson(lesson["original"])
+            lesson["original"] = self.analyzeLesson(lesson["original"], displayNames)
 
         return lesson
 
@@ -652,8 +671,9 @@ class session:
                 print("empty lesson")
                 continue
 
+            displayNames = self.getDisplayNames(day["gridEntries"])
             for lesson in details:
-                lessons.append(self.analyzeLesson(lesson))
+                lessons.append(self.analyzeLesson(lesson, displayNames))
         return timetable
 
     def lessonsAreEqual(self, l1, l2):
