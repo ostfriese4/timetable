@@ -59,26 +59,25 @@ class InformationWindow(Adw.Dialog):
             data[_("Teaching content")] = lesson["teachingContent"]
         if lesson["status"] == "CANCELLED":
             data[_("Cancelled")] = ""
-        minutes_start = lesson["start"] % 60
-        hours_start = int((lesson["start"] - minutes_start) / 60)
-        if len(str(minutes_start)) == 1:
-            minutes_start = "0" + str(minutes_start)
-        minutes_end = lesson["end"] % 60
-        hours_end = int((lesson["end"] - minutes_end) / 60)
-        if len(str(minutes_end)) == 1:
-            minutes_end = "0" + str(minutes_end)
+
+        minutes_start = str(lesson["start"] % 60).zfill(2)
+        hours_start = str(int(lesson["start"] / 60)).zfill(2)
+
+        minutes_end = str(lesson["end"] % 60).zfill(2)
+        hours_end = str(int(lesson["end"] / 60)).zfill(2)
+
         data[_("Duration")] = (
             str(lesson["duration"])
             + " "
             + _("Minutes")
             + " ("
-            + str(hours_start)
+            + hours_start
             + ":"
-            + str(minutes_start)
+            + minutes_start
             + " - "
-            + str(hours_end)
+            + hours_end
             + ":"
-            + str(minutes_end)
+            + minutes_end
             + ")"
         )
 

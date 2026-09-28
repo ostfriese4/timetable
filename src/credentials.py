@@ -22,13 +22,20 @@ SCHEMA = Secret.Schema.new(
 def getCredentialsFile():
     try:
         with open(credentialsPath) as file:
-            return json.load(file)
+            data = json.load(file)
     except FileNotFoundError:
-        return {
-            "profiles":        {},
-            "credentials":     {},
-            "default-profile": None
-        }
+        data = {}
+    if not "profiles" in data:
+        data["profiles"] = {}
+    if not "credentials" in data:
+        data["credentials"] = {}
+    if not "default-profile" in data:
+        data["default-profile"] = "0"
+    return data
+
+def save(data):
+    with open(credentialsPath, "w") as file:
+        json.dump(data, file, indent = 4)
 
 def storePassword(attributes, password):
     # returns False if the keyring is unavailable, e.g. when running
@@ -46,7 +53,6 @@ def storePassword(attributes, password):
     except GLib.GError as error:
         print("storing password in the keyring failed:", error.message)
         return False
-
 
 def setCredentials(server, school, user, password, credType, profile="1"):
     data = getCredentialsFile()
@@ -71,8 +77,7 @@ def setCredentials(server, school, user, password, credType, profile="1"):
         # fall back to the credentials file so logging in still works
         data["credentials"][profile]["password"] = password
 
-    with open(credentialsPath, "w") as file:
-        json.dump(data, file, indent=4)
+    save(data)
 
 
 def getPassword(attributes):
@@ -89,41 +94,23 @@ def getPassword(attributes):
 
 
 def getCredentials(profile="1"):
-    data = getCredentialsFile()
+    file = getCredentialsFile()
 
-    if "password" in data:  # not yet migrated to secrets
-        print("migrating password to secrets")
-        setCredentials(
-            data["server"], data["school"], data["username"], data["password"], "password"
-        )
-        return getCredentials()
+    if not profile in file["credentials"]:
+        file["profiles"][profile] = {"name": _("Profile") + " " + profile}
+        file["credentials"][profile] = {
+            "server":  "",
+            "user":    "",
+            "school":  "",
+            "type":    "password",
+        }
+        save(file)
 
-    if not "default-profile" in data:  # not yet migrated to profiles
-        print("migrating password to profiles")
-        password = getPassword(data)
-        if password is None:  # keyring unavailable, retry on the next run
-            raise FileNotFoundError("no password set")
-        with open(credentialsPath, "w") as file:
-            json.dump({}, file)
-        setCredentials(
-            data["server"],
-            data["school"],
-            data["user"],
-            password,
-            "password",
-            profile,
-        )
-        return getCredentials()
+    data = file["credentials"][profile]
 
-    if not profile in data["credentials"]:
-        raise FileNotFoundError("no password set")
+    if not "password" in data:
+        data["password"] = getPassword(data)
 
-    data = data["credentials"][profile]
-    fallbackPassword = data.pop("password", "")
-    password = getPassword(data)
-    if not password:  # not in the keyring or keyring unavailable
-        password = fallbackPassword
-    data["password"] = password
     data["profile"] = profile
 
     if not data["server"].startswith("https://"):
@@ -133,17 +120,10 @@ def getCredentials(profile="1"):
 
 def getProfiles():
     data = getCredentialsFile()
-    try:
-        return {
-            "profiles": data["profiles"],
-            "default-profile": data["default-profile"],
-        }
-    except KeyError:
-        try:
-            getCredentials()  # not migrated
-        except FileNotFoundError:
-            return {"profiles": {}, "default-profile": None}
-        return getProfiles()
+    return {
+        "profiles": data["profiles"],
+        "default-profile": data["default-profile"],
+    }
 
 
 def setProfiles(new):
@@ -156,5 +136,4 @@ def setProfiles(new):
             print("deleting credentials of profile", profile)
             del data["credentials"][profile]
 
-    with open(credentialsPath, "w") as file:
-        json.dump(data, file, indent=4)
+    save(data)

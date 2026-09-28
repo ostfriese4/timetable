@@ -52,6 +52,23 @@ def fetchHomeworks(start=None, end=None, mode="normal", orig=False):
         else:
             result.append(applyChanges(homework))
 
+    if start is not None:
+        start = int(start.strftime("%Y%m%d"))
+    if end is not None:
+        end = int(end.strftime("%Y%m%d"))
+
+    ownData = getOwnData()
+    for id in ownData:
+        if id.startswith("own"):
+            item = ownData[id]
+
+            if start is not None and item["dueDate"] <= start:
+                break
+            if end is not None and item["dueDate"] >= end:
+                break
+
+            result.append(item)
+
     return result
 
 
@@ -73,13 +90,7 @@ def applyChanges(item):
 
 
 def getAll(orig=False):
-    ownData = getOwnData()
-
-    data = fetchHomeworks(orig=orig)
-    for id in ownData:
-        if id.startswith("own"):
-            data.append(ownData[id])
-    return data
+    return fetchHomeworks(orig=orig)
 
 
 def setValue(id, key, value):

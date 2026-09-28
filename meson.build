@@ -18,7 +18,7 @@ gnome.compile_resources('untis',
   'untis.gresource.xml',
   gresource_bundle: true,
   install: true,
-  source_dir: ['data/resources/icons', 'src/ui', 'src'],
+  source_dir: ['data/resources/icons', 'src/ui', 'src', 'src/ui/pages'],
   install_dir: pkgdatadir,
 )
 
