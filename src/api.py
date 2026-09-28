@@ -125,6 +125,21 @@ def searchSchool(query):
     except requests.exceptions.ConnectionError:
         return ["offline"]
 
+def parseLandingPage(server, path = "/WebUntis", key = "config: ", session = requests):
+    landingPage = session.get(server + path).text
+    pos = landingPage.find(key) + len(key)
+    end = pos
+    score = 0
+    while score != 0 or end == pos:
+        i = landingPage[end]
+        if i == "{":
+            score += 1
+        elif i == "}":
+            score -= 1
+        end += 1
+    code = landingPage[pos:end]
+    return json.loads(code)
+
 
 def testCredentials(credentials):
     return _login(credentials) is not None or offline
