@@ -20,7 +20,7 @@
 from gi.repository import Gtk
 from gi.repository import Adw
 from gi.repository import GLib
-from .api import session, testCredentials, searchSchool
+from .api import session, testCredentials, searchSchool, parseLandingPage
 from .credentials import getCredentials, setCredentials, setProfiles, getProfiles
 from .qr import QrScanner
 
@@ -80,6 +80,13 @@ class LoginWindow(Adw.Dialog):
         self.login_pages.push(self.main_login_page)
         if self.school_entry.get_text() == "":
             self.openSearchSchoolPage()
+        else:
+            self.getAlternativeLoginMethods()
+
+    def getAlternativeLoginMethods(self):
+        data = parseLandingPage(server = self.server_entry.get_text())
+        import json
+        print(json.dumps(data, indent=4))
 
     def scanQRCode(self, a=None):
         self.login_pages.push(self.scan_qr_page)
@@ -130,6 +137,7 @@ class LoginWindow(Adw.Dialog):
                     self.login_pages.pop()
                     self.school_entry.set_text(name)
                     self.server_entry.set_text(server)
+                    self.getAlternativeLoginMethods()
 
             result.connect("activated", onClick)
 
