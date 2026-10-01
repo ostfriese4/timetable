@@ -49,6 +49,89 @@ class CustomTimetableFilter(Adw.ActionRow):
         self.edit_button.set_icon_name("document-edit-symbolic")
         self.edit_button.set_tooltip_text(_("Edit filter"))
         self.add_suffix(self.edit_button)
+        self.edit_button.connect("clicked", self.edit)
+        self.prepareEdit()
+
+    def edit(self, *args):
+        self.edit_window.present(self.get_ancestor(Adw.Dialog))
+
+    def prepareEdit(self):
+        self.edit_window = Adw.Dialog()
+
+        self.edit_window.set_title(_("Edit filter"))
+        self.edit_window.set_content_width(450)
+        self.edit_window.set_content_height(550)
+
+        self.edit_window_content = Adw.ToolbarView()
+        self.edit_window.set_child(self.edit_window_content)
+        self.edit_window_header = Adw.HeaderBar()
+        self.edit_window_content.add_top_bar(self.edit_window_header)
+
+        match self.data["type"]:
+            case "isOneOf":
+                self.availableKeys = {
+                    _("Class/Course"): ["mainStudentGroup", "name"],
+                    _("Room"): ["room"],
+                }
+
+                page = Adw.PreferencesPage()
+                self.edit_window_content.set_content(page)
+
+                upperGroup = Adw.PreferencesGroup()
+                page.add(upperGroup)
+                self.key = Adw.ComboRow()
+                self.key.set_title(_("Key"))
+                self.key.set_enable_search(True)
+                self.key.set_search_match_mode(Gtk.StringFilterMatchMode.SUBSTRING)
+                model = Gtk.StringList()
+                for timetable in self.availableKeys:
+                    model.append(timetable)
+                self.key.set_model(model)
+                upperGroup.add(self.key)
+
+                self.items_group = Adw.PreferencesGroup(title = _("Values"))
+                self.values = []
+                page.add(self.items_group)
+
+                def add(*args):
+                    self.addIsOneOfRow("")
+
+                self.add_button = Gtk.Button()
+                self.add_button.set_icon_name("list-add-symbolic")
+                self.add_button.set_tooltip_text(_("Add value"))
+                self.add_button.connect("clicked", add)
+                self.items_group.set_header_suffix(self.add_button)
+
+                for value in self.data["values"]:
+                    self.addIsOneOfRow(value)
+
+    def addIsOneOfRow(self, value):
+        row = Adw.EntryRow()
+        row.set_title(_("Value"))
+        row.set_text(str(value))
+
+        delete_button = Gtk.Button()
+        delete_button.set_icon_name("user-trash-symbolic")
+        delete_button.set_tooltip_text(_("Delete value"))
+        delete_button.add_css_class("destructive-action")
+        row.add_suffix(delete_button)
+
+        self.items_group.add(row)
+        self.values.append(row)
+
+    def save(self):
+        data = self.data.copy()
+
+        match data["type"]:
+            case "isOneOf":
+                data["key"] = self.availableKeys[self.key.get_selected_item().get_string()]
+                values = []
+                for value in self.values:
+                    values.append(value.get_text())
+                data["values"] = values
+
+        return data
+
 
 class CustomTimetableStep(Adw.ExpanderRow):
     def __init__(self, step, parent):
@@ -92,6 +175,26 @@ class CustomTimetableStep(Adw.ExpanderRow):
                     self.filters.append(filterWidget)
                     self.filter_row.add_row(filterWidget)
 
+    def save(self):
+        data = self.data.copy()
+
+        match data["type"]:
+            case "fromRealTimetable":
+                timetableName = self.src_row.get_selected_item().get_string()
+                for timetable in self.parent.parent.shared.session.getAvailableTimetables():
+                    if timetable["name"] == timetableName:
+                        data["timetable"] = {
+                            "id": timetable["id"],
+                            "type": timetable["type"],
+                        }
+                        break
+                filters = []
+                data["filters"] = filters
+                for filter in self.filters:
+                    filters.append(filter.save())
+
+        return data
+
 class CustomTimetableBuilder:
     def __init__(self, widget, parent):
         self.widget = widget
@@ -118,6 +221,6 @@ class CustomTimetableBuilder:
 
     def save(self):
         out = []
-        for step in steps:
+        for step in self.steps:
             out.append(step.save())
         return out

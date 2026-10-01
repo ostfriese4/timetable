@@ -50,6 +50,20 @@ class AdditionalTimetablesPage(Gtk.Box):
         #closeOnClickOutside(self.edit_timetable_dialog) # disabled to prevent data loss
 
         self.builder = CustomTimetableBuilder(self.recipe_steps, self)
+        self.recipe_save.connect("activated", self.saveRecipe)
+
+        self.currentId = None
+
+    def saveRecipe(self, *args):
+        id = self.currentId
+        recipe = self.builder.save()
+        timetable = {
+            "id": id,
+            "recipe": recipe,
+            "type": "CUSTOM",
+            "name": self.recipe_name.get_text(),
+        }
+        setCustomTimetable(id, timetable)
 
     def enable_bindings(self, parent):
         parent.split_view.bind_property(
@@ -83,6 +97,7 @@ class AdditionalTimetablesPage(Gtk.Box):
         self.display()
 
     def editTimetable(self, row, id):
+        self.currentId = id
         self.edit_timetable_dialog.present(self.parent)
         data = getCustomTimetable(id)
         self.recipe_name.set_text(data["name"])
