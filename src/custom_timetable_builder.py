@@ -84,9 +84,15 @@ class CustomTimetableFilter(Adw.ActionRow):
                 self.key.set_enable_search(True)
                 self.key.set_search_match_mode(Gtk.StringFilterMatchMode.SUBSTRING)
                 model = Gtk.StringList()
-                for timetable in self.availableKeys:
-                    model.append(timetable)
+                i = 0
+                position = 0
+                for key in self.availableKeys:
+                    model.append(key)
+                    if self.availableKeys[key] == self.data["key"]:
+                        position = i
+                    i+=1
                 self.key.set_model(model)
+                self.key.set_selected(position)
                 upperGroup.add(self.key)
 
                 self.items_group = Adw.PreferencesGroup(title = _("Values"))
@@ -154,9 +160,15 @@ class CustomTimetableStep(Adw.ExpanderRow):
                 self.src_row.set_enable_search(True)
                 self.src_row.set_search_match_mode(Gtk.StringFilterMatchMode.SUBSTRING)
                 model = Gtk.StringList()
+                i = 0
+                position = 0
                 for timetable in self.parent.parent.shared.session.getAvailableTimetables():
                     model.append(timetable["name"])
+                    if timetable["id"] == self.data["timetable"]["id"] and timetable["type"] == self.data["timetable"]["type"]:
+                        position = i
+                    i += 1
                 self.src_row.set_model(model)
+                self.src_row.set_selected(position)
                 self.add_row(self.src_row)
 
                 self.filter_row = Adw.ExpanderRow()

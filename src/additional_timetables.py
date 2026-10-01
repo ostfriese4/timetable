@@ -64,6 +64,8 @@ class AdditionalTimetablesPage(Gtk.Box):
             "name": self.recipe_name.get_text(),
         }
         setCustomTimetable(id, timetable)
+        self.edit_timetable_dialog.close()
+        self.display()
 
     def enable_bindings(self, parent):
         parent.split_view.bind_property(

@@ -54,10 +54,13 @@ def getCustomTimetable(id):
 
 def setCustomTimetable(id, data):
     all = listCustomTimetables()
-    for i in range (len(all)-1):
+    found = False
+    for i in range (len(all)):
         if all[i]["id"] == id:
-            del all[i]
+            found = True
             break
+    if not found:
+        i = len(all)
     all[i] = data
     saveCustomTimetables(all)
 
