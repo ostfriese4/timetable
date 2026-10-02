@@ -389,6 +389,7 @@ class Timetable(Gtk.Box):
                 drawLabel(end)
 
     def displayData(self, data):
+        dontClose = False
         if data is None:
             return
         table, self.gridFormat = data
@@ -506,5 +507,10 @@ class Timetable(Gtk.Box):
                     block = Lesson(lesson, self, now)
                     layout.add(block)
                     self.lessons.append((layout, block, lesson))
+                    if lesson == self.information_window.lesson:
+                        dontClose = True
 
             date += datetime.timedelta(days=1)
+
+        if not dontClose and self.information_window.lesson is not None:
+            self.information_window.close()

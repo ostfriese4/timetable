@@ -174,16 +174,13 @@ class Lesson(Gtk.Overlay):
                 self.room_label.add_css_class("changed")
 
         self.markedAsHidden = False
-        self.lesson["homeworks"] = []
-
-    def markAsHidden(self):
-        self.markedAsHidden = True
-        if self.window.information_window.lesson == self.lesson:
-            self.window.information_window.close()
+        self.lesson["homeworks"] = [] True
 
     def on_click(self, gesture, data, x, y):
         if not self.markedAsHidden:
             self.window.information_window.setLesson(self.lesson)
+        else:
+            print("don't open", self.lesson)
 
     def clearHomeworks(self):
         self.lesson["homeworks"] = []
