@@ -1,8 +1,8 @@
 <div align="center">
   <img src='https://codeberg.org/ostfriese4/untis/raw/branch/main/data/icons/hicolor/scalable/apps/page.codeberg.ostfriese4.Untis.svg'></img>
   <br>
-  <a href="https://repology.org/project/timetable/versions">
-    <img src="https://repology.org/badge/latest-versions/timetable.svg?header=latest%20version" alt="latest release: ">
+  <a href="https://repology.org/project/untix/versions">
+    <img src="https://repology.org/badge/latest-versions/untix.svg?header=latest%20version" alt="latest release: ">
   </a>
   <br>
   <h1>Timetable</h1>
@@ -19,12 +19,12 @@
 
 
 # Install
-Besides Flathub, Timetable is also available in the [AUR](https://aur.archlinux.org/packages/timetable) for Arch Linux users:
+Besides Flathub, Timetable is also available in the [AUR](https://aur.archlinux.org/packages/untix) for Arch Linux users:
 
 ```
-yay -S timetable
+yay -S untix
 ```
-[![Packaging status](https://repology.org/badge/vertical-allrepos/timetable.svg)](https://repology.org/project/timetable/versions)
+[![Packaging status](https://repology.org/badge/vertical-allrepos/untix.svg)](https://repology.org/project/untix/versions)
 
 # Dependencies
 - gstreamer 
