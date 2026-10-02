@@ -654,10 +654,11 @@ class session:
     def analyzeTimetable(self, data, resourceType, resourceId, mode="normal"):
         timetable = []
         for day in data:
+            date = day["date"]
             lessons = []
             timetable.append(lessons)
-            start = day["gridEntries"][0]["duration"]["start"]
-            end = day["gridEntries"][-1]["duration"]["end"]
+            start = date + "T00:00"
+            end = date + "T23:59"
 
             details = self.getLessonDetails(
                 start,
