@@ -23,6 +23,22 @@ from gi.repository import GLib
 from gi.repository import Gio
 
 
+def confirm(window, question, yes, no, callback):
+    dialog = Adw.AlertDialog()
+    dialog.set_heading(question)
+    dialog.add_response("no", no)
+    dialog.add_response("yes", yes)
+    dialog.set_close_response("no")
+    dialog.set_default_response("no")
+    dialog.set_response_appearance("yes", Adw.ResponseAppearance.DESTRUCTIVE)
+
+    def code(dialog, response):
+        if response == "yes":
+            callback()
+
+    dialog.connect("response", code)
+    dialog.choose(window)
+
 class CustomTimetableFilter(Adw.ActionRow):
     def __init__(self, filter, step):
         super().__init__()
@@ -121,6 +137,19 @@ class CustomTimetableFilter(Adw.ActionRow):
         delete_button.set_tooltip_text(_("Delete value"))
         delete_button.add_css_class("destructive-action")
         row.add_suffix(delete_button)
+
+        def onDelete(*args):
+            def code():
+                self.values.remove(row)
+                self.items_group.remove(row)
+            confirm(
+                self.get_ancestor(Adw.Dialog),
+                _("Do you really want to delete this value?"),
+                _("Yes"),
+                _("No"),
+                code,
+            )
+        delete_button.connect("clicked", onDelete)
 
         self.items_group.add(row)
         self.values.append(row)
