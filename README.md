@@ -27,6 +27,7 @@ yay -S untix
 [![Packaging status](https://repology.org/badge/vertical-allrepos/untix.svg)](https://repology.org/project/untix/versions)
 
 # Dependencies
+- gettext
 - gstreamer 
 - gtk4
 - libadwaita
