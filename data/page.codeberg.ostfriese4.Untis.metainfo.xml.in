@@ -4,7 +4,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
 
-  <name>Timetable</name>
+  <name>Untix</name>
   <summary>View your WebUntis timetable</summary>
   <description>
     <p>Untix is an unofficial client for WebUntis, which focusses on the features used by students.</p>
