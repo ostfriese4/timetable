@@ -5,21 +5,21 @@
     <img src="https://repology.org/badge/latest-versions/untix.svg?header=latest%20version" alt="latest release: ">
   </a>
   <br>
-  <h1>Timetable</h1>
-  <p>Timetable is an inofficial client for WebUntis.
+  <h1>Untix</h1>
+  <p>Untix (formerly known as Timetable) is an inofficial client for WebUntis.
     <br>
     Some parts (icon and parts of the api) are taken from https://codeberg.org/l-koehler/untis-py.
     <br>
     Some icons are taken from the Adwaita icon theme (https://gitlab.gnome.org/GNOME/adwaita-icon-theme)</p>
   <a href='https://flathub.org/apps/page.codeberg.ostfriese4.Untis'>
-    <img width='240' alt='Get it on Flathub' src='https://flathub.org/api/badge?svg&locale=en'/>
+    <img width='240' alt='Install Untix from Flathub' src='https://flathub.org/api/badge?svg&locale=en'/>
   </a>
 </div>
 
 
 
 # Install
-Besides Flathub, Timetable is also available in the [AUR](https://aur.archlinux.org/packages/untix) for Arch Linux users:
+Besides Flathub, Untix is also available in the [AUR](https://aur.archlinux.org/packages/untix) for Arch Linux users:
 
 ```
 yay -S untix
